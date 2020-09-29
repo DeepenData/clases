@@ -1,0 +1,16 @@
+File Name: Thermococcus_gammatolerans_genomic_refseq.fna.gz
+Organism Name: Thermococcus_gammatolerans
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/022/365/GCF_000022365.1_ASM2236v1/GCF_000022365.1_ASM2236v1_genomic.fna.gz
+Download_Date: Tue Sep 29 14:55:10 2020
+refseq_category: representative genome
+assembly_accession: GCF_000022365.1
+bioproject: PRJNA224116
+biosample: SAMN02603333
+taxid: 593117
+infraspecific_name: strain=EJ3; DSM 15229
+version_status: latest
+release_type: Major
+genome_rep: Full
+seq_rel_date: 2009-06-12
+submitter: IGM/ Universit Paris-Sud, France

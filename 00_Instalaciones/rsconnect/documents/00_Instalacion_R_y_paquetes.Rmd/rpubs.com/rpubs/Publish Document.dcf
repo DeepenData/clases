@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/666249/abc965279ddc4701812a97d571798375
+bundleId: https://api.rpubs.com/api/v1/document/666249/abc965279ddc4701812a97d571798375
+url: http://rpubs.com/DeepenData/666249
+when: 1601084350.57395

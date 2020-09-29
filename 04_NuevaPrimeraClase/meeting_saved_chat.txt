@@ -1,0 +1,98 @@
+11:52:34	 De  Dasfne Lee : yo!
+11:52:36	 De  Dasfne Lee : porfa
+11:52:46	 De  Constanza Rubio : yo
+11:52:49	 De  prodriguezv : YO
+11:52:52	 De  prodriguezv : yo
+11:52:59	 De  Marce Legue : yo , gracias!
+11:53:03	 De  Cris : Yo, gracias
+11:54:28	 De  Loreto Pino : yo, por favor
+11:57:48	 De  Bárbara Rojas San Martín : Hola a todos!!
+11:57:56	 De  Alejandra Parra : Hola!!
+12:00:53	 De  Manu ayudante : Hola a todos!
+12:01:19	 De  Karla Veas-Mattheos : Holi! :D
+12:01:27	 De  Kevin Meza : holaa
+12:02:56	 De  Karina Alejandra Cordero : Yo por favor
+12:02:58	 De  Alejandra Parra : yo
+12:02:59	 De  Lorena Abarzúa : yo
+12:03:01	 De  Pablo Quintrel : yo
+12:03:03	 De  Diego Acuña : yo Alejandro porfa
+12:03:12	 De  Alex Florás : alex florás
+12:04:25	 De  Manu ayudante : El RPub de hoy https://rpubs.com/DeepenData/665531
+12:05:21	 De  Alejandra Parra : ok
+12:08:44	 De  Eduardo Rodriguez : Hola!!
+12:20:14	 De  Jousepth Gallardo  a  Manu ayudante(En privado) : Hola Manuel, una consulta, sabes si es posible pasar el código desde html directamente a Rmd ???
+12:32:17	 De  isadora  a  Manu ayudante(En privado) : No logré hacer lo del directorio
+12:32:51	 De  isadora  a  Manu ayudante(En privado) : Es posible mover todo a un directorio después?
+12:33:25	 De  Manu ayudante  a  Jousepth Gallardo(En privado) : Hola Josepyh, el código lo subiremos luego, pero si es posible
+12:34:06	 De  Manu ayudante  a  Jousepth Gallardo(En privado) : *subiremos luego como Rmd; lo que ven es una versión renderizada y pre-corrida del cuaderno; así si a alguien le falta un paquete, aun pueden seguir la clase
+12:34:23	 De  Manu ayudante  a  Jousepth Gallardo(En privado) : Isa: sí
+12:34:44	 De  Jousepth Gallardo  a  Manu ayudante(En privado) : gracias
+12:35:31	 De  Manu ayudante  a  Jousepth Gallardo(En privado) : En general RStudio pesca todo en rutas relativas a donde esta el cuaderno, pero eso es una opción en la configuración global del programaY eso cambia según cada instalación, pero por defecto debería usar la ubicación del cuaderno como WorkingDirectory
+12:38:00	 De  Jousepth Gallardo  a  Manu ayudante(En privado) : Gracias Manuel
+12:42:51	 De  Manu ayudante  a  isadora(En privado) : En general RStudio pesca todo en rutas relativas a donde esta el cuaderno, pero eso es una opción en la configuración global del programaY eso cambia según cada instalación, pero por defecto debería usar la ubicación del cuaderno como WorkingDirectory
+12:42:59	 De  Manu ayudante  a  isadora(En privado) : Sorry, respondi en privado a alguien más 
+12:43:54	 De  isadora  a  Manu ayudante(En privado) : Gracias <3
+12:53:53	 De  marileyxis lopez : Hola !! Los objetos de la lista tienen que ser de la misma clase??
+13:02:57	 De  Diego Acuña : me sale error cuando ejecuto hola.github Error: Evaluation error: error -103 with zipfile in unzGetCurrentFileInfo .
+13:04:03	 De  Daniela Aurora Ortiz : si, por aca igual error
+13:04:12	 De  Daniela Aurora Ortiz : :(
+13:05:50	 De  Manu ayudante : Hola, a los de windows puede fallar porque no esta wget (original), que es una utilidad común en sistemas POSIX (Linux et Mac). 
+13:05:58	 De  Manu ayudante : Les envio los archivos
+13:06:06	 De  Daniela Aurora Ortiz : ok, gracias
+13:07:36	 De  Javier Enríquez  : con wininet sí me funcionó
+13:07:49	 De  Diego Acuña : también wininet funciona
+13:07:55	 De  Pablo Salgado : wininet me funciono
+13:08:17	 De  Dasfne Lee : en mac no me funciono wget
+13:08:17	 De  Sebastian Gonzalez : Pero solo funciona la descargar, el siguiente código no
+13:08:17	 De  Alfonso Romero : con auto igual funciona
+13:08:49	 De  Manu ayudante : Si alguien quiere meterse a hacer cosas con sus PCs, pueden instalar el Subsistema Linux para Windows (WLS2) e instalar utilidades de LinuxLuego tendrían que cambiar la terminal por defecto de RStudio, pero la ventaja es que desde entonces funcionarian todos los programas y comandos Linux
+13:09:46	 De  Manu ayudante : Creo que Wang2018... está roto, pero no es necesario más adelante
+13:09:47	 De  Pablo Quintrel : Me descargo un archivo pero no tiene datos
+13:09:57	 De  Javier Enríquez  : sí, creo que a mi igual me descargó un archivo nada que ver 
+13:21:25	 De  Manu ayudante : Lo peor de lo peorErrores crípticos tipo Download finished as Install.msiERROR Can't find  Install.msi - Running "sudo rm -rf \" as fallback
+13:22:54	 De  Karina Alejandra Cordero  a  Manu ayudante(En privado) : Manuel, me pide que acepte la licencia de Xcode, y ademas que lo actualice, pero dice que no tengo espacio en el almacenamiento y si tengo
+13:23:04	 De  Manu ayudante : Si están corriendo R 4.0+ en general los paquetes se instalan y no hay errores
+13:24:20	 De  Manu ayudante  a  Karina Alejandra Cordero(En privado) : Que extraño ¿que paquete esta fallando? Y porque pide XCode?
+13:26:31	 De  Karina Alejandra Cordero  a  Manu ayudante(En privado) : No se, tengo espacio en el mac
+13:27:29	 De  Manu ayudante  a  Karina Alejandra Cordero(En privado) : ¿Podemos verlo luego? Si quieres te envio una VM para usar esta clase y seguir lo demás 
+13:27:46	 De  Karina Alejandra Cordero  a  Manu ayudante(En privado) : bueno
+13:27:55	 De  Karina Alejandra Cordero  a  Manu ayudante(En privado) : gracias
+13:27:56	 De  Manu ayudante  a  Karina Alejandra Cordero(En privado) : Es raro, muy raroPuede que sea alguna cosa de Apple que obliga a usar XCode
+13:28:35	 De  Karina Alejandra Cordero  a  Manu ayudante(En privado) : Siempre me lo pide, y ahora no se ha actualizado porque no me queda espacio, pero si tengo
+13:28:56	 De  Manu ayudante : Los que estan de los cursos anteriores pasada deberian tener *GEOquery* instalado.Si no está pueden instalar viaif (!requireNamespace("BiocManager", quietly = TRUE))    install.packages("BiocManager")BiocManager::install("GEOquery")
+13:29:03	 De  Pablo Salgado : me logró instalar los paquetes
+13:31:45	 De  Manu ayudante  a  Karina Alejandra Cordero(En privado) : ec2-18-231-144-73.sa-east-1.compute.amazonaws.comVM para la clase
+13:31:52	 De  Constanza Rubio : gracias
+13:32:18	 De  Karina Alejandra Cordero  a  Manu ayudante(En privado) : gracias
+13:42:15	 De  Diego Acuña : me quedo una duda qué es sudo???
+13:42:31	 De  Diego Acuña : gracias!!
+13:42:31	 De  Manu ayudante : Super User DO
+13:42:34	 De  Diego Acuña : jajaja
+13:42:48	 De  Manu ayudante : es una forma de ser root sin ser root todo el tiempo
+13:43:10	 De  Manu ayudante : lo que es una mala idea por "rm -fr /"
+13:44:13	 De  Bernardita Cayupe Rivas : Que es root?
+13:44:33	 De  Manu ayudante : Es como el usuario administrador de sistemas linux
+13:44:45	 De  Bernardita Cayupe Rivas : gracias
+13:46:44	 De  Manu ayudante : Es un superusuario unico sin restricciones de acceso al sistema, y es mala idea usarlo porque uno puede romper el sistemaPor eso en general se usa un usuario normal, y "sudo ...blablá" cuando hay que correr comandos como instalaciones 
+13:56:00	 De  masyelly : Muchas gracias
+13:56:07	 De  Pablo Salgado : gracias por la clase
+13:56:11	 De  marileyxis lopez : gracias
+13:56:11	 De  Daniela Aurora Ortiz : Gracias
+13:56:15	 De  Dasfne Lee : muchas gracias!!!!
+13:56:16	 De  Zaray Miranda-Chacón : gracias
+13:56:16	 De  Lorena Abarzúa : Gracias
+13:56:16	 De  Angel Parra : Gracias
+13:56:16	 De  Kevin Meza : graciaas
+13:56:17	 De  Daniela Aurora Ortiz : nos vemos
+13:56:17	 De  Alejandra Parra : muchas grcuas
+13:56:17	 De  Gerardo : mmuchas gracias !!
+13:56:18	 De  Camila Gudenschwager : gracias
+13:56:18	 De  Emma Rey : gracias!
+13:56:19	 De  Jousepth Gallardo : Muchas gracias !!!
+13:56:20	 De  Karla Veas-Mattheos : Gracias! Chaoo!
+13:56:22	 De  Manu ayudante : Si alguien tiene dudas de R en Windows también pueden preguntar
+13:56:25	 De  Javier Enríquez  : gracias
+13:56:28	 De  Sebastian Gonzalez : Que este n bien!
+13:56:37	 De  Alex Florás : gracias
+13:56:49	 De  ilvanna salas leon : Me encanto la clasee! Gracias :)
+13:56:52	 De  Gustavo Adolfo Sandoval Peña : Gracias a todos!

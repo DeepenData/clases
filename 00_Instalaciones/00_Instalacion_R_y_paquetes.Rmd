@@ -14,6 +14,8 @@ La guía asume que ya tienen RStudio. La sección para instalar R y RStudio en v
 CRAN (_Comprehensive R Archive Network_) es el repositorio principal de R, con más de 16,000 paquetes disponibles en multiples ambitos de analisis de datos, ciencias (astronomia, biología, matematica, sociología, etc.) y economía<!-- está así a proposito -->. De aqui instalamos:
 
 ```{r Paquetes a utilizar, echo=TRUE, eval=FALSE}
+options(install.packages.check.source = "yes") # Chequea la fuente de los paquetes
+
 install.packages("devtools")   # Utilidades de manejo de archivos, descargas, etc.
 install.packages("tidyverse")  # Set de paquetes que hacen muchas cosas
                                # Analisis no lineal, manipulación de texto, etc...
@@ -23,6 +25,16 @@ install.packages("readr")      # Traducción (pharsing) de archivos a una tibble
 install.packages("tibble")     # Dataframes del Siglo 21 (moderniza sintaxis)
 install.packages("magrittr")   # Operadores cañeria (pipes) %>%
 install.packages("readxl")     # Permite leer archivos de Excel
+
+install.packages("openssl")    # TODO: comentar todo esto (es tidyverse)
+install.packages("fs")
+install.packages("broom")
+install.packages("dbplyr")
+install.packages("dplyr")
+install.packages("haven")
+install.packages("httr")
+install.packages("modelr")
+install.packages("readr")
 
 install.packages("gapminder")  # data de Gapminder
 install.packages("gifski")     # encoding de GIFs
@@ -38,7 +50,14 @@ install.packages("gganimate")  # graficos animados
 install.packages("ggmuller")   # diagrama de evolucionarios Muller
 install.packages("autoplotly") # visualizaciones interactivas
 install.packages("gridExtra")  # extensión de grid, para la creación de figuras
+
+# Paqutes para completación de datos
+install.packages("outForest")  # Permite 
+install.packages("OutlierDetection")
+install.packages("missRanger") # 
 ```
+
+Una vez instalados los paquetes, R no es necesario correr estos comandos de nuevo, solo se convocan via `library(PAQUETE)`. 
 
 > El repositorio funciona como una red sincronizada, y existen dos instancias en Chile: https://cran.dcc.uchile.cl/ (Departamento de Ciencias de la Computación) y https://cran.dme.ufro.cl/ (Departamento de Matematicas y Estadistica). 
 > Por motivos de velocidad y para reducir carga sobre la red, es recomendable cambiar la configuración de RStudio en "Global Options / Packages / Primary CRAN Repository" y seleccionar uno de estos (asumiendo que estén en Chile). 

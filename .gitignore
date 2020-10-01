@@ -1,0 +1,11 @@
+# En el knit de los cuadernos
+.ipynb_checkpoints
+
+# Variables del ambiente
+.RData
+
+# Desarrollo
+.Rhistory
+
+# Estos son los archivos de sincronización con R-Pubs
+/rsconnect

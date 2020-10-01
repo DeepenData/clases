@@ -1,0 +1,294 @@
+---
+title: "Adquisisión y limpieza de data para metagenomica"
+date: '2020-09-20'
+output:
+  html_document:
+    df_print: paged
+---
+
+# Analisis metagenomico
+
+Es posible importar datos directamente a nuestro ambiente de R, usandolos desde el mismo directorio del cuaderno.
+Para ello, usamos `setwd(DIRECTORIO)` para explicitar donde estamos trabajando.
+Usualmente RStudio asume que es en mismo lugar donde esta el cuaderno, pero esto es una configuración local que puede no estar encendida.
+
+<!-- TODO: falta archivo aqui -->
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#setwd("~/clase_04_junio_2020")
+library(tidyverse) # Set de paquetes que hacen muchas cosas
+
+mis.DEGs.studies %>% names() # Analisis rapido de que tiene mis.DEGs.studies
+
+mis.DEGs.studies$GSE82227 %>% rownames() -> ENSGs # Lista de 
+```
+
+## Utilizando paquetes asociados a bases de datos en linea
+
+Alternativamente, se pueden usar paquetes que conecten a APIs de bases de datos disponibles fuera de la maquina.
+Esto tiene la ventaja de que las API se encargan de consultar y descargar los datos, los cuales usualmente estan validados, limpios, y actualizados.
+La desventaja es que las API pueden tener limitaciones de uso, y más que nada, que depende de la disponibilidad de los datos en line y la velocidad de descarga de estos.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(biomaRt) # Permite acceder a la colección de bases de datos de BioMart
+
+ensembl <- useMart("ensembl") 
+# Usando la database Ensembl, anotación de genes en multiples (202) especies
+# Creamos un objeto "ensembl" con todas esas anotaciones 
+
+searchDatasets(mart = ensembl, pattern = "sapiens") 
+# Buscamos los Ensembl con "sapiens" en el nombre
+# Solo hay un resultado, "hsapiens_gene_ensembl"
+
+# A partir de ese, creamos un objeto con genes humanos "Hs.ensembl"
+Hs.ensembl = useMart("ensembl",dataset="hsapiens_gene_ensembl")
+
+# Cada gen tiene multiples atributos, como largo, identificadores, genes homologos, etc.
+# Podemos listar todos estos atributos en busca de datos que queramos
+listAttributes(Hs.ensembl)
+```
+
+> **[BioMart](http://biomart.org/)** es un proyecto del Instituto de Europeo de Bioinformatica destinado a servir como punto de acceso para multiples datasets biomedicos publicamente disponibles. 
+> En si, la idea es centralizar estos datasets y las herramientas necesarias para descargarlos, para ahorrar el trabajo de buscar multiples bases de datos en distintos formatos.
+> Actualmente cuenta con bases de datos Ensembl, UniProt, Mouse Genomic Informatics, SalmonDB, etc.
+
+En toda base de datos existen los llamados **identificadores**, cuya función es generar una referencia unica para cada dato dentro de la base de datos. 
+Los identificadores no suelen ser particularmente descriptivos, y pueden variar entre bases de datos para un mismo objeto. 
+En Ensembl existen entonces los **simbolos**, que son el nombre que se le da a los genes o sus proteínas asociadas.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+searchAttributes(mart = Hs.ensembl, pattern = 'symbol')
+```
+
+Esto da dos atributos por gen. 
+
+- `hgnc_symbol` es el nombre dado por el _HUGO (HUman Genome Organization) Gene Nomenclature Committe_. Es idealmente un nombre _unico_ y _descriptivo_.
+- `uniprot_gn_symbol`  es el nombre de la proteína asociada al gen segun su registro en UniProt. 
+
+	
+
+```{r}
+my.genes      =   c('ACSL1','ACSL4','ADM','ADORA2A')
+
+my.genes.symbols = getBM(attributes=c('ensembl_gene_id','hgnc_symbol','entrezgene_description'),filters ='hgnc_symbol',values = my.genes,mart = Hs.ensembl)
+```
+
+
+
+```{r}
+my.genes      =   ENSGs
+
+my.genes.symbols = getBM(attributes=c('ensembl_gene_id','hgnc_symbol','entrezgene_description'),filters ='ensembl_gene_id',values = my.genes,mart = Hs.ensembl)
+
+```
+
+```{r}
+my.genes.symbols %>% tail()
+mis.DEGs.studies %>% names()
+```
+
+
+```{r}
+library(DESeq2)
+
+un.estudio <- 'GSE100382'
+
+mis.DEGs.studies[[un.estudio]]$baseMean        %>% as.numeric.Array() -> mis.means
+mis.DEGs.studies[[un.estudio]]$padj            %>% as.numeric.Array() -> mis.padjs
+mis.DEGs.studies[[un.estudio]]$log2FoldChange  %>% as.numeric.Array() -> mis.lfcs
+mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.filas
+mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.simbolos
+
+
+para.metaanal <- list()
+para.metaanal[['GSE100382']] <-  data.frame(symbols= mis.simbolos ,padj = mis.padjs, log2FoldChange = mis.lfcs, baseMean = mis.means, row.names = mis.filas)
+
+####################################################################################################
+
+un.estudio <- 'GSE55536'
+
+mis.DEGs.studies[[un.estudio]]$baseMean        %>% as.numeric.Array()   -> mis.means
+mis.DEGs.studies[[un.estudio]]$padj            %>% as.numeric.Array()   -> mis.padjs
+mis.DEGs.studies[[un.estudio]]$log2FoldChange  %>% as.numeric.Array()   -> mis.lfcs
+mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.filas
+mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.simbolos
+                                                                        
+para.metaanal[['GSE55536']] <-  data.frame(symbols= mis.simbolos ,padj = mis.padjs, log2FoldChange = mis.lfcs, baseMean = mis.means, row.names = mis.filas)
+
+##################################################################################################
+
+un.estudio <- 'GSE82227'
+
+mis.DEGs.studies[[un.estudio]]$baseMean        %>% as.numeric.Array()   -> mis.means
+mis.DEGs.studies[[un.estudio]]$padj            %>% as.numeric.Array()   -> mis.padjs
+mis.DEGs.studies[[un.estudio]]$log2FoldChange  %>% as.numeric.Array()   -> mis.lfcs
+mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.filas
+mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.simbolos
+                                                                        
+para.metaanal[['GSE82227']] <-  data.frame(symbols= mis.simbolos ,padj = mis.padjs, log2FoldChange = mis.lfcs, baseMean = mis.means, row.names = mis.filas)
+
+################################################################################################
+para.metaanal %>% glimpse()
+```
+
+```{r}
+
+
+GSE82227.con.symbols <- inner_join(para.metaanal$GSE82227,my.genes.symbols, by = c("symbols" = "ensembl_gene_id"))
+
+
+para.metaanal[['GSE82227']] <-  data.frame(symbols= GSE82227.con.symbols$hgnc_symbol ,padj = GSE82227.con.symbols$padj, log2FoldChange = GSE82227.con.symbols$log2FoldChange, baseMean = GSE82227.con.symbols$baseMean)
+
+
+para.metaanal  %>% glimpse()
+```
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(MetaVolcanoR)
+
+meta_degs_combining <- combining_mv(diffexp = para.metaanal, metathr=0.05,metafc = "Median", pcriteria= 'padj',                                                      foldchangecol= 'log2FoldChange', genenamecol='symbols', collaps = T)
+
+meta_degs_votecount <- votecount_mv(diffexp=para.metaanal, pcriteria='padj', foldchangecol= 'log2FoldChange', pvalue=0.01, foldchange=1, genenamecol='symbols',metathr=1,collaps=T)
+
+```
+
+```{r}  
+mis.resultados           <- meta_degs_combining@metaresult
+rownames(mis.resultados) <- mis.resultados$symbols
+colnames(mis.resultados)           <- c("symbols", "padj",   "log2FoldChange" , "idx" )
+mis.resultados[c('padj','log2FoldChange')]   -> meta.rest
+```
+
+```{r echo=TRUE, fig.height=7, fig.width=15, message=FALSE, warning=FALSE}
+library(EnhancedVolcano)
+EnhancedVolcano(meta.rest,
+    lab = rownames(meta.rest),
+    x = 'log2FoldChange',
+    y = 'padj',
+    xlim = c(-4,4),
+    xlab = bquote(~Log[2]~ 'fold change'),
+    pCutoff = 10e-15,
+    FCcutoff = 1,
+    pointSize = 3.0,
+    labSize = 3.0,
+    colAlpha = .8,
+    legendPosition = 'right',
+    legendLabSize = 12,
+    legendIconSize = 4.0,
+    drawConnectors = TRUE,
+    widthConnectors = 0.2,
+    colConnectors = 'grey30')
+
+
+```
+
+```{r}
+meta_degs_votecount@metaresult
+
+```
+
+
+```{r}
+meta_degs_votecount@MetaVolcano
+```
+
+
+```{r}
+
+subset(meta.rest, (padj < 1e-5)&(log2FoldChange >  2)) %>% rownames()%>% as.character.Array()  -> up0 
+subset(meta.rest, (padj < 1e-5)&(log2FoldChange < -1)) %>% rownames() %>% as.character.Array()  -> down0
+
+
+```
+
+```{r}
+meta_degs_votecount@metaresult$degvcount %>% unique()
+
+votes <- meta_degs_votecount@metaresult
+
+subset(votes, degvcount == "2.Up-regulated")$symbols %>% as.character.Array() -> up1
+subset(votes, degvcount == "0.Down-regulated")$symbols %>% as.character.Array() -> down1
+
+```
+```{r}
+mis.up   <- intersect(up0, up1) %>% sort()
+mis.down <- intersect(down0, down1)
+
+```
+
+**Clusters en studio GSE55536**
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(Biobase)
+library(stringr)
+library(DESeq2)
+
+selected.ready.set = datasets.ready$GSE55536
+selected.ready.set %>% exprs() %>% round() -> countdata #Por qué redondear
+
+coldata <- pData(selected.ready.set)
+coldata$title %>% as.character() %>% str_replace_all('.*(M1|M2).*','stimulated') %>% str_replace_all('.*rep.*','control') -> coldata$title 
+ddsMat <- DESeqDataSetFromMatrix(countData = countdata,
+                                 colData   = coldata,
+                                 design    = ~ title)
+keep <- rowSums(counts(ddsMat)) > 1
+dds  <- ddsMat[keep,]
+dds  <- estimateSizeFactors(dds)
+```
+
+
+
+```{r}
+dds %>% assay() %>% head(2)
+```
+
+
+The transformation rlog is useful when checking for outliers or as input for machine learning techniques.
+```{r}
+rld <- rlog(dds, blind = T)
+head(assay(rld), 3)
+```
+
+```{r}
+datos.exprs.norm <- assay(rld) %>% as.data.frame()
+```
+
+```{r}
+
+rownames(datos.exprs.norm) %in% mis.up -> bool.up
+
+datos.exprs.norm[bool.up,] -> exprs.up
+```
+
+```{r}
+km.res <- kmeans(exprs.up, centers = 5, iter.max = 10, nstart = 1)
+```
+
+
+```{r}
+dd <- cbind(exprs.up, cluster = km.res$cluster)
+head(dd)
+```
+
+```{r}
+library(factoextra)
+fviz_cluster(km.res,data = exprs.up, labelsize = 5)
+```
+
+
+
+```{r}
+res.hk <-hkmeans(exprs.up, 5) 
+fviz_cluster(res.hk,labelsize = 5)
+```
+
+
+
+
+
+
+
+
+
+
+

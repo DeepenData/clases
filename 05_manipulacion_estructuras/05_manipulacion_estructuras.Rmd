@@ -192,7 +192,7 @@ MAR_matrix <- matrix(data = sample(c(TRUE, FALSE),
 controls   <- grep("control", colnames(sim))
 treatments <- grep("treatment", colnames(sim))
 sim[, c(controls, treatments)][MAR_matrix] <- NA
-#sim$MAR <- apply(MAR_matrix, 1, any) # TODO: que hace esto?
+
 ```
 
 ## Missing Not At Random
@@ -205,9 +205,8 @@ MNAR_proteins = 100
 DE_protein_IDs <- grep("DE", sim$name) # TODO: corregir posiciones
 DE_first_100   <- DE_protein_IDs[1:MNAR_proteins]
 sim[DE_first_100, controls] <- NA
-#sim$MNAR <- FALSE
-#sim$MNAR[DE_first_100] <- TRUE
-library(dplyr) # TODO: esta arriba, eliminar
+
+
 sim %>% slice_sample(n=100) # Hace una muestra de 100 datos
 ```
 
@@ -272,7 +271,7 @@ glimpse(out)
 
 # Cosa del final
 
-```{r}
+```{r Insersión columna de Fold-change, echo=TRUE, message=FALSE, warning=FALSE}
 
 
 sim.without.outliers %>% mutate(treatment = rowMeans(select(., starts_with("treat")))) %>% mutate(control = rowMeans(select(., starts_with("control")))) %>%
@@ -304,5 +303,6 @@ cbind(A,B,C,D,E) %>%
     mutate(log2Ratio.E = log2(.[['treatment.E_mean']] / .[['control']])) %>% select(starts_with(c('na','log'))) -> log2Ratio_matrix
 
 log2Ratio_matrix
-```
 
+```
+# pendiente escritura de cartepas y exploracion de directorios.

@@ -1,0 +1,289 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r instalacion tidyverse completo y todas las dependencias chequeadas, echo=TRUE, message=FALSE, warning=FALSE, eval=F}
+options(install.packages.check.source = "yes")
+install.packages("openssl", dependencies = TRUE, quiet=TRUE )
+install.packages("fs", dependencies = TRUE, quiet=TRUE )
+install.packages("broom", dependencies = TRUE, quiet=TRUE )
+install.packages("dbplyr", dependencies = TRUE, quiet=TRUE )
+install.packages("dplyr", dependencies = TRUE, quiet=TRUE )
+install.packages("dplyr", dependencies = TRUE, quiet=TRUE )
+install.packages("haven", dependencies = TRUE, quiet=TRUE )
+install.packages("httr", dependencies = TRUE, quiet=TRUE )
+install.packages("modelr", dependencies = TRUE, quiet=TRUE )
+install.packages("readr", dependencies = TRUE, quiet=TRUE )
+install.packages("tidyverse", dependencies = TRUE, quiet=TRUE )
+```
+
+```{r instalacion package para manejo de alto nivel, echo=TRUE, message=FALSE, warning=FALSE, eval=F}
+devtools::install_github("traversc/trqwe", dependencies = T,quiet=T)
+library(trqwe)
+```
+
+# Background data (sampled from null distribution): *sim_null*
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+#bg: Background.
+replicates   = 3
+bg_proteins  = 3000           #Background proteins. 
+log2_mean_bg = 27             #Background mean.
+log2_sd_bg   = 2              #Background standard deviation.
+
+bg_reps_by_prot             <- rep((2*replicates), bg_proteins)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+bg_all_3000_prots_by_6_reps <- rep(1:bg_proteins,bg_reps_by_prot)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+bg_distrib_all_samples      <- rnorm(2*replicates*bg_proteins, mean = log2_mean_bg, sd = log2_sd_bg)
+
+ggplot(as.data.frame(bg_distrib_all_samples), aes(x=bg_distrib_all_samples)) +  geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                   binwidth=.5, colour="black", fill="white") +
+    geom_density(alpha=.2, fill="#FF6666")  # Overlay with transparent density plot
+
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+sim_null <- data_frame(
+  name  = paste0("bg_", bg_all_3000_prots_by_6_reps),
+  ID    = bg_all_3000_prots_by_6_reps,
+  var   = rep(c("control_1", "control_2", "control_3", "treatment_1","treatment_2","treatment_3"), bg_proteins), 
+  val   = 2^bg_distrib_all_samples)
+sim_null
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Histogram overlaid with kernel density curve
+
+
+ggplot(sim_null, aes(x=val)) +     geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                   binwidth=.5, colour="black", fill="white") +
+    geom_density(alpha=.2, fill="#FF6666")  # Overlay with transparent density plot
+
+```
+
+# Data for DE proteins (sampled from alternative distribution): *sim_diff*
+```{r}
+DE_proteins            = 300
+log2_mean_DE_control   = 25
+log2_mean_DE_treatment = 30
+log2_sd_DE             = 2
+
+DE_reps_by_prot              <- rep(replicates,    DE_proteins)
+DE_all_3000_prots_by_6_reps  <- rep(1:DE_proteins, DE_reps_by_prot) # debería ser DE_all_3000_prots_by_3_reps
+
+DE_distrib_control_samples   <- rnorm(replicates*DE_proteins, mean = log2_mean_DE_control, sd = log2_sd_DE)
+DE_distrib_treatment_samples <- rnorm(replicates*DE_proteins, mean = log2_mean_DE_treatment, sd = log2_sd_DE)
+```
+
+
+```{r}
+sim_diff <- rbind(
+  
+  data_frame(
+    name = paste0("DE_", DE_all_3000_prots_by_6_reps),
+    ID   = rep(  (bg_proteins+1):(bg_proteins+DE_proteins), DE_reps_by_prot),
+    var  = rep(c("control_1", "control_2", "control_3"), DE_proteins), 
+    val  = 2^DE_distrib_control_samples),
+  
+  
+  data_frame(
+    name = paste0("DE_", DE_all_3000_prots_by_6_reps),
+    ID = rep((bg_proteins+1):(bg_proteins+DE_proteins), DE_reps_by_prot),
+    var = rep(c("treatment_1", "treatment_2", "treatment_3"), DE_proteins),
+    val = 2^DE_distrib_treatment_samples)
+  )
+
+
+rbind(sim_null, sim_diff) %>% tail(10)
+```
+
+```{r}
+# Combine null and DE data
+#Funciones tradicionales
+rbind(sim_null, sim_diff) %>% 
+             spread(key = var, value = val) %>% 
+             arrange(ID) -> sim 
+sim
+```
+```{r}
+# Operación inversa
+sim %>% gather(key = "var", value = "val", -name, -ID)
+```
+```{r}
+#################################################
+# Con funciones nuevas:
+sim <-  rbind(sim_null, sim_diff) %>% 
+        pivot_wider(names_from = var, values_from = val)%>% 
+        arrange(ID)
+
+
+sim %>% pivot_longer(cols = !c(name,ID),  names_to = "var", values_to = "val")
+```
+
+# Introduce missing values
+
+missing at random (MAR) or missing not at random (MNAR). To mimick these two types of missing values, we introduce missing values randomly over all data points (MAR) and we introduce missing values in the control samples of 100 differentially expressed proteins (MNAR).
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Generate a MAR matrix
+MAR_fraction = 0.05
+MAR_matrix <- matrix(
+                     data = sample(c(TRUE, FALSE), 
+                            size = 2*replicates*(bg_proteins+DE_proteins), 
+                            replace = TRUE, 
+                            prob = c(MAR_fraction, 1-MAR_fraction)),
+                            nrow = bg_proteins+DE_proteins, 
+                            ncol = 2*replicates)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Introduce missing values at random (MAR)
+controls   <- grep("control", colnames(sim))
+treatments <- grep("treatment", colnames(sim))
+sim[, c(controls, treatments)][MAR_matrix]  <- NA
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Introduce missing values not at random (MNAR)
+MNAR_proteins  <- 100
+DE_protein_IDs <- grep("DE", sim$name) #SOn posiciones
+
+
+DE_first_100   <- DE_protein_IDs[1:MNAR_proteins]
+sim[DE_first_100, controls] <- NA
+
+library(dplyr)
+sim %>% slice_sample(n=100) 
+```
+## Missing values and outliers
+```{r más instalaciones, message=F,warning=F,eval=F}
+options(install.packages.check.source = "yes")
+install.packages('outForest', dependencies = TRUE, quiet=TRUE)
+install.packages('OutlierDetection', dependencies = TRUE, quiet=TRUE)
+install.packages('missRanger', dependencies = TRUE, quiet=TRUE)
+install.packages("mice", dependencies = TRUE, quiet=TRUE )
+```
+
+```{r}
+select_if(sim, is.numeric)
+sim[,-c(1,2)]
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(outForest)
+library(dplyr)
+library(OutlierDetection)
+
+
+
+sim %>%select(starts_with(c("tr",'co'))) -> only.my.numeric.data
+only.my.numeric.data.with.outliers        <- generateOutliers(only.my.numeric.data) %>% abs()
+```
+# Lidiando con datos ausentes
+
+```{r dropping, echo=TRUE, message=FALSE, warning=FALSE}
+is.na(only.my.numeric.data.with.outliers)           %>% colSums
+```
+
+
+```{r dropping, echo=TRUE, message=FALSE, warning=FALSE}
+is.na(drop_na(only.my.numeric.data.with.outliers))  %>% colSums
+```
+
+
+```{r dropping, echo=TRUE, message=FALSE, warning=FALSE}
+summary(only.my.numeric.data.with.outliers)
+```
+```{r}
+
+
+cbind(sim[,c(1,2)],only.my.numeric.data.with.outliers) -> sim.final
+```
+
+# Imputar missing data
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(mice)
+
+imputed_Data <- mice(sim.final, m=5, maxit = 50, method ='rf', seed = 500)
+
+my.raw.data <- mice::complete(imputed_Data) # no es raw data
+
+my.raw.data
+
+
+```
+
+# Corrección de outliers
+
+```{r}
+
+my.raw.data %>%select(starts_with(c("tr",'co'))) -> only.my.numeric.data.with.outliers
+
+out <- outForest(only.my.numeric.data.with.outliers, splitrule = "extratrees", 
+                 num.trees = 50, verbose = 0) 
+
+outliers(out)
+summary(out)
+# The fixed data
+
+Data(out)
+
+
+
+my.raw.data %>%select(!starts_with(c("tr",'co'))) %>% cbind((Data(out))) -> sim.without.outliers
+sim.without.outliers
+```
+
+# Generación de log2Ratio = FC
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+
+sim.without.outliers %>% mutate(treatment = rowMeans(select(., starts_with("treat")))) %>% mutate(control = rowMeans(select(., starts_with("control")))) %>%
+    mutate(log2Ratio = log2(.[['treatment']] / .[['control']])) -> A
+
+library(trqwe)
+
+B.names <- c('treatment.B_1', 'treatment.B_2', 'treatment.B_3',  'treatment.B_mean')
+C.names <- c('treatment.C_1', 'treatment.C_2', 'treatment.C_3',  'treatment.C_mean')
+D.names <- c('treatment.D_1', 'treatment.D_2', 'treatment.D_3',  'treatment.D_mean')
+E.names <- c('treatment.E_1', 'treatment.E_2', 'treatment.E_3',  'treatment.E_mean')
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(2 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat")))) %>% 
+  trqwe::set_colnames(B.names) -> B
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(5 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat"))))%>% 
+  trqwe::set_colnames(C.names) -> C
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(.5 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat"))))%>% 
+  trqwe::set_colnames(D.names) -> D
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(.2 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat"))))%>% 
+  trqwe::set_colnames(E.names) -> E
+
+cbind(A,B,C,D,E) %>%
+    mutate(log2Ratio.B = log2(.[['treatment.B_mean']] / .[['control']])) %>%
+    mutate(log2Ratio.C = log2(.[['treatment.C_mean']] / .[['control']])) %>%
+    mutate(log2Ratio.D = log2(.[['treatment.D_mean']] / .[['control']])) %>%
+    mutate(log2Ratio.E = log2(.[['treatment.E_mean']] / .[['control']])) %>% select(starts_with(c('na','log'))) -> log2Ratio_matrix
+
+log2Ratio_matrix
+
+```
+# pendiente escritura de cartepas y exploracion de directorios.

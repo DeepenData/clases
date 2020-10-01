@@ -14,6 +14,7 @@ La guía asume que ya tienen RStudio. La sección para instalar R y RStudio en v
 CRAN (_Comprehensive R Archive Network_) es el repositorio principal de R, con más de 16,000 paquetes disponibles en multiples ambitos de analisis de datos, ciencias (astronomia, biología, matematica, sociología, etc.) y economía<!-- está así a proposito -->. De aqui instalamos:
 
 ```{r Paquetes a utilizar, echo=TRUE, eval=FALSE}
+install.packages("devtools")   # Utilidades de manejo de archivos, descargas, etc.
 install.packages("tidyverse")  # Set de paquetes que hacen muchas cosas
                                # Analisis no lineal, manipulación de texto, etc...
 

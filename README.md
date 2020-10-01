@@ -12,4 +12,4 @@ Aquí están ordenadas cronológicamente.
 [02 - ANTIGUA - Recolección de datos RNA-seq, SQL y expresión diferencial](https://rpubs.com/DeepenData/r02-RNAseq_SQL_expresion_diferencial) <!-- Clases de 2020-06-01 -->  
 [03 - ANTIGUA - Meta-análisis y Clustering](https://rpubs.com/DeepenData/r03_meta-analisis_clustering) <!-- Clases de 2020-06-04 -->  
 [04 - Importación y escritura de datos; Introducción a paquetes de ómicas](https://rpubs.com/DeepenData/r04_importacion_escritura)  <!-- Clases de 2020-09-24 -->  
-[05 - Manipulación de estructuras de datos; Trabajando con carpetas]()  <!-- Clase de 2020-09-31 -->  
+[05 - Creación, manejo y transformación de estructuras de datos](https://rpubs.com/DeepenData/r05_manipulacion_estructuras_datos)  <!-- Clase de 2020-10-01 -->  

@@ -1,0 +1,101 @@
+---
+title: "Tercera clase: modificación de columnas con 'mutate', operadores de tipo 'pipes', detección/extracción de patrones con expresiones regulares y guardar en formato R."
+author: "Acevedo, A. & Munoz, Manuel. U. de Chile. "
+date: "08 octubre 2020."
+output:
+  html_document:
+    df_print: paged
+---
+
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(readr)
+library(magrittr)
+library(dplyr)
+
+sim.without.outliers <- read_csv('https://raw.githubusercontent.com/DeepenData/clases/master/06_mutate_pipes_regex/data_oct_08_2020.csv')
+
+sim.without.outliers %>% mutate(`Mean treatment` = rowMeans(select(., starts_with("treat")))) %>% mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%
+    mutate(log2Ratio = log2(.[['Mean treatment']] / .[['Mean control']])) %>% rename_at(  vars(matches('^treat|^contr|^mean|log2', ignore.case = TRUE)), funs(paste0(., ' A'))) -> A
+
+an.increase             <- function(x,change=3,fraction=.1) {runif(1, min= (change*x - fraction*(change*x)), max=(change*x + fraction*(change*x)))}
+a.decrase               <- function(x,change=.2,fraction=.1) {runif(1, min= (change*x - fraction*(change*x )), max=(change*x + fraction*(change*x )))}
+generate_mean_log2Ratio <- function(x, a.letter){
+                                                x %>% mutate(`Mean treatment` = rowMeans(select(., starts_with("treat")))) %>% 
+                                                mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%  
+                                                mutate(log2Ratio = log2(.[['Mean treatment']] / .[['Mean control']])) %>% 
+                                                rename_at(  vars(matches('^treat|^contr|^mean|log2', ignore.case = TRUE)), funs(paste0(., a.letter)))}
+
+sim.without.outliers %>% mutate(across(starts_with("treatment"), an.increase)) %>% generate_mean_log2Ratio(' B') -> B
+
+sim.without.outliers %>% mutate(across(starts_with("treatment"), a.decrase)) %>% generate_mean_log2Ratio(' C') -> C
+
+
+cbind(A, select(B, matches('tre|con|log')), select(C, matches('tre|con|log'))) -> final.data
+```
+
+
+```{r echo=TRUE, fig.height=3, fig.width=3, message=FALSE, warning=FALSE}
+final.data %$% cor(`log2Ratio A`,`log2Ratio B`)
+final.data %$% cbind(`log2Ratio A`, `log2Ratio B`, `log2Ratio C`) %>% colSums -> my.col.sum
+my.col.sum %>%  subset(.>0) -> my.col.sum
+my.col.sum %<>% subset(.>0)
+final.data %>% select(matches('log2')) %T>% plot() %>% select(matches('B|C')) -> my.cols
+```
+
+
+```{r}
+
+my.terms <- c('system 1','system 2.7.9','subsystem A','subsystem B and A')
+sample(my.terms, nrow(final.data)/2,  replace = T)        -> terms.col
+sample(final.data$name, nrow(final.data)/2,  replace = F) -> names.sample
+data.frame(terms.col,names.sample) -> my.info
+inner_join(final.data,my.info, by = c('name'='names.sample'))-> final.data.with.terms
+full_join(final.data,my.info, by = c('name'='names.sample')) -> final.data.with.terms.nas
+```
+
+```{r}
+library(tidyverse)
+final.data.with.terms.nas %>% filter(`log2Ratio A` < 0 & `log2Ratio B` < 0 & `log2Ratio C` < 0) %>% drop_na 
+```
+```{r}
+library(stringr)
+
+final.data.with.terms.nas %>% .[['name']] %>% str_detect('DE') %>% which
+
+final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d$') %>%  .[!is.na(.)]
+final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d+') %>% .[!is.na(.)] 
+final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d.+') %>% .[!is.na(.)]
+final.data.with.terms.nas %>% .[['terms.col']] %>% str_extract('^s.*m') %>% na.exclude() %>% sample(10)
+final.data.with.terms.nas %>% .[['terms.col']] %>% str_replace('subsystem','comparment') %>% na.exclude() %>% sample(10)
+```
+
+```{r}
+final.data.with.terms.nas %>% filter(str_detect(name, regex('de.*', ignore_case = T)) & str_detect(terms.col, regex('B.*A', ignore_case = F)))
+```
+```{r}
+final.data.with.terms.nas %>% filter(str_detect(name, regex('de.*', ignore_case = T)) & str_detect(terms.col, regex('\\d.\\d', ignore_case = F)) & `log2Ratio C` <0) %>% select(matches('log|name|term')) 
+```
+```{r}
+
+
+'system 2.7.9' %in% final.data.with.terms.nas$terms.col
+final.data.with.terms.nas %>% {if('system 2.7.9 ff' %in% final.data.with.terms.nas$terms.col) print('ok') else str_extract(.[['terms.col']], 'system.*' )} %>% na.omit %>% unique -> unicos
+
+
+```
+
+```{r}
+list.files(path = ".", pattern = 'aa',  ignore.case = T)
+list.files(pattern = 'csv', full.names = T)
+
+# Save an object to a file
+saveRDS(final.data.with.terms.nas, file = "final.data.with.terms.nas.rds")
+# Restore the object
+hola <- readRDS(file = "final.data.with.terms.nas.rds")
+# Save multiple objects
+save(final.data.with.terms.nas, unicos, file = "some_data.RData")
+load("some_data.RData")
+```

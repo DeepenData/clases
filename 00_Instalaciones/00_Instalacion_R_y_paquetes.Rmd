@@ -21,20 +21,18 @@ install.packages("tidyverse")  # Set de paquetes que hacen muchas cosas
                                # Analisis no lineal, manipulación de texto, etc...
 
 # Paquetes que deberian estar incluidos en Tidyverse
-install.packages("readr")      # Traducción (pharsing) de archivos a una tibble
-install.packages("tibble")     # Dataframes del Siglo 21 (moderniza sintaxis)
+install.packages("broom")      # Convierte objetos de R a Tibbles, como "readr"
+install.packages("dbplyr")     # Manipulación de bases de datps (eg. SQL)
+install.packages("dplyr")      # Manipulación de datos mediante gramatica propia
+install.packages("fs")         # Operaciones agnosticas de sistemas de archivos
+install.packages("haven")      # Trabaja con archivos SPSS, Stata y SAS
+install.packages("httr")       # Herramientas del protocolo HTTP, como GET, etc...
 install.packages("magrittr")   # Operadores cañeria (pipes) %>%
+install.packages("modelr")     # Funciones de modelado compatibles con pipes
+install.packages("openssl")    # Trabaja con certificados y encriptación SSL
+install.packages("readr")      # Traducción (pharsing) de archivos a una tibble 
 install.packages("readxl")     # Permite leer archivos de Excel
-
-install.packages("openssl")    # TODO: comentar todo esto (es tidyverse)
-install.packages("fs")
-install.packages("broom")
-install.packages("dbplyr")
-install.packages("dplyr")
-install.packages("haven")
-install.packages("httr")
-install.packages("modelr")
-install.packages("readr")
+install.packages("tibble")     # Dataframes del Siglo 21 (moderniza sintaxis)
 
 install.packages("gapminder")  # data de Gapminder
 install.packages("gifski")     # encoding de GIFs
@@ -52,9 +50,9 @@ install.packages("autoplotly") # visualizaciones interactivas
 install.packages("gridExtra")  # extensión de grid, para la creación de figuras
 
 # Paqutes para completación de datos
-install.packages("outForest")  # Permite 
-install.packages("OutlierDetection")
-install.packages("missRanger") # 
+install.packages("missRanger") # Permite completar data incompleta (gaps)
+install.packages("outForest")  # Detección y reemplazo de outliers y gaps
+install.packages("OutlierDetection") # Detección avanzada de outliers
 ```
 
 Una vez instalados los paquetes, R no es necesario correr estos comandos de nuevo, solo se convocan via `library(PAQUETE)`. 

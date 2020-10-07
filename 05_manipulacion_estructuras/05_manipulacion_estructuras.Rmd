@@ -1,0 +1,317 @@
+---
+title: "Manipulación y manejo de estructuras"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Titulo 1
+
+## Estructura de datos y diagrama
+
+
+
+```{r Instala paquetes necesarios, eval=FALSE}
+# No correr este chunk a menos que el subsiguiente falle
+# Opciones globales para instalación de paquetes
+options(install.packages.check.source = "yes")
+
+# Instalando paquetes (descripción mí¡s adelante)
+install.packages("openssl",   dependencies = TRUE, quiet=TRUE )
+install.packages("fs",        dependencies = TRUE, quiet=TRUE )
+install.packages("broom",     dependencies = TRUE, quiet=TRUE )
+install.packages("dbplyr",    dependencies = TRUE, quiet=TRUE )
+install.packages("dplyr",     dependencies = TRUE, quiet=TRUE )
+install.packages("dplyr",     dependencies = TRUE, quiet=TRUE )
+install.packages("haven",     dependencies = TRUE, quiet=TRUE )
+install.packages("httr",      dependencies = TRUE, quiet=TRUE )
+install.packages("modelr",    dependencies = TRUE, quiet=TRUE )
+install.packages("readr",     dependencies = TRUE, quiet=TRUE )
+install.packages("tidyverse", dependencies = TRUE, quiet=TRUE )
+
+install.packages('outForest', dependencies = TRUE, quiet=TRUE)
+install.packages('OutlierDetection', dependencies = TRUE, quiet=TRUE)
+install.packages('missRanger', dependencies = TRUE, quiet=TRUE)
+```
+
+
+```{r Instala paquetes necesarios de Github, eval=FALSE}
+# Instalando paquetes desde github
+if("devtools" %in% rownames(installed.packages()) == FALSE) # ¿está devtools?
+  {install.packages("devtools")}    # Instalalo en caso de que no esté --Manu
+# TODO: incluir este comportamiento con los otros paquetes instalados  --Manu
+
+library(devtools) # Utilidades de manejo de archivos, descargas, etc.
+devtools::install_github("traversc/trqwe", dependencies = T,quiet=TRUE)
+```
+
+```{r Activa las librerias a usar, message=FALSE, warning=FALSE}
+library("tidyverse") # Carga muchos paquetes de analisis de datos 
+
+# En caso de que Tidyverse falle la carga común
+library("broom")   # Convierte objetos de R a Tibbles, como "readr"
+library("dbplyr")  # Manipulación de bases de datps (eg. SQL)
+library("dplyr")   # Manipulación de datos mediante gramatica propia
+library("fs")      # Operaciones agnosticas de sistemas de archivos
+library("haven")   # Trabaja con archivos SPSS, Stata y SAS
+library("httr")    # Herramientas del protocolo HTTP, como GET, etc...
+library("modelr")  # Funciones de modelado compatibles con pipes
+library("openssl") # Trabaja con certificados y encriptación SSL
+library("readr")   # Traducción (pharsing) de archivos a una tibble 
+library("readxl")  # Permite leer archivos de Excel
+library("tibble")  # Dataframes del Siglo 21 (moderniza sintaxis)
+
+# Paquetes para manejo de gaps y outliers en la data
+library("missRanger") # Permite completar data incompleta (gaps)
+library("outForest")  # Detección y reemplazo de outliers y gaps
+library("OutlierDetection") # Detección avanzada de outliers
+```
+
+# manipulación de data
+
+```{r}
+library(tidyverse)
+
+#bg: Background.
+replicates   = 3
+bg_proteins  = 3000           #Background proteins. 
+log2_mean_bg = 27             #Background mean.
+log2_sd_bg   = 2              #Background standard deviation.
+
+bg_reps_by_prot             <- rep((2*replicates), bg_proteins)
+bg_all_3000_prots_by_6_reps <- rep(1:bg_proteins,bg_reps_by_prot)                   
+bg_distrib_all_samples      <- rnorm(2*replicates*bg_proteins, mean = log2_mean_bg, sd = log2_sd_bg) 
+
+
+sim_null <- data_frame(
+  name  = paste0("bg_", bg_all_3000_prots_by_6_reps),
+  ID    = bg_all_3000_prots_by_6_reps,
+  var   = rep(c("control_1", "control_2", "control_3", "treatment_1","treatment_2","treatment_3"), bg_proteins), 
+  val   = 2^bg_distrib_all_samples)
+
+# Histogram overlaid with kernel density curve
+ggplot(as.data.frame(bg_distrib_all_samples), aes(x=bg_distrib_all_samples)) +  geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                   binwidth=.5, colour="black", fill="white") +
+    geom_density(alpha=.2, fill="#FF6666")  # Overlay with transparent density plot
+```
+
+```{r}
+ggplot(sim_null, aes(x=val)) +     geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                   binwidth=.5, colour="black", fill="white") +
+    geom_density(alpha=.2, fill="#FF6666")  # Overlay with transparent density plot
+```
+
+# Diferencial
+
+```{r paged.print=TRUE}
+DE_proteins            = 300
+log2_mean_DE_control   = 25
+log2_mean_DE_treatment = 30
+log2_sd_DE             = 2
+
+
+
+DE_reps_by_prot              <- rep(replicates,    DE_proteins)
+DE_all_3000_prots_by_6_reps  <- rep(1:DE_proteins, DE_reps_by_prot) # TODO: arreglar problema de generación de distribuciones con media del tratamiento >= control
+# DE_all_3000_prots_by_3_reps
+DE_distrib_control_samples   <- rnorm(replicates*DE_proteins, mean = log2_mean_DE_control, sd = log2_sd_DE)
+DE_distrib_treatment_samples <- rnorm(replicates*DE_proteins, mean = log2_mean_DE_treatment, sd = log2_sd_DE)
+
+sim_diff <- rbind(
+  
+  data_frame(
+    name = paste0("DE_", DE_all_3000_prots_by_6_reps),
+    ID   = rep(  (bg_proteins+1):(bg_proteins+DE_proteins),  DE_reps_by_prot),
+    var  = rep(c("control_1", "control_2", "control_3"), DE_proteins), 
+    val  = 2^DE_distrib_control_samples),
+  
+  data_frame(
+    name = paste0("DE_", DE_all_3000_prots_by_6_reps),
+    ID = rep((bg_proteins+1):(bg_proteins+DE_proteins), DE_reps_by_prot),
+    var = rep(c("treatment_1", "treatment_2", "treatment_3"), DE_proteins),
+    val = 2^DE_distrib_treatment_samples))
+
+
+rbind(sim_null, sim_diff) # TODO: genera tabla super larga
+
+rbind(sim_null, sim_diff) %>% tail()
+```
+
+
+
+```{r paged.print=TRUE}
+# Combine null and DE data
+# Funciones tradicionales de R
+sim <- rbind(sim_null, sim_diff) %>% # Esparcir cosa
+             spread(key = var,       # Key es columna var
+                    value = val) %>% # Value es columna val
+             arrange(ID)             # Ordena por el ID
+
+sim %>% tail() # Muestra 
+
+# Operación inversa
+# Sirve para funciones de visualización de datos
+
+sim %>% gather(key = "var",     # Asigna var como Key
+               value = "val",   # Asigna val como Value
+               -name,           # Elimina columna "name"
+               -ID) -> antisim  # Elimina colmna "ID"
+
+antisim %>% tail()
+
+# TODO: hacer un grafico de muestra?
+
+```
+
+```{r paged.print=TRUE}
+# Con funciones nuevas:
+sim <-  rbind(sim_null, sim_diff) %>% 
+        # Pivot_wider es el nuevo spread()
+        pivot_wider(names_from = var, # spread
+                    values_from = val) %>% 
+        arrange(ID) # Ordena por ID
+
+
+sim %>% pivot_longer(cols = !c(name,ID), # No usar name, ID
+                     names_to = "var",
+                     values_to = "val")
+```
+
+# Valores faltantes
+
+## Mising At Random (Blancos aleatorios)
+
+Faltan datos en un patron aleatorio, como podria ser causado por problemas de mediciones por el equipo.
+
+```{r}
+# Generate a MAR matrix
+MAR_fraction = 0.05 # Probabilidad de dato faltante 5%
+
+# Creamos una matriz del mismo tamaí±o que la que estabamos usando
+# Para hacer un screen de dato/no-dato
+MAR_matrix <- matrix(data = sample(c(TRUE, FALSE),
+                            size = 2*replicates*(bg_proteins+DE_proteins), 
+                            replace = TRUE, 
+                            prob = c(MAR_fraction, 1-MAR_fraction)), 
+                            # Check de probabilidades?
+                     nrow = bg_proteins+DE_proteins, 
+                     ncol = 2*replicates)
+
+# Introduce missing values at random (MAR)
+controls   <- grep("control", colnames(sim))
+treatments <- grep("treatment", colnames(sim))
+sim[, c(controls, treatments)][MAR_matrix] <- NA
+
+```
+
+## Missing Not At Random
+
+Faltan datos en un patron definido, como podria ser causado por problemas de mediciones en una condición experimental.
+
+```{r}
+# Introduce missing values not at random (MNAR)
+MNAR_proteins = 100
+DE_protein_IDs <- grep("DE", sim$name) # TODO: corregir posiciones
+DE_first_100   <- DE_protein_IDs[1:MNAR_proteins]
+sim[DE_first_100, controls] <- NA
+
+
+sim %>% slice_sample(n=100) # Hace una muestra de 100 datos
+```
+
+# Outliers
+
+Son datos fuera de tres desviaciones estandar. 
+Comunmente se eliminan, porque su probabilidad es similar o inferior a la de un error de medición. 
+
+```{r paged.print=TRUE}
+select_if(sim, is.numeric)
+
+sim[,-c(1,2)]
+
+sim %>%select(starts_with(c("tr",'co'))) -> only.my.numeric.data
+
+only.my.numeric.data.with.outliers <- generateOutliers(only.my.numeric.data) %>% abs()
+
+# TODO: si le pongo select_if con is,control sirve?
+
+
+```
+
+```{r}
+is.na(only.my.numeric.data.with.outliers)  %>% colSums # TODO: corregir esta [LISTO]
+summary(sim)
+```
+
+# Corrección de Outliers
+
+```{r}
+# TODO: nuevas lineas de codigo
+cbind(sim[,c(1,2)],only.my.numeric.data.with.outliers) -> sim.final
+# TODO: falta desde "library(mice)" en adelante
+
+library(mice)
+imputed_data <- mice(sim, 
+                     m=5,           # minimo 5 iteraciones
+                     maxit=50,      # maximo 50 iteraciones
+                     method = 'rf', # Usa random forest
+                     seed=500)      # hcae algo?
+
+my.raw.data <- mice::complete(imputed_data)
+my.raw.data
+
+# TODO: Podrían especificar, por favor, cuando se hace la corrección de los NA ramdom, que es lo que específicamente hace. Me refiero a sí elimina el dato o lo reemplaza por un valor.
+
+```
+
+
+```{r}
+my.raw.data %>%select(starts_with(c("tr",'co'))) -> only.my.numeric.data.with.outliers # TODO: my.raw.data no encontrado
+
+out <- outForest(only.my.numeric.data.with.outliers, splitrule = "extratrees", 
+                 num.trees = 50, verbose = 0) 
+
+outliers(out)
+
+# Checks
+summary(out)
+glimpse(out)
+```
+
+# Cosa del final
+
+```{r Insersión columna de Fold-change, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+sim.without.outliers %>% mutate(treatment = rowMeans(select(., starts_with("treat")))) %>% mutate(control = rowMeans(select(., starts_with("control")))) %>%
+    mutate(log2Ratio = log2(.[['treatment']] / .[['control']])) -> A
+
+library(trqwe)
+
+B.names <- c('treatment.B_1', 'treatment.B_2', 'treatment.B_3',  'treatment.B_mean')
+C.names <- c('treatment.C_1', 'treatment.C_2', 'treatment.C_3',  'treatment.C_mean')
+D.names <- c('treatment.D_1', 'treatment.D_2', 'treatment.D_3',  'treatment.D_mean')
+E.names <- c('treatment.E_1', 'treatment.E_2', 'treatment.E_3',  'treatment.E_mean')
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(2 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat")))) %>% 
+  trqwe::set_colnames(B.names) -> B
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(5 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat"))))%>% 
+  trqwe::set_colnames(C.names) -> C
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(.5 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat"))))%>% 
+  trqwe::set_colnames(D.names) -> D
+
+my.raw.data %>% select(starts_with("treat")) %>% "*"(.2 ) %>%mutate(treatment = rowMeans(select(., starts_with("treat"))))%>% 
+  trqwe::set_colnames(E.names) -> E
+
+cbind(A,B,C,D,E) %>%
+    mutate(log2Ratio.B = log2(.[['treatment.B_mean']] / .[['control']])) %>%
+    mutate(log2Ratio.C = log2(.[['treatment.C_mean']] / .[['control']])) %>%
+    mutate(log2Ratio.D = log2(.[['treatment.D_mean']] / .[['control']])) %>%
+    mutate(log2Ratio.E = log2(.[['treatment.E_mean']] / .[['control']])) %>% select(starts_with(c('na','log'))) -> log2Ratio_matrix
+
+log2Ratio_matrix
+
+```
+<!-- # pendiente escritura de cartepas y exploracion de directorios.-->

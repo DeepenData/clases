@@ -13,3 +13,4 @@ Aquí están ordenadas cronológicamente.
 [03 - ANTIGUA - Meta-análisis y Clustering](https://rpubs.com/DeepenData/r03_meta-analisis_clustering) <!-- Clases de 2020-06-04 -->  
 [04 - Importación y escritura de datos; Introducción a paquetes de ómicas](https://rpubs.com/DeepenData/r04_importacion_escritura)  <!-- Clases de 2020-09-24 -->  
 [05 - Creación, manejo y transformación de estructuras de datos](https://rpubs.com/DeepenData/r05_manipulacion_estructuras_datos)  <!-- Clase de 2020-10-01 -->  
+[06 - Columnas con _mutate_, _pipes_ y expresiones regulares (_regex_)](https://rpubs.com/DeepenData/r06_mutante_pipes_regex)  <!-- Clase de 2020-10-08 -->

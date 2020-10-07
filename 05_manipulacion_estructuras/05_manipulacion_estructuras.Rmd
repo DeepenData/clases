@@ -5,11 +5,14 @@ output:
     df_print: paged
 ---
 
-# Titulo 1
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8Q2CvLkStOY?start=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Estructura de datos y diagrama
+# Manipulación de data
 
+## Librerias a utilizar
 
+Utilizamos principalmente la colección de paquetes incluida en **Tidyverse**, los cuales cuentan con utilidades para ayudar a limpiar y reestructurar data. 
+Adicionalmente, usamos paquetes _machine learning_ para reparar outliers y graps en la data, manteniendo la estructura general de esta.
 
 ```{r Instala paquetes necesarios, eval=FALSE}
 # No correr este chunk a menos que el subsiguiente falle
@@ -67,16 +70,25 @@ library("outForest")  # Detección y reemplazo de outliers y gaps
 library("OutlierDetection") # Detección avanzada de outliers
 ```
 
-# manipulación de data
+## Generación de los datos
+
+<!--### Estructuras de datos-->
+
+### Datos de fondo
+
+Como ejemplo, trabajaremos con datos por triplicado de un experimento de proteómica. 
+Estos datos son generados por R en una distribución normal para 3000 "proteínas" (identificadores unicos) con tres valores numericos (triplicados) similares.
+Estructuras parecidas se encuentran en datasets poblacionales, mediciones de temperatura en una region (los triplicados podrian ser estaciones meteorologicas cercanas), analiticas de una campaña publicitaria, etc. 
 
 ```{r}
 library(tidyverse)
 
+replicates   = 3             # Replicas del experimento (triplicado)
+
 #bg: Background.
-replicates   = 3
-bg_proteins  = 3000           #Background proteins. 
-log2_mean_bg = 27             #Background mean.
-log2_sd_bg   = 2              #Background standard deviation.
+bg_proteins  = 3000          # Proteínas de fondo que no cambian
+log2_mean_bg = 27            # Promedio para proteínas del fondo
+log2_sd_bg   = 2             # Desviación estandar para p. fondo
 
 bg_reps_by_prot             <- rep((2*replicates), bg_proteins)
 bg_all_3000_prots_by_6_reps <- rep(1:bg_proteins,bg_reps_by_prot)                   
@@ -101,15 +113,17 @@ ggplot(sim_null, aes(x=val)) +     geom_histogram(aes(y=..density..),      # His
     geom_density(alpha=.2, fill="#FF6666")  # Overlay with transparent density plot
 ```
 
-# Diferencial
+### Datos diferenciales
+
+Entre los datos del control y el tratamiento, existe una subpoblación que se comporta distinto al _background_, 
+que en este ejemplo denominamos _diferentially expressed_. 
+En este caso, diremos 300 proteínas, un 9% del total. 
 
 ```{r paged.print=TRUE}
-DE_proteins            = 300
-log2_mean_DE_control   = 25
-log2_mean_DE_treatment = 30
-log2_sd_DE             = 2
-
-
+DE_proteins            = 300 # Proteínas diferencialmente expresadas
+log2_mean_DE_control   = 25  # Promedio para estas en el grupo CONTROL
+log2_mean_DE_treatment = 30  # Promedio para estas en el grupo TRATADO
+log2_sd_DE             = 2   # Desviación estandar en ambos grupos
 
 DE_reps_by_prot              <- rep(replicates,    DE_proteins)
 DE_all_3000_prots_by_6_reps  <- rep(1:DE_proteins, DE_reps_by_prot) # TODO: arreglar problema de generación de distribuciones con media del tratamiento >= control
@@ -129,15 +143,21 @@ sim_diff <- rbind(
     name = paste0("DE_", DE_all_3000_prots_by_6_reps),
     ID = rep((bg_proteins+1):(bg_proteins+DE_proteins), DE_reps_by_prot),
     var = rep(c("treatment_1", "treatment_2", "treatment_3"), DE_proteins),
-    val = 2^DE_distrib_treatment_samples))
-
+    val = 2^DE_distrib_treatment_samples)
+    
+    )
 
 rbind(sim_null, sim_diff) # TODO: genera tabla super larga
 
 rbind(sim_null, sim_diff) %>% tail()
 ```
+### Manipulando estructuras para graficos y resumenes
 
+Varias librerias de R, principalmente las librerias de graficos como ggPlot, requieren que la data este estructurada de cierta forma para funcionar, 
+o puede ser necesario consolidar data de multiples objetos en uno solo. 
+Para eso podemos alterar la forma de las tablas, o manipular las columnas para crear resumentes, promedios, etc. 
 
+Existen funciones que hacen esto en R
 
 ```{r paged.print=TRUE}
 # Combine null and DE data
@@ -158,10 +178,9 @@ sim %>% gather(key = "var",     # Asigna var como Key
                -ID) -> antisim  # Elimina colmna "ID"
 
 antisim %>% tail()
-
-# TODO: hacer un grafico de muestra?
-
 ```
+
+Y funciones nuevas que tienen a ser más rapidas o idiomaticas (se leen más bonitas)
 
 ```{r paged.print=TRUE}
 # Con funciones nuevas:
@@ -178,6 +197,10 @@ sim %>% pivot_longer(cols = !c(name,ID), # No usar name, ID
 ```
 
 # Valores faltantes
+
+Por diversos motivos, un dataset puede tener gaps, o espacios, donde faltan datos. 
+Si son datos simples de pocas dimensiones, estos se pueden inferir por la forma general del set. 
+Si son datos complejos y multidimensionales, y no se comportan de forma uniforme, rellenarlos puede ser más complejo.
 
 ## Mising At Random (Blancos aleatorios)
 
@@ -201,7 +224,6 @@ MAR_matrix <- matrix(data = sample(c(TRUE, FALSE),
 controls   <- grep("control", colnames(sim))
 treatments <- grep("treatment", colnames(sim))
 sim[, c(controls, treatments)][MAR_matrix] <- NA
-
 ```
 
 ## Missing Not At Random
@@ -215,13 +237,16 @@ DE_protein_IDs <- grep("DE", sim$name) # TODO: corregir posiciones
 DE_first_100   <- DE_protein_IDs[1:MNAR_proteins]
 sim[DE_first_100, controls] <- NA
 
-
 sim %>% slice_sample(n=100) # Hace una muestra de 100 datos
 ```
 
+<!-- TODO: parte de la corrección de gaps de datos -->
+
 # Outliers
 
-Son datos fuera de tres desviaciones estandar. 
+Tambien tenemos datos que no parecen pertenecer al experimento o muestra que tenemos. 
+Estos _outliers_ comunmente se definen como datos fuera de tres desviaciones estandar, 
+pero la definición queda a criterio estadistico de quien hace el analisis. 
 Comunmente se eliminan, porque su probabilidad es similar o inferior a la de un error de medición. 
 
 ```{r paged.print=TRUE}
@@ -234,16 +259,14 @@ sim %>%select(starts_with(c("tr",'co'))) -> only.my.numeric.data
 only.my.numeric.data.with.outliers <- generateOutliers(only.my.numeric.data) %>% abs()
 
 # TODO: si le pongo select_if con is,control sirve?
-
-
 ```
 
 ```{r}
-is.na(only.my.numeric.data.with.outliers)  %>% colSums # TODO: corregir esta [LISTO]
+is.na(only.my.numeric.data.with.outliers)  %>% colSums
 summary(sim)
 ```
 
-# Corrección de Outliers
+##  Corrección de Outliers
 
 ```{r}
 # TODO: nuevas lineas de codigo
@@ -255,15 +278,13 @@ imputed_data <- mice(sim,
                      m=5,           # minimo 5 iteraciones
                      maxit=50,      # maximo 50 iteraciones
                      method = 'rf', # Usa random forest
-                     seed=500)      # hcae algo?
+                     seed=500)      
 
 my.raw.data <- mice::complete(imputed_data)
 my.raw.data
 
 # TODO: Podrían especificar, por favor, cuando se hace la corrección de los NA ramdom, que es lo que específicamente hace. Me refiero a sí elimina el dato o lo reemplaza por un valor.
-
 ```
-
 
 ```{r}
 my.raw.data %>%select(starts_with(c("tr",'co'))) -> only.my.numeric.data.with.outliers # TODO: my.raw.data no encontrado
@@ -278,11 +299,9 @@ summary(out)
 glimpse(out)
 ```
 
-# Cosa del final
+# Renombrar: Cosa del final
 
 ```{r Insersión columna de Fold-change, echo=TRUE, message=FALSE, warning=FALSE}
-
-
 sim.without.outliers %>% mutate(treatment = rowMeans(select(., starts_with("treat")))) %>% mutate(control = rowMeans(select(., starts_with("control")))) %>%
     mutate(log2Ratio = log2(.[['treatment']] / .[['control']])) -> A
 

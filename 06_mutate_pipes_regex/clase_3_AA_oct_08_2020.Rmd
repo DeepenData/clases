@@ -25,7 +25,23 @@ Por ejemplo, sacando el promedio de dos variables u operaciones similares.
 # Importando datos de un CSV
 data.location <- 'https://raw.githubusercontent.com/DeepenData/clases/master/06_mutate_pipes_regex/data_oct_08_2020.csv' # Reemplazar por dirección local si bajan el archivo
 sim.without.outliers <- read_csv(data.location) # Importa la data a "sim.without.outliers"
+```
 
+- ``sim.without.outliers$1``
+- ``sim.without.outliers[1]``
+- ``sim.without.outliers[ ,c(1,6)]``
+- ``sim.without.outliers[ ,-c(1,6)]``
+- ``sim.without.outliers[ ,c(2:6)]``
+- ``sim.without.outliers[c(10:110) ,c(2:6)]`` Saca las filas 10 a 110 (100 en total) de las columnas 2 a 6
+
+- ``sim.without.outliers[[1]]`` Sacamos la columna 1 como vector
+
+<!--
+# TODO:
+Objeto$columna <- NULL # Eso crea una columna llena de NULL o elimina la columna?
+-->
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Modificando la tabla con mutate() para calcular el Fold-change (log2/log2)
 sim.without.outliers %>% # Tirando data por la cañeria 
   # Hace un promedio de las columnas TREAT(MENT)
@@ -116,18 +132,18 @@ final.data.with.terms.nas %>% filter(`log2Ratio A` < 0 & `log2Ratio B` < 0 & `lo
 
 final.data.with.terms.nas %>% .[['name']] %>% str_detect('DE') %>% which
 
-final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d$') %>%  .[!is.na(.)]
-final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d+') %>% .[!is.na(.)] 
+final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d$')  %>% .[!is.na(.)]
+final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d+')  %>% .[!is.na(.)] 
 final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d.+') %>% .[!is.na(.)]
 final.data.with.terms.nas %>% .[['terms.col']] %>% str_extract('^s.*m') %>% na.exclude() %>% sample(10)
 final.data.with.terms.nas %>% .[['terms.col']] %>% str_replace('subsystem','comparment') %>% na.exclude() %>% sample(10)
 ```
 
-```{r}
+```{r paged.print=TRUE}
 final.data.with.terms.nas %>% filter(str_detect(name, regex('de.*', ignore_case = T)) & str_detect(terms.col, regex('B.*A', ignore_case = F)))
 ```
 
-```{r}
+```{r paged.print=TRUE}
 final.data.with.terms.nas %>% filter(str_detect(name, regex('de.*', ignore_case = T)) & str_detect(terms.col, regex('\\d.\\d', ignore_case = F)) & `log2Ratio C` <0) %>% select(matches('log|name|term')) 
 ```
 

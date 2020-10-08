@@ -40,7 +40,17 @@ sim.without.outliers %>% # Tirando data por la cañeria
             funs(paste0(., ' A'))) # Identificador " A" al final de cada columna
             # TODO: sugiero eliminar " A" de aqui y dejarlo solo en la función más abajo
 
-# Creamos funciones personalizadas
+# Creamos funciones personalizadas para reutilizar codigo
+
+# Fold-change definida como función
+generate_mean_log2Ratio <- function(x, a.letter) 
+  {x %>% # Toma la entrada "x
+    mutate(`Mean treatment` = rowMeans(select(., starts_with("treat")))) %>%  # Promedio Tratamiento
+    mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%  # Promedio Control
+    mutate(log2Ratio = log2(.[['Mean treatment']] / .[['Mean control']])) %>% # Fold-change
+    rename_at(vars(matches('^treat|^contr|^mean|log2', ignore.case = TRUE)),  # No hace nada?
+              funs(paste0(., a.letter)))}
+
 # Aumenta por el cambio +- fracción del cambio. Es decir 3 +- 0.3 (2.7-3.3)
 an.increase             <- function(x,change=3,fraction=.1) 
 {runif(1, 
@@ -53,20 +63,10 @@ a.decrase               <- function(x,change=.2,fraction=.1)
        min= (change*x - fraction*(change*x )),
        max=(change*x + fraction*(change*x )))}
 
-# TODO: sugiero meter esto más arriba de las an.increase y a.decrease, junto al ejemplo
-# Repite la creación de fold-change que hicimos y lo hace función
-generate_mean_log2Ratio <- function(x, a.letter) 
-  {x %>% # Toma la entrada "x
-    mutate(`Mean treatment` = rowMeans(select(., starts_with("treat")))) %>%  # Promedio Tratamiento
-    mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%  # Promedio Control
-    mutate(log2Ratio = log2(.[['Mean treatment']] / .[['Mean control']])) %>% # Fold-change
-    rename_at(vars(matches('^treat|^contr|^mean|log2', ignore.case = TRUE)),  # No hace nada?
-              funs(paste0(., a.letter)))}
-
-
 # Mutate(across(...)) modifica multiples columnas con la función que le demos
+# en este caso, las que acabamos de definir
 
-# TODO: esto repite lo de arriba, pero creo que queda más claro con los A,B,C de una
+# Generando un sets para correlaciones 
 sim.without.outliers %>% 
   generate_mean_log2Ratio(' A') -> A # Calcula el fold-change inicial
 
@@ -77,7 +77,6 @@ sim.without.outliers %>%
 sim.without.outliers %>% 
   mutate(across(starts_with("treatment"), a.decrase)) %>% 
   generate_mean_log2Ratio(' C') -> C # Fold-change disminuye -3.3 - -1.7 veces
-
 
 # Creando el dataset final
 cbind(A, # Parte con la data A
@@ -92,7 +91,9 @@ final.data %$% cor(`log2Ratio A`,`log2Ratio B`) # Correlación entre A y B
 final.data %$% cbind(`log2Ratio A`, `log2Ratio B`, `log2Ratio C`) %>% colSums -> my.col.sum
 my.col.sum %>%  subset(.>0) -> my.col.sum
 my.col.sum %<>% subset(.>0)
-final.data %>% select(matches('log2')) %T>% plot() %>% select(matches('B|C')) -> my.cols
+
+final.data %>% select(matches('log2')) %T>% plot() %>% # %T% permite sacar "muestras" del pipe
+select(matches('B|C')) -> my.cols
 ```
 
 

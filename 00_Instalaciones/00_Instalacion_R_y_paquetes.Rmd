@@ -32,6 +32,7 @@ install.packages("modelr")     # Funciones de modelado compatibles con pipes
 install.packages("openssl")    # Trabaja con certificados y encriptación SSL
 install.packages("readr")      # Traducción (pharsing) de archivos a una tibble 
 install.packages("readxl")     # Permite leer archivos de Excel
+install.packages("stringr")    # Operadores consistentes para strings
 install.packages("tibble")     # Dataframes del Siglo 21 (moderniza sintaxis)
 
 install.packages("gapminder")  # data de Gapminder
@@ -135,9 +136,9 @@ writeLines('PATH="${RTOOLS40_HOME}\\usr\\bin;${PATH}"', con = "~/.Renviron")
 Sys.which("make") # la salida deberia ser "C:\\rtools40\\usr\\bin\\make.exe"
 ```
 
-
+<!--
 # Instalación de R(Studio) en Debian/Ubuntu
-<!-- Esto existe porque el Install de Kevin tenia problemas de versión de R (3.4) -->
+ Esto existe porque el Install de Kevin tenia problemas de versión de R (3.4)
 
 
 
@@ -145,7 +146,7 @@ Sys.which("make") # la salida deberia ser "C:\\rtools40\\usr\\bin\\make.exe"
 sudo apt clean 
 ```
 
-<!--
+
 # Instalación de R(Studio) como contenedor en Docker
 
 Supongo que esto es como correr un Flatpak, pero con OS incorporado :/

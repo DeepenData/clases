@@ -8,9 +8,9 @@ Las clases del curso estan publicadas como cuadernos bajo la cuenta de DeepenDat
 Aquí están ordenadas cronológicamente. 
 
 [00 - Instalación de Paquetes para R y RStudio ❗](https://rpubs.com/DeepenData/r00-instalacion-paquetes)  
-[01 - ANTIGUA - Introducción a R, cuadernos, y Dataframes](https://rpubs.com/DeepenData/r01-introduccion-dataframes)  <!-- Clases de 2020-05-28 -->  
-[02 - ANTIGUA - Recolección de datos RNA-seq, SQL y expresión diferencial](https://rpubs.com/DeepenData/r02-RNAseq_SQL_expresion_diferencial) <!-- Clases de 2020-06-01 -->  
-[03 - ANTIGUA - Meta-análisis y Clustering](https://rpubs.com/DeepenData/r03_meta-analisis_clustering) <!-- Clases de 2020-06-04 -->  
-[04 - Importación y escritura de datos; Introducción a paquetes de ómicas](https://rpubs.com/DeepenData/r04_importacion_escritura)  <!-- Clases de 2020-09-24 -->  
-[05 - Creación, manejo y transformación de estructuras de datos](https://rpubs.com/DeepenData/r05_manipulacion_estructuras_datos)  <!-- Clase de 2020-10-01 -->  
-[06 - Columnas con _mutate_, _pipes_ y expresiones regulares (_regex_)](https://rpubs.com/DeepenData/r06_mutante_pipes_regex)  <!-- Clase de 2020-10-08 -->
+[01 - ANTIGUA - Introducción a R, cuadernos, y Dataframes](https://rpubs.com/DeepenData/r01-introduccion-dataframes) - [Video]() <!-- Clases de 2020-05-28 -->  
+[02 - ANTIGUA - Recolección de datos RNA-seq, SQL y expresión diferencial](https://rpubs.com/DeepenData/r02-RNAseq_SQL_expresion_diferencial) - [Video]() <!-- Clases de 2020-06-01 -->  
+[03 - ANTIGUA - Meta-análisis y Clustering](https://rpubs.com/DeepenData/r03_meta-analisis_clustering) - [Video]() <!-- Clases de 2020-06-04 -->  
+[04 - Importación y escritura de datos; Introducción a paquetes de ómicas](https://rpubs.com/DeepenData/r04_importacion_escritura) - [Video]()  <!-- Clases de 2020-09-24 -->  
+[05 - Creación, manejo y transformación de estructuras de datos](https://rpubs.com/DeepenData/r05_manipulacion_estructuras_datos) - [Video]()  <!-- Clase de 2020-10-01 -->  
+[06 - Columnas con _mutate_, _pipes_ y expresiones regulares (_regex_)](https://rpubs.com/DeepenData/r06_clase_08_oct_2020_mutante_pipes_regex) - [Video]() <!-- Clase de 2020-10-08 -->  

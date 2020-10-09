@@ -1,12 +1,16 @@
-# En el knit de los cuadernos
+# Ambiente y desarrollo de cuadernos
 .ipynb_checkpoints
-
-# Variables del ambiente
 .RData
-
-# Desarrollo
 .Rhistory
 
-# Estos son los archivos de sincronización con R-Pubs
+# Versiones alpha
+**/*AA*.Rmd
+**/*AA*.html
+**/*MM*.Rmd
+**/*MM*.html
+
+# Archivos de sincronización con R-Pubs
 /rsconnect
+
+# Archivos varios
 06_mutate_pipes_regex/pipes.drawio.svg

@@ -1,7 +1,7 @@
 # Ambiente y desarrollo de cuadernos
-.ipynb_checkpoints
-.RData
-.Rhistory
+*.ipynb_checkpoints
+*.RData
+*.Rhistory
 
 # Versiones alpha
 **/*AA*.Rmd
@@ -10,7 +10,8 @@
 **/*MM*.html
 
 # Archivos de sincronización con R-Pubs
-/rsconnect
+**/rsconnect
+*.dcf
 
 # Archivos varios
 06_mutate_pipes_regex/pipes.drawio.svg

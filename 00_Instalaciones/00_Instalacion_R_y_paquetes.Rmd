@@ -9,6 +9,10 @@ La guía asume que ya tienen RStudio. La sección para instalar R y RStudio en v
 
 # Paquetes que vamos a utilizar
 
+[**Script de instalación de paquetes**](https://github.com/DeepenData/clases/blob/master/00_Instalaciones/paquetes_autoinstall.r), 
+actualizado a 2020-10-11. 
+Detalles, instrucciones, y troubleshooting escritos más abajo.
+
 ## Paquetes de CRAN
 
 CRAN (_Comprehensive R Archive Network_) es el repositorio principal de R, con más de 16,000 paquetes disponibles en multiples ambitos de analisis de datos, ciencias (astronomia, biología, matematica, sociología, etc.) y economía<!-- está así a proposito -->. De aqui instalamos:
@@ -118,14 +122,14 @@ Este se instala y maneja desde la consola de comandos PowerShell.
 1. Abrir **Powershell como administrador** (para que pueda instalar programas)
 2. Ejecutar el comando `Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`. Esto instala Chocolatey.
 3. Ejecutar el comando `choco install r R.Studio --yes`. Esto instala R y RStudio.
-4. 🎉
+4. 🎉 (Instalación lista!)
 
 ## Instalando R-tools
 
 Ciertos paquetes estan escritos en C/C++ por motivos de rendimiento, por lo que Windows requiere un compilador C para instalarlos.
 En R, este se suple por R-tools, distribuido en forma de un instalador ejecutable (desafortunadamente no en Chocolatey). 
 
-**[R-tools (64bit & 32bit)](https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe)** 
+[**R-tools (64bit & 32bit)**](https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe) 
 o para sistemas antiguos de 
 [32bit](https://cran.r-project.org/bin/windows/Rtools/rtools40-i686.exe)
 

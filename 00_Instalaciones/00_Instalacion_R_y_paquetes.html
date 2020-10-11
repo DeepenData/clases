@@ -1640,17 +1640,30 @@ summary {
 <p>La guía asume que ya tienen RStudio. La sección para instalar R y RStudio en varios sistemas se encuentra más abajo.</p>
 <div id="paquetes-que-vamos-a-utilizar" class="section level1">
 <h1>Paquetes que vamos a utilizar</h1>
+<p><a href="https://github.com/DeepenData/clases/blob/master/00_Instalaciones/paquetes_autoinstall.r"><strong>Script de instalación de paquetes</strong></a>, actualizado a 2020-10-11. Detalles, instrucciones, y troubleshooting escritos más abajo.</p>
 <div id="paquetes-de-cran" class="section level2">
 <h2>Paquetes de CRAN</h2>
 <p>CRAN (<em>Comprehensive R Archive Network</em>) es el repositorio principal de R, con más de 16,000 paquetes disponibles en multiples ambitos de analisis de datos, ciencias (astronomia, biología, matematica, sociología, etc.) y economía<!-- está así a proposito -->. De aqui instalamos:</p>
-<pre class="r"><code>install.packages(&quot;tidyverse&quot;)  # Set de paquetes que hacen muchas cosas
+<pre class="r"><code>options(install.packages.check.source = &quot;yes&quot;) # Chequea la fuente de los paquetes
+
+install.packages(&quot;devtools&quot;)   # Utilidades de manejo de archivos, descargas, etc.
+install.packages(&quot;tidyverse&quot;)  # Set de paquetes que hacen muchas cosas
                                # Analisis no lineal, manipulación de texto, etc...
 
 # Paquetes que deberian estar incluidos en Tidyverse
-install.packages(&quot;readr&quot;)      # Traducción (pharsing) de archivos a una tibble
-install.packages(&quot;tibble&quot;)     # Dataframes del Siglo 21 (moderniza sintaxis)
+install.packages(&quot;broom&quot;)      # Convierte objetos de R a Tibbles, como &quot;readr&quot;
+install.packages(&quot;dbplyr&quot;)     # Manipulación de bases de datps (eg. SQL)
+install.packages(&quot;dplyr&quot;)      # Manipulación de datos mediante gramatica propia
+install.packages(&quot;fs&quot;)         # Operaciones agnosticas de sistemas de archivos
+install.packages(&quot;haven&quot;)      # Trabaja con archivos SPSS, Stata y SAS
+install.packages(&quot;httr&quot;)       # Herramientas del protocolo HTTP, como GET, etc...
 install.packages(&quot;magrittr&quot;)   # Operadores cañeria (pipes) %&gt;%
+install.packages(&quot;modelr&quot;)     # Funciones de modelado compatibles con pipes
+install.packages(&quot;openssl&quot;)    # Trabaja con certificados y encriptación SSL
+install.packages(&quot;readr&quot;)      # Traducción (pharsing) de archivos a una tibble 
 install.packages(&quot;readxl&quot;)     # Permite leer archivos de Excel
+install.packages(&quot;stringr&quot;)    # Operadores consistentes para strings
+install.packages(&quot;tibble&quot;)     # Dataframes del Siglo 21 (moderniza sintaxis)
 
 install.packages(&quot;gapminder&quot;)  # data de Gapminder
 install.packages(&quot;gifski&quot;)     # encoding de GIFs
@@ -1665,7 +1678,13 @@ install.packages(&quot;ggpubr&quot;)     # ggplot simplificado para publicacione
 install.packages(&quot;gganimate&quot;)  # graficos animados
 install.packages(&quot;ggmuller&quot;)   # diagrama de evolucionarios Muller
 install.packages(&quot;autoplotly&quot;) # visualizaciones interactivas
-install.packages(&quot;gridExtra&quot;)  # extensión de grid, para la creación de figuras</code></pre>
+install.packages(&quot;gridExtra&quot;)  # extensión de grid, para la creación de figuras
+
+# Paqutes para completación de datos
+install.packages(&quot;missRanger&quot;) # Permite completar data incompleta (gaps)
+install.packages(&quot;outForest&quot;)  # Detección y reemplazo de outliers y gaps
+install.packages(&quot;OutlierDetection&quot;) # Detección avanzada de outliers</code></pre>
+<p>Una vez instalados los paquetes, R no es necesario correr estos comandos de nuevo, solo se convocan via <code>library(PAQUETE)</code>.</p>
 <blockquote>
 <p>El repositorio funciona como una red sincronizada, y existen dos instancias en Chile: <a href="https://cran.dcc.uchile.cl/" class="uri">https://cran.dcc.uchile.cl/</a> (Departamento de Ciencias de la Computación) y <a href="https://cran.dme.ufro.cl/" class="uri">https://cran.dme.ufro.cl/</a> (Departamento de Matematicas y Estadistica). Por motivos de velocidad y para reducir carga sobre la red, es recomendable cambiar la configuración de RStudio en “Global Options / Packages / Primary CRAN Repository” y seleccionar uno de estos (asumiendo que estén en Chile).</p>
 </blockquote>
@@ -1714,21 +1733,33 @@ BiocManager::install(&quot;MSnbase&quot;, # Funciones para espectrometria de mas
 <li>Abrir <strong>Powershell como administrador</strong> (para que pueda instalar programas)</li>
 <li>Ejecutar el comando <code>Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</code>. Esto instala Chocolatey.</li>
 <li>Ejecutar el comando <code>choco install r R.Studio --yes</code>. Esto instala R y RStudio.</li>
-<li>🎉</li>
+<li>🎉 (Instalación lista!)</li>
 </ol>
 </div>
 <div id="instalando-r-tools" class="section level2">
 <h2>Instalando R-tools</h2>
 <p>Ciertos paquetes estan escritos en C/C++ por motivos de rendimiento, por lo que Windows requiere un compilador C para instalarlos. En R, este se suple por R-tools, distribuido en forma de un instalador ejecutable (desafortunadamente no en Chocolatey).</p>
-<p><strong><a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe">R-tools (64bit &amp; 32bit)</a></strong> o para sistemas antiguos de <a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-i686.exe">32bit</a></p>
+<p><a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe"><strong>R-tools (64bit &amp; 32bit)</strong></a> o para sistemas antiguos de <a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-i686.exe">32bit</a></p>
 <p>Luego, en R ejecutar</p>
 <pre class="r"><code>writeLines(&#39;PATH=&quot;${RTOOLS40_HOME}\\usr\\bin;${PATH}&quot;&#39;, con = &quot;~/.Renviron&quot;)
 Sys.which(&quot;make&quot;) # la salida deberia ser &quot;C:\\rtools40\\usr\\bin\\make.exe&quot;</code></pre>
+<!--
+# Instalación de R(Studio) en Debian/Ubuntu
+ Esto existe porque el Install de Kevin tenia problemas de versión de R (3.4)
+
+
+
+
+```bash
+sudo apt clean 
+```
+
+
+# Instalación de R(Studio) como contenedor en Docker
+
+Supongo que esto es como correr un Flatpak, pero con OS incorporado :/
+-->
 </div>
-</div>
-<div id="instalación-de-rstudio-en-debianubuntu" class="section level1">
-<h1>Instalación de R(Studio) en Debian/Ubuntu</h1>
-<!-- Esto existe porque el Install de Kevin tenia problemas de versión de R (3.4) -->
 </div>
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Tercera clase: modificación de columnas con 'mutate', operadores de tipo 'pipes', detección/extracción de patrones con expresiones regulares y guardar en formato R."
+title: "Modificación de columnas con 'mutate', operadores de tipo 'pipes', detección/extracción de patrones con expresiones regulares y guardar en formato R."
 author: "Acevedo, A. & Munoz, Manuel. U. de Chile. "
 date: "08 octubre 2020."
 output:
@@ -66,8 +66,6 @@ sim.without.outliers %>% # Tirando data por la cañeria
   mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%
   # Calcula el fold-change de TRATAMIENTO sobre CONTROL
   mutate(`log2Ratio` = log2(.[['Mean treatment']] / .[['Mean control']])) -> mutated.sim
-
-choose(mutated.sim, 10) # TODO: muestra de la cosa modificada por mutate
 ```
 
 ## Funciones personalizadas
@@ -107,7 +105,7 @@ generate_mean_log2Ratio <- function(x, a.letter){
 
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Generando sets para correlaciones 
-sim.without.outliers %>%
+sim.without.outliers %>% 
   generate_mean_log2Ratio(' A') -> A # Calcula el fold-change inicial sin cambios
 
 sim.without.outliers %>% 
@@ -115,7 +113,7 @@ sim.without.outliers %>%
   generate_mean_log2Ratio(' B') -> B # Fold-change aumenta 1.4-1.7 veces
 
 sim.without.outliers %>% 
-  mutate(across(starts_with("treatment"), a.decrase)) %>% 
+  mutate(across(starts_with("treatment"), a.decrease))  %>% 
   generate_mean_log2Ratio(' C') -> C # Fold-change disminuye -3.3 - -1.7 veces
 
 # Creando el dataset final
@@ -138,7 +136,8 @@ R no incluye pipes en base.
 - ``%T%`` una tee, que permite sacar muestras del pipeline, o derivar a otros pipes  
 
 ```{r echo=TRUE, fig.height=3, fig.width=3, message=FALSE, warning=FALSE}
-final.data %$% name
+final.data %$% name %>% 
+  head # Sin head el output es de 3300 cosas
 
 final.data %$% cor(`log2Ratio A`,`log2Ratio B`) # Correlación entre A y B
 

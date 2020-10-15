@@ -37,7 +37,7 @@ Con un dataframe como el sacado de un CSV, esto son las filas, columnas, celdas 
 Dado que un dataframe puede contener dataframes, este modo de acceso puede ir varios niveles de profundidad
 <!-- Como conspiraciones dentro de conspiraciones dentro de conspiraciones en _The X-Files_-->. 
 
-- ``sim.without.outliers$1`` id de la primera columna
+- ``sim.without.outliers$1``  saca la primera como vector
 - ``sim.without.outliers[1]`` saca la columna 1
 - ``sim.without.outliers[ ,c(1,6)]`` saca las columnas 1 y 6
 - ``sim.without.outliers[ ,c(1:6)]`` saca las columnas de 1 a 6

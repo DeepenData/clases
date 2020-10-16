@@ -1641,127 +1641,129 @@ summary {
 </div>
 
 
-<!--# Loops-->
-<pre class="r"><code>install.packages(&#39;stringi&#39;, dependencies = T, quiet = T)
-#install.packages(&#39;svMisc&#39;, dependencies = T, quiet = F)
-
-if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
-    install.packages(&quot;BiocManager&quot;, dependencies = T, quiet = T )
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ktVwhoYcYvA?start=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<pre class="r"><code># Instalaciones, si falla cargar las librerias
+install.packages(&#39;stringi&#39;, dependencies = T, quiet = T)
+install.packages(&quot;BiocManager&quot;, dependencies = T, quiet = T )
 BiocManager::install(&quot;GEOquery&quot;, checkBuilt = T, ask = F )</code></pre>
-<pre class="r"><code>largo &lt;- 60
-sample(letters, largo, replace = T) -&gt; a
-sample(1:10, largo, replace = T)    -&gt; b
+<pre class="r"><code>library(magrittr) # Operadores cañeria (pipes) %&gt;% 
+library(stringi)  # Generador de strings aletaorios</code></pre>
+<p>Definimos un objeto que usaremos para los ejemplos con loops.</p>
+<pre class="r"><code>largo &lt;- 60 # Filas en el objeto
 
-library(stringi)
+# Relleno del objeto usando funciones r{base}
+sample(letters, largo, replace = T) -&gt; a # Relleno a
+sample(1:10, largo, replace = T)    -&gt; b # Relleno b
+
+# Usando funciones de Stringi
 stri_rand_strings(largo,8, pattern = &quot;[A-B0-9t-z]&quot;) -&gt; my.rows
 stri_rand_strings(2, # Dos strings
                   4, # De largo 4 caracteres
                   pattern = &quot;[A-G]&quot; # Con las letras ABCDEFG
-                  ) -&gt; my.cols
+                  ) -&gt; my.cols # Guardado en &quot;my.cols&quot;
 
-library(magrittr)
-cbind(a,b) %&gt;% set_rownames(my.rows) %&gt;% # Los nombres de las filas se llamaran como las filas creadas arriba
-  set_colnames(my.cols) -&gt; my.mat # Los nombres de las filas se llamaran como las columnas creadas arriba
-
-# Estas funciones solo son aplicables a matrices, no a dataframes.
-# En ese caso usamos as.data.frame()
-
-my.mat</code></pre>
-<pre><code>##          CGGB CGDE
-## 6w665wuz &quot;i&quot;  &quot;5&quot; 
-## 4477z681 &quot;o&quot;  &quot;6&quot; 
-## w613w93t &quot;z&quot;  &quot;7&quot; 
-## yx7Ay525 &quot;j&quot;  &quot;10&quot;
-## 029v76Az &quot;c&quot;  &quot;3&quot; 
-## 74y32wA8 &quot;f&quot;  &quot;1&quot; 
-## 1yu7ytB0 &quot;z&quot;  &quot;1&quot; 
-## u98z5x43 &quot;n&quot;  &quot;2&quot; 
-## 6932wy8z &quot;k&quot;  &quot;1&quot; 
-## 05x15271 &quot;t&quot;  &quot;1&quot; 
-## 4113u7Bv &quot;t&quot;  &quot;6&quot; 
-## w5A70x04 &quot;q&quot;  &quot;10&quot;
-## 9v96Bu37 &quot;m&quot;  &quot;10&quot;
-## 0xwz9ty3 &quot;t&quot;  &quot;3&quot; 
-## 2vBBA0B1 &quot;f&quot;  &quot;6&quot; 
-## wwvz7195 &quot;l&quot;  &quot;3&quot; 
-## z21u4z03 &quot;x&quot;  &quot;6&quot; 
-## 64BA7yuB &quot;d&quot;  &quot;7&quot; 
-## y3w9yx5u &quot;y&quot;  &quot;5&quot; 
-## 5137B9Au &quot;k&quot;  &quot;8&quot; 
-## t0u993At &quot;d&quot;  &quot;1&quot; 
-## 930833B8 &quot;n&quot;  &quot;8&quot; 
-## tw74Bw41 &quot;y&quot;  &quot;10&quot;
-## 754w5yB0 &quot;a&quot;  &quot;1&quot; 
-## vtzyA277 &quot;w&quot;  &quot;3&quot; 
-## vx4By3zv &quot;e&quot;  &quot;10&quot;
-## wy8u8977 &quot;n&quot;  &quot;3&quot; 
-## u254yx50 &quot;n&quot;  &quot;1&quot; 
-## 56Axt91x &quot;c&quot;  &quot;3&quot; 
-## y3vw0wx7 &quot;a&quot;  &quot;3&quot; 
-## 44762z8z &quot;c&quot;  &quot;3&quot; 
-## 3u1Avv9z &quot;q&quot;  &quot;3&quot; 
-## 2tBx2A94 &quot;v&quot;  &quot;5&quot; 
-## 6zxv0t1v &quot;h&quot;  &quot;9&quot; 
-## v4uBx3tw &quot;z&quot;  &quot;3&quot; 
-## 0A2uy50y &quot;m&quot;  &quot;3&quot; 
-## uxy76890 &quot;v&quot;  &quot;2&quot; 
-## ytt4w84t &quot;d&quot;  &quot;7&quot; 
-## uBB29573 &quot;g&quot;  &quot;2&quot; 
-## u76Av204 &quot;s&quot;  &quot;8&quot; 
-## A741v8zB &quot;w&quot;  &quot;5&quot; 
-## z810u53v &quot;c&quot;  &quot;7&quot; 
-## 48w0646y &quot;o&quot;  &quot;3&quot; 
-## v9z3u1v0 &quot;p&quot;  &quot;5&quot; 
-## t9223720 &quot;o&quot;  &quot;3&quot; 
-## 171545w6 &quot;t&quot;  &quot;8&quot; 
-## 8w2v89y7 &quot;b&quot;  &quot;9&quot; 
-## 225y40t8 &quot;w&quot;  &quot;3&quot; 
-## 4uyv33Bw &quot;b&quot;  &quot;5&quot; 
-## 2uA1A0tB &quot;f&quot;  &quot;5&quot; 
-## w34z654B &quot;b&quot;  &quot;4&quot; 
-## yu1tz7v0 &quot;b&quot;  &quot;4&quot; 
-## 0429v415 &quot;a&quot;  &quot;7&quot; 
-## 3AAzyAx1 &quot;e&quot;  &quot;7&quot; 
-## xx0yy5t3 &quot;o&quot;  &quot;7&quot; 
-## 08B09yyA &quot;n&quot;  &quot;10&quot;
-## t884w04t &quot;n&quot;  &quot;8&quot; 
-## uA35xw62 &quot;d&quot;  &quot;4&quot; 
-## xzw919A9 &quot;n&quot;  &quot;5&quot; 
-## 669v0w09 &quot;p&quot;  &quot;7&quot;</code></pre>
+# Guardando el objeto a usar
+cbind(a,b) %&gt;%                    # Une rellenos a y b
+  set_rownames(my.rows) %&gt;%       # Los nombres de las filas se llamaran como las my.rows
+  set_colnames(my.cols) -&gt; my.mat # Los nombres de las columnas se llamaran como las my.cols</code></pre>
+<pre class="r"><code>my.mat # El objeto recien creado</code></pre>
+<pre><code>##          FFDB GAEB
+## t7923x4v &quot;v&quot;  &quot;10&quot;
+## tAy3939A &quot;r&quot;  &quot;7&quot; 
+## 3253ux0B &quot;y&quot;  &quot;4&quot; 
+## 12352y50 &quot;n&quot;  &quot;1&quot; 
+## v8yv3297 &quot;y&quot;  &quot;8&quot; 
+## 988B10xz &quot;x&quot;  &quot;1&quot; 
+## 5zB07660 &quot;a&quot;  &quot;10&quot;
+## 73u5vwtB &quot;x&quot;  &quot;9&quot; 
+## 4z11080B &quot;c&quot;  &quot;4&quot; 
+## 7v13y21u &quot;d&quot;  &quot;6&quot; 
+## A9t83Bxz &quot;b&quot;  &quot;5&quot; 
+## vxwBzzww &quot;o&quot;  &quot;9&quot; 
+## 15Bv04A0 &quot;n&quot;  &quot;10&quot;
+## 109850y9 &quot;o&quot;  &quot;6&quot; 
+## v2tt7w82 &quot;v&quot;  &quot;6&quot; 
+## 18Bttwtt &quot;l&quot;  &quot;8&quot; 
+## 80v9xz83 &quot;w&quot;  &quot;10&quot;
+## w8BuAzy4 &quot;y&quot;  &quot;2&quot; 
+## 2w8zx0B6 &quot;d&quot;  &quot;1&quot; 
+## 0B74t1y4 &quot;a&quot;  &quot;9&quot; 
+## v7txy9u1 &quot;w&quot;  &quot;5&quot; 
+## B24u1u2x &quot;k&quot;  &quot;7&quot; 
+## 92zv3wyu &quot;d&quot;  &quot;6&quot; 
+## 61zxA65A &quot;j&quot;  &quot;7&quot; 
+## y3zuyz47 &quot;z&quot;  &quot;7&quot; 
+## 128503w6 &quot;x&quot;  &quot;7&quot; 
+## y03w3x6w &quot;k&quot;  &quot;5&quot; 
+## Bwz0413z &quot;e&quot;  &quot;9&quot; 
+## t9834686 &quot;b&quot;  &quot;6&quot; 
+## u2ByuBB0 &quot;f&quot;  &quot;8&quot; 
+## 5xB7515A &quot;f&quot;  &quot;5&quot; 
+## 30w6A9tz &quot;h&quot;  &quot;3&quot; 
+## wtA6z431 &quot;y&quot;  &quot;1&quot; 
+## ABuBB9wy &quot;h&quot;  &quot;8&quot; 
+## vAxvuA52 &quot;e&quot;  &quot;8&quot; 
+## vzAAzzB8 &quot;g&quot;  &quot;9&quot; 
+## vu0u0zxw &quot;e&quot;  &quot;9&quot; 
+## 13uA5A8A &quot;a&quot;  &quot;7&quot; 
+## A2u41t40 &quot;t&quot;  &quot;8&quot; 
+## 59908y50 &quot;v&quot;  &quot;7&quot; 
+## 4wBz286t &quot;j&quot;  &quot;4&quot; 
+## 43t89Ayw &quot;i&quot;  &quot;9&quot; 
+## wA6v815x &quot;p&quot;  &quot;3&quot; 
+## x2z7uAzu &quot;q&quot;  &quot;8&quot; 
+## 7wz18xtB &quot;c&quot;  &quot;3&quot; 
+## 81xv5x45 &quot;b&quot;  &quot;10&quot;
+## 9vzuz578 &quot;x&quot;  &quot;3&quot; 
+## 8y0w101w &quot;u&quot;  &quot;1&quot; 
+## w3671y2u &quot;u&quot;  &quot;2&quot; 
+## x1x3694A &quot;k&quot;  &quot;3&quot; 
+## 16v4Axww &quot;g&quot;  &quot;2&quot; 
+## 86728vwu &quot;n&quot;  &quot;10&quot;
+## 874vA96B &quot;t&quot;  &quot;10&quot;
+## t31Bz49x &quot;i&quot;  &quot;5&quot; 
+## 6tAByB0z &quot;e&quot;  &quot;7&quot; 
+## z7w2z3uA &quot;w&quot;  &quot;1&quot; 
+## ut2At6uy &quot;d&quot;  &quot;8&quot; 
+## 15B52683 &quot;t&quot;  &quot;6&quot; 
+## 05z6704w &quot;k&quot;  &quot;6&quot; 
+## 8t0yuz6x &quot;h&quot;  &quot;8&quot;</code></pre>
 <pre class="r"><code>my.mat[,colnames(my.mat)[1]] # esto es equivalente a extraer la primera columna con su nombre</code></pre>
-<pre><code>## 6w665wuz 4477z681 w613w93t yx7Ay525 029v76Az 74y32wA8 1yu7ytB0 u98z5x43 
-##      &quot;i&quot;      &quot;o&quot;      &quot;z&quot;      &quot;j&quot;      &quot;c&quot;      &quot;f&quot;      &quot;z&quot;      &quot;n&quot; 
-## 6932wy8z 05x15271 4113u7Bv w5A70x04 9v96Bu37 0xwz9ty3 2vBBA0B1 wwvz7195 
-##      &quot;k&quot;      &quot;t&quot;      &quot;t&quot;      &quot;q&quot;      &quot;m&quot;      &quot;t&quot;      &quot;f&quot;      &quot;l&quot; 
-## z21u4z03 64BA7yuB y3w9yx5u 5137B9Au t0u993At 930833B8 tw74Bw41 754w5yB0 
-##      &quot;x&quot;      &quot;d&quot;      &quot;y&quot;      &quot;k&quot;      &quot;d&quot;      &quot;n&quot;      &quot;y&quot;      &quot;a&quot; 
-## vtzyA277 vx4By3zv wy8u8977 u254yx50 56Axt91x y3vw0wx7 44762z8z 3u1Avv9z 
-##      &quot;w&quot;      &quot;e&quot;      &quot;n&quot;      &quot;n&quot;      &quot;c&quot;      &quot;a&quot;      &quot;c&quot;      &quot;q&quot; 
-## 2tBx2A94 6zxv0t1v v4uBx3tw 0A2uy50y uxy76890 ytt4w84t uBB29573 u76Av204 
-##      &quot;v&quot;      &quot;h&quot;      &quot;z&quot;      &quot;m&quot;      &quot;v&quot;      &quot;d&quot;      &quot;g&quot;      &quot;s&quot; 
-## A741v8zB z810u53v 48w0646y v9z3u1v0 t9223720 171545w6 8w2v89y7 225y40t8 
-##      &quot;w&quot;      &quot;c&quot;      &quot;o&quot;      &quot;p&quot;      &quot;o&quot;      &quot;t&quot;      &quot;b&quot;      &quot;w&quot; 
-## 4uyv33Bw 2uA1A0tB w34z654B yu1tz7v0 0429v415 3AAzyAx1 xx0yy5t3 08B09yyA 
-##      &quot;b&quot;      &quot;f&quot;      &quot;b&quot;      &quot;b&quot;      &quot;a&quot;      &quot;e&quot;      &quot;o&quot;      &quot;n&quot; 
-## t884w04t uA35xw62 xzw919A9 669v0w09 
-##      &quot;n&quot;      &quot;d&quot;      &quot;n&quot;      &quot;p&quot;</code></pre>
-<pre class="r"><code># Basicamente matriz[,&quot;nombre de la primera columna&quot;]
-my.mat[2,]</code></pre>
-<pre><code>## CGGB CGDE 
-##  &quot;o&quot;  &quot;6&quot;</code></pre>
+<pre><code>## t7923x4v tAy3939A 3253ux0B 12352y50 v8yv3297 988B10xz 5zB07660 73u5vwtB 
+##      &quot;v&quot;      &quot;r&quot;      &quot;y&quot;      &quot;n&quot;      &quot;y&quot;      &quot;x&quot;      &quot;a&quot;      &quot;x&quot; 
+## 4z11080B 7v13y21u A9t83Bxz vxwBzzww 15Bv04A0 109850y9 v2tt7w82 18Bttwtt 
+##      &quot;c&quot;      &quot;d&quot;      &quot;b&quot;      &quot;o&quot;      &quot;n&quot;      &quot;o&quot;      &quot;v&quot;      &quot;l&quot; 
+## 80v9xz83 w8BuAzy4 2w8zx0B6 0B74t1y4 v7txy9u1 B24u1u2x 92zv3wyu 61zxA65A 
+##      &quot;w&quot;      &quot;y&quot;      &quot;d&quot;      &quot;a&quot;      &quot;w&quot;      &quot;k&quot;      &quot;d&quot;      &quot;j&quot; 
+## y3zuyz47 128503w6 y03w3x6w Bwz0413z t9834686 u2ByuBB0 5xB7515A 30w6A9tz 
+##      &quot;z&quot;      &quot;x&quot;      &quot;k&quot;      &quot;e&quot;      &quot;b&quot;      &quot;f&quot;      &quot;f&quot;      &quot;h&quot; 
+## wtA6z431 ABuBB9wy vAxvuA52 vzAAzzB8 vu0u0zxw 13uA5A8A A2u41t40 59908y50 
+##      &quot;y&quot;      &quot;h&quot;      &quot;e&quot;      &quot;g&quot;      &quot;e&quot;      &quot;a&quot;      &quot;t&quot;      &quot;v&quot; 
+## 4wBz286t 43t89Ayw wA6v815x x2z7uAzu 7wz18xtB 81xv5x45 9vzuz578 8y0w101w 
+##      &quot;j&quot;      &quot;i&quot;      &quot;p&quot;      &quot;q&quot;      &quot;c&quot;      &quot;b&quot;      &quot;x&quot;      &quot;u&quot; 
+## w3671y2u x1x3694A 16v4Axww 86728vwu 874vA96B t31Bz49x 6tAByB0z z7w2z3uA 
+##      &quot;u&quot;      &quot;k&quot;      &quot;g&quot;      &quot;n&quot;      &quot;t&quot;      &quot;i&quot;      &quot;e&quot;      &quot;w&quot; 
+## ut2At6uy 15B52683 05z6704w 8t0yuz6x 
+##      &quot;d&quot;      &quot;t&quot;      &quot;k&quot;      &quot;h&quot;</code></pre>
+<pre class="r"><code>                             # Basicamente matriz[,&quot;nombre de la primera columna&quot;]
+
+my.mat[2,] # Selecciona la segunda fila como muestra</code></pre>
+<pre><code>## FFDB GAEB 
+##  &quot;r&quot;  &quot;7&quot;</code></pre>
 <pre class="r"><code>my.mat[,2] %&lt;&gt;% as.numeric() # La segunda columna son numeros, pero lo considera string
 # Entonces usamos as.numeric() para que lo interprete como numero
 # %&lt;&gt;% es el operador de pipe bidireccional boomerang</code></pre>
 <div id="while-loop" class="section level2">
 <h2>While loop</h2>
 <p>Utilizamos <em>while</em> en iteraciones dado que podemos programar un valor objetivo y hacer que el loop corra hasta que ese objetivo se cumpla. Por ejemplo, que la diferencia entre nuestro valor objetivo y el calculado en una simulación numerica sea menor a 0.1.</p>
-<pre class="r"><code>i=0 # Definimos que nuestro indexador parta desde 0
-while(i&lt;nrow(my.mat)){
-                      i = i +1 # Avanza un punto del indice
-                      paste0(&#39;looping at &#39;,i) %&gt;% # Looping at i
-                        print # Imprime el string recien generado
-                      }</code></pre>
+<pre class="r"><code>i = 0 # Definimos que nuestro indexador parta desde 0
+while( i&lt; nrow(my.mat) )
+  {
+    i = i + 1 # Avanza un punto del indice
+    paste0(&#39;looping at &#39;,i) %&gt;% # &quot;Looping at i&quot;
+      print  # Imprime el string recien generado
+  }</code></pre>
 <pre><code>## [1] &quot;looping at 1&quot;
 ## [1] &quot;looping at 2&quot;
 ## [1] &quot;looping at 3&quot;
@@ -1822,21 +1824,75 @@ while(i&lt;nrow(my.mat)){
 ## [1] &quot;looping at 58&quot;
 ## [1] &quot;looping at 59&quot;
 ## [1] &quot;looping at 60&quot;</code></pre>
-<p>Existen multiples funciones paste para generar stings</p>
+<blockquote>
+<p>Existen multiples funciones paste para concatenar strings, dependiendo de la situación</p>
 <ul>
 <li><code>paste()</code> incluye por defecto el separador <code></code>, pero se puede especificar con <code>sep = &quot;,&quot;</code> u otro separador.</li>
 <li><code>paste0()</code> no incluye separadores, por lo que puede ser más rapido para concatenación.</li>
 </ul>
-<pre class="r"><code># While con operadores logicos</code></pre>
-<!-- Tabla de operadores logicos -->
+</blockquote>
+<p>Es posible utilizar multiples operadores logicos en un loop <strong>while</strong>.</p>
+<!-- TODO: añadir codigo de demostración aqui
+
+```r
+# While con operadores logicos
+```
+-->
+<table>
+<thead>
+<tr class="header">
+<th align="center">Operador</th>
+<th align="left">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">a <code>==</code> b</td>
+<td align="left"><em>a</em> es igual a <em>b</em></td>
+</tr>
+<tr class="even">
+<td align="center">a <code>!=</code> b</td>
+<td align="left"><em>a</em> es distinto a <em>b</em></td>
+</tr>
+<tr class="odd">
+<td align="center">a <code>&gt;</code> b</td>
+<td align="left"><em>a</em> es mayor que <em>b</em></td>
+</tr>
+<tr class="even">
+<td align="center">a <code>&lt;</code> b</td>
+<td align="left"><em>a</em> es menor que <em>b</em></td>
+</tr>
+<tr class="odd">
+<td align="center">a <code>&gt;=</code> b</td>
+<td align="left"><em>a</em> es mayor o igual que <em>b</em></td>
+</tr>
+<tr class="even">
+<td align="center">a <code>&lt;=</code> b</td>
+<td align="left"><em>a</em> es menor o igual que <em>b</em></td>
+</tr>
+<tr class="odd">
+<td align="center">a <code>&amp;</code> b</td>
+<td align="left"><em>a</em> y <em>b</em> son VERDADEROS</td>
+</tr>
+<tr class="even">
+<td align="center">a <code>|</code> b</td>
+<td align="left"><em>a</em> o <em>b</em> son VERDADEROS</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>!</code>a</td>
+<td align="left">Negación de <em>a</em></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="for-loop" class="section level2">
 <h2>For loop</h2>
 <p><strong>for</strong> no incluye operadores logicos, solo un indice dentro de un vector.</p>
-<pre class="r"><code>for (i in 0:10){ # i de index o iteration, en el vector (0:10)
-  print(i)       # imprime i, que en este caso es (1,...,10)
-  Sys.sleep(0.2) # Pausa por 0.2 s para que sea visible la cosa
-}</code></pre>
+<pre class="r"><code>for (i in 0:10)    # i de index o iteration, en el vector (0:10)
+  { 
+    print(i)       # imprime i, que en este caso es (1,...,10)
+    Sys.sleep(0.1) # Pausa por 0.1 s para que sea visible el procesamiento
+  }</code></pre>
 <pre><code>## [1] 0
 ## [1] 1
 ## [1] 2
@@ -1851,10 +1907,11 @@ while(i&lt;nrow(my.mat)){
 <p>Con eso, podemos usar un vector no ordenado <em>(4,3,0,2,1)</em> para iterar en esa secuencia.</p>
 <pre class="r"><code>orden    &lt;- c(&quot;uno&quot;,&quot;dos&quot;,&quot;tres&quot;,&quot;cuatro&quot;)
 desorden &lt;- c(4,1,3,1,2)
-for (i in desorden){ # i de index o iteration, en el vector &quot;desorden&quot;
-  print(orden[i])       # imprime i, que en este caso es (desorden)
-  Sys.sleep(0.2) # Pausa por 0.2 ms para que sea visible la cosa
-}</code></pre>
+for (i in desorden) # i de index o iteration, en el vector &quot;desorden&quot;
+  { 
+    print(orden[i]) # imprime i, que en este caso es (desorden)
+    Sys.sleep(0.2)  # Pausa por 0.2 ms para que sea visible la cosa
+  }</code></pre>
 <pre><code>## [1] &quot;cuatro&quot;
 ## [1] &quot;uno&quot;
 ## [1] &quot;tres&quot;
@@ -1865,8 +1922,10 @@ for (i in desorden){ # i de index o iteration, en el vector &quot;desorden&quot;
 <p>Podemos usar los loops <strong>for</strong> para procesar un listado de archivos que tengamos en una carpeta de datos.</p>
 <pre class="r"><code># Este ejemplo resulto más largo de lo que esperaba. --Manu
 # Igual es verboso, por como lo escribi y para que se entienda
-# Supongamos reportes del uso de servidores
+# Usa los archivos del .csv en el repo de la clase en Github
+# No tiene contexto sin esos archivos, pero pueden ver el codifo
 
+# Supongamos reportes del uso de servidores
 data.dir = &quot;./procesamiento-lotes/&quot; # Los archivos están en un subdirectorio
 reportes = c(&quot;instancias-09c.csv&quot;,&quot;instancias-09d.csv&quot;,&quot;instancias-10a.csv&quot;,&quot;instancias-10b.csv&quot;) # Y solo queremos importar algunos
 
@@ -1914,18 +1973,23 @@ v &lt;- list.files(getwd(),
 La gente bonita usa **while**. 
 **for** es para gente fea que se come los mocos. 
  --> ## Barras de progreso</p>
+<p>Para lotes grandes resulta util tener una barra de progreso, que indique el el sistema esta funcionando hacia la consola. Podemos usar el mismo indice <em>i</em> o poner condicionals para el avance de la barra, como pasar ciertas pruebas tipo <code>if(...){TRUE}</code></p>
 </div>
 <div id="barra-de-progreso-con-for-loop" class="section level3">
 <h3>Barra de progreso con <strong>for</strong> loop</h3>
-<pre class="r"><code>pb &lt;- txtProgressBar(0,nrow(my.mat), style = 3)</code></pre>
+<pre class="r"><code>pb &lt;- txtProgressBar(0,nrow(my.mat), style = 3) # Setup barra de progreso</code></pre>
 <pre><code>## 
   |                                                                            
   |                                                                      |   0%</code></pre>
-<pre class="r"><code>for(i in 1:nrow(my.mat)) {
-   setTxtProgressBar(pb, i)
-   Sys.sleep(.1) # Espera 0.1 segundos
-    if (i == nrow(my.mat)) print(&#39;OK!&#39;)
- }</code></pre>
+<pre class="r"><code>for(i in 1:nrow(my.mat)) # Desde 1 al largo de las filas en my.mat (60)
+  {
+    setTxtProgressBar(pb, i) # Imprime la barra de progreso
+    Sys.sleep(.1)            # Espera 0.1 segundos
+    if (i == nrow(my.mat))   # Correr cuando este en la ultima iteracion
+      {
+        print(&#39;OK!&#39;)
+      }
+  }</code></pre>
 <pre><code>## 
   |                                                                            
   |=                                                                     |   2%
@@ -2050,17 +2114,16 @@ La gente bonita usa **while**.
 </div>
 <div id="barra-de-progreso-con-while-loop" class="section level3">
 <h3>Barra de progreso con <strong>while</strong> loop</h3>
-<pre class="r"><code>i=0
-pb &lt;- txtProgressBar(0,nrow(my.mat), style = 3)</code></pre>
+<pre class="r"><code>i=0; pb &lt;- txtProgressBar(0,nrow(my.mat), style = 3) # Setup barra de progreso</code></pre>
 <pre><code>## 
   |                                                                            
   |                                                                      |   0%</code></pre>
-<pre class="r"><code>while(i&lt;nrow(my.mat)){
-                      i = i +1
-                      setTxtProgressBar(pb, i)
-                      Sys.sleep(.1)
-                      #paste(&#39;looping at &#39;,i) %&gt;% print
-                      }</code></pre>
+<pre class="r"><code>while(i &lt; nrow(my.mat)) # Operador logico TRUE si i &lt; filas en my.mat (60)
+  {
+    i = i +1
+    setTxtProgressBar(pb, i) # Imprime la barra de progreso
+    Sys.sleep(.1)            # Espera 0.1 segundos
+  }</code></pre>
 <pre><code>## 
   |                                                                            
   |=                                                                     |   2%
@@ -2182,19 +2245,24 @@ pb &lt;- txtProgressBar(0,nrow(my.mat), style = 3)</code></pre>
   |===================================================================== |  98%
   |                                                                            
   |======================================================================| 100%</code></pre>
+<pre class="r"><code>if (i == nrow(my.mat)) {print(&#39;OK!&#39;)} # Avisa que termino de iterar</code></pre>
+<pre><code>## [1] &quot;OK!&quot;</code></pre>
 <p>&lt;<!-- Estilos 1,2,3 de la barra de progreso --></p>
 </div>
 </div>
 <div id="repeat-loop" class="section level2">
 <h2>Repeat loop</h2>
 <p>Lo usamos como alternativa a <strong>while</strong>, usualmente como pruebas. Se repite eternamente hasta que se active un operador <strong>break</strong>, por lo que hay que incluir uno o sino el loop será infinito. Como ultima opción, <code>Ctrl C</code> mata procesos de la terminal.</p>
-<pre class="r"><code>i=0
-repeat
+<pre class="r"><code>i=0; pb &lt;- txtProgressBar(0,nrow(my.mat),style = 3) # Setup barra de progreso</code></pre>
+<pre><code>## 
+  |                                                                            
+  |                                                                      |   0%</code></pre>
+<pre class="r"><code>repeat
   {
     i = i +1
     setTxtProgressBar(pb, i)
     Sys.sleep(.1)
-    if( !i&lt;nrow(my.mat) ) {break}
+    if( !i&lt;nrow(my.mat) ) {break} # Condicional para terminar
   }</code></pre>
 <pre><code>## 
   |                                                                            
@@ -2323,11 +2391,12 @@ repeat
 <!-- Los circulos son la figura geometrica más viciosa de todas -->
 <div id="break" class="section level3">
 <h3>BREAK</h3>
+<p><strong>break</strong> termina el procesamiento del loop. Lo usamos cuando quremos terminar iteraciones, si por ejemplo se acumulan errores o se llego a un resultado deseado segun el condicional de un loop <strong>while</strong>.</p>
 <pre class="r"><code>threshold &lt;- 5
 
 for (i in 1:nrow(my.mat)) 
   {
-    Sys.sleep(.2)
+    Sys.sleep(.1)
     print(paste(&quot;lopping at  &quot;, i)) 
     if (my.mat[i,][2] %&gt;% as.numeric() &gt; threshold) 
       {
@@ -2336,12 +2405,8 @@ for (i in 1:nrow(my.mat))
     } 
   } </code></pre>
 <pre><code>## [1] &quot;lopping at   1&quot;
-## [1] &quot;lopping at   2&quot;
 ## [1] &quot;We superpass  5&quot;</code></pre>
-<pre class="r"><code>i=0
-pb &lt;- txtProgressBar(0,            # Minimo
-                     nrow(my.mat), # Maximo
-                     style = 3)    # Un estilo con porcentaje completado</code></pre>
+<pre class="r"><code>i=0; pb &lt;- txtProgressBar(0,nrow(my.mat),style = 3) # Setup barra de progreso</code></pre>
 <pre><code>## 
   |                                                                            
   |                                                                      |   0%</code></pre>
@@ -2372,7 +2437,7 @@ pb &lt;- txtProgressBar(0,            # Minimo
 </div>
 <div id="next" class="section level3">
 <h3>NEXT</h3>
-<p><strong>next</strong> el procesamiento de la iteración actual y pasa a la siguiente.</p>
+<p><strong>next</strong> termina el procesamiento de la iteración actual y pasa a la siguiente. Lo usamos dentro del procesamiento, si por ejemplo la iteración actual fuese un error o no quisieramos incluirla en el procesamiento. Por ejemplo, si los valores procesados son outliers.</p>
 <pre class="r"><code># Implementación verbosa
 
 mis_numbs = NA
@@ -2392,16 +2457,16 @@ for(i in 1:length(c(my.mat)))
       }
     p2 = p2 + 1 
     mis_letrs[p2] =  my.item
-}
+  }
 mis_letrs</code></pre>
-<pre><code>##  [1] &quot;i&quot; &quot;o&quot; &quot;z&quot; &quot;j&quot; &quot;c&quot; &quot;f&quot; &quot;z&quot; &quot;n&quot; &quot;k&quot; &quot;t&quot; &quot;t&quot; &quot;q&quot; &quot;m&quot; &quot;t&quot; &quot;f&quot; &quot;l&quot; &quot;x&quot; &quot;d&quot; &quot;y&quot;
-## [20] &quot;k&quot; &quot;d&quot; &quot;n&quot; &quot;y&quot; &quot;a&quot; &quot;w&quot; &quot;e&quot; &quot;n&quot; &quot;n&quot; &quot;c&quot; &quot;a&quot; &quot;c&quot; &quot;q&quot; &quot;v&quot; &quot;h&quot; &quot;z&quot; &quot;m&quot; &quot;v&quot; &quot;d&quot;
-## [39] &quot;g&quot; &quot;s&quot; &quot;w&quot; &quot;c&quot; &quot;o&quot; &quot;p&quot; &quot;o&quot; &quot;t&quot; &quot;b&quot; &quot;w&quot; &quot;b&quot; &quot;f&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;e&quot; &quot;o&quot; &quot;n&quot; &quot;n&quot;
-## [58] &quot;d&quot; &quot;n&quot; &quot;p&quot;</code></pre>
+<pre><code>##  [1] &quot;v&quot; &quot;r&quot; &quot;y&quot; &quot;n&quot; &quot;y&quot; &quot;x&quot; &quot;a&quot; &quot;x&quot; &quot;c&quot; &quot;d&quot; &quot;b&quot; &quot;o&quot; &quot;n&quot; &quot;o&quot; &quot;v&quot; &quot;l&quot; &quot;w&quot; &quot;y&quot; &quot;d&quot;
+## [20] &quot;a&quot; &quot;w&quot; &quot;k&quot; &quot;d&quot; &quot;j&quot; &quot;z&quot; &quot;x&quot; &quot;k&quot; &quot;e&quot; &quot;b&quot; &quot;f&quot; &quot;f&quot; &quot;h&quot; &quot;y&quot; &quot;h&quot; &quot;e&quot; &quot;g&quot; &quot;e&quot; &quot;a&quot;
+## [39] &quot;t&quot; &quot;v&quot; &quot;j&quot; &quot;i&quot; &quot;p&quot; &quot;q&quot; &quot;c&quot; &quot;b&quot; &quot;x&quot; &quot;u&quot; &quot;u&quot; &quot;k&quot; &quot;g&quot; &quot;n&quot; &quot;t&quot; &quot;i&quot; &quot;e&quot; &quot;w&quot; &quot;d&quot;
+## [58] &quot;t&quot; &quot;k&quot; &quot;h&quot;</code></pre>
 <pre class="r"><code>mis_numbs</code></pre>
-<pre><code>##  [1]  5  6  7 10  3  1  1  2  1  1  6 10 10  3  6  3  6  7  5  8  1  8 10  1  3
-## [26] 10  3  1  3  3  3  3  5  9  3  3  2  7  2  8  5  7  3  5  3  8  9  3  5  5
-## [51]  4  4  7  7  7 10  8  4  5  7</code></pre>
+<pre><code>##  [1] 10  7  4  1  8  1 10  9  4  6  5  9 10  6  6  8 10  2  1  9  5  7  6  7  7
+## [26]  7  5  9  6  8  5  3  1  8  8  9  9  7  8  7  4  9  3  8  3 10  3  1  2  3
+## [51]  2 10 10  5  7  1  8  6  6  8</code></pre>
 <pre class="r"><code># Implementación tacaña
 mis_numbs = NULL; mis_letrs = NULL; i  = 0
 for(i in 1:length(c(my.mat)))
@@ -2409,41 +2474,41 @@ for(i in 1:length(c(my.mat)))
     my.item &lt;- c(my.mat)[i]
     if(!is.na( as.numeric(my.item))) 
     {
-      mis_numbs %&lt;&gt;% c(as.numeric(my.item))
-      next
+      mis_numbs %&lt;&gt;% c(as.numeric(my.item)); next
     }
     mis_letrs %&lt;&gt;% c(my.item) 
   }
-
 mis_letrs</code></pre>
-<pre><code>##  [1] &quot;i&quot; &quot;o&quot; &quot;z&quot; &quot;j&quot; &quot;c&quot; &quot;f&quot; &quot;z&quot; &quot;n&quot; &quot;k&quot; &quot;t&quot; &quot;t&quot; &quot;q&quot; &quot;m&quot; &quot;t&quot; &quot;f&quot; &quot;l&quot; &quot;x&quot; &quot;d&quot; &quot;y&quot;
-## [20] &quot;k&quot; &quot;d&quot; &quot;n&quot; &quot;y&quot; &quot;a&quot; &quot;w&quot; &quot;e&quot; &quot;n&quot; &quot;n&quot; &quot;c&quot; &quot;a&quot; &quot;c&quot; &quot;q&quot; &quot;v&quot; &quot;h&quot; &quot;z&quot; &quot;m&quot; &quot;v&quot; &quot;d&quot;
-## [39] &quot;g&quot; &quot;s&quot; &quot;w&quot; &quot;c&quot; &quot;o&quot; &quot;p&quot; &quot;o&quot; &quot;t&quot; &quot;b&quot; &quot;w&quot; &quot;b&quot; &quot;f&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;e&quot; &quot;o&quot; &quot;n&quot; &quot;n&quot;
-## [58] &quot;d&quot; &quot;n&quot; &quot;p&quot;</code></pre>
+<pre><code>##  [1] &quot;v&quot; &quot;r&quot; &quot;y&quot; &quot;n&quot; &quot;y&quot; &quot;x&quot; &quot;a&quot; &quot;x&quot; &quot;c&quot; &quot;d&quot; &quot;b&quot; &quot;o&quot; &quot;n&quot; &quot;o&quot; &quot;v&quot; &quot;l&quot; &quot;w&quot; &quot;y&quot; &quot;d&quot;
+## [20] &quot;a&quot; &quot;w&quot; &quot;k&quot; &quot;d&quot; &quot;j&quot; &quot;z&quot; &quot;x&quot; &quot;k&quot; &quot;e&quot; &quot;b&quot; &quot;f&quot; &quot;f&quot; &quot;h&quot; &quot;y&quot; &quot;h&quot; &quot;e&quot; &quot;g&quot; &quot;e&quot; &quot;a&quot;
+## [39] &quot;t&quot; &quot;v&quot; &quot;j&quot; &quot;i&quot; &quot;p&quot; &quot;q&quot; &quot;c&quot; &quot;b&quot; &quot;x&quot; &quot;u&quot; &quot;u&quot; &quot;k&quot; &quot;g&quot; &quot;n&quot; &quot;t&quot; &quot;i&quot; &quot;e&quot; &quot;w&quot; &quot;d&quot;
+## [58] &quot;t&quot; &quot;k&quot; &quot;h&quot;</code></pre>
 <pre class="r"><code>mis_numbs</code></pre>
-<pre><code>##  [1]  5  6  7 10  3  1  1  2  1  1  6 10 10  3  6  3  6  7  5  8  1  8 10  1  3
-## [26] 10  3  1  3  3  3  3  5  9  3  3  2  7  2  8  5  7  3  5  3  8  9  3  5  5
-## [51]  4  4  7  7  7 10  8  4  5  7</code></pre>
+<pre><code>##  [1] 10  7  4  1  8  1 10  9  4  6  5  9 10  6  6  8 10  2  1  9  5  7  6  7  7
+## [26]  7  5  9  6  8  5  3  1  8  8  9  9  7  8  7  4  9  3  8  3 10  3  1  2  3
+## [51]  2 10 10  5  7  1  8  6  6  8</code></pre>
 <pre class="r"><code># Implementación optimizada
 mis_numbs = NULL; mis_letrs = NULL; i = 0
-repeat{i=i+1
-       if(i&gt;length(c(my.mat))){break}
-
-       my.item &lt;- c(my.mat)[i]
-       if(!is.na( as.numeric(my.item))) {
-                                        mis_numbs %&lt;&gt;% c(as.numeric(my.item))
-                                        next}
-      mis_letrs %&lt;&gt;% c(my.item) 
-}
+repeat
+  {
+    i=i+1
+    if(i&gt;length(c(my.mat))){break}
+    my.item &lt;- c(my.mat)[i]
+    if(!is.na( as.numeric(my.item))) 
+    {
+      mis_numbs %&lt;&gt;% c(as.numeric(my.item)); next
+    }
+    mis_letrs %&lt;&gt;% c(my.item) 
+  }
 mis_letrs</code></pre>
-<pre><code>##  [1] &quot;i&quot; &quot;o&quot; &quot;z&quot; &quot;j&quot; &quot;c&quot; &quot;f&quot; &quot;z&quot; &quot;n&quot; &quot;k&quot; &quot;t&quot; &quot;t&quot; &quot;q&quot; &quot;m&quot; &quot;t&quot; &quot;f&quot; &quot;l&quot; &quot;x&quot; &quot;d&quot; &quot;y&quot;
-## [20] &quot;k&quot; &quot;d&quot; &quot;n&quot; &quot;y&quot; &quot;a&quot; &quot;w&quot; &quot;e&quot; &quot;n&quot; &quot;n&quot; &quot;c&quot; &quot;a&quot; &quot;c&quot; &quot;q&quot; &quot;v&quot; &quot;h&quot; &quot;z&quot; &quot;m&quot; &quot;v&quot; &quot;d&quot;
-## [39] &quot;g&quot; &quot;s&quot; &quot;w&quot; &quot;c&quot; &quot;o&quot; &quot;p&quot; &quot;o&quot; &quot;t&quot; &quot;b&quot; &quot;w&quot; &quot;b&quot; &quot;f&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;e&quot; &quot;o&quot; &quot;n&quot; &quot;n&quot;
-## [58] &quot;d&quot; &quot;n&quot; &quot;p&quot;</code></pre>
+<pre><code>##  [1] &quot;v&quot; &quot;r&quot; &quot;y&quot; &quot;n&quot; &quot;y&quot; &quot;x&quot; &quot;a&quot; &quot;x&quot; &quot;c&quot; &quot;d&quot; &quot;b&quot; &quot;o&quot; &quot;n&quot; &quot;o&quot; &quot;v&quot; &quot;l&quot; &quot;w&quot; &quot;y&quot; &quot;d&quot;
+## [20] &quot;a&quot; &quot;w&quot; &quot;k&quot; &quot;d&quot; &quot;j&quot; &quot;z&quot; &quot;x&quot; &quot;k&quot; &quot;e&quot; &quot;b&quot; &quot;f&quot; &quot;f&quot; &quot;h&quot; &quot;y&quot; &quot;h&quot; &quot;e&quot; &quot;g&quot; &quot;e&quot; &quot;a&quot;
+## [39] &quot;t&quot; &quot;v&quot; &quot;j&quot; &quot;i&quot; &quot;p&quot; &quot;q&quot; &quot;c&quot; &quot;b&quot; &quot;x&quot; &quot;u&quot; &quot;u&quot; &quot;k&quot; &quot;g&quot; &quot;n&quot; &quot;t&quot; &quot;i&quot; &quot;e&quot; &quot;w&quot; &quot;d&quot;
+## [58] &quot;t&quot; &quot;k&quot; &quot;h&quot;</code></pre>
 <pre class="r"><code>mis_numbs</code></pre>
-<pre><code>##  [1]  5  6  7 10  3  1  1  2  1  1  6 10 10  3  6  3  6  7  5  8  1  8 10  1  3
-## [26] 10  3  1  3  3  3  3  5  9  3  3  2  7  2  8  5  7  3  5  3  8  9  3  5  5
-## [51]  4  4  7  7  7 10  8  4  5  7</code></pre>
+<pre><code>##  [1] 10  7  4  1  8  1 10  9  4  6  5  9 10  6  6  8 10  2  1  9  5  7  6  7  7
+## [26]  7  5  9  6  8  5  3  1  8  8  9  9  7  8  7  4  9  3  8  3 10  3  1  2  3
+## [51]  2 10 10  5  7  1  8  6  6  8</code></pre>
 <pre class="r"><code>mis_numbs = NULL; mis_letrs = NULL; i  = 0
 repeat{
   i=i+1; if(i&gt;length(c(my.mat))){break}
@@ -2454,14 +2519,14 @@ repeat{
     {mis_letrs %&lt;&gt;% c(my.item)}
 }
 mis_letrs</code></pre>
-<pre><code>##  [1] &quot;i&quot; &quot;o&quot; &quot;z&quot; &quot;j&quot; &quot;c&quot; &quot;f&quot; &quot;z&quot; &quot;n&quot; &quot;k&quot; &quot;t&quot; &quot;t&quot; &quot;q&quot; &quot;m&quot; &quot;t&quot; &quot;f&quot; &quot;l&quot; &quot;x&quot; &quot;d&quot; &quot;y&quot;
-## [20] &quot;k&quot; &quot;d&quot; &quot;n&quot; &quot;y&quot; &quot;a&quot; &quot;w&quot; &quot;e&quot; &quot;n&quot; &quot;n&quot; &quot;c&quot; &quot;a&quot; &quot;c&quot; &quot;q&quot; &quot;v&quot; &quot;h&quot; &quot;z&quot; &quot;m&quot; &quot;v&quot; &quot;d&quot;
-## [39] &quot;g&quot; &quot;s&quot; &quot;w&quot; &quot;c&quot; &quot;o&quot; &quot;p&quot; &quot;o&quot; &quot;t&quot; &quot;b&quot; &quot;w&quot; &quot;b&quot; &quot;f&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;e&quot; &quot;o&quot; &quot;n&quot; &quot;n&quot;
-## [58] &quot;d&quot; &quot;n&quot; &quot;p&quot;</code></pre>
+<pre><code>##  [1] &quot;v&quot; &quot;r&quot; &quot;y&quot; &quot;n&quot; &quot;y&quot; &quot;x&quot; &quot;a&quot; &quot;x&quot; &quot;c&quot; &quot;d&quot; &quot;b&quot; &quot;o&quot; &quot;n&quot; &quot;o&quot; &quot;v&quot; &quot;l&quot; &quot;w&quot; &quot;y&quot; &quot;d&quot;
+## [20] &quot;a&quot; &quot;w&quot; &quot;k&quot; &quot;d&quot; &quot;j&quot; &quot;z&quot; &quot;x&quot; &quot;k&quot; &quot;e&quot; &quot;b&quot; &quot;f&quot; &quot;f&quot; &quot;h&quot; &quot;y&quot; &quot;h&quot; &quot;e&quot; &quot;g&quot; &quot;e&quot; &quot;a&quot;
+## [39] &quot;t&quot; &quot;v&quot; &quot;j&quot; &quot;i&quot; &quot;p&quot; &quot;q&quot; &quot;c&quot; &quot;b&quot; &quot;x&quot; &quot;u&quot; &quot;u&quot; &quot;k&quot; &quot;g&quot; &quot;n&quot; &quot;t&quot; &quot;i&quot; &quot;e&quot; &quot;w&quot; &quot;d&quot;
+## [58] &quot;t&quot; &quot;k&quot; &quot;h&quot;</code></pre>
 <pre class="r"><code>mis_numbs</code></pre>
-<pre><code>##  [1]  5  6  7 10  3  1  1  2  1  1  6 10 10  3  6  3  6  7  5  8  1  8 10  1  3
-## [26] 10  3  1  3  3  3  3  5  9  3  3  2  7  2  8  5  7  3  5  3  8  9  3  5  5
-## [51]  4  4  7  7  7 10  8  4  5  7</code></pre>
+<pre><code>##  [1] 10  7  4  1  8  1 10  9  4  6  5  9 10  6  6  8 10  2  1  9  5  7  6  7  7
+## [26]  7  5  9  6  8  5  3  1  8  8  9  9  7  8  7  4  9  3  8  3 10  3  1  2  3
+## [51]  2 10 10  5  7  1  8  6  6  8</code></pre>
 </div>
 </div>
 <div id="ejemplo-extraer-títulos-desde-lista-con-metadata-de-rnaseq" class="section level2">
@@ -2473,35 +2538,33 @@ codes &lt;- c(&#39;GSE159378&#39;, &#39;nada&#39; , &#39;GSE159377&#39;,  &#39;G
 
 metadata.list &lt;- list()
 
-for(i in 1:length(codes)){
-  down.path                  &lt;- NULL
-  try(
-  getGEOfile(codes[i])       -&gt; down.path) 
-  if (down.path %&gt;% is.null){next}
-  getGEO(filename=down.path) -&gt; soft
-  soft                       -&gt; metadata.list[[i]]
-}</code></pre>
+for(i in 1:length(codes))
+  {
+    down.path                  &lt;- NULL
+    try(getGEOfile(codes[i])   -&gt; down.path) 
+    if (down.path %&gt;% is.null){next}
+    getGEO(filename=down.path) -&gt; soft
+    soft                       -&gt; metadata.list[[i]]
+  }</code></pre>
 <pre><code>## Error in file.exists(destfile) : objeto &#39;destfile&#39; no encontrado
 ## Error in file.exists(destfile) : objeto &#39;destfile&#39; no encontrado</code></pre>
-<pre class="r"><code>#metadata.list %&gt;% glimpse
-#metadata.list %&gt;% length
-
-Titles &lt;- NULL
-for(i in 1:length(metadata.list)){
-                                   metadata.list[[i]]               -&gt; extracted.metadata
-                                   if (extracted.metadata %&gt;% is.null){next}  
-  
-                                   extracted.metadata %&gt;% slotNames -&gt; my.slots
-
-             for(j in 1:length(my.slots)){
-                                          slot(extracted.metadata,my.slots[j] ) %&gt;% names -&gt; my.names
-
-             if(str_detect(my.names, &#39;(t|T)itle&#39;) %&gt;% any){
-                                              my.names[str_detect(my.names, &#39;(t|T)itle&#39;)]       -&gt; my.title0
-                                              slot(extracted.metadata,my.slots[1])[[my.title0]] -&gt; my.title
-                                              Titles %&lt;&gt;% c(my.title)
-                                              }}}
-
+<pre class="r"><code>Titles &lt;- NULL
+for(i in 1:length(metadata.list))
+  {
+    metadata.list[[i]]  -&gt; extracted.metadata
+    if (extracted.metadata %&gt;% is.null){next}  
+    extracted.metadata %&gt;% slotNames -&gt; my.slots
+    for(j in 1:length(my.slots))
+      {
+        slot(extracted.metadata,my.slots[j] ) %&gt;% names -&gt; my.names
+        if(str_detect(my.names, &#39;(t|T)itle&#39;) %&gt;% any)
+          {
+            my.names[str_detect(my.names, &#39;(t|T)itle&#39;)]       -&gt; my.title0
+            slot(extracted.metadata,my.slots[1])[[my.title0]] -&gt; my.title
+            Titles %&lt;&gt;% c(my.title)
+          }
+      }
+  }
 Titles</code></pre>
 <pre><code>## [1] &quot;An enhancer cluster promotes NPCs formation from ESCs through maintaining HoxB activation by long-range chromatin interaction&quot;
 ## [2] &quot;The subcellular redistribution of NLRC5 promotes angiogenesis via interacting with STAT3 in endothelial cells&quot;                

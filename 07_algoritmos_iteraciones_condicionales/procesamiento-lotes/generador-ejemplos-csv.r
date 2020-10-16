@@ -1,5 +1,6 @@
 # DEMOSTRACIÓN DE LOOPS PARA ARCHIVOS
-# Este script general los archivos
+# Este script genera los archivos que uso
+# como ejemplo en cuadero 07_algoritomos.Rmd
 # La data real es secreta y solo mia
 # (muajajaja)
 #     - Manu 2020/10/15 17:42
@@ -14,8 +15,8 @@
 # en archivos .csv con el codigo mes.semana abcd
 
 library(stringi);  # Genera ids para las maquinas
-stri_rand_strings(18,18, pattern = "[a-f0-9]") -> rand.id
-ids = c(); index = 0
+stringi::stri_rand_strings(18,18, pattern = "[a-f0-9]") -> rand.id
+ids = c(); index = 1
 for (i in rand.id){
     ids[index] <- paste0("i-0",i) # Todos los ids empiezan como i-0nnnnnn
     index = index + 1
@@ -38,3 +39,13 @@ for (i in reportes)
     # Todo esto esta en el mismo directorio que 07-clase... Por orden hare un subDir
     write.csv2(out, paste0("./procesamiento-lotes/",i)) # Guarda en el subdirectorio
   }
+
+# NOTAS DE DEBUG
+# 1. Este archivo fue creado en mi propio ambiente,
+#    es posible que la linea 40 falle al no existir
+#    el subdirectorio "./procesamiento-lotes/", para
+#    lo cual reemplacen ",paste0(...))" por ",i)"
+#    pero eso tirara los csv al directorio de trabajo
+# 2. RDS es mejor que CSV, pero para este ejemplo lo
+#    que busco es interoperabilidad, no eficiencia
+

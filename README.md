@@ -14,4 +14,4 @@ Aquí están ordenadas cronológicamente.
 [04 - Importación y escritura de datos; Introducción a paquetes de ómicas](https://rpubs.com/DeepenData/r04_importacion_escritura) - [Video](https://www.youtube.com/watch?v=Oz7hvrESRt4)  <!-- Clases de 2020-09-24 -->  
 [05 - Creación, manejo y transformación de estructuras de datos](https://rpubs.com/DeepenData/r05_manipulacion_estructuras_datos) - [Video](https://www.youtube.com/watch?v=8Q2CvLkStOY)  <!-- Clase de 2020-10-01 -->  
 [06 - Columnas con _mutate_, _pipes_ y expresiones regulares (_regex_)](https://rpubs.com/DeepenData/r06_clase_08_oct_2020_mutante_pipes_regex) - [Video](https://www.youtube.com/watch?v=UHldQxq9lvM) <!-- Clase de 2020-10-08 -->  
-[07 - Loops, Algoritmos iterativos, condicionales, y progreso](https://rpubs.com/DeepenData/r07_algoritmos_iteraciones_condicionales) - Video
+[07 - Loops, Algoritmos iterativos, condicionales, y progreso](https://rpubs.com/DeepenData/r07_algoritmos_iteraciones_condicionales) - [Video](https://www.youtube.com/watch?v=ktVwhoYcYvA) <!-- Clase de 2020-10-15 -->

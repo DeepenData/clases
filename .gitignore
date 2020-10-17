@@ -4,8 +4,10 @@
 *.Rhistory
 
 # Versiones alpha
+/aa_ignorar
 **/*AA*.Rmd
 **/*AA*.html
+/mm_ignorar
 **/*MM*.Rmd
 **/*MM*.html
 

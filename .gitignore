@@ -2,12 +2,12 @@
 *.ipynb_checkpoints
 *.RData
 *.Rhistory
+**/tmp
 
 # Versiones alpha
-/aa_ignorar
+**/ignorar
 **/*AA*.Rmd
 **/*AA*.html
-/mm_ignorar
 **/*MM*.Rmd
 **/*MM*.html
 

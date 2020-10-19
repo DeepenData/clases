@@ -9,14 +9,13 @@
 #
 # -- Script hecho y mantenido por Manu
 
-version <- "1.0.1"
-fecha   <- "2020-10-01"
+version <- "2.0.0"
+fecha   <- "2020-10-19"
 
 # LISTADOS DE PAQUETES -- Solo son vectores de nombres
 
 packages <- c(# PAQUETES INSTALADOS DESDE CRAN
 "devtools",   # Utilidades de manejo de archivos, descargas, etc.
-"tidyverse",  # Set de paquetes que hacen muchas cosas
 "broom",      # Convierte objetos de R a Tibbles, como "readr"
 "dbplyr",     # Manipulación de bases de datps (eg. SQL)
 "dplyr",      # Manipulación de datos mediante gramatica propia
@@ -31,6 +30,7 @@ packages <- c(# PAQUETES INSTALADOS DESDE CRAN
 "stringr",    # Operadores consistentes para strings
 "tibble",     # Dataframes del Siglo 21 (moderniza sintaxis)
 "gapminder",  # data de Gapminder
+"tidyverse",  # Set de paquetes que hacen muchas cosas
 "gifski",     # encoding de GIFs
 "av",         # herramientas de audio y video
 "webshot",    # screenshots de paginas web
@@ -51,14 +51,35 @@ bioPacks <- c(# PAQUETES DESDE BIOCONDUCTOR
 "Biostrings", # Manipulación de strings en biología
 "biomaRt")    # Acceso a bases de datos biomedicas
 
-instalar <- c(packages, bioPacks) # Lista completa de dependencias
+biocran  <- c(# PAQUETES CRAN DEPENDIENTES DE BIOCONDUCTOR
+  "biomartr")  # Permite descargar elementos de Biomart
+
+instalar <- c(packages, bioPacks, biocran) # Lista completa de dependencias
+
+# ACTUALIZACIONES -- Actualiza todo antes de instalar cosas nuevas
+
+update.packages(ask = FALSE, checkBuilt = TRUE, type = getOption("pkgType"))
+BiocManager::install(update = TRUE, ask = FALSE) # Actualiza de Bioconductor
 
 # INSTALACIONES -- compara con listas, e instala los que no están
 
 instalables <- instalar[!(instalar %in% installed.packages()[,"Package"])] # Substrae los que faltan
 options(install.packages.check.source = "yes") # Chequea la fuente de los paquetes
+
 if(length(instalables)) {
-  install.packages(instalables) # Instala los que faltan
+
+  # Instalaciones desde CRAN
+  instalables.cran <- packages[!(packages %in% installed.packages()[,"Package"])]     # Lista
+  install.packages(instalables.cran, quiet = TRUE)        # Instala los que faltan desde CRAN
+
+  # Instalaciones desde Bioconductor
+  instalables.bioPacks <- bioPacks[!(bioPacks %in% installed.packages()[,"Package"])] # Lista
+  BiocManager::install(instalables.bioPacks, ask=FALSE)
+
+  # Instalaciones dependientes CRAN de Bioconductor
+  instalables.biocran <- biocran[!(biocran %in% installed.packages()[,"Package"])]    # Lista
+  install.packages(instalables.biocran, quiet = TRUE)     # Instala los que faltan desde CRAN
+
+  # FIN DE ESTAS INSTALACIONES
   print(paste0(length(instalables)," paquetes instalados. (Actualizado a ",fecha,")"))} else
   print(paste0("Todo al dia! (Actualizado a ",fecha,")")) # Avisa que esta listo
-

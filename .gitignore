@@ -15,5 +15,10 @@
 **/rsconnect
 *.dcf
 
+# Archivos de datos absurdamente pesados
+**/*.gz
+**/*.tar
+
 # Archivos varios
 06_mutate_pipes_regex/pipes.drawio.svg
+09_programacion_funcional/GSE**/

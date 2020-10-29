@@ -1,10 +1,9 @@
 ---
-title: "Cuarta clase 22-oct-2020: Algoritmos, loops y condicionales PARTE2"
+title: "Algoritmos, loops y condicionales (PARTE 2)"
 author: 'Acevedo, A. & Munoz, M. U. de Chile.'
+date: 2020-10-22
 output: html_notebook
 ---
-
-
 
 ```{r}
 largo                              <- 30
@@ -29,17 +28,21 @@ mis_letrs = NA
 i  = 0
 p1 = 0
 p2 = 0
-for(i in 1:nrow(my.mat)){
-                         for(j in 1:ncol(my.mat)){
-                                                  my.mat[i,j] -> my.item
-                                                  if(!is.na( as.numeric(my.item))) {p1 = p1 +1
-                                                          mis_numbs[p1] <- as.numeric(my.item)
-                                                          next}
-                                                  p2 = p2 + 1 
-                                                  mis_letrs[p2] =  my.item
-                           
-                         }
-}
+for(i in 1:nrow(my.mat))
+  {
+    for(j in 1:ncol(my.mat))
+      {
+        my.mat[i,j] -> my.item
+        if(!is.na( as.numeric(my.item))) 
+          {
+            p1 = p1 +1
+            mis_numbs[p1] <- as.numeric(my.item)
+            next
+          }
+        p2 = p2 + 1 
+        mis_letrs[p2] =  my.item
+      }
+  }
 
 mis_letrs
 mis_numbs
@@ -47,11 +50,8 @@ mis_numbs
 
 
 ```{r message=FALSE, warning=FALSE}
-mis_numbs = NA
-mis_letrs = NA
-i  = 0
-p1 = 0
-p2 = 0
+mis_numbs = NA; mis_letrs = NA
+i  = 0; p1 = 0; p2 = 0
 c(my.mat) -> matriz.aplanada
 
 for(i in 1:length(matriz.aplanada)){
@@ -104,7 +104,8 @@ mis_numbs
 
 ### Ejemplo: Extraer títulos desde lista con metadata de RNAseq
 ```{r message=FALSE, warning=FALSE}
-library(GEOquery)
+if (!("GEOquery" %in% installed.packages())){install.packages("GEOquery")}
+library("GEOquery")
 library(tidyverse)
 
 codes <- c('GSE159378', 'nada' , 'GSE159377',  'GSE154900', 'GSE151154', 'nada', 'GSE146754' )
@@ -189,34 +190,3 @@ for(i in 1:length(all.raw.files)){
                                   
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,7 +2,7 @@ File Name: Thermococcus_gammatolerans_genomic_refseq.fna.gz
 Organism Name: Thermococcus_gammatolerans
 Database: NCBI refseq
 URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/022/365/GCF_000022365.1_ASM2236v1/GCF_000022365.1_ASM2236v1_genomic.fna.gz
-Download_Date: Tue Sep 29 14:55:10 2020
+Download_Date: Thu Nov 05 19:27:27 2020
 refseq_category: representative genome
 assembly_accession: GCF_000022365.1
 bioproject: PRJNA224116

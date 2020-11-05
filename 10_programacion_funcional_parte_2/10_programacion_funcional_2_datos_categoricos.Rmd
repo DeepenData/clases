@@ -6,10 +6,9 @@ output:
     df_print: paged
 ---
 
+En programación funcional podemos aplicar funciones predefinidas a listas, lo que permite hacer más rapido un flujo de trabajo. 
 
-En programación funcional podemos aplicar funciones predefinidas a listas, lo que permite hacer más reapido un flujo de trabajo. 
-
-### Mapear funciones en más de una lista
+# Mapear funciones en más de una lista
 
 ```{r}
 library(purrr)
@@ -58,7 +57,6 @@ list(x, y, z) -> l
 # pmap() puede trabajar con multiples argumentos
 pmap(l, sum)
 ```
---min 31--
 
 Para evitar hacer loops, podemos utilizar **purrr::rerun()** para repetir _n_ veces una función.
 
@@ -92,7 +90,13 @@ reduce(l, union)     # Une las listas con items unicos
 
 # Datos categoricos
 
+```{r}
+reduce(l, intersect) 
+reduce(l, union)
+```
 
+### Forcats
+>>>>>>> 3c9e84db4b632e19b0af9d6bcd93099dbc9cc23d
 
 ```{r}
 library(forcats)
@@ -201,7 +205,6 @@ map(found.kegg, pluck('ENTRY')) %>%
 map(found.kegg, pluck('GENE')) %>% set_names(disease.names) %>%
   enframe( name = "Disease", value = "Genes") %>%
   unnest_longer(Genes) -> brain.disease.genes
-
 ```
 
 ```{r}
@@ -251,8 +254,6 @@ my.info %>% group_by(name_1006) %>%
 ```
 
 ```{r}
-
 my.info %>% group_by(hgnc_symbol) %>% 
   summarise(Term_count = n_distinct(name_1006)) 
-
 ```

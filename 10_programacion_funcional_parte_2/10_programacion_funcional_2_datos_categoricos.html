@@ -1687,9 +1687,9 @@ summary {
 </div>
 
 
-<p>En programación funcional podemos aplicar funciones predefinidas a listas, lo que permite hacer más reapido un flujo de trabajo.</p>
-<div id="mapear-funciones-en-más-de-una-lista" class="section level3">
-<h3>Mapear funciones en más de una lista</h3>
+<p>En programación funcional podemos aplicar funciones predefinidas a listas, lo que permite hacer más rapido un flujo de trabajo.</p>
+<div id="mapear-funciones-en-más-de-una-lista" class="section level1">
+<h1>Mapear funciones en más de una lista</h1>
 <pre class="r"><code>library(purrr)
 
 # Creamos tres listas de tres entradas cada una
@@ -1792,30 +1792,29 @@ pmap(l, sum)</code></pre>
 ## 
 ## [[3]]
 ## [1] 74</code></pre>
-<p>–min 31–</p>
 <p>Para evitar hacer loops, podemos utilizar <strong>purrr::rerun()</strong> para repetir <em>n</em> veces una función.</p>
 <pre class="r"><code>rnorm(5) # da 5 valores de una distribución normal</code></pre>
-<pre><code>## [1]  0.4304319  0.3022493 -0.5738117 -0.9984092  0.5762202</code></pre>
+<pre><code>## [1]  1.9020606  1.5691476  1.2238281  0.4003828 -0.9065235</code></pre>
 <pre class="r"><code># Usando ReRun() para evitar el uso de loops
 3 %&gt;% rerun(rnorm(5)) # Sacamos 3x5 valores</code></pre>
 <pre><code>## [[1]]
-## [1] -1.2399771  1.2532309 -0.3820275  0.6974088  0.4079700
+## [1] -0.1051122 -0.2673454 -0.6668881 -0.0782133 -0.3554713
 ## 
 ## [[2]]
-## [1]  1.6568805 -0.4722658 -1.3493968 -1.1620457 -0.3082942
+## [1] -1.84988290  1.61798068 -0.03631453 -0.02588929  0.44855455
 ## 
 ## [[3]]
-## [1]  0.31739264  0.06677125  1.73594317 -0.24743505 -1.87983119</code></pre>
+## [1]  0.1231475  1.1254829  1.2005118 -0.6427910 -0.1740202</code></pre>
 <pre class="r"><code># Si quisieramos definirlo para una lista de n listas
 length(l) %&gt;% rerun(rnorm(5))</code></pre>
 <pre><code>## [[1]]
-## [1]  0.1421355  0.3768648  1.2459755 -0.7725885 -0.9539463
+## [1] -0.6720692  3.5633236 -2.1073248 -0.6044441  0.1686312
 ## 
 ## [[2]]
-## [1]  0.64563877 -0.07699526 -0.22986669  0.24581836 -1.50600543
+## [1] -0.7839242 -0.6646483  1.8349734  0.1640251  0.3736936
 ## 
 ## [[3]]
-## [1]  0.7469945 -1.0567280  0.5430440 -0.8308803  1.4405185</code></pre>
+## [1]  0.2955464  1.2787213  0.1789845  1.3180067 -0.7992797</code></pre>
 <pre class="r"><code># Otras listas
 x &lt;- list(10, 14)
 y &lt;- list(10, 20, 30,14)
@@ -1850,6 +1849,44 @@ l %&gt;% unlist # Aplana nuestra lista de listas a un vector</code></pre>
 </div>
 <div id="datos-categoricos" class="section level1">
 <h1>Datos categoricos</h1>
+<pre class="r"><code>reduce(l, intersect) </code></pre>
+<pre><code>## [[1]]
+## [1] 14</code></pre>
+<pre class="r"><code>reduce(l, union)</code></pre>
+<pre><code>## [[1]]
+## [1] 10
+## 
+## [[2]]
+## [1] 14
+## 
+## [[3]]
+## [1] 20
+## 
+## [[4]]
+## [1] 30
+## 
+## [[5]]
+## [1] 100
+## 
+## [[6]]
+## [1] 9</code></pre>
+<div id="forcats" class="section level3">
+<h3>Forcats</h3>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>3c9e84db4b632e19b0af9d6bcd93099dbc9cc23d</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <pre class="r"><code>library(forcats)
 library(magrittr)</code></pre>
 <pre><code>## 
@@ -1867,12 +1904,12 @@ my.letters %&gt;% levels     # Cuales son las categorias?</code></pre>
 <pre class="r"><code>my.letters %&gt;% fct_count  # Frecuencia de cada categoria</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["f"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"b","2":"3"},{"1":"c","2":"1"},{"1":"d","2":"2"},{"1":"e","2":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["f"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"b","2":"4"},{"1":"c","2":"3"},{"1":"d","2":"2"},{"1":"e","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>my.letters %&gt;% fct_infreq # Ordenados por frecuencia</code></pre>
-<pre><code>##  [1] b e e d e e b b d c
-## Levels: e b d c</code></pre>
+<pre><code>##  [1] d c c d b c b e b b
+## Levels: b c d e</code></pre>
 <p>Los valores categoricos pueden ser utiles en segmentación de data para analisis, eg. que ruta metabolica esta más fecuentemente alterada,</p>
 <pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>## 
@@ -2324,6 +2361,7 @@ data2 %&gt;% filter(teamID == &#39;BOS&#39;) %&gt;% .[[&#39;yearID&#39;]]</code>
 ## [4355] 1901 1901 1901 1901 1901 1901 1901 1901 1901 1901 1901 1901 1901 1901
 ## [4369] 1901 1901 1901 1901 1901 1901 1901 1901 1901
 ## 147 Levels: 1871 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881 1882 ... 2017</code></pre>
+</div>
 </div>
 <div id="cosas-kegg" class="section level1">
 <h1>Cosas KEGG</h1>

@@ -1,0 +1,182 @@
+---
+title: "Programación funcional  y datos categóricos"
+date: 2020-11-05
+output:
+  html_document:
+    df_print: paged
+---
+
+
+### Mapear funciones en más de una lista
+
+```{r}
+library(purrr)
+
+x <- list(3, 5, 7)
+y <- list(10, 20, 30)
+z <- list(13, 25, 37)
+
+
+map2(x, y, ~ .x + .y)
+map2(x, y, `+`)
+map2(x, y, sum)
+
+
+log2ratio <- function(x,y){r <- log2(x/y); return(r)}
+map2(x, y, log2ratio)
+
+
+log2ratio <- function(x,y){r <- log2(x/y); return(as.data.frame(r))}
+map2_dfr(x, y, log2ratio)
+map2_dfc(x, y, log2ratio)
+```
+
+```{r}
+list(x, y, z) -> l
+pmap(l, sum)
+```
+
+```{r}
+3 %>% rerun(rnorm(5))
+```
+
+### Listas
+```{r}
+x <- list(10, 14)
+y <- list(10, 20, 30,14)
+z <- list(100, 14, 30, 9)
+list(x, y, z) -> l
+l %>% unlist
+```
+
+
+```{r}
+reduce(l, intersect) 
+reduce(l, union)
+```
+
+### Forcats
+
+```{r}
+library(forcats)
+library(magrittr)
+
+my.letters <- sample(letters[2:5],10, replace = T)
+my.letters %<>% factor
+my.letters %>% levels
+my.letters %>% fct_count
+my.letters %>% fct_infreq
+```
+
+```{r}
+library(dplyr)
+
+library(dplyr)
+data <- read.csv("https://raw.githubusercontent.com/guru99-edu/R-Programming/master/lahman-batting.csv") %>%
+select(c(playerID, yearID, AB, teamID, lgID, G, R, HR, SH))  %>% 
+arrange(yearID %>% desc)
+data
+glimpse(data)
+```
+```{r}
+summarise(data)
+```
+
+```{r}
+library(tidyverse)
+library(magrittr)
+data %>%
+  group_by(yearID) %>%
+  summarise(mean_AB = mean(AB), mean_HR = mean(HR))
+```
+
+
+```{r}
+data %>% group_by(yearID) %>% summarise(count_teamIDs = n_distinct(teamID),  count_playerIDs = n_distinct(playerID)) #, count_teamIDs = n_distinct(teamIDs))
+```
+
+
+```{r}
+compose(`!`,is.double) -> not_double
+
+
+
+
+
+data %>% select_if(not_double) %>% names 
+
+
+data[['playerID']] %<>% as.factor
+data[['yearID']] %<>% as.factor
+data[['teamID']] %<>% as.factor
+
+
+data %>% select_if(is.factor) %>% as.list %>% map(fct_count)
+```
+```{r}
+
+library(tidyverse)
+
+data %>% group_by(teamID) %>% nest -> nested.data.by.teamID
+
+
+
+nested.data.by.teamID %>% unnest_wider(data) -> data2
+
+
+
+data2 %>% filter(teamID == 'BOS') %>% .[['yearID']]
+```
+
+```{r}
+library(KEGGREST)
+listDatabases()
+
+paths <- 'brain'
+
+keggFind("disease", paths) %>% as.matrix %>% rownames()  %>%keggGet() -> found.kegg
+map(found.kegg, pluck('ENTRY')) %>% as.character -> disease.names
+map(found.kegg, pluck('GENE')) %>% set_names(disease.names) %>% enframe( name = "Disease", value = "Genes") %>% unnest_longer(Genes) -> brain.disease.genes
+
+```
+```{r}
+map(found.kegg, pluck('PATHWAY')) %>% set_names(disease.names) %>% set_names(disease.names) %>% enframe( name = "Disease", value = "PATHWAY") %>% 
+                            unnest_longer(PATHWAY) -> brain.disease.pathways
+```
+
+```{r}
+full_join(brain.disease.pathways,brain.disease.genes, by='Disease' ) -> brain_diseases
+```
+
+```{r}
+brain_diseases %>% group_by(Disease) %>% summarise(Gene_count = n_distinct(Genes), PATHWAY_id_count = n_distinct(PATHWAY_id)) -> brain_diseases_df
+```
+
+```{r}
+brain_diseases$Genes %>% str_extract('HSA:\\d+') %>% str_extract('\\d+') -> brain_diseases.entrezgene_id
+```
+
+```{r}
+library(biomaRt)
+ensembl    <- useMart("ensembl") #para toda la base de datos
+Hs.ensembl <- useMart("ensembl",dataset="hsapiens_gene_ensembl") #solo Humano
+```
+
+```{r}
+my.genes      <-  brain_diseases.entrezgene_id
+
+my.info <- getBM(
+attributes=c('name_1006','hgnc_symbol','entrezgene_id'),filters ='entrezgene_id',values = my.genes,mart = Hs.ensembl)
+
+my.info
+```
+
+```{r}
+my.info %>% group_by(name_1006) %>% nest %>% unnest_wider(data)
+```
+
+```{r}
+
+my.info %>% group_by(hgnc_symbol) %>% summarise(Term_count = n_distinct(name_1006)) 
+
+```

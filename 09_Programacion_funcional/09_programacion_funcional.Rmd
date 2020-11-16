@@ -6,39 +6,42 @@ author: "Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Unive
 
 ```{r Carga librerias a usar, echo=TRUE, message=FALSE, warning=FALSE}
 # Librerias a utilizar
-library("Biobase")    # Funciones base de Bioconductor
-library("biomaRt")    # Acceso a bases de datos de Biomart
-library("tidyverse")  # Set de paquetes que hacen muchas cosas
-library("magrittr")   # Operadores cañeria (pipes) %>%
-library("purrr")      # Programación funcional (de funciones)
-library("stringr")    # Operadores consistentes para strings
+library("Biobase")   # Funciones base de Bioconductor
+library("biomaRt")   # Acceso a bases de datos de Biomart
+library("tidyverse") # Set de paquetes que hacen muchas cosas
+library("magrittr")  # Operadores cañeria (pipes) %>%
+library("purrr")     # Programación funcional (de funciones)
+library("stringr")   # Operadores consistentes para strings
 ```
 
 ```{r Obteniendo un objeto GEO, message=FALSE, warning=FALSE}
 # Descargando objetos GEO a utilizar
-data <- GEOquery::getGEO('GSE148349',       # Un estudio con 66 datasets
-                          GSEMatrix = TRUE, # Usa GSE como matrices, más eficiente
-                          AnnotGPL = TRUE,  # Pide anotaciones
-                          getGPL = TRUE)    # Plataforma utilizada 
+data <- GEOquery::getGEO("GSE148349", # Un estudio con 66 datasets
+  GSEMatrix = TRUE, # Usa GSE como matrices, más eficiente
+  AnnotGPL = TRUE, # Pide anotaciones
+  getGPL = TRUE
+) # Plataforma utilizada
 
-# Es objeto "data" es una lista de objetos. 
+# Es objeto "data" es una lista de objetos.
 class(data)
 
 # Vemos el contenido del nivel superiro de "data"
 data # solo mostrando el objeto en la consola
 
 # Hay ciertos atributos que es recomendable preparar
-data %>% names # por ejemplo, los nombres
+data %>% names() # por ejemplo, los nombres
 ```
 
 Los nombres de los datasets son algo complicados y verbosos, pero podemos usar funciones para simplificarlos.
 
 ```{r Limpieza inicial, message=FALSE, warning=FALSE}
 # Primero hacemos nuevos nombres, que quedan en una lista
-data %>% names %>% str_replace('_.*gz','') -> new.names 
+data %>%
+  names() %>%
+  str_replace("_.*gz", "") -> new.names
 # Luego los aplicamos con el pipe boomerang
 data %<>% purrr::set_names(new.names)
-data %>% names # nombres algo más legibles
+data %>% names() # nombres algo más legibles
 ```
 
 # Funciones iterativas que aplican funciones
@@ -74,11 +77,13 @@ Utilizando **purr::compose()** podemos crear una función similar a un _pipe_, q
 ```{r Composición de funciones, message=FALSE, warning=FALSE}
 # Creando una función con compose(fun1, fun2, ...)
 # esta eliminará los valores vacios (NA) de una lista
-not_a_na <- purrr::compose(na.omit , as.character)
+not_a_na <- purrr::compose(na.omit, as.character)
 
-A <- c(NA,'ddd','dgrfg',NA)    # Un vector de demostración
-A %>% na.omit %>% as.character # Forma tradicional con pipes
-A %>% not_a_na                 # Forma más breve con la función creada
+A <- c(NA, "ddd", "dgrfg", NA) # Un vector de demostración
+A %>%
+  na.omit() %>%
+  as.character() # Forma tradicional con pipes
+A %>% not_a_na() # Forma más breve con la función creada
 ```
 
 ## Segmentando la data a un organismo
@@ -92,7 +97,7 @@ list.of.phenoData <- map(data, pData)
 # Si queremos extraer la data de cuales son los organismos necesitamos
 # la columna dentro de la tabla de datasets con esa información
 list.of.phenoData %>% map(names) %>% # Toma los nombres con names()
-  map(~str_extract(.,'org.*')) %>%   # Deja solo las entradas con org...
+  map(~ str_extract(., "org.*")) %>% # Deja solo las entradas con org...
   map(not_a_na) -> my.organism.entry # Elimina las entradas vacias y guarda
 ```
 
@@ -100,7 +105,7 @@ Una forma más rapida es utilizar **purrr::pluck()**, que actua como un ``[['ind
 
 ```{r message=FALSE, warning=FALSE}
 # Usando pluck()
-map(list.of.phenoData , purrr::pluck('organism_ch1'))
+map(list.of.phenoData, purrr::pluck("organism_ch1"))
 ```
 
 ```{r ¿que es esto?, eval=FALSE, include=FALSE}
@@ -112,54 +117,59 @@ map(list.of.phenoData , purrr::pluck('organism_ch1'))
 Desde **ensembl_transcript_ID** hasta **EC number**, para reconstruir redes. 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-my.GEOfile = GEOquery::getGEOfile('GSE148349',AnnotGPL = T, destdir = getwd())
+my.GEOfile <- GEOquery::getGEOfile("GSE148349", AnnotGPL = T, destdir = getwd())
 
-GEOquery::getGEO(filename=my.GEOfile) -> soft
+GEOquery::getGEO(filename = my.GEOfile) -> soft
 
-suppfiles = GEOquery::getGEOSuppFiles('GSE148349')
+suppfiles <- GEOquery::getGEOSuppFiles("GSE148349")
 suppfiles %>% row.names() -> full.path.raw_tar
-full.path.raw_tar %>% str_match('GSE\\d+.RAW.*') 
-full.path.raw_tar %>% str_match('.*(?=GSE\\d+.RAW.*)') -> gse.folder
-untar(tarfile = full.path.raw_tar ,exdir =  gse.folder)
+full.path.raw_tar %>% str_match("GSE\\d+.RAW.*")
+full.path.raw_tar %>% str_match(".*(?=GSE\\d+.RAW.*)") -> gse.folder
+untar(tarfile = full.path.raw_tar, exdir = gse.folder)
 ```
 
 <!-- Todo falla desde aqui, parece una var. local -->
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-my.gunzip       <- function(a.file){GEOquery::gunzip(a.file,remove = T, overwrite = T)}
+my.gunzip <- function(a.file) {
+  GEOquery::gunzip(a.file, remove = T, overwrite = T)
+}
 
-get.my.gz.files <- function(gsefolder)
-  {
-    gsefolder %>% list.files(full.names = T ) %>% 
-      str_extract('.*gz') %>% na.cleaner %>% map(my.gunzip)
-  }
+get.my.gz.files <- function(gsefolder) {
+  gsefolder %>%
+    list.files(full.names = T) %>%
+    str_extract(".*gz") %>%
+    na.cleaner() %>%
+    map(my.gunzip)
+}
 
 # TODO: evitar que descargue mil veces
-gse.folder %>% get.my.gz.files
+gse.folder %>% get.my.gz.files()
 
-gse.folder %>% list.files(full.names = T ) %>% str_extract('.*tsv$') %>%  na.cleaner -> tsv.files.path
+gse.folder %>%
+  list.files(full.names = T) %>%
+  str_extract(".*tsv$") %>%
+  na.cleaner() -> tsv.files.path
 
-#Función anónima
+# Función anónima
 tsv.files.path %>%
-      map(function(files.path00)
-        {
-          readr::read_delim(files.path00, delim = '\t', skip = 0,col_names = TRUE)
-        }) -> df_list #
+  map(function(files.path00) {
+    readr::read_delim(files.path00, delim = "\t", skip = 0, col_names = TRUE)
+  }) -> df_list #
 
-df_list %>% class
-df_list %>% length
-df_list %>% names
+df_list %>% class()
+df_list %>% length()
+df_list %>% names()
 ```
 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-tsv.files.path %>% str_extract('GSM\\d+') -> gsm.names
+tsv.files.path %>% str_extract("GSM\\d+") -> gsm.names
 
 df_list %<>% purrr::set_names(gsm.names)
 
-df_list %>% names
-df_list['GSM4462281']
-
+df_list %>% names()
+df_list["GSM4462281"]
 ```
 
 ### GSMs sólo de Homo sapiens
@@ -168,7 +178,7 @@ df_list['GSM4462281']
 
 my.pData.list <- map(data, pData)
 
-GSMs.by.gpl <- map( my.pData.list, pluck('geo_accession'))
+GSMs.by.gpl <- map(my.pData.list, pluck("geo_accession"))
 
 GSMs.by.gpl[[2]] -> Homo.sapiens.samples
 df_list[Homo.sapiens.samples] -> Homo.sapiens.samples.list
@@ -179,11 +189,11 @@ Homo.sapiens.samples.list[[1]]
 ```
 
 ```{r, eval=FALSE}
-map( Homo.sapiens.samples.list, pluck('target_id')) -> all.genes
+map(Homo.sapiens.samples.list, pluck("target_id")) -> all.genes
 
 all.genes %>% purrr::reduce(union) -> all.commom.genes
 
-all.commom.genes %>% length
+all.commom.genes %>% length()
 
 all.commom.genes %>% sample(5)
 ```
@@ -194,78 +204,86 @@ all.commom.genes %>% sample(5)
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Convocando la API de KEGG
 BiocManager::install("KEGGREST")
-library("KEGGREST")            # API que permite acceder a data de KEGG programaticamente
+library("KEGGREST") # API que permite acceder a data de KEGG programaticamente
 
 # Que hace esto?
 listDatabases()
 
-#my.EC <- c('1.8.1.4')#, '2.7.4.12', '', '2.7.4.13', '2.7.4.9', '2.7.4.9') 
-#keggFind("genes", my.EC) %>% as.matrix() %>% rownames()  %>%keggGet() -> found.kegg
-#keggFind("genes",'1738')
-#keggFind("genome",'ENSG00000091140')
+# my.EC <- c('1.8.1.4')#, '2.7.4.12', '', '2.7.4.13', '2.7.4.9', '2.7.4.9')
+# keggFind("genes", my.EC) %>% as.matrix() %>% rownames()  %>%keggGet() -> found.kegg
+# keggFind("genes",'1738')
+# keggFind("genome",'ENSG00000091140')
 ```
 ### Convertir desde ensembl_transcript_id a entrezgene_id (biomaRt)
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 
-ensembl    <- useMart("ensembl") #para toda la base de datos
-Hs.ensembl <- useMart("ensembl",dataset="hsapiens_gene_ensembl") #solo Humano
+ensembl <- useMart("ensembl") # para toda la base de datos
+Hs.ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") # solo Humano
 
-searchAttributes(mart = Hs.ensembl, pattern = 'GO')
+searchAttributes(mart = Hs.ensembl, pattern = "GO")
 ```
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-my.genes      <-   c('ENSG00000091140') #GENE como ejemplo
+my.genes <- c("ENSG00000091140") # GENE como ejemplo
 
 my.genes.symbols <- getBM(
-attributes=c('ensembl_gene_id','hgnc_symbol','entrezgene_id','goslim_goa_description'),filters ='ensembl_gene_id',values = my.genes,mart = Hs.ensembl)
+  attributes = c("ensembl_gene_id", "hgnc_symbol", "entrezgene_id", "goslim_goa_description"), 
+  filters = "ensembl_gene_id", 
+  values = my.genes, 
+  mart = Hs.ensembl
+)
 
 my.genes.symbols
 ```
 
 ```{r, eval=FALSE}
-my.genes      <- c('ENST00000487058',all.commom.genes %>% sample(8), 'ENST00000535366')
+my.genes <- c("ENST00000487058", all.commom.genes %>% sample(8), "ENST00000535366")
 
 my.genes.symbols <- getBM(
-attributes=c('ensembl_transcript_id','hgnc_symbol','entrezgene_id','wikigene_description','goslim_goa_description'),filters ='ensembl_transcript_id',values = my.genes,mart = Hs.ensembl)
+  attributes = c("ensembl_transcript_id", "hgnc_symbol", "entrezgene_id", "wikigene_description", "goslim_goa_description"), filters = "ensembl_transcript_id", 
+  values = my.genes, 
+  mart = Hs.ensembl
+)
 
 my.genes.symbols
 ```
 
 ```{r, eval=FALSE}
-na.cleaner      <- purrr::compose(as.character, na.exclude)
+na.cleaner <- purrr::compose(as.character, na.exclude)
 
-my.genes.symbols$entrezgene_id %>% unique %>% na.cleaner %>% paste0('hsa:',.) %>% keggGet -> my.kegg.list
+my.genes.symbols$entrezgene_id %>%
+  unique() %>%
+  na.cleaner() %>%
+  paste0("hsa:", .) %>%
+  keggGet() -> my.kegg.list
 
-my.kegg.list %>% length
-my.kegg.list %>% names
+my.kegg.list %>% length()
+my.kegg.list %>% names()
 
-my.genes.symbols$hgnc_symbol[!is.na(my.genes.symbols$entrezgene_id)] %>% unique -> mis.nombres
+my.genes.symbols$hgnc_symbol[!is.na(my.genes.symbols$entrezgene_id)] %>% unique() -> mis.nombres
 
-my.kegg.list %>% purrr::set_names(mis.nombres)   -> my.kegg.info
+my.kegg.list %>% purrr::set_names(mis.nombres) -> my.kegg.info
 
-my.kegg.info %>% names
-my.kegg.info[["ENO2"]] %>% class
+my.kegg.info %>% names()
+my.kegg.info[["ENO2"]] %>% class()
 
-map( my.kegg.info, pluck('PATHWAY')) %>% glimpse()
-map( my.kegg.info, pluck('PATHWAY')) %>% purrr::compact() 
+map(my.kegg.info, pluck("PATHWAY")) %>% glimpse()
+map(my.kegg.info, pluck("PATHWAY")) %>% purrr::compact()
 ```
 
 
 ```{r, eval=FALSE}
-map( my.kegg.info, pluck('ORTHOLOGY')) %>% 
-  purrr::compact() %>% 
-    as.matrix() %>% 
-      as.data.frame() %>% 
-        unnest -> A
+map(my.kegg.info, pluck("ORTHOLOGY")) %>%
+  purrr::compact() %>%
+  as.matrix() %>%
+  as.data.frame() %>%
+  unnest() -> A
 
 
-A %>%   mutate(`EC number` = ifelse(
-                                    str_detect(V1, regex('\\[EC.\\d+' , ignore_case = T)), 
-                                    'EC exists', 
-                                      NA)) #%>% drop_na
+A %>% mutate(`EC number` = ifelse(
+  str_detect(V1, regex("\\[EC.\\d+", ignore_case = T)),
+  "EC exists",
+  NA
+)) # %>% drop_na
 ```
-
-
-
-

@@ -8,14 +8,14 @@ author: "Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Unive
 
 ```{r Instalaciones, message=FALSE, warning=FALSE, eval=F}
 # Instalaciones, si falla cargar las librerias
-install.packages('stringi', dependencies = T, quiet = T)
-install.packages("BiocManager", dependencies = T, quiet = T )
-BiocManager::install("GEOquery", checkBuilt = T, ask = F )
+install.packages("stringi", dependencies = T, quiet = T)
+install.packages("BiocManager", dependencies = T, quiet = T)
+BiocManager::install("GEOquery", checkBuilt = T, ask = F)
 ```
 
 ```{r Carga librerias a usar, echo=TRUE, warning=FALSE}
-library(magrittr) # Operadores cañeria (pipes) %>% 
-library(stringi)  # Generador de strings aletaorios
+library(magrittr) # Operadores cañeria (pipes) %>%
+library(stringi) # Generador de strings aletaorios
 ```
 
 Definimos un objeto que usaremos para los ejemplos con loops. 
@@ -25,31 +25,30 @@ largo <- 60 # Filas en el objeto
 
 # Relleno del objeto usando funciones r{base}
 sample(letters, largo, replace = T) -> a # Relleno a
-sample(1:10, largo, replace = T)    -> b # Relleno b
+sample(1:10, largo, replace = T) -> b # Relleno b
 
 # Usando funciones de Stringi
-stri_rand_strings(largo,8, pattern = "[A-B0-9t-z]") -> my.rows
+stri_rand_strings(largo, 8, pattern = "[A-B0-9t-z]") -> my.rows
 stri_rand_strings(2, # Dos strings
-                  4, # De largo 4 caracteres
-                  pattern = "[A-G]" # Con las letras ABCDEFG
-                  ) -> my.cols # Guardado en "my.cols"
+  4, # De largo 4 caracteres
+  pattern = "[A-G]" # Con las letras ABCDEFG
+) -> my.cols # Guardado en "my.cols"
 
 # Guardando el objeto a usar
-cbind(a,b) %>%                    # Une rellenos a y b
-  set_rownames(my.rows) %>%       # Los nombres de las filas se llamaran como las my.rows
+cbind(a, b) %>% # Une rellenos a y b
+  set_rownames(my.rows) %>% # Los nombres de las filas se llamaran como las my.rows
   set_colnames(my.cols) -> my.mat # Los nombres de las columnas se llamaran como las my.cols
-
 ```
 
 ```{r Explorando el objeto, message=FALSE, warning=FALSE}
 my.mat # El objeto recien creado
 
-my.mat[,colnames(my.mat)[1]] # esto es equivalente a extraer la primera columna con su nombre
-                             # Basicamente matriz[,"nombre de la primera columna"]
+my.mat[, colnames(my.mat)[1]] # esto es equivalente a extraer la primera columna con su nombre
+# Basicamente matriz[,"nombre de la primera columna"]
 
-my.mat[2,] # Selecciona la segunda fila como muestra
+my.mat[2, ] # Selecciona la segunda fila como muestra
 
-my.mat[,2] %<>% as.numeric() # La segunda columna son numeros, pero lo considera string
+my.mat[, 2] %<>% as.numeric() # La segunda columna son numeros, pero lo considera string
 # Entonces usamos as.numeric() para que lo interprete como numero
 # %<>% es el operador de pipe bidireccional boomerang
 ```
@@ -60,13 +59,12 @@ Utilizamos _while_ en iteraciones dado que podemos programar un valor objetivo y
 Por ejemplo, que la diferencia entre nuestro valor objetivo y el calculado en una simulación numerica sea menor a 0.1. 
 
 ```{r}
-i = 0 # Definimos que nuestro indexador parta desde 0
-while( i< nrow(my.mat) )
-  {
-    i = i + 1 # Avanza un punto del indice
-    paste0('looping at ',i) %>% # "Looping at i"
-      print  # Imprime el string recien generado
-  }
+i <- 0 # Definimos que nuestro indexador parta desde 0
+while (i < nrow(my.mat)) {
+  i <- i + 1 # Avanza un punto del indice
+  paste0("looping at ", i) %>% # "Looping at i"
+    print() # Imprime el string recien generado
+}
 ```
 
 > Existen multiples funciones paste para concatenar strings, dependiendo de la situación
@@ -100,23 +98,23 @@ Es posible utilizar multiples operadores logicos en un loop **while**.
 
 
 ```{r}
-for (i in 0:10)    # i de index o iteration, en el vector (0:10)
-  { 
-    print(i)       # imprime i, que en este caso es (1,...,10)
-    Sys.sleep(0.1) # Pausa por 0.1 s para que sea visible el procesamiento
-  }
+for (i in 0:10) # i de index o iteration, en el vector (0:10)
+{
+  print(i) # imprime i, que en este caso es (1,...,10)
+  Sys.sleep(0.1) # Pausa por 0.1 s para que sea visible el procesamiento
+}
 ```
 
 Con eso, podemos usar un vector no ordenado _(4,3,0,2,1)_ para iterar en esa secuencia. 
 
 ```{r}
-orden    <- c("uno","dos","tres","cuatro")
-desorden <- c(4,1,3,1,2)
+orden <- c("uno", "dos", "tres", "cuatro")
+desorden <- c(4, 1, 3, 1, 2)
 for (i in desorden) # i de index o iteration, en el vector "desorden"
-  { 
-    print(orden[i]) # imprime i, que en este caso es (desorden)
-    Sys.sleep(0.2)  # Pausa por 0.2 ms para que sea visible la cosa
-  }
+{
+  print(orden[i]) # imprime i, que en este caso es (desorden)
+  Sys.sleep(0.2) # Pausa por 0.2 ms para que sea visible la cosa
+}
 ```
 
 ### Procesamiento de archivos en lotes
@@ -130,36 +128,37 @@ Podemos usar los loops **for** para procesar un listado de archivos que tengamos
 # No tiene contexto sin esos archivos, pero pueden ver el codifo
 
 # Supongamos reportes del uso de servidores
-data.dir = "./procesamiento-lotes/" # Los archivos están en un subdirectorio
-reportes = c("instancias-09c.csv","instancias-09d.csv","instancias-10a.csv","instancias-10b.csv") # Y solo queremos importar algunos
+data.dir <- "./procesamiento-lotes/" # Los archivos están en un subdirectorio
+reportes <- c("instancias-09c.csv", "instancias-09d.csv", "instancias-10a.csv", "instancias-10b.csv") # Y solo queremos importar algunos
 
-library("readr")       # Usamos esta para leer .csv
+library("readr") # Usamos esta para leer .csv
 
 # Describimos que queremos en el resumen
-  n.instancias = c() # Instancias en la sesion
-  tiempo.cpu.p = c() # Tiempo promedio de uso de CPU
-  tiempo.cpu.t = c() # Tiempo total de uso de CPU
-  sub.utilizad = c() # Instancias con un uso < 20% maximo 
-  
-i = 1 # Definimos un contador (R parte en 1, Otros en 0)
+n.instancias <- c() # Instancias en la sesion
+tiempo.cpu.p <- c() # Tiempo promedio de uso de CPU
+tiempo.cpu.t <- c() # Tiempo total de uso de CPU
+sub.utilizad <- c() # Instancias con un uso < 20% maximo
+
+i <- 1 # Definimos un contador (R parte en 1, Otros en 0)
 
 for (csv in reportes) # Empieza el loop
-  {
-    lote <- as.data.frame(read.csv2(paste0(data.dir, reportes[i]))) # Importa cada CSV
-    lote[[1]] <- NULL # Mata el index de las filas
-    
-    # Guarda la información para resumes
-    n.instancias[i] = length(lote$ID)
-    tiempo.cpu.p[i] =   mean(lote$CPUzeit)
-    tiempo.cpu.t[i] =    sum(lote$CPUzeit)
-    sub.utilizad[i] = length((lote$CPUzeit)[lote$CPUzeit < .2*max(lote$CPUzeit)])
-    
-    lote <- NULL # Limpiamos la RAM
-    i = i + 1    # Avanza el indice
-  }
+{
+  lote <- as.data.frame(read.csv2(paste0(data.dir, reportes[i]))) # Importa cada CSV
+  lote[[1]] <- NULL # Mata el index de las filas
+
+  # Guarda la información para resumes
+  n.instancias[i] <- length(lote$ID)
+  tiempo.cpu.p[i] <- mean(lote$CPUzeit)
+  tiempo.cpu.t[i] <- sum(lote$CPUzeit)
+  sub.utilizad[i] <- length((lote$CPUzeit)[lote$CPUzeit < .2 * max(lote$CPUzeit)])
+
+  lote <- NULL # Limpiamos la RAM
+  i <- i + 1 # Avanza el indice
+}
 
 # Reinicia el indice; y genera un reporte
-i=1; resumen = data.frame(n.instancias, tiempo.cpu.p, tiempo.cpu.t, sub.utilizad)
+i <- 1
+resumen <- data.frame(n.instancias, tiempo.cpu.p, tiempo.cpu.t, sub.utilizad)
 ```
 
 En el ejemplo sabemos el nombre de los archivos, pero podemos usar ``list.files()`` y sus parametros
@@ -171,9 +170,10 @@ En el ejemplo sabemos el nombre de los archivos, pero podemos usar ``list.files(
 ```{r Lista los csv recursivamente, echo=TRUE}
 # Lista todos los archivos .csv a un vector
 # con forma subdirectorio/archivo.csv
-v <- list.files(getwd(), 
-                recursive = TRUE,
-                pattern = "*.csv$")
+v <- list.files(getwd(),
+  recursive = TRUE,
+  pattern = "*.csv$"
+)
 ```
 
 Se puede eliminar el nombre del subdirectorio del listado utilizando funciones como ``str_replace()`` y _regex_.
@@ -193,29 +193,32 @@ avance de la barra, como pasar ciertas pruebas tipo ``if(...){TRUE}``
 ### Barra de progreso con **for** loop 
 
 ```{r message=FALSE, warning=FALSE}
-pb <- txtProgressBar(0,nrow(my.mat), style = 3) # Setup barra de progreso
-for(i in 1:nrow(my.mat)) # Desde 1 al largo de las filas en my.mat (60)
-  {
-    setTxtProgressBar(pb, i) # Imprime la barra de progreso
-    Sys.sleep(.1)            # Espera 0.1 segundos
-    if (i == nrow(my.mat))   # Correr cuando este en la ultima iteracion
-      {
-        print('OK!')
-      }
-  }
+pb <- txtProgressBar(0, nrow(my.mat), style = 3) # Setup barra de progreso
+for (i in 1:nrow(my.mat)) # Desde 1 al largo de las filas en my.mat (60)
+{
+  setTxtProgressBar(pb, i) # Imprime la barra de progreso
+  Sys.sleep(.1) # Espera 0.1 segundos
+  if (i == nrow(my.mat)) # Correr cuando este en la ultima iteracion
+    {
+      print("OK!")
+    }
+}
 ```
 
 ### Barra de progreso con **while** loop 
 
 ```{r}
-i=0; pb <- txtProgressBar(0,nrow(my.mat), style = 3) # Setup barra de progreso
-while(i < nrow(my.mat)) # Operador logico TRUE si i < filas en my.mat (60)
-  {
-    i = i +1
-    setTxtProgressBar(pb, i) # Imprime la barra de progreso
-    Sys.sleep(.1)            # Espera 0.1 segundos
-  }
-if (i == nrow(my.mat)) {print('OK!')} # Avisa que termino de iterar
+i <- 0
+pb <- txtProgressBar(0, nrow(my.mat), style = 3) # Setup barra de progreso
+while (i < nrow(my.mat)) # Operador logico TRUE si i < filas en my.mat (60)
+{
+  i <- i + 1
+  setTxtProgressBar(pb, i) # Imprime la barra de progreso
+  Sys.sleep(.1) # Espera 0.1 segundos
+}
+if (i == nrow(my.mat)) {
+  print("OK!")
+} # Avisa que termino de iterar
 ```
 
 <<!-- Estilos 1,2,3 de la barra de progreso -->
@@ -228,14 +231,16 @@ por lo que hay que incluir uno o sino el loop será infinito.
 Como ultima opción, ``Ctrl C`` mata procesos de la terminal. 
 
 ```{r}
-i=0; pb <- txtProgressBar(0,nrow(my.mat),style = 3) # Setup barra de progreso
-repeat
-  {
-    i = i +1
-    setTxtProgressBar(pb, i)
-    Sys.sleep(.1)
-    if( !i<nrow(my.mat) ) {break} # Condicional para terminar
-  }
+i <- 0
+pb <- txtProgressBar(0, nrow(my.mat), style = 3) # Setup barra de progreso
+repeat  {
+  i <- i + 1
+  setTxtProgressBar(pb, i)
+  Sys.sleep(.1)
+  if (!i < nrow(my.mat)) {
+    break
+  } # Condicional para terminar
+}
 ```
 
 ## Saliendo de Loops
@@ -251,29 +256,27 @@ o se llego a un resultado deseado segun el condicional de un loop **while**.
 ```{r BREAK, echo=TRUE}
 threshold <- 5
 
-for (i in 1:nrow(my.mat)) 
-  {
-    Sys.sleep(.1)
-    print(paste("lopping at  ", i)) 
-    if (my.mat[i,][2] %>% as.numeric() > threshold) 
-      {
-        print(paste("We superpass ", threshold)) 
-        break
-    } 
-  } 
+for (i in 1:nrow(my.mat))
+{
+  Sys.sleep(.1)
+  print(paste("lopping at  ", i))
+  if (my.mat[i, ][2] %>% as.numeric() > threshold) {
+    print(paste("We superpass ", threshold))
+    break
+  }
+}
 ```
 
 ```{r}
-i=0; pb <- txtProgressBar(0,nrow(my.mat),style = 3) # Setup barra de progreso
-while(i<nrow(my.mat))
-  {
-    i = i +1
-    paste('looping at ',i) %>% print
-    setTxtProgressBar(pb, i)
-    Sys.sleep(0.1)
-    if(i==5) break 
-  }
-
+i <- 0
+pb <- txtProgressBar(0, nrow(my.mat), style = 3) # Setup barra de progreso
+while (i < nrow(my.mat)) {
+  i <- i + 1
+  paste("looping at ", i) %>% print()
+  setTxtProgressBar(pb, i)
+  Sys.sleep(0.1)
+  if (i == 5) break
+}
 ```
 
 ### NEXT
@@ -286,40 +289,41 @@ procesados son outliers.
 ```{r Implementación ingenua, message=FALSE, warning=FALSE}
 # Implementación verbosa
 
-mis_numbs = NA
-mis_letrs = NA
-i  = 0
-p1 = 0
-p2 = 0
+mis_numbs <- NA
+mis_letrs <- NA
+i <- 0
+p1 <- 0
+p2 <- 0
 
-for(i in 1:length(c(my.mat)))
-  {
-    my.item <- c(my.mat)[i]
-    if(!is.na( as.numeric(my.item))) 
-      {
-        p1 = p1 +1
-        mis_numbs[p1] <- as.numeric(my.item)
-        next
-      }
-    p2 = p2 + 1 
-    mis_letrs[p2] =  my.item
+for (i in 1:length(c(my.mat)))
+{
+  my.item <- c(my.mat)[i]
+  if (!is.na(as.numeric(my.item))) {
+    p1 <- p1 + 1
+    mis_numbs[p1] <- as.numeric(my.item)
+    next
   }
+  p2 <- p2 + 1
+  mis_letrs[p2] <- my.item
+}
 mis_letrs
 mis_numbs
 ```
 
 ```{r Implementación tacaña, message=FALSE, warning=FALSE}
 # Implementación tacaña
-mis_numbs = NULL; mis_letrs = NULL; i  = 0
-for(i in 1:length(c(my.mat)))
-  {
-    my.item <- c(my.mat)[i]
-    if(!is.na( as.numeric(my.item))) 
-    {
-      mis_numbs %<>% c(as.numeric(my.item)); next
-    }
-    mis_letrs %<>% c(my.item) 
+mis_numbs <- NULL
+mis_letrs <- NULL
+i <- 0
+for (i in 1:length(c(my.mat)))
+{
+  my.item <- c(my.mat)[i]
+  if (!is.na(as.numeric(my.item))) {
+    mis_numbs %<>% c(as.numeric(my.item))
+    next
   }
+  mis_letrs %<>% c(my.item)
+}
 mis_letrs
 mis_numbs
 ```
@@ -327,31 +331,41 @@ mis_numbs
 
 ```{r Implmtcn, message=FALSE, warning=FALSE}
 # Implementación optimizada
-mis_numbs = NULL; mis_letrs = NULL; i = 0
-repeat
-  {
-    i=i+1
-    if(i>length(c(my.mat))){break}
-    my.item <- c(my.mat)[i]
-    if(!is.na( as.numeric(my.item))) 
-    {
-      mis_numbs %<>% c(as.numeric(my.item)); next
-    }
-    mis_letrs %<>% c(my.item) 
+mis_numbs <- NULL
+mis_letrs <- NULL
+i <- 0
+repeat  {
+  i <- i + 1
+  if (i > length(c(my.mat))) {
+    break
   }
+  my.item <- c(my.mat)[i]
+  if (!is.na(as.numeric(my.item))) {
+    mis_numbs %<>% c(as.numeric(my.item))
+    next
+  }
+  mis_letrs %<>% c(my.item)
+}
 mis_letrs
 mis_numbs
 ```
 
 ```{r message=FALSE, warning=FALSE}
-mis_numbs = NULL; mis_letrs = NULL; i  = 0
+mis_numbs <- NULL
+mis_letrs <- NULL
+i <- 0
 repeat{
-  i=i+1; if(i>length(c(my.mat))){break}
+  i <- i + 1
+  if (i > length(c(my.mat))) {
+    break
+  }
   my.item <- c(my.mat)[i]
-  if(!is.na( as.numeric(my.item)))
-    {mis_numbs %<>% c(as.numeric(my.item))}
-  else
-    {mis_letrs %<>% c(my.item)}
+  if (!is.na(as.numeric(my.item))) {
+    mis_numbs %<>% c(as.numeric(my.item))
+  }
+  else {
+    mis_letrs %<>% c(my.item)
+  }
 }
 mis_letrs
 mis_numbs
@@ -364,35 +378,38 @@ mis_numbs
 library(GEOquery)
 library(tidyverse)
 
-codes <- c('GSE159378', 'nada' , 'GSE159377',  'GSE154900', 'GSE151154', 'nada', 'GSE146754' )
+codes <- c("GSE159378", "nada", "GSE159377", "GSE154900", "GSE151154", "nada", "GSE146754")
 
 metadata.list <- list()
 
-for(i in 1:length(codes))
-  {
-    down.path                  <- NULL
-    try(getGEOfile(codes[i])   -> down.path) 
-    if (down.path %>% is.null){next}
-    getGEO(filename=down.path) -> soft
-    soft                       -> metadata.list[[i]]
+for (i in 1:length(codes))
+{
+  down.path <- NULL
+  try(getGEOfile(codes[i]) -> down.path)
+  if (down.path %>% is.null()) {
+    next
   }
+  getGEO(filename = down.path) -> soft
+  soft -> metadata.list[[i]]
+}
 
 Titles <- NULL
-for(i in 1:length(metadata.list))
-  {
-    metadata.list[[i]]  -> extracted.metadata
-    if (extracted.metadata %>% is.null){next}  
-    extracted.metadata %>% slotNames -> my.slots
-    for(j in 1:length(my.slots))
-      {
-        slot(extracted.metadata,my.slots[j] ) %>% names -> my.names
-        if(str_detect(my.names, '(t|T)itle') %>% any)
-          {
-            my.names[str_detect(my.names, '(t|T)itle')]       -> my.title0
-            slot(extracted.metadata,my.slots[1])[[my.title0]] -> my.title
-            Titles %<>% c(my.title)
-          }
-      }
+for (i in 1:length(metadata.list))
+{
+  metadata.list[[i]] -> extracted.metadata
+  if (extracted.metadata %>% is.null()) {
+    next
   }
+  extracted.metadata %>% slotNames() -> my.slots
+  for (j in 1:length(my.slots))
+  {
+    slot(extracted.metadata, my.slots[j]) %>% names() -> my.names
+    if (str_detect(my.names, "(t|T)itle") %>% any()) {
+      my.names[str_detect(my.names, "(t|T)itle")] -> my.title0
+      slot(extracted.metadata, my.slots[1])[[my.title0]] -> my.title
+      Titles %<>% c(my.title)
+    }
+  }
+}
 Titles
 ```

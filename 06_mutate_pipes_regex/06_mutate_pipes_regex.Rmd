@@ -10,10 +10,10 @@ author: "Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Unive
 library("tidyverse") # Muchas cosas cool
 
 # Incluidas en tidyverse, en caso de errores cargandolo
-library("dplyr")     # Manipulación de datos mediante gramatica propia
-library("magrittr")  # Operadores cañeria (pipes) %>%)
-library("readr")     # Traducción (pharsing) de archivos a una tibble
-library("stringr")   # Operadores consistentes para strings
+library("dplyr") # Manipulación de datos mediante gramatica propia
+library("magrittr") # Operadores cañeria (pipes) %>%)
+library("readr") # Traducción (pharsing) de archivos a una tibble
+library("stringr") # Operadores consistentes para strings
 ```
 
 La función _mutate()_ de **dplyr** permite crear nuevas variables manteniendo las ya existentes. 
@@ -21,7 +21,7 @@ Por ejemplo, sacando el promedio de dos variables u operaciones similares.
 
 ```{r Importación de datos,echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Importando datos de un CSV
-data.location <- 'https://raw.githubusercontent.com/DeepenData/clases/master/06_mutate_pipes_regex/data_oct_08_2020.csv' # Reemplazar por dirección local si bajan el archivo
+data.location <- "https://raw.githubusercontent.com/DeepenData/clases/master/06_mutate_pipes_regex/data_oct_08_2020.csv" # Reemplazar por dirección local si bajan el archivo
 sim.without.outliers <- read_csv(data.location) # Importa la data a "sim.without.outliers"
 ```
 
@@ -44,8 +44,8 @@ Dado que un dataframe puede contener dataframes, este modo de acceso puede ir va
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 # Accediendo a data en un objeto
-sim.without.outliers[c(10:200) , -c(1:2)] %>% rowMeans
-sim.without.outliers['treatment_1']/sim.without.outliers['treatment_2'] %>% log2 -> hola
+sim.without.outliers[c(10:200), -c(1:2)] %>% rowMeans()
+sim.without.outliers["treatment_1"] / sim.without.outliers["treatment_2"] %>% log2() -> hola
 
 sim.without.outliers$nueva_columna <- hola # Llena la columna con "hola"
 sim.without.outliers$nueva_columna <- NULL # Elimina una columna
@@ -56,13 +56,13 @@ Esto crea una nueva columna a partir de existentes, preservando las originales.
 
 ```{r Mutate y fold-change, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Modificando la tabla con mutate() para calcular el Fold-change (log2/log2)
-sim.without.outliers %>% # Tirando data por la cañeria 
+sim.without.outliers %>% # Tirando data por la cañeria
   # Hace un promedio de las columnas TREAT(MENT)
   mutate(`Mean treatment` = rowMeans(select(., starts_with("treat")))) %>%
-  # Hace un promedio de las columnas CONTROL 
+  # Hace un promedio de las columnas CONTROL
   mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%
   # Calcula el fold-change de TRATAMIENTO sobre CONTROL
-  mutate(`log2Ratio` = log2(.[['Mean treatment']] / .[['Mean control']])) -> mutated.sim
+  mutate(`log2Ratio` = log2(.[["Mean treatment"]] / .[["Mean control"]])) -> mutated.sim
 ```
 
 ## Funciones personalizadas
@@ -79,44 +79,48 @@ e idealmente definir un comportamiento de error para las funciones.
 # Creamos funciones personalizadas para reutilizar codigo
 
 # Aumenta por el cambio +- fracción del cambio. Es decir 3 +- 0.3 (2.7-3.3)
-an.increase             <- function(x,change=3,fraction=.1) {
-                                    runif(1, min= (change*x - fraction*(change*x)), max=(change*x + fraction*(change*x)))
-                                     }
+an.increase <- function(x, change = 3, fraction = .1) {
+  runif(1, min = (change * x - fraction * (change * x)), max = (change * x + fraction * (change * x)))
+}
 
 # Disminuye por el cambio +- fracción del cambio. Es decir 0.2 +- 0.1 (0.1-0.3)
-a.decrease               <- function(x,change=.2,fraction=.1) {
-                                    runif(1, min= (change*x - fraction*(change*x )), max=(change*x + fraction*(change*x )))
-                                      }
+a.decrease <- function(x, change = .2, fraction = .1) {
+  runif(1, min = (change * x - fraction * (change * x)), max = (change * x + fraction * (change * x)))
+}
 ```
 
 Podemos crear una función para el pipeline más complejo que hicimos para el calculo del fold-change. 
 
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-generate_mean_log2Ratio <- function(x, a.letter){
-                                                x %>% mutate(`Mean treatment` = rowMeans(select(., starts_with("treat")))) %>% 
-                                                mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%  
-                                                mutate(log2Ratio = log2(.[['Mean treatment']] / .[['Mean control']])) %>% 
-                                                # Les añadiremos un identidicador al final, por """motivos""" (ver luego)
-                                                rename_at(  vars(matches('^treat|^contr|^mean|log2', ignore.case = TRUE)), funs(paste0(., a.letter)))}
+generate_mean_log2Ratio <- function(x, a.letter) {
+  x %>%
+    mutate(`Mean treatment` = rowMeans(select(., starts_with("treat")))) %>%
+    mutate(`Mean control` = rowMeans(select(., starts_with("control")))) %>%
+    mutate(log2Ratio = log2(.[["Mean treatment"]] / .[["Mean control"]])) %>%
+    # Les añadiremos un identidicador al final, por """motivos""" (ver luego)
+    rename_at(vars(matches("^treat|^contr|^mean|log2", ignore.case = TRUE)), funs(paste0(., a.letter)))
+}
 ```
 
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-# Generando sets para correlaciones 
-sim.without.outliers %>% 
-  generate_mean_log2Ratio(' A') -> A # Calcula el fold-change inicial sin cambios
+# Generando sets para correlaciones
+sim.without.outliers %>%
+  generate_mean_log2Ratio(" A") -> A # Calcula el fold-change inicial sin cambios
 
-sim.without.outliers %>% 
-  mutate(across(starts_with("treatment"), an.increase)) %>% 
-  generate_mean_log2Ratio(' B') -> B # Fold-change aumenta 1.4-1.7 veces
+sim.without.outliers %>%
+  mutate(across(starts_with("treatment"), an.increase)) %>%
+  generate_mean_log2Ratio(" B") -> B # Fold-change aumenta 1.4-1.7 veces
 
-sim.without.outliers %>% 
-  mutate(across(starts_with("treatment"), a.decrease))  %>% 
-  generate_mean_log2Ratio(' C') -> C # Fold-change disminuye -3.3 - -1.7 veces
+sim.without.outliers %>%
+  mutate(across(starts_with("treatment"), a.decrease)) %>%
+  generate_mean_log2Ratio(" C") -> C # Fold-change disminuye -3.3 - -1.7 veces
 
 # Creando el dataset final
-cbind(A,                                               # Parte con la data A
-      select(B, matches('tre|con|log')),               # Añade columnas de B
-      select(C, matches('tre|con|log'))) -> final.data # Añade columnas de C y guarda
+cbind(
+  A, # Parte con la data A
+  select(B, matches("tre|con|log")), # Añade columnas de B
+  select(C, matches("tre|con|log"))
+) -> final.data # Añade columnas de C y guarda
 final.data
 ```
 
@@ -133,18 +137,18 @@ R no incluye pipes en base.
 - ``%T%`` una tee, que permite sacar muestras del pipeline, o derivar a otros pipes  
 
 ```{r echo=TRUE, fig.height=3, fig.width=3, message=FALSE, warning=FALSE}
-final.data %$% name %>% 
-  head # Sin head el output es de 3300 cosas
+final.data %$% name %>%
+  head() # Sin head el output es de 3300 cosas
 
-final.data %$% cor(`log2Ratio A`,`log2Ratio B`) # Correlación entre A y B
+final.data %$% cor(`log2Ratio A`, `log2Ratio B`) # Correlación entre A y B
 
-final.data %$% cbind(`log2Ratio A`, `log2Ratio B`, `log2Ratio C`) %>% colSums -> my.col.sum
+final.data %$% cbind(`log2Ratio A`, `log2Ratio B`, `log2Ratio C`) %>% colSums() -> my.col.sum
 
-my.col.sum %>%  subset(.>0) -> my.col.sum
-my.col.sum %<>% subset(.>0) # Pipe bidireccional util para actualizar cosas
+my.col.sum %>% subset(. > 0) -> my.col.sum
+my.col.sum %<>% subset(. > 0) # Pipe bidireccional util para actualizar cosas
 
-final.data %>% select(matches('log2')) %T>% plot() %>% # %T% permite sacar "muestras" del pipe
-select(matches('B|C')) -> my.cols
+final.data %>% select(matches("log2")) %T>% plot() %>% # %T% permite sacar "muestras" del pipe
+  select(matches("B|C")) -> my.cols
 ```
 
 ## Usando sistemas de identificadores
@@ -152,17 +156,17 @@ select(matches('B|C')) -> my.cols
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Esto crea las descripciones del sistema o como estan descritas
 # Molestias de los datos ómicos
-my.terms <- c('system 1','system 2.7.9','subsystem A','subsystem B and A') # Sistemas super-sistemicos
+my.terms <- c("system 1", "system 2.7.9", "subsystem A", "subsystem B and A") # Sistemas super-sistemicos
 
-sample(my.terms, nrow(final.data)/2,  replace = T)        -> terms.col # Genera una columna de terminos de 1650 lineas . 
+sample(my.terms, nrow(final.data) / 2, replace = T) -> terms.col # Genera una columna de terminos de 1650 lineas .
 
-sample(final.data$name, nrow(final.data)/2,  replace = F) -> names.sample # saca 1650 nombres sin duplicados, para una tabla donde habran termiminos para sistemas de identificadores
+sample(final.data$name, nrow(final.data) / 2, replace = F) -> names.sample # saca 1650 nombres sin duplicados, para una tabla donde habran termiminos para sistemas de identificadores
 
-data.frame(terms.col,names.sample) -> my.info # hacemos una tabla con datos de multiples funciones 
+data.frame(terms.col, names.sample) -> my.info # hacemos una tabla con datos de multiples funciones
 
-inner_join(final.data,my.info, by = c('name'='names.sample'))-> final.data.with.terms # elimina los datos que no tienen los terminos de sistemas que usamos
+inner_join(final.data, my.info, by = c("name" = "names.sample")) -> final.data.with.terms # elimina los datos que no tienen los terminos de sistemas que usamos
 
-full_join(final.data,my.info, by = c('name'='names.sample')) -> final.data.with.terms.nas # terminos en que algunos tienen descriptores y otros no
+full_join(final.data, my.info, by = c("name" = "names.sample")) -> final.data.with.terms.nas # terminos en que algunos tienen descriptores y otros no
 ```
 
 ## Filtrado de filas
@@ -171,7 +175,7 @@ full_join(final.data,my.info, by = c('name'='names.sample')) -> final.data.with.
 
 final.data.with.terms.nas %>% # Nuestra data media sucia sin los nombres sistemicos
   filter(`log2Ratio A` < 0 & `log2Ratio B` < 0 & `log2Ratio C` < 0) %>% # TODO: porque no funciona con "?
-  drop_na # Elimina todas las filas con NA
+  drop_na() # Elimina todas las filas con NA
 ```
 
 # Expresiones regulares
@@ -186,67 +190,103 @@ Sitios como [regex101](regex101.com/) permiten testear y analizar expresiones re
 
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Detectando un patron
-final.data.with.terms.nas %>% .[['name']] %>% 
-  str_detect('DE') %>% # Detecta si hay o no, tira un vectro booleano
-  which # Tira una lista de las columnas donde es str_detect es TRUE
+final.data.with.terms.nas %>%
+  .[["name"]] %>%
+  str_detect("DE") %>% # Detecta si hay o no, tira un vectro booleano
+  which() # Tira una lista de las columnas donde es str_detect es TRUE
 
 # TODO: que hacia any()?
-final.data.with.terms.nas %>% .[['name']] %>% str_detect('DE') %>% any
-final.data.with.terms.nas %>% .[['name']] %>% str_extract('DE.\\d+')  %>%  .[!is.na(.)]
+final.data.with.terms.nas %>%
+  .[["name"]] %>%
+  str_detect("DE") %>%
+  any()
+final.data.with.terms.nas %>%
+  .[["name"]] %>%
+  str_extract("DE.\\d+") %>%
+  .[!is.na(.)]
 ```
 
 
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Detección de patrones algo más avanzada
-final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d$') %>%  .[!is.na(.)]
-final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d+') %>% .[!is.na(.)] 
-final.data.with.terms.nas %>% .[['name']] %>% str_extract('[aA-zZ]E.1\\d.+') %>% .[!is.na(.)]
+final.data.with.terms.nas %>%
+  .[["name"]] %>%
+  str_extract("[aA-zZ]E.1\\d$") %>%
+  .[!is.na(.)]
+final.data.with.terms.nas %>%
+  .[["name"]] %>%
+  str_extract("[aA-zZ]E.1\\d+") %>%
+  .[!is.na(.)]
+final.data.with.terms.nas %>%
+  .[["name"]] %>%
+  str_extract("[aA-zZ]E.1\\d.+") %>%
+  .[!is.na(.)]
 
-final.data.with.terms.nas %>% .[['terms.col']] %>% str_extract('^s.*m') %>% 
-  na.exclude %>% # Es como lo de arriba, pero tira más cosas. Puede ser incomodo
-  sample(10) %>% unique
+final.data.with.terms.nas %>%
+  .[["terms.col"]] %>%
+  str_extract("^s.*m") %>%
+  na.exclude() %>% # Es como lo de arriba, pero tira más cosas. Puede ser incomodo
+  sample(10) %>%
+  unique()
 
 # Reemplazo de patrones (subsystem -> comparment) # TODO: compartment?
-final.data.with.terms.nas %>% .[['terms.col']] %>% str_replace('subsyst.*','comparment') %>% na.exclude() %>% sample(10)
+final.data.with.terms.nas %>%
+  .[["terms.col"]] %>%
+  str_replace("subsyst.*", "comparment") %>%
+  na.exclude() %>%
+  sample(10)
 ```
 ## Workflow de la vida real
 
 ```{r paged.print=TRUE}
-final.data.with.terms.nas %>% 
-  filter(str_detect(name, # en la columna "name"
-                    regex('de.*', # Busca "de*"
-                          ignore_case = T)) & # sin diferencias Minuscula/Mayuscula
-         str_detect(terms.col, # Busca en la columna "term.cols"
-                    regex('B.*A', ignore_case = F))) # ...terminos que empiezan con B y terminan en A
+final.data.with.terms.nas %>%
+  filter(str_detect(
+    name, # en la columna "name"
+    regex("de.*", # Busca "de*"
+      ignore_case = T
+    )
+  ) & # sin diferencias Minuscula/Mayuscula
+    str_detect(
+      terms.col, # Busca en la columna "term.cols"
+      regex("B.*A", ignore_case = F)
+    )) # ...terminos que empiezan con B y terminan en A
 ```
 
 ```{r paged.print=TRUE}
-final.data.with.terms.nas %>% 
-  filter(str_detect(name, # en la columna "name"
-                    regex('de.*',  # ... el patrón "de*"
-                          ignore_case = T)) & # sin diferencias Minuscula/Mayuscula
-         str_detect(terms.col, # en la columna "term.cols"
-                    regex('\\d.\\d',  # ... el patrón "\\d.\\d"
-                          ignore_case = F)) & # sin diferencias Minuscula/Mayuscula
-           `log2Ratio C` <0) %>% # Y el fold-change es menor a 0
-  select(matches('log|name|term')) 
+final.data.with.terms.nas %>%
+  filter(str_detect(
+    name, # en la columna "name"
+    regex("de.*", # ... el patrón "de*"
+      ignore_case = T
+    )
+  ) & # sin diferencias Minuscula/Mayuscula
+    str_detect(
+      terms.col, # en la columna "term.cols"
+      regex("\\d.\\d", # ... el patrón "\\d.\\d"
+        ignore_case = F
+      )
+    ) & # sin diferencias Minuscula/Mayuscula
+    `log2Ratio C` < 0) %>% # Y el fold-change es menor a 0
+  select(matches("log|name|term"))
 ```
 
 - ``%in%`` permite detectar si un elemento esta en un objeto. Devuelve TRUE/FALSE.  
   Puede usarse como un complemento de los comparadores ``==``, `>`, `<=` en sentencias ``if(){}``
 
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-if(T){'ok'}
-if(F){'ok'}
-if('system 2.7.9' %in% final.data.with.terms.nas$terms.col){'ok'}
+if (T) {"ok"}
+if (F) {"ok"}
+if ("system 2.7.9" %in% final.data.with.terms.nas$terms.col) {"ok"}
 # "system 2.7.9" está en "final.data..." así que TRUE -> 'ok'
 
-final.data.with.terms.nas %>% {
-                               if('system 2.7.9' %in% final.data.with.terms.nas$terms.col) print('ok') else str_extract(.[['terms.col']], 'system.*' )
-                               } %>%
-                                  na.omit %>% unique -> unicos
+final.data.with.terms.nas %>%
+  {
+    if ("system 2.7.9" %in% final.data.with.terms.nas$terms.col) print("ok") else str_extract(.[["terms.col"]], "system.*")
+  } %>%
+  na.omit() %>%
+  unique() -> unicos
 
-mis.datos <- list(final.data.with.terms.nas, unicos, c(1,2,4,5,5,NA))
+mis.datos <- list(final.data.with.terms.nas, unicos, c(1, 2, 4, 5, 5, NA))
 ```
 
 # Guardando datos en formato RDS y RData
@@ -262,8 +302,8 @@ Dependiendo de la data, un RDS puede ser 10 veces más pequeño que un CSV.
 
 ```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 list.files()
-list.files(path = ".", pattern = 'aa',  ignore.case = T)
-list.files(pattern = 'csv', full.names = T)
+list.files(path = ".", pattern = "aa", ignore.case = T)
+list.files(pattern = "csv", full.names = T)
 # Save an object to a file
 saveRDS(mis.datos, file = "AA_mis_datos.rds")
 # Restore the object

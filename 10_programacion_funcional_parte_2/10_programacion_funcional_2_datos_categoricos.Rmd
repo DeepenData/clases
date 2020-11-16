@@ -22,13 +22,19 @@ map2(x, y, `+`)       # La misma operación con otra sintaxis
 map2(x, y, sum)       # Y otra sintaxis más
 
 # Creamos una funcion de dos variables
-log2ratio <- function(x,y){r <- log2(x/y); return(r)}
+log2ratio <- function(x, y) {
+  r <- log2(x / y)
+  return(r)
+}
 
 # Y usamos map2() para aplicarla
 map2(x, y, log2ratio)
 
 # Modificamos log2ratio para que salga como data.frame
-log2ratio <- function(x,y){r <- log2(x/y); return(as.data.frame(r))}
+log2ratio <- function(x, y) {
+  r <- log2(x / y)
+  return(as.data.frame(r))
+}
 
 # Guardamos los tres resultados a un dataframe
 map2_dfr(x, y, log2ratio) # Concatenado por filas (rows)
@@ -49,7 +55,7 @@ Ahora, podemos trabajar con más de dos listas.
 Primero, necesitamos definir una lista de listas. 
 
 ```{r, message=FALSE, warning=FALSE}
-# Creamos una nueva lista de listas a partir de x,y,z 
+# Creamos una nueva lista de listas a partir de x,y,z
 list(x, y, z) -> l
 
 # pmap() puede trabajar con multiples argumentos
@@ -71,12 +77,12 @@ length(l) %>% rerun(rnorm(5))
 ```{r, message=FALSE, warning=FALSE}
 # Otras listas
 x <- list(10, 14)
-y <- list(10, 20, 30,14)
+y <- list(10, 20, 30, 14)
 z <- list(100, 14, 30, 9)
 list(x, y, z) -> l
 
 # Si queremos desarmar nuestra de listas a un objeto más plano
-l %>% unlist # Aplana nuestra lista de listas a un vector
+l %>% unlist() # Aplana nuestra lista de listas a un vector
 ```
 
 Ahora, si queremos aplicar teoría de grupos a nuestras listas, para unir, interseccionar, etc. las listas, podemos usar **reduce()**
@@ -93,28 +99,28 @@ library(forcats)
 library(magrittr)
 
 # Creando nuesto objeto de ejemplo
-my.letters <- sample(letters[2:5],10, replace = T) # saca 10 letras que pueden ser b,c,d, ó e.
-my.letters %<>% factor    # convierte las letras a factores categoricos
+my.letters <- sample(letters[2:5], 10, replace = T) # saca 10 letras que pueden ser b,c,d, ó e.
+my.letters %<>% factor # convierte las letras a factores categoricos
 
 # Analizando una lista con factores categoricos
-my.letters %>% levels     # Cuales son las categorias?
-my.letters %>% fct_count  # Frecuencia de cada categoria
-my.letters %>% fct_infreq # Ordenados por frecuencia
+my.letters %>% levels()     # Cuales son las categorias?
+my.letters %>% fct_count()  # Frecuencia de cada categoria
+my.letters %>% fct_infreq() # Ordenados por frecuencia
 ```
 Los valores categoricos pueden ser utiles en segmentación de data para analisis, eg. que ruta metabolica esta más fecuentemente alterada, 
 
 ```{r, message=FALSE, warning=FALSE}
 library(dplyr)
 
-data <- read.csv("https://raw.githubusercontent.com/guru99-edu/R-Programming/master/lahman-batting.csv") %>% 
+data <- read.csv("https://raw.githubusercontent.com/guru99-edu/R-Programming/master/lahman-batting.csv") %>%
   select(c(playerID, yearID, AB, teamID, lgID, G, R, HR, SH)) %>%
-  arrange(yearID %>% desc)
+  arrange(yearID %>% desc())
 ```
 En general, los archivos .CSV son demasiado simples como para guardar metadata sobre el tipo de data que es cada columna. 
 Esto puede llevar a errores, como data de fechas interpretada como caracteres, datos binarios 01 interpretados como numeros, etc. 
 
 ```{r, message=FALSE, warning=FALSE}
-glimpse(data)   # Hay varios datos "categoricos" guardados como chr
+glimpse(data) # Hay varios datos "categoricos" guardados como chr
 ```
 
 El _playerID_, _yearID_, son categoricos, no _character_ ni _integrers_. 
@@ -132,8 +138,9 @@ data %>% group_by(yearID) %>% # Se aplica sobre variables categoricas
 
 
 ```{r, message=FALSE, warning=FALSE}
-data %>% group_by(yearID) %>% 
-  summarise(count_teamIDs = n_distinct(teamID),  count_playerIDs = n_distinct(playerID)) #, count_teamIDs = n_distinct(teamIDs))
+data %>%
+  group_by(yearID) %>%
+  summarise(count_teamIDs = n_distinct(teamID), count_playerIDs = n_distinct(playerID)) # , count_teamIDs = n_distinct(teamIDs))
 # Esto deberia quedar como un nuevo data.frame, dado que no tenemos una salida del mismo tamaño
 # TODO: hacer un plot de esta salida
 ```
@@ -142,15 +149,17 @@ data %>% group_by(yearID) %>%
 # TODO: interconversiones data.frame lista; lista data.frame
 # TODO: ejemplo del uso de map+reduce
 
-compose(`!`,is.double) -> not.double # Creamos una función inversa
+compose(`!`, is.double) -> not.double # Creamos una función inversa
 
 # Cuales variables de la tabla son datos categoricos?
-data %>% select_if(not.double) %>% names # Columnas no numericas
+data %>%
+  select_if(not.double) %>%
+  names() # Columnas no numericas
 
 # Convertimos los datos categoricos a factores
-data[['playerID']] %<>% as.factor
-data[['yearID']]   %<>% as.factor
-data[['teamID']]   %<>% as.factor
+data[["playerID"]] %<>% as.factor
+data[["yearID"]]   %<>% as.factor
+data[["teamID"]]   %<>% as.factor
 # data[['lgID']]   %<>% as.factor # TODO: what is this?
 
 # TODO: transformado a lista que aplica contar y eso
@@ -158,17 +167,23 @@ data[['teamID']]   %<>% as.factor
 
 # Hace tablas de resumen de frecuencia para cada factor
 # ADVERTENCIA: si lo hacen paso a paso, la RAM explota
-data %>% select_if(is.factor) %>% as.list %>% map(fct_count)
+data %>%
+  select_if(is.factor) %>%
+  as.list() %>%
+  map(fct_count)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-data %>% group_by(teamID) %>% 
-  nest -> nested.data.by.teamID
+data %>%
+  group_by(teamID) %>%
+  nest() -> nested.data.by.teamID
 
-nested.data.by.teamID %>% 
+nested.data.by.teamID %>%
   tidyr::unnest_wider(data) -> data2
 
-data2 %>% filter(teamID == 'BOS') %>% .[['yearID']]
+data2 %>%
+  filter(teamID == "BOS") %>%
+  .[["yearID"]]
 ```
 
 # Cosas KEGG
@@ -177,11 +192,11 @@ data2 %>% filter(teamID == 'BOS') %>% .[['yearID']]
 library("KEGGREST")
 KEGGREST::listDatabases()
 
-paths <- 'brain' # Queremos enfermedades del cerebro
+paths <- "brain" # Queremos enfermedades del cerebro
 
 keggFind("disease", paths) %>% # Buscamos enfermedades con "brain"
-  as.matrix %>% rownames() %>%   # (un poco de formato)
-  keggGet() -> found.kegg      # Pedimos toda esta data
+  as.matrix() %>% rownames() %>% # (un poco de formato)
+  keggGet() -> found.kegg # Pedimos toda esta data
 
 # TODO: como hacer un bypass de las limitaciones de API de KEGG
 ```
@@ -189,61 +204,67 @@ keggFind("disease", paths) %>% # Buscamos enfermedades con "brain"
 
 ```{r, message=FALSE, warning=FALSE}
 # Hacemos un map de pluck de entradas en nuestra lista
-map(found.kegg, pluck('ENTRY')) %>% 
-  as.character -> disease.names # Guardado como un vector
+map(found.kegg, pluck("ENTRY")) %>%
+  as.character() -> disease.names # Guardado como un vector
 
-map(found.kegg, pluck('GENE')) %>% set_names(disease.names) %>%
-  enframe( name = "Disease", value = "Genes") %>%
+map(found.kegg, pluck("GENE")) %>%
+  set_names(disease.names) %>%
+  enframe(name = "Disease", value = "Genes") %>%
   unnest_longer(Genes) -> brain.disease.genes
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-map(found.kegg, pluck('PATHWAY')) %>% set_names(disease.names) %>%
-  set_names(disease.names) %>% 
-  enframe( name = "Disease", value = "PATHWAY") %>% 
+map(found.kegg, pluck("PATHWAY")) %>%
+  set_names(disease.names) %>%
+  set_names(disease.names) %>%
+  enframe(name = "Disease", value = "PATHWAY") %>%
   unnest_longer(PATHWAY) -> brain.disease.pathways
 ```
 
 ```{r, message=FALSE, warning=FALSE}
 # Hace una tabla resumen de genes y enfermedades
-full_join(brain.disease.pathways,brain.disease.genes, by='Disease' ) -> brain_diseases
+full_join(brain.disease.pathways, brain.disease.genes, by = "Disease") -> brain_diseases
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-brain_diseases %>% 
-  group_by(Disease) %>% 
-  summarise(Gene_count = n_distinct(Genes),PATHWAY_id_count = n_distinct(PATHWAY_id)) -> brain_diseases_df
+brain_diseases %>%
+  group_by(Disease) %>%
+  summarise(Gene_count = n_distinct(Genes), PATHWAY_id_count = n_distinct(PATHWAY_id)) -> brain_diseases_df
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-brain_diseases$Genes %>% 
-  str_extract('HSA:\\d+') %>% 
-  str_extract('\\d+') -> brain_diseases.entrezgene_id
+brain_diseases$Genes %>%
+  str_extract("HSA:\\d+") %>%
+  str_extract("\\d+") -> brain_diseases.entrezgene_id
 ```
 
 ```{r, message=FALSE, warning=FALSE}
 library(biomaRt)
-ensembl    <- useMart("ensembl") #para toda la base de datos
-Hs.ensembl <- useMart("ensembl",dataset="hsapiens_gene_ensembl") #solo Humano
+ensembl <- useMart("ensembl") # para toda la base de datos
+Hs.ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl") # solo Humano
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-my.genes   <-  brain_diseases.entrezgene_id
+my.genes <- brain_diseases.entrezgene_id
 
-my.info    <- getBM(
-  attributes=c('name_1006','hgnc_symbol','entrezgene_id'),
-  filters ='entrezgene_id',
-  values = my.genes,mart = Hs.ensembl)
+my.info <- getBM(
+  attributes = c("name_1006", "hgnc_symbol", "entrezgene_id"),
+  filters = "entrezgene_id",
+  values = my.genes, mart = Hs.ensembl
+)
 
 my.info
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-my.info %>% group_by(name_1006) %>% 
-  nest %>% unnest_wider(data)
+my.info %>%
+  group_by(name_1006) %>%
+  nest() %>%
+  unnest_wider(data)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-my.info %>% group_by(hgnc_symbol) %>% 
-  summarise(Term_count = n_distinct(name_1006)) 
+my.info %>%
+  group_by(hgnc_symbol) %>%
+  summarise(Term_count = n_distinct(name_1006))
 ```

@@ -1,4 +1,4 @@
----
+https://rdrr.io/r/utils/install.packages.html---
 title: "Algoritmos, loops y condicionales (PARTE 2)"
 author: Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Universidad
   de Chile, deepen.data@gmail.com]; Manuel Muñoz-González^[_Pregrado_, Universidad
@@ -18,96 +18,108 @@ output:
 ---
 
 ```{r}
-largo                              <- 30
+largo <- 30
 sample(letters, largo, replace = T) -> a
-sample(1:10, largo, replace = T)    -> b
-sample(c(1:10,letters[1:5]), largo, replace = T)    -> c
+sample(1:10, largo, replace = T) -> b
+sample(c(1:10, letters[1:5]), largo, replace = T) -> c
 
 
 library(stringi)
-stri_rand_strings(largo,8, pattern = "[A-B0-9t-z]") -> my.rows
-stri_rand_strings(3,4, pattern = "[A-G]") -> my.cols
+stri_rand_strings(largo, 8, pattern = "[A-B0-9t-z]") -> my.rows
+stri_rand_strings(3, 4, pattern = "[A-G]") -> my.cols
 
 library(magrittr)
-cbind(a,b,c) %>% set_rownames(my.rows) %>% set_colnames(my.cols) -> `my.mat`
-
+cbind(a, b, c) %>%
+  set_rownames(my.rows) %>%
+  set_colnames(my.cols) -> `my.mat`
 ```
 
 
 ```{r message=FALSE, warning=FALSE}
-mis_numbs = NA
-mis_letrs = NA
-i  = 0
-p1 = 0
-p2 = 0
-for(i in 1:nrow(my.mat))
+mis_numbs <- NA
+mis_letrs <- NA
+i <- 0
+p1 <- 0
+p2 <- 0
+for (i in 1:nrow(my.mat))
+{
+  for (j in 1:ncol(my.mat))
   {
-    for(j in 1:ncol(my.mat))
-      {
-        my.mat[i,j] -> my.item
-        if(!is.na( as.numeric(my.item))) 
-          {
-            p1 = p1 +1
-            mis_numbs[p1] <- as.numeric(my.item)
-            next
-          }
-        p2 = p2 + 1 
-        mis_letrs[p2] =  my.item
-      }
+    my.mat[i, j] -> my.item
+    if (!is.na(as.numeric(my.item))) {
+      p1 <- p1 + 1
+      mis_numbs[p1] <- as.numeric(my.item)
+      next
+    }
+    p2 <- p2 + 1
+    mis_letrs[p2] <- my.item
+  }
+}
+
+mis_letrs
+mis_numbs
+```
+
+
+```{r message=FALSE, warning=FALSE}
+mis_numbs <- NA
+mis_letrs <- NA
+i <- 0
+p1 <- 0
+p2 <- 0
+c(my.mat) -> matriz.aplanada
+
+for (i in 1:length(matriz.aplanada)) {
+  my.item <- matriz.aplanada[i]
+  if (!is.na(as.numeric(my.item))) {
+    p1 <- p1 + 1
+    mis_numbs[p1] <- as.numeric(my.item)
+    next
+  }
+  p2 <- p2 + 1
+  mis_letrs[p2] <- my.item
+}
+mis_letrs
+mis_numbs
+```
+
+
+```{r message=FALSE, warning=FALSE}
+mis_numbs <- NULL
+mis_letrs <- NULL
+i <- 0
+repeat{
+  i <- i + 1
+  if (i > length(c(my.mat))) {
+    break
   }
 
-mis_letrs
-mis_numbs
-```
-
-
-```{r message=FALSE, warning=FALSE}
-mis_numbs = NA; mis_letrs = NA
-i  = 0; p1 = 0; p2 = 0
-c(my.mat) -> matriz.aplanada
-
-for(i in 1:length(matriz.aplanada)){
-                         my.item <- matriz.aplanada[i]
-                         if(!is.na( as.numeric(my.item))) {p1 = p1 +1
-                                                          mis_numbs[p1] <- as.numeric(my.item)
-                                                          next}
-                         p2 = p2 + 1 
-                         mis_letrs[p2] =  my.item
-}
-mis_letrs
-mis_numbs
-```
-
-
-```{r message=FALSE, warning=FALSE}
-mis_numbs = NULL
-mis_letrs = NULL
-i  = 0
-repeat{i=i+1
-       if(i>length(c(my.mat))){break}
-
-       my.item <- c(my.mat)[i]
-       if(!is.na( as.numeric(my.item))) {
-                                        mis_numbs %<>% c(as.numeric(my.item))
-                                        next}
-      mis_letrs %<>% c(my.item) 
+  my.item <- c(my.mat)[i]
+  if (!is.na(as.numeric(my.item))) {
+    mis_numbs %<>% c(as.numeric(my.item))
+    next
+  }
+  mis_letrs %<>% c(my.item)
 }
 mis_letrs
 mis_numbs
 ```
 
 ```{r message=FALSE, warning=FALSE}
-mis_numbs = NULL
-mis_letrs = NULL
-i  = 0
+mis_numbs <- NULL
+mis_letrs <- NULL
+i <- 0
 c(my.mat) -> matriz.aplanada
 
-while(i<length(matriz.aplanada)){
-                                i       <- i + 1
-                                my.item <- matriz.aplanada[i]
-                              if(!is.na(as.numeric(my.item))) {
-                                        mis_numbs %<>% c(as.numeric(my.item))}
-                              else{mis_letrs %<>% c(my.item)}
+while (i < length(matriz.aplanada)) {
+  i <- i + 1
+  my.item <- matriz.aplanada[i]
+  if (!is.na(as.numeric(my.item))) {
+    mis_numbs %<>% c(as.numeric(my.item))
+  }
+  else {
+    mis_letrs %<>% c(my.item)
+  }
 }
 mis_letrs
 mis_numbs
@@ -116,89 +128,98 @@ mis_numbs
 
 ### Ejemplo: Extraer títulos desde lista con metadata de RNAseq
 ```{r message=FALSE, warning=FALSE}
-if (!("GEOquery" %in% installed.packages())){install.packages("GEOquery")}
+if (!("GEOquery" %in% installed.packages())) {
+  install.packages("GEOquery")
+}
 library("GEOquery")
 library(tidyverse)
 
-codes <- c('GSE159378', 'nada' , 'GSE159377',  'GSE154900', 'GSE151154', 'nada', 'GSE146754' )
+codes <- c("GSE159378", "nada", "GSE159377", "GSE154900", "GSE151154", "nada", "GSE146754")
 
 metadata.list <- list()
 
-for(i in 1:length(codes)){
-  down.path                  <- NULL
+for (i in 1:length(codes)) {
+  down.path <- NULL
   try(
-  getGEOfile(codes[i])       -> down.path) 
-  if (down.path %>% is.null){next}
-  getGEO(filename=down.path) -> soft
-  soft                       -> metadata.list[[i]]
+    getGEOfile(codes[i]) -> down.path
+  )
+  if (down.path %>% is.null()) {
+    next
+  }
+  getGEO(filename = down.path) -> soft
+  soft -> metadata.list[[i]]
 }
 
-#metadata.list %>% glimpse
-#metadata.list %>% length
+# metadata.list %>% glimpse
+# metadata.list %>% length
 My.sample.codes <- NULL
 Titles <- NULL
-for(i in 1:length(metadata.list)){
-                                   metadata.list[[i]]               -> extracted.metadata
-                                   if (extracted.metadata %>% is.null){next}  
-  
-                                   extracted.metadata %>% slotNames -> my.slots
+for (i in 1:length(metadata.list)) {
+  metadata.list[[i]] -> extracted.metadata
+  if (extracted.metadata %>% is.null()) {
+    next
+  }
 
-             for(j in 1:length(my.slots)){ 
-                                          slot(extracted.metadata,my.slots[j] ) %>% names -> my.names
+  extracted.metadata %>% slotNames() -> my.slots
 
-             if(str_detect(my.names, '(t|T)itle') %>% any){
-                                              my.names[str_detect(my.names, '(t|T)itle')]       -> my.title0
-                                              slot(extracted.metadata,my.slots[j])[[my.title0]] -> my.title
-                                              Titles %<>% c(my.title)}
-             if (str_detect(my.names, 'GSM.*') %>% any) {  
-                                              my.names[str_detect(my.names, 'GSM.*')]       -> GSM0
-                                              GSM0 %>% paste(collapse = ',') -> GSM
-                                              My.sample.codes %<>% c(GSM)}
-                                      }
-                                   }
-                    
-                                            
+  for (j in 1:length(my.slots)) {
+    slot(extracted.metadata, my.slots[j]) %>% names() -> my.names
 
+    if (str_detect(my.names, "(t|T)itle") %>% any()) {
+      my.names[str_detect(my.names, "(t|T)itle")] -> my.title0
+      slot(extracted.metadata, my.slots[j])[[my.title0]] -> my.title
+      Titles %<>% c(my.title)
+    }
+    if (str_detect(my.names, "GSM.*") %>% any()) {
+      my.names[str_detect(my.names, "GSM.*")] -> GSM0
+      GSM0 %>% paste(collapse = ",") -> GSM
+      My.sample.codes %<>% c(GSM)
+    }
+  }
+}
 
-cbind(My.sample.codes,Titles) 
-
+cbind(My.sample.codes, Titles)
 ```
 
 ```{r message=FALSE, warning=FALSE}
 library(GEOquery)
 
-GSE43255.supp <- getGEOSuppFiles(GEO = 'GSE43255', makeDirectory = TRUE,   fetch_files = TRUE)
+GSE43255.supp <- getGEOSuppFiles(GEO = "GSE43255", makeDirectory = TRUE, fetch_files = TRUE)
 GSE43255.supp %>% row.names() -> full.path.raw_tar
-full.path.raw_tar %>% str_match('.*(?=GSE\\d+.RAW.*)') -> gse.folder
-untar(tarfile = full.path.raw_tar ,exdir =  gse.folder)
+full.path.raw_tar %>% str_match(".*(?=GSE\\d+.RAW.*)") -> gse.folder
+untar(tarfile = full.path.raw_tar, exdir = gse.folder)
 ```
 
 ```{r}
 
-list.files(gse.folder) %>% str_extract_all('.*gz') %>% unlist() -> my.gz
-gz.paths <- paste0(gse.folder,my.gz)
-for(i in 1:length(gz.paths)){
-                              gunzip(gz.paths[i], remove = F, overwrite = T)
-                             
+list.files(gse.folder) %>%
+  str_extract_all(".*gz") %>%
+  unlist() -> my.gz
+gz.paths <- paste0(gse.folder, my.gz)
+for (i in 1:length(gz.paths)) {
+  gunzip(gz.paths[i], remove = F, overwrite = T)
 }
 
-list.files(gse.folder) %>% str_extract_all('.*gpr') %>% unlist() %>% paste0(gse.folder, .) -> all.raw.files
+list.files(gse.folder) %>%
+  str_extract_all(".*gpr") %>%
+  unlist() %>%
+  paste0(gse.folder, .) -> all.raw.files
 ```
 
 
 ```{r message=FALSE, warning=FALSE}
 my.gpr.DFs <- list()
-for(i in 1:length(all.raw.files)){
-                                  line  <- 0L
-                                  input <- 'start'
-                                  a.file <- all.raw.files[i]
-                                  sample.id <- str_extract(a.file, 'GSM\\d+')
-                                  #see if the word is in the file
-                                  while(!str_detect(input, '(B|b)lock')){
-                                       line  <- line + 1L
-                                       input <- read_lines(a.file, skip = line - 1L, n_max = 1L)}
-                                  
-                                  as.data.frame(read_delim(a.file, delim = '\t', skip = line-1)) -> my.gpr.DFs[[sample.id]]
-                                  
+for (i in 1:length(all.raw.files)) {
+  line <- 0L
+  input <- "start"
+  a.file <- all.raw.files[i]
+  sample.id <- str_extract(a.file, "GSM\\d+")
+  # see if the word is in the file
+  while (!str_detect(input, "(B|b)lock")) {
+    line <- line + 1L
+    input <- read_lines(a.file, skip = line - 1L, n_max = 1L)
+  }
+
+  as.data.frame(read_delim(a.file, delim = "\t", skip = line - 1)) -> my.gpr.DFs[[sample.id]]
 }
 ```

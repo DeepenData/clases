@@ -1,8 +1,7 @@
 ---
-title: "Guia de Instalaciones para R(Studio)"
-output:
-  html_document:
-    df_print: paged
+{title: "Guia de Instalaciones para R(Studio)",
+date: 2020-10-11,
+author: "Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Universidad de Chile, deepen.data@gmail.com]; Manuel Muñoz-González^[_Pregrado_, Universidad de Chile]", output: {html_document: {theme: flatly, highlight: tango, toc: true, toc_float: {collapsed: false, smooth_scroll: true}, df_print: paged, code_folding: show}, html_notebook: default}}
 ---
 
 La guía asume que ya tienen RStudio. La sección para instalar R y RStudio en varios sistemas se encuentra más abajo.

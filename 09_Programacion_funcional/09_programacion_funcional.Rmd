@@ -1,13 +1,10 @@
 ---
-title: "Programación funcional"
-date: 2020-10-29
-author: 'Acevedo, A. & Munoz, M. U. de Chile.'
-output:
-  html_document:
-    df_print: paged
+{title: "Programación funcional",
+date: 2020-10-29,
+author: "Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Universidad de Chile, deepen.data@gmail.com]; Manuel Muñoz-González^[_Pregrado_, Universidad de Chile]", output: {html_document: {theme: flatly, highlight: tango, toc: true, toc_float: {collapsed: false, smooth_scroll: true}, df_print: paged, code_folding: show}, html_notebook: default}}
 ---
 
-```{r Carga librerias a usar, echo=TRUE, warning=FALSE}
+```{r Carga librerias a usar, echo=TRUE, message=FALSE, warning=FALSE}
 # Librerias a utilizar
 library("Biobase")    # Funciones base de Bioconductor
 library("biomaRt")    # Acceso a bases de datos de Biomart
@@ -126,12 +123,14 @@ full.path.raw_tar %>% str_match('.*(?=GSE\\d+.RAW.*)') -> gse.folder
 untar(tarfile = full.path.raw_tar ,exdir =  gse.folder)
 ```
 
-```{r message=FALSE, warning=FALSE}
+<!-- Todo falla desde aqui, parece una var. local -->
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 my.gunzip       <- function(a.file){GEOquery::gunzip(a.file,remove = T, overwrite = T)}
 
-get.my.gz.files <- function(a.gse.folder)
+get.my.gz.files <- function(gsefolder)
   {
-    a.gse.folder %>% list.files(full.names = T ) %>% 
+    gsefolder %>% list.files(full.names = T ) %>% 
       str_extract('.*gz') %>% na.cleaner %>% map(my.gunzip)
   }
 
@@ -153,7 +152,7 @@ df_list %>% names
 ```
 
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 tsv.files.path %>% str_extract('GSM\\d+') -> gsm.names
 
 df_list %<>% purrr::set_names(gsm.names)
@@ -165,7 +164,7 @@ df_list['GSM4462281']
 
 ### GSMs sólo de Homo sapiens
 
-```{r}
+```{r, eval=FALSE}
 
 my.pData.list <- map(data, pData)
 
@@ -179,7 +178,7 @@ Homo.sapiens.samples.list %>% length()
 Homo.sapiens.samples.list[[1]]
 ```
 
-```{r}
+```{r, eval=FALSE}
 map( Homo.sapiens.samples.list, pluck('target_id')) -> all.genes
 
 all.genes %>% purrr::reduce(union) -> all.commom.genes
@@ -192,7 +191,7 @@ all.commom.genes %>% sample(5)
 
 ### 
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Convocando la API de KEGG
 BiocManager::install("KEGGREST")
 library("KEGGREST")            # API que permite acceder a data de KEGG programaticamente
@@ -207,7 +206,7 @@ listDatabases()
 ```
 ### Convertir desde ensembl_transcript_id a entrezgene_id (biomaRt)
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 
 ensembl    <- useMart("ensembl") #para toda la base de datos
 Hs.ensembl <- useMart("ensembl",dataset="hsapiens_gene_ensembl") #solo Humano
@@ -215,7 +214,7 @@ Hs.ensembl <- useMart("ensembl",dataset="hsapiens_gene_ensembl") #solo Humano
 searchAttributes(mart = Hs.ensembl, pattern = 'GO')
 ```
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 my.genes      <-   c('ENSG00000091140') #GENE como ejemplo
 
 my.genes.symbols <- getBM(
@@ -224,7 +223,7 @@ attributes=c('ensembl_gene_id','hgnc_symbol','entrezgene_id','goslim_goa_descrip
 my.genes.symbols
 ```
 
-```{r}
+```{r, eval=FALSE}
 my.genes      <- c('ENST00000487058',all.commom.genes %>% sample(8), 'ENST00000535366')
 
 my.genes.symbols <- getBM(
@@ -232,7 +231,8 @@ attributes=c('ensembl_transcript_id','hgnc_symbol','entrezgene_id','wikigene_des
 
 my.genes.symbols
 ```
-```{r}
+
+```{r, eval=FALSE}
 na.cleaner      <- purrr::compose(as.character, na.exclude)
 
 my.genes.symbols$entrezgene_id %>% unique %>% na.cleaner %>% paste0('hsa:',.) %>% keggGet -> my.kegg.list
@@ -252,7 +252,7 @@ map( my.kegg.info, pluck('PATHWAY')) %>% purrr::compact()
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 map( my.kegg.info, pluck('ORTHOLOGY')) %>% 
   purrr::compact() %>% 
     as.matrix() %>% 

@@ -1,12 +1,8 @@
 ---
-title: "Introducción a R y Dataframes"
-output:
-  html_document:
-    df_print: paged
-  html_notebook: default
+{title: "Introducción a R y Dataframes",
+date: 2020-05-28,
+author: "Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Universidad de Chile, deepen.data@gmail.com]; Manuel Muñoz-González^[_Pregrado_, Universidad de Chile]", output: {html_document: {theme: flatly, highlight: tango, toc: true, toc_float: {collapsed: false, smooth_scroll: true}, df_print: paged, code_folding: show}, html_notebook: default}}
 ---
-<!--author: "Manuel Muñoz-González" -->
-Versión anotada de _Clase 28 de mayo 2020: Intro a R y dataframes_. 
 
 # Introducción a R y cuadernos
 
@@ -284,9 +280,11 @@ edges3 <- data.frame(Parent = paste0("clone_",
 # a function for generating exponential growth curves:
 pop_seq <- function(gens, lambda, start_gen) c(rep(0, start_gen),
                                                exp(lambda * gens[0:(length(gens) - start_gen)]))
+
 lambda <- 0.1 # baseline fitness
 gens <- 0:150 # time points
 fitnesses <- c(1, 2, 2.2, 2.5, 3, 3.2, 3.5, 3.5, 3.8) # relative fitnesses of genotypes
+
 pop3 <- data.frame(Generation = rep(gens, 9),
  Identity = paste0("clone_", LETTERS[rep(1:9, each = length(gens))]),
  Population = c(1E2 * pop_seq(gens, fitnesses[1]*lambda, 0), 
@@ -299,6 +297,7 @@ pop3 <- data.frame(Generation = rep(gens, 9),
  pop_seq(gens, fitnesses[8]*lambda, 50),
  pop_seq(gens, fitnesses[9]*lambda, 60)),
  Fitness = rep(fitnesses, each = length(gens)))
+
 Muller_df3 <- get_Muller_df(edges3, pop3)
 ```
 

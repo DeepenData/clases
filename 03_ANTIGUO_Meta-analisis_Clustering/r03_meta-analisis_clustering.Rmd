@@ -102,7 +102,7 @@ mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.s
 para.metaanal <- list()
 para.metaanal[['GSE100382']] <-  data.frame(symbols= mis.simbolos ,padj = mis.padjs, log2FoldChange = mis.lfcs, baseMean = mis.means, row.names = mis.filas)
 
-####################################################################################################
+#####
 
 un.estudio <- 'GSE55536'
 
@@ -114,7 +114,7 @@ mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.s
                                                                         
 para.metaanal[['GSE55536']] <-  data.frame(symbols= mis.simbolos ,padj = mis.padjs, log2FoldChange = mis.lfcs, baseMean = mis.means, row.names = mis.filas)
 
-##################################################################################################
+#####
 
 un.estudio <- 'GSE82227'
 
@@ -126,7 +126,8 @@ mis.DEGs.studies[[un.estudio]] %>% rownames()  %>% as.character.Array() -> mis.s
                                                                         
 para.metaanal[['GSE82227']] <-  data.frame(symbols= mis.simbolos ,padj = mis.padjs, log2FoldChange = mis.lfcs, baseMean = mis.means, row.names = mis.filas)
 
-################################################################################################
+#####
+
 para.metaanal %>% glimpse()
 ```
 

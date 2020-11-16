@@ -1,8 +1,20 @@
 ---
 title: "Algoritmos, loops y condicionales (PARTE 2)"
-author: 'Acevedo, A. & Munoz, M. U. de Chile.'
-date: 2020-10-22
-output: html_notebook
+author: Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Universidad
+  de Chile, deepen.data@gmail.com]; Manuel Muñoz-González^[_Pregrado_, Universidad
+  de Chile]
+date: '2020-10-22'
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+    df_print: paged
+    code_folding: show
+  html_notebook: default
 ---
 
 ```{r}

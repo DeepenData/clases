@@ -23,3 +23,8 @@
 06_mutate_pipes_regex/pipes.drawio.svg
 **/GSE**
 .Rproj.user
+
+# La carpeta de bookworm
+_bookworm_files/
+
+

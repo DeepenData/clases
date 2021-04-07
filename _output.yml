@@ -7,6 +7,6 @@ bookdown::gitbook:
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
     download: ["pdf", "epub"]
-    edit: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
+    edit: https://github.com/DeepenData/clases/blob/master/%s
     sharing: no
 bookdown::epub_book: default

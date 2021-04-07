@@ -1,21 +1,419 @@
-# Introduction {#intro}
+# (PART) Herramientas computacionales y programación para bioinformática {-}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+# Conceptos generales, ejemplos de casos y nociones de lenguajes de programación
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+## Interacción con terminales
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
+La terminal es una herramienta que nos permite comunicarnos directamente con la computadora para ejecutar acciones complejas en unos pocos comandos. 
+En si, es similar a como trabajamos con lenguajes interpretados como R, en el sentido de que enviamos comandos y recibimos respuestas (casi) inmediatas. 
+
+Dependiendo de en que sistema nos encontramos, tenemos distintas SHELLs que interpretan los comandos, siguiendo una sintaxis u otra, con distintos niveles de ayuda al usuario. 
+
+Por conveniencia, usaremos principalmente `BASH`, que es la SHELL mas comun encontrada en entornos Linux, que a su vez son los mas comunes en tareas de programacion para datascience y bioinformatica. 
+
+Es posible instalar un entorno Linux en Windows usando WSL ([[Windows-Subsystem-for-Linux]]). 
+
+La mayor parte de estos comandos existen tanto en Linux como en Windows Powershell (aunque en este ultimo realmente son alias). 
+La principal diferencia es como las shells manejan directorios, con `/` en POSIX y `\` en Windows; 
+y como manejan comandos multilinea, `\` y `` ` `` respectivamente. 
+
+La parte más compleja y menos interoperable es cuando usamos comandos con `-parametros`.
+
+### Navegación del sistema
+   
+- `ls` es _LiSt_, mapeado a _Get-ChilItem_ en Powershell. 
+    - `ls -a` lista todos los objetos en el directorio, incluyendo ocultos
+    - `ls -lh` genera una lista en formato lista, con permisos, dueños, grupos, tamaño, etc.
+    - `ls -r1 | sort | uniq -c | sort -nr` permite listar rapidamente archivos duplicados (por nombre) en un directorio y subdirectorios
+    - **Los parametros no funcionan en Get-ChildItem**
+
+- `cd` es _Change Directory_, mapea _Set-Directory_ en Powershell. 
+    - `cd /un/path/especifico` cambia a un directorio segun un path directo o relativo  
+    - `cd $VAR` dirige a un directorio definido por una variable ambiental, como `$HOME`  
+    - `cd ..` permite subir al directorio superior, como en `/home/directory` a `/home`  
+    - `cd -` es para volver rapidamente al directorio anterior. Util si cambian rapidamente entre un sub-sub-subdirectorio  
+    - **Los paths usan `\` en Windows. `/` no funciona**
+
+- `mkdir` es _MaKe DIRectory_, mapea a _New-Item_ en Powershell. 
+    - En *nix podemos crear multiples directorios y subdirectorios como ``mkdir -p Directorio/{Sub1,Sub2,Sub3}`` (sin espacios, solo `,`)
+    - En Powershell necesitamos una sintaxis explicita; ie. ``mkdir Directorio\Sub1, Directorio\Sub2, ...``
+    
+- `ln`,es _LiNk_, no existe un map directo en Powershell. 
+    - `ln -s <target> <link>` permite crear un vinculo `-s`imbolico
+    - `ln -sf <target> <link>` permite actualizar el vinculo simbolico
+    - **Una opción en Windows es desempolvar la vieja CMD.exe, y usar `MKLINK`**
+    - `MKLINK \D <link> <target>` señala un link de `\D`irectorios
+    - Los links son una forma comoda de apuntar a un archivo/directorio especifico que no está en nuestro ambiente local. 
+      Son comprendidos por el sistema como si el archivo estuviese ahi, a diferencia de un _acceso directo_. 
+
+### Descargando archivos 
+
+- `curl` es _C (see) URL_, mapeado a _Invoke-WebRequest_ en Powershell.
+    - `curl <url> -o <archivo>` descarga una URL para guardarla en un archivo
+    - `curl -O <url>` descarga la URL a un archvio con su nombre. Usualmente usamos esto
+
+- `wget` es _Web GET_, mapeado a _Invoke-WebRequest_ en Powershell. Es el más facil de usar. 
+    - `wget <url> <url2…>` descarga la URL a un archvio con su nombre
+    - `wget -c <url>` permite continuar una descarga interrumpida (muy util para cosas de varios GB)
+
+- `Invoke-WebRequest` requiere un output explicito. 
+    - `Invoke-WebRequest <url> -OutFile <archivo>`
+    - `Invoke-WebRequest <url> -Method Get -o <archivo>` funciona igual que Wget
+    - `curl <url> -o <archivo>` es valido en Windows base
+
+```bash
+curl "https://datosrnaseq.s3.amazonaws.com/ejemplo.zip" -o "ejemplo.zip" # Descargando un ejemplo
 ```
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+### Descomprimiendo archivos
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
+- `tar`, no existe en Windows.
+    - `… xf …` son parametros para _eXtract_ y _File_
+    - `tar xf <tar.gz.bz2.xz>` desempaca un tar (comprimido) al directorio local
+    - `tar xf <tar.gz.bz2.xz> -C <directorio>` desempaca el tar a un directorio especifico
+    - Los tar por defecto no están comprimidos. Un tar.gz si lo está. 
+    - `tar cf <nuevo.tar> <archivo1 directorio/*>` crea un archivo tar.
+    - `tar cgf <nuevo.tar.gz> <archivo1 directorio/*>` crea un archivo tar comprimido.
+
+- `unzip`, no existe en Windows.
+    - `unzip <zip>` extrae los contenidos de un zip en el directorio actual
+    - `unzip <zip> -d <directorio>` extrae el zip a una carpeta especifica 
+    - `zip -r <nuevo.zip> <directorio>` comprime un directorio a un zip. 
+
+- `Expand-Archive` es una utilidad de Windows que funciona como `unzip`
+    - `Expand-Archive <zip> <directorio>` descomprime un zip en un directorio existente o nuevo
+    - `Compress-Archive -Path <directorio\*> -DestinationPath <nuevo.zip>` crea un zip con los contenidos de _directorio_
+
+- `7zip` tiene linea de comandos para Linux, Mac, Windows. 
+
+```
+unzip ejemplo.zip -d Ejemplo       # Linux
+Expand-Archive ejemplo.zip Ejemplo # PowerShell
 ```
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+### Explorando y renombrando archivos
+
+- `cat` es _conCATenate_, mapeado a _Get-Content_ en Powershell.
+    - `cat <archivo>` pasa los contenidos de _archivo_ a la terminal, mostrandolos
+    - `cat <archivo1> <archivo2> > <nuevo>` reemplaza los contenidos de _nuevo_ por la concatenación de _archivo1_ y _archivo2_
+    - `cat <achivo3> >> <nuevo>` concatena _archivo3_ a _nuevo_
+
+- `head`, no existe en Windows.
+    - `head <archivo>` muestra las 10 primeras lineas de _archivo_
+    - `head -n <archivo>` muestra las _n_ primeras lineas de _archivo_
+    - En Windows, `Get-Content <archivo> -TotalCount 10` tiene el mismo comportamiento
+
+- `tail`, no existe en Windows.
+    - `tail <archivo>` muestra las 10 ultimas lineas de _archivo_
+    - `tail -n <archivo>` muestra las _n_ ultimas lineas de _archivo_
+    - En Windows, `Get-Content <archivo> -Tail 10` tiene el mismo comportamiento
+
+```bash
+cd Ejemplo       # Entra al directorio descomprimido
+cat script.r     # Explorando el script
+```
+
+## Lenguajes de programación e IDEs
+
+### Tipos de lenguajes de programacion
+
+- **Lenguajes de programacion interpretados:** son lenguajes en que cada linea es compilada e interpretada en evaluacion, dentro del llamado _Read-Eval-Print-Loop_ (REPL). Esto premite que sean interactivos, dado que cada instruccion devuelve una respuesta inmediata, agilizando significativamente el desarrollo de programas. 
+  - Python, R, etc.
+- **Lenguaje de programacion compilados:** a diferencia de un lenguaje interpretado, este es compilado en su totalidad previa ejecucion del programa. Por esto, tienden a ser significativamente mas rapidos en ejecucion, a costa del tiempo de compilacion.  
+  - C, C++, Fortran, Julia, etc.
+- **Lenguaje maquina:** representan el nivel más bajo al que el compilador traduce las instrucciones, el denominado codigo binario que opera fisicamente en el procesador. 
+
+De cierta forma, la brecha entre lenguajes compilados se hace borrosa al considerar que una gran parte de las librerias que usamos en lenguajes interpretados son implementaciones escritas en C/C++, Fotran, u otros lenguajes compilados (ej. la libreria NumPy en Python); 
+y ademas es posible usar compiladores _just-in-time_ (JIT) para funciones de codigo interpretado (ej. Numba en Python, JIT en R). 
+
+> **Lenguaje de marcado:** _JSON_, _LaTeX_, _Markdown_ son lenguajes que permiten especificar estructuras de documentos. 
+
+Existen formatos hibridos, como RMD, que incluyen la sintaxis de marcado de Markdown junto a la posibilidad de ejecutar codigo en R. 
+
+Cabe mencionar que el lenguaje de las SHELL puede ser considerado como un lenguaje interpretado, dado que ejecuta instrucciones de forma lineal aunque comunmente estas son llamar a programas ya compilados. 
+
+### Integrated Development Environment
+
+Un IDE es comunmente una aplicacion con una interfaz 
+
+
+- **R Studio** fue originalmente creado para trabajar con R, pero actualmente es capaz de trabajar con multiples otros lenguajes como Python o BASH script directamente, apuntando a ser un entorno completo para datascience. 
+
+- **VS Code** es originalmente un editor de texto, pero cuenta con extensiones que facilmente lo convierten en un IDE poliglota para trabajar con R, Python, C, Julia, y casi cualquier lenguaje existente. 
+  - Permite trabajar interactivamente con codigo R y Python
+  - La extension LiveShare permite trabajar con colaboradores en tiempo real, _a la_ Google Docs
+  - La extension Remotes-SSH permite conectarlo a un entorno en otra maquina fisica, lo cual es util para trabajar en sistemas como un cluster HPC
+
+- **Jupyter** 
+  es un entorno para trabajar con _cuadernos_, originalmente en Python pero ahora con multiples interpretes como R o Julia. 
+  Dado que corre en un servidor y presenta una interfaz web, es comunmente usado conectado a un backend mas potente que el computador del usuario. 
+  Se puede usar en Google Colab. La version mas moderna es Jupyter Lab, que incluye funciones como multiples pestanas, terminales, etc.  
+  - Los cuadernos son faciles de usar, pero el codigo subyacente es un hibrido de Python y JSON para cada celda. 
+    Esto los hace mucho mas propensos a errores de replicabilidad, dado que un cambio en una celda NO afecta a las otras a menos que estas se corran de nuevo o se reinicie el Kernel. 
+    Aparte, sin Jupyter para mostrar los archivos, es complicado leer el codigo JSON y entender que hace el programa. 
+
+## Introducción a R y cuadernos
+
+### Formato de R notebooks
+
+La sintaxis de R permite que el codigo sea legible para personas, y es posible añadir comentarios explicativos como `# comentario`. 
+
+Los cuadernos con extensión _.Rmd_ permiten tomar notas más largas, y aplicar formato como utilizando sintaxis [Markdown](https://www.markdownguide.org/basic-syntax), con algunas modificaciones.
+
+- `_` _italica_
+- `**` **negrita**
+- `` ` `` ``monoespaciado``
+
+Podemos añadir _#_ al inicio de una linea para marcarla como titulo, sub-titulo, sub-sub-titulo, etc... para así hacer un esquema más ordenado.
+
+<!-- > [Markdown](https://www.markdownguide.org/basic-syntax) es un lenguaje de marcado como HTML o LaTeX, pero para gente viviendo en el 2000 que no consideran ``\~{n}`` un uso adecuado de su tiempo. -->
+
+### Trabajando con chunks
+
+Los cuadernos seccionan el codigo en **chunks**, o secciones cortas de codigo.
+Podemos darles nombre de forma `` ```{r NOMBRE DEL CHUNK}``
+
+Estas secciones luego pueden ejecutarse cada una como su propio script, accediendo a variables dejadas por las otras secciones. 
+
+Por ejemplo, haciendo una definición de los tipos de objetos en R:
+```{r }
+A <- 15.0  # Número
+B <- 15e2  # Número en notación cientifica
+C <-   pi  # Constantes definidas
+D <- 'cadena de texto' # Texto
+E <- FALSE # Valores binarios  
+```
+
+Más otros objetos: 
+```{r}
+V <- c(1, 3, 5)                 # Un vector 
+W <- 7:9                        # Otro vector, naturales desde 7 a 9
+X <- list(V, x <- 2, "texto")   # Una lista, con distintos tipos de objetos con nombre
+Y <- data.frame(V, W, c(7,8,9)) # Una lista con elementos del mismo largo
+                                # son más complejos, y los veremos en detalle
+```
+
+Estos dos chunks son independientes, por lo que podriamos modificarlos sin que se afecten entre si. 
+Podemos usar los objetos creados en estos chunks fuera, en otros chunks del cuaderno:
+
+```{r}
+V*A # Multiplicando un vector (1,2,5) por un escalar (15)
+```
+
+Luego, podemos usar el header del chunk (donde esta el nombre) para controlar otros atributos, como las salidas, warnings, o ejecución del chunk.
+
+```{r Chunk con bugs, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# este chunk tiene errores y RStudio no lo ejecutara
+# a menos que manualmente ejecutemos las lineas
+asgdj
+asdgs # Esto no tiene sentido y tirara error
+```
+
+Un chunk sin ejecución automatica puede usarse para cargar las librerias al inicio de la clase, dado que luego no necesario recargarlas durante la sesión.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)  # Set de paquetes que hacen muchas cosas
+library(gapminder)  # data de Gapminder
+library(gifski)     # encoding de GIFs
+#library(av)         # herramientas de audio y video
+library(webshot)    # screenshots de paginas web
+library(ggplot2)    # Graficos complejos
+library(GGally)     # extensión de ggplot2
+library(ggsci)      # paletas de colores para publicacion
+library(gganimate)  # graficos animados
+library(ggmuller)   # diagrama de evolucionarios Muller
+library(autoplotly) # visualizaciones interactivas
+library(gridExtra)  # extensión de grid, para la creación de figuras
+```
+
+## Importación y analisis de datos
+
+### Listas
+
+Un vector, definido como `c(1,2,"abc",...)` es util para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
+Para elementos más complejos se recurre a las listas, definidas como `list("a",b <- c(1,2,3), 15e2)`. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data('psychademic') # requiere GGally
+data('diamonds')    # requiere ggplot2
+data('iris')        # no requiere más paquetes
+sets.de.datos                    <- list()      # Crea una lista "set.de.datos"
+sets.de.datos[['sicoacademico']] <- psychademic # Añadimos los datos de psychademic
+sets.de.datos[['diamantes']]     <- diamonds    # Añadimos los datos de diamonds
+sets.de.datos[['flores']]        <- iris        # Añadimos los datos de iris
+```
+
+### Flujo de datos
+
+Para controlar cascadas de datos, utilizamos el operador `%>%` , _pipe_, el cual toma la salida de una función o los datos presentados, y los introduce como entrada en la siguiente función.
+
+```r
+#{r Flujo de datos, echo=TRUE}
+# Utilizando %>% (pipe)
+sets.de.datos$sicoacademico %>% head()
+# Formato estándar para funciones
+head(sets.de.datos$sicoacademico)
+```
+<!-- Porque usar pipes en lugar de funciones?
+- Es posible construir _pipes_ más largas, tomando las salidas sucesivas de las funciones.
+- Se ve más ordenado-
+- más facil cambiar inputs solo modificando la linea 1-->
+
+## Exploración de datos
+<!-- TODO: deberiamos ordenarlos por base, utils, tidyverse? -->
+Para simplificar los analisis, trabajamos con un unico set.
+
+```{r Crea un subset, echo=TRUE, message=FALSE, warning=FALSE}
+mi.set = sets.de.datos$sicoacademico
+```
+
+Existen varios funciones para el analisis de la estructura de datos. 
+Paquetes como tibble (incluido en tidyverse) añaden funciones adicionales.
+
+```{r Exploración de datos, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+mi.set %>% class()      # tipo de objeto (es un dataframe)
+mi.set %>% dim()        # dimensiones del dataframe (600 x 8)
+mi.set %>% length()     # largo (columnas) del dataframe
+mi.set %>% head()       # primeras 10 filas del dataframe <!-- R utils -->
+mi.set %>% names()      # Nombre de las columnas del dataframe (locus..., self)
+mi.set %>% colnames()   # Nombre de las columnas. Similar a names()
+mi.set %>% attributes() # propiedades del objeto. Similar a class()
+mi.set %>% str()        # Convierte el dataframe a un string. <!-- R utils -->
+mi.set %>% glimpse()    # Muy util para explorar, muestra las columnas con algunos datos de ejemplo, señalando que tipo de datos son. (Podemos ver el error en "motivation" en que datos tipo "1, 3, 2, ..." son caracteres en lugar de integros) 
+```
+
+### Pipelines para limpieza de datos
+
+Es posible construir analisis más complejos usando el operador _pipe_.
+
+```{r Pipelines para analisis de datos, echo=TRUE, message=FALSE, warning=FALSE}
+mi.set %>% colnames() %>% class() # Hace una lista del nombre de las columnas en el subset, y luego pregunta que tipo de data esta en esta lista.
+nombres.filas <- mi.set %>% rownames() # Hace una lista con los nombres de las filas del subset "mi.set", y luego los guarda como un objeto "nombres.filas"
+mi.set %>% colnames() -> nombres.columnas # Hace una lista con los nombres de las columnas del subset "mi.set", y luego los guarda como un objeto "nombres.filas"
+# lo interesante es como se puede hacer lo mismo escribiendolo de dos formas.
+```
+
+A menudo los datos vienen en un formato que no es conveniente para lo que queremos, ya sea porque los nombres son cripticos, o no coinciden con identificadores estándar que estamos usando. 
+Un primer paso en limpieza de datos es renombrarlos a nuestro formato.
+
+```{r Pipelines para limpieza de datos, echo=TRUE, message=FALSE, warning=FALSE}
+nombres.columnas %>% str_replace_all('_',' ') # Reemplaza los caracteres "_" por " " en la lista "nombres.columnas" (sin guardar el objeto). La función str_replace(a,b) busca "a" dentro de la entrada y lo reemplaza por "b"
+nombres.columnas  %>%  # Cambiamos el nombre de las columanas a español
+  str_replace_all(c("locus_of_control" = "control",
+                    "self_concept" = "consciencia",
+                    'motivation'='motivación',
+                    'read'='lectura',
+                    'write'='escritura',
+                    'math'='matemáticas',
+                    'science'='ciencias',
+                    'sex'='sexo')
+                  ) -> nuevas.cols # Guardamos el nuevo objeto
+colnames(mi.set)           <- nuevas.cols         # Renombra las columnas del dataset "mi.set" con los nombres en la lista "nuveas.cols"
+attr(mi.set, "psychology") <- nuevas.cols[c(1:3)] # Renombra atributos internos del dataset "mi.set" con los valores 1-3 en la lista "nuevas.cols"
+attr(mi.set, "academic")   <- nuevas.cols[c(4:8)] # Renombra atributos internos del dataset "mi.set" con los valores 4-8 en la lista "nuevas.cols"
+attributes(mi.set)                                # Muestra los atributos del dataset "mi.set". Ahora son distintos dado que los renombramos. 
+```
+
+### Visualización de datos
+
+Aún dentro de las exploraciones iniciales, resulta conveniente visualizar los datos para encontrar patrones que luego podamos usar para análisis.
+Para esto podemos usar funciones como _plot()_, ya incluida en R, o paquetes como _ggPlot2_, que permiten generar gráficos más complejos.
+
+```{r Plot de psychademic, echo=TRUE,fig.align = 'center', fig.height=3, fig.width=5, message=FALSE, warning=FALSE, cache=TRUE}
+mi.set$motivación <- as.factor(mi.set$motivación)
+# Creamos un objeto "dp" como plot
+dp <- ggplot(mi.set, aes(x=motivación, y=matemáticas, # Plots en x e y (motivación y matematicas)
+                         fill=motivación))+           # Coloreando segun x (motivacion)
+             geom_violin(trim=FALSE)+                 # Añade un violin-plot
+             geom_boxplot(width=0.1, fill="white")+   # Fill de las barras de Desviación Estandar
+             labs(title="Desempeño",x="Motivación", y = "Ciencias") # Etiquetas (titulo, x, y)
+# con ggplot2 es posible usar "+" para añadir elementos al plot
+dp + scale_fill_brewer(palette="jco") + theme_classic() -> dp
+dp %>% plot() # Podemos usar pipes para plots
+```
+
+Una forma de explorar la interacción entre variables es haciendo una matriz que muestre la correlación de estas. 
+
+```{r echo=TRUE,fig.align = 'center', fig.height=7, fig.width=15, message=FALSE, warning=FALSE, cache=TRUE}
+academic_variables <- attr(mi.set, "academic")   # Agrupamos las variables academicas
+ggpairs(mi.set, academic_variables, title = "Segun variables academicas") # Permite hacer una matriz de plots a partir de grupos de variables, calculando la correlación entre estas
+```
+
+Se pueden construir plots complejos añadiendo elementos en ggplot2.
+
+```{r Plot de diamantes}
+# Otro subset de datos
+mi.set2 = sets.de.datos$diamantes 
+p1 <- ggplot(subset(mi.set2, carat >= 2.2), # Selecciona solo los diamantes de más de 2.2 carat
+  aes(x = table, y = price, colour = cut))+ # Define los ejes
+  geom_point(alpha = 0.7) +                 # Añadimos un punto para cada dato, con opacidad 70%
+  geom_smooth(method = "loess", alpha = 0.05, size = 1, span = 1)+ # Suavizamos las lineas
+  theme_bw() # Utiliza bw, el tema clasico de ggplot2. Más en ggtheme()
+p2 <- ggplot(subset(mi.set2, carat > 2.2 & depth > 55 & depth < 70), # Podemos usar "&" como AND para sumar requisitos, entonces serian solo los de más de 2.2 carats, y profundidad entre 55-70
+  aes(x = depth, fill = cut))+ # Solo los destribuye segun el corte
+  geom_histogram(colour = "black", binwidth = 1, position = "dodge")+ # Define el plot como histograma
+  theme_bw() # Usa el tema clasico
+```
+
+Podemos usar estos plots para crear nuevos graficos, ya sea añadiendo elementos, o sumandolos para hacer figuras. 
+
+```{r Reusando plots de ggplot 2, echo=TRUE, fig.align = 'center', fig.height=5, fig.width=15, message=FALSE, warning=FALSE, cache=TRUE}
+p1_lancet <- p1 + scale_color_lancet() # Añade colores del Lancet Oncology al plot p1
+p2_lancet <- p2 + scale_fill_lancet()  # Añade colores del Lancet Oncology al plot p2
+figura <- grid.arrange(p1_lancet, p2_lancet, ncol = 2) # Crea una figura a partir de los plots recoloreados
+```
+### Visualizaciones interactivas
+
+Existen varios paquetes en R capaces de crear visualizaciones interactivas.
+Estas se pueden ampliar, reescalar, rotar, o más, dependiendo del paquete usado. 
+
+```{r Reducción dimensional, fig.cap='Componentes principales de un dataset de Flores', fig.align = 'center', fig.height=5, fig.width=7, echo=TRUE, message=FALSE, warning=FALSE, cache=TRUE}
+# Plot interactivo generado automaticamente usando analisis de `stats::prcomp`
+p <- autoplotly(prcomp(iris[c(1, 2, 3, 4)]), data = iris,         # HAce un analisis PCA de los datos Iris
+  colour = 'Species', label = TRUE, label.size = 3, frame = TRUE) # Colores, segun especie 
+# Añadiendo elementos al plot PCA
+p + ggplot2::ggtitle("Analisis de componentes principales")+ # Titulo
+    ggplot2::labs(x = "Primer componente principal",         # Coordenada 1
+                  y = "Segundo componente principal") -> p   # Coordenada 2, guarda p
+# Añadiendo anotaciones, como una flecha
+p %>% plotly::layout(annotations = list(
+  text = "Flecha apuntando",
+  font = list(
+    family = "Courier New, monospace",
+    size = 18,
+    color = "black"),
+  x = 0,
+  y = 0,
+  showarrow = TRUE))
+```
+
+Esta figura es creada usando el paquete [Plotly](https://plotly.com/), tambien disponible en Python, JavaScript y Julia. 
+Es una buena alternativa si quieren un lenguaje de graficos multiplataforma. 
+
+<!--
+
+# Tarea de la semana
+
+Las tareas son por niveles, partiendo por algo basico a algo avanzado
+
+1. Crear un cuaderno y obtener 
+2. Crear graficos explicando como se relacionan las variables
+3. Crear graficos interactivos con Plotly
+
+-----
+
+# Material suplementario
+
+## Dataframes y relacionados
+
+- Manipulación de estructuras: https://rpubs.com/Cisco_Self_Serve/315139
+- Manipulación de estructuras: https://rpubs.com/williamsurles/292547
+- Manipulación de estructuras: https://rpubs.com/JoanClaverol/493728
+
+## Visualizaciones de datos
+
+- Gráficos: https://rpubs.com/rdelgado/429190
+- Gráficos: https://rpubs.com/RUsersGroup-Ecuador/ggplot2
+- Galería: https://www.r-graph-gallery.com/all-graphs.html
+
+-->

@@ -12,4 +12,10 @@ Encoding: UTF-8
 RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
+AutoAppendNewline: Yes
+
 BuildType: Website
+
+MarkdownWrap: Sentence
+
+SpellingDictionary: es_ES

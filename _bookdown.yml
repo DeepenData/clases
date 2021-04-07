@@ -1,6 +1,25 @@
 book_filename: "clases"
 output_dir: "../clases-rendered"
 delete_merged_file: true
+edit: https://github.com/DeepenData/clases/blob/master/%s
 language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Equación '
+    thm: 'Teorema '
+    lem: 'Lemma '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    cnj: 'Conjectura '
+    def: 'Definición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    hyp: 'Hipotesis '
+    proof: 'Prueba. '
+    remark: 'Remarado. '
+    solution: 'Solución. '
   ui:
-    chapter_name: "Capitulo "
+    edit: Editar
+    chapter_name: 'Clase '
+    appendix_name: 'Apéndice '

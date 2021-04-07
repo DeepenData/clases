@@ -47,9 +47,9 @@ Una vez instalados los paquetes, R no es necesario correr estos comandos de nuev
 
 > El repositorio funciona como una red sincronizada, y existen dos instancias en Chile: <https://cran.dcc.uchile.cl/> (Departamento de Ciencias de la Computación) y <https://cran.dme.ufro.cl/> (Departamento de Matematicas y Estadistica).
 > Por motivos de velocidad y para reducir carga sobre la red, es recomendable cambiar la configuración de RStudio en "Global Options / Packages / Primary CRAN Repository" y seleccionar uno de estos (asumiendo que estén en Chile).
-> \#\# Paquetes de Bioconductor
 
-Los monopolios son malos, y cualquier partida con (ex)amigos es prueba de ello.
+## Paquetes de Bioconductor {.unnumbered}
+
 Existen otros repositorios especializados que contienen paquetes dedicados a areas especificas de investigación.
 
 [Bioconductor](https://bioconductor.org) tiene una colección dedicada al analisis de datos genomicos y pipelines asociadas a estos, con más de 1,900 paquetes, y software adicional no-basado en R.

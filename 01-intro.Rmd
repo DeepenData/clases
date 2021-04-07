@@ -362,6 +362,7 @@ p1_lancet <- p1 + scale_color_lancet() # Añade colores del Lancet Oncology al p
 p2_lancet <- p2 + scale_fill_lancet()  # Añade colores del Lancet Oncology al plot p2
 figura <- grid.arrange(p1_lancet, p2_lancet, ncol = 2) # Crea una figura a partir de los plots recoloreados
 ```
+
 ### Visualizaciones interactivas
 
 Existen varios paquetes en R capaces de crear visualizaciones interactivas.

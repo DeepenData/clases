@@ -4,24 +4,24 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>A Minimal Book Example</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <title>Principios de bioinformática y ciencias de biodatos</title>
+  <meta name="description" content="Clases de bioinformática para gente no informática." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A Minimal Book Example" />
+  <meta property="og:title" content="Principios de bioinformática y ciencias de biodatos" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta property="og:description" content="Clases de bioinformática para gente no informática." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Minimal Book Example" />
+  <meta name="twitter:title" content="Principios de bioinformática y ciencias de biodatos" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
   
 
-<meta name="author" content="Yihui Xie" />
+<meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
 
 
 <meta name="date" content="2021-04-07" />
@@ -32,9 +32,9 @@
   
   
 
-<link rel="next" href="intro.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="next" href="setup-del-ambiente.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,6 +51,13 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -130,22 +137,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="https://github.com/DeepenData/clases">📄 ./source</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
-<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Presentación</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html"><i class="fa fa-check"></i>Setup del ambiente</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#paquetes-de-cran"><i class="fa fa-check"></i>Paquetes de CRAN</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalación-de-rstudio-en-windows"><i class="fa fa-check"></i>Instalación de R(Studio) en Windows</a>
+<ul>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#usando-un-gestor-de-paquetes"><i class="fa fa-check"></i>Usando un gestor de paquetes</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalación-manual"><i class="fa fa-check"></i>Instalación manual</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalando-r-tools-manualmente"><i class="fa fa-check"></i>Instalando R-tools manualmente</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="part"><span><b>I Herramientas computacionales y programación para bioinformática</b></span></li>
+<li class="chapter" data-level="1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><i class="fa fa-check"></i><b>1</b> Conceptos generales, ejemplos de casos y nociones de lenguajes de programación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#interacción-con-terminales"><i class="fa fa-check"></i><b>1.1</b> Interacción con terminales</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#navegación-del-sistema"><i class="fa fa-check"></i><b>1.1.1</b> Navegación del sistema</a></li>
+<li class="chapter" data-level="1.1.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#descargando-archivos"><i class="fa fa-check"></i><b>1.1.2</b> Descargando archivos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#descomprimiendo-archivos"><i class="fa fa-check"></i><b>1.1.3</b> Descomprimiendo archivos</a></li>
+<li class="chapter" data-level="1.1.4" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#explorando-y-renombrando-archivos"><i class="fa fa-check"></i><b>1.1.4</b> Explorando y renombrando archivos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#lenguajes-de-programación-e-ides"><i class="fa fa-check"></i><b>1.2</b> Lenguajes de programación e IDEs</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#tipos-de-lenguajes-de-programacion"><i class="fa fa-check"></i><b>1.2.1</b> Tipos de lenguajes de programacion</a></li>
+<li class="chapter" data-level="1.2.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#integrated-development-environment"><i class="fa fa-check"></i><b>1.2.2</b> Integrated Development Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#introducción-a-r-y-cuadernos"><i class="fa fa-check"></i><b>1.3</b> Introducción a R y cuadernos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#formato-de-r-notebooks"><i class="fa fa-check"></i><b>1.3.1</b> Formato de R notebooks</a></li>
+<li class="chapter" data-level="1.3.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#trabajando-con-chunks"><i class="fa fa-check"></i><b>1.3.2</b> Trabajando con chunks</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#importación-y-analisis-de-datos"><i class="fa fa-check"></i><b>1.4</b> Importación y analisis de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#listas"><i class="fa fa-check"></i><b>1.4.1</b> Listas</a></li>
+<li class="chapter" data-level="1.4.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#flujo-de-datos"><i class="fa fa-check"></i><b>1.4.2</b> Flujo de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#exploración-de-datos"><i class="fa fa-check"></i><b>1.5</b> Exploración de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#pipelines-para-limpieza-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pipelines para limpieza de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#visualización-de-datos"><i class="fa fa-check"></i><b>1.5.2</b> Visualización de datos</a></li>
+<li class="chapter" data-level="1.5.3" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#visualizaciones-interactivas"><i class="fa fa-check"></i><b>1.5.3</b> Visualizaciones interactivas</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
 
 </ul>
 
@@ -156,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principios de bioinformática y ciencias de biodatos</a>
           </h1>
         </div>
 
@@ -165,20 +204,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">A Minimal Book Example</h1>
-<p class="author"><em>Yihui Xie</em></p>
+<h1 class="title">Principios de bioinformática y ciencias de biodatos</h1>
+<p class="author"><em>Alejandro Acevedo-Aracena, <em>PhD</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>; Manuel Muñoz-González<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></em></p>
 <p class="date"><em>2021-04-07</em></p>
 </div>
-<div id="prerequisites" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
-<p>This is a <em>sample</em> book written in <strong>Markdown</strong>. You can use anything that Pandoc’s Markdown supports, e.g., a math equation <span class="math inline">\(a^2 + b^2 = c^2\)</span>.</p>
-<p>The <strong>bookdown</strong> package can be installed from CRAN or Github:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;bookdown&quot;</span>)</span>
-<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or the development version</span></span>
-<span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&quot;rstudio/bookdown&quot;)</span></span></code></pre></div>
-<p>Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading <code>#</code>.</p>
-<p>To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <a href="https://yihui.org/tinytex/" class="uri">https://yihui.org/tinytex/</a>.</p>
+<div id="presentación" class="section level1 unnumbered">
+<h1>Presentación</h1>
+<p>Los avances en la obtención de datos biológicos asociados a genes, proteínas y
+metabolitos han dado lugar a un rápido aumento del volumen y complejidad de
+datos publicados en distintos repositorios de libre acceso
+(por ejemplo <em>Gene Expression Omnibus</em> de NCBI).
+Actualmente se requiere de bioinformáticos que apliquen herramientas
+bioinformáticas y ciencia de datos para generar resultados biológicamente
+interpretables desde datos complejos y diversos.</p>
+<p>Este curso está orientado a <strong>alumnos sin ningún conocimiento
+previo sobre programación y computacional ni bioinformática</strong>. Se
+espera que al final del curso los alumnos dominen herramientas
+básicas de bioinformática y principios generales de ciencia de datos
+para aplicarlos en sus respectivas áreas de investigación.</p>
 
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><em>FONDECYT Postdoctoral Fellow</em>, Universidad de Chile, <a href="mailto:deepen.data@gmail.com" class="email">deepen.data@gmail.com</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><em>Pregrado</em>, Universidad de Chile<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
@@ -186,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="setup-del-ambiente.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -201,24 +252,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
+"sharing": false,
 "fontsettings": {
 "theme": "white",
 "family": "sans",
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/rstudio/bookdown/edit/master/inst/examples/index.Rmd",
+"text": "Editar"
 },
 "history": {
 "link": null,
@@ -236,20 +278,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

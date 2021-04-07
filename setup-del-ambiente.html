@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Setup del ambiente | Principios de bioinformática y ciencias de biodatos</title>
+  <meta name="description" content="Clases de bioinformática para gente no informática." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Setup del ambiente | Principios de bioinformática y ciencias de biodatos" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Clases de bioinformática para gente no informática." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Setup del ambiente | Principios de bioinformática y ciencias de biodatos" />
+  
+  <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
+  
+
+<meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
+
+
+<meta name="date" content="2021-04-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://github.com/DeepenData/clases">📄 ./source</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Presentación</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html"><i class="fa fa-check"></i>Setup del ambiente</a>
+<ul>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#paquetes-de-cran"><i class="fa fa-check"></i>Paquetes de CRAN</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#paquetes-de-bioconductor"><i class="fa fa-check"></i>Paquetes de Bioconductor</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalación-de-rstudio-en-windows"><i class="fa fa-check"></i>Instalación de R(Studio) en Windows</a>
+<ul>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#usando-un-gestor-de-paquetes"><i class="fa fa-check"></i>Usando un gestor de paquetes</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalación-manual"><i class="fa fa-check"></i>Instalación manual</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalando-r-tools-manualmente"><i class="fa fa-check"></i>Instalando R-tools manualmente</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Herramientas computacionales y programación para bioinformática</b></span></li>
+<li class="chapter" data-level="1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><i class="fa fa-check"></i><b>1</b> Conceptos generales, ejemplos de casos y nociones de lenguajes de programación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#interacción-con-terminales"><i class="fa fa-check"></i><b>1.1</b> Interacción con terminales</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#navegación-del-sistema"><i class="fa fa-check"></i><b>1.1.1</b> Navegación del sistema</a></li>
+<li class="chapter" data-level="1.1.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#descargando-archivos"><i class="fa fa-check"></i><b>1.1.2</b> Descargando archivos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#descomprimiendo-archivos"><i class="fa fa-check"></i><b>1.1.3</b> Descomprimiendo archivos</a></li>
+<li class="chapter" data-level="1.1.4" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#explorando-y-renombrando-archivos"><i class="fa fa-check"></i><b>1.1.4</b> Explorando y renombrando archivos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#lenguajes-de-programación-e-ides"><i class="fa fa-check"></i><b>1.2</b> Lenguajes de programación e IDEs</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#tipos-de-lenguajes-de-programacion"><i class="fa fa-check"></i><b>1.2.1</b> Tipos de lenguajes de programacion</a></li>
+<li class="chapter" data-level="1.2.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#integrated-development-environment"><i class="fa fa-check"></i><b>1.2.2</b> Integrated Development Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#introducción-a-r-y-cuadernos"><i class="fa fa-check"></i><b>1.3</b> Introducción a R y cuadernos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#formato-de-r-notebooks"><i class="fa fa-check"></i><b>1.3.1</b> Formato de R notebooks</a></li>
+<li class="chapter" data-level="1.3.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#trabajando-con-chunks"><i class="fa fa-check"></i><b>1.3.2</b> Trabajando con chunks</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#importación-y-analisis-de-datos"><i class="fa fa-check"></i><b>1.4</b> Importación y analisis de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#listas"><i class="fa fa-check"></i><b>1.4.1</b> Listas</a></li>
+<li class="chapter" data-level="1.4.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#flujo-de-datos"><i class="fa fa-check"></i><b>1.4.2</b> Flujo de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#exploración-de-datos"><i class="fa fa-check"></i><b>1.5</b> Exploración de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#pipelines-para-limpieza-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pipelines para limpieza de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#visualización-de-datos"><i class="fa fa-check"></i><b>1.5.2</b> Visualización de datos</a></li>
+<li class="chapter" data-level="1.5.3" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#visualizaciones-interactivas"><i class="fa fa-check"></i><b>1.5.3</b> Visualizaciones interactivas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#dataframes-y-relacionados"><i class="fa fa-check"></i><b>1.6</b> Dataframes y relacionados</a></li>
+<li class="chapter" data-level="1.7" data-path="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#visualizaciones-de-datos"><i class="fa fa-check"></i><b>1.7</b> Visualizaciones de datos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principios de bioinformática y ciencias de biodatos</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="setup-del-ambiente" class="section level1 unnumbered">
+<h1>Setup del ambiente</h1>
+<div id="paquetes-de-cran" class="section level2 unnumbered">
+<h2>Paquetes de CRAN</h2>
+<p>CRAN (<em>Comprehensive R Archive Network</em>) es el repositorio principal de R, con más de 16,000 paquetes disponibles en multiples ambitos de analisis de datos, ciencias (astronomia, biología, matematica, sociología, etc.) y economía<!-- está así a proposito -->.
+De aqui instalamos:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup-del-ambiente.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">install.packages.check.source =</span> <span class="st">&quot;yes&quot;</span>) <span class="co"># Chequea la fuente de los paquetes</span></span>
+<span id="cb1-2"><a href="setup-del-ambiente.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)   <span class="co"># Utilidades de manejo de archivos, descargas, etc.</span></span>
+<span id="cb1-3"><a href="setup-del-ambiente.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># Set de paquetes que hacen muchas cosas</span></span>
+<span id="cb1-4"><a href="setup-del-ambiente.html#cb1-4" aria-hidden="true" tabindex="-1"></a>                               <span class="co"># Analisis no lineal, manipulación de texto, etc...</span></span>
+<span id="cb1-5"><a href="setup-del-ambiente.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes que deberian estar incluidos en Tidyverse</span></span>
+<span id="cb1-6"><a href="setup-del-ambiente.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># Convierte objetos de R a Tibbles, como &quot;readr&quot;</span></span>
+<span id="cb1-7"><a href="setup-del-ambiente.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dbplyr&quot;</span>)     <span class="co"># Manipulación de bases de datps (eg. SQL)</span></span>
+<span id="cb1-8"><a href="setup-del-ambiente.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)      <span class="co"># Manipulación de datos mediante gramatica propia</span></span>
+<span id="cb1-9"><a href="setup-del-ambiente.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fs&quot;</span>)         <span class="co"># Operaciones agnosticas de sistemas de archivos</span></span>
+<span id="cb1-10"><a href="setup-del-ambiente.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)      <span class="co"># Trabaja con archivos SPSS, Stata y SAS</span></span>
+<span id="cb1-11"><a href="setup-del-ambiente.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;httr&quot;</span>)       <span class="co"># Herramientas del protocolo HTTP, como GET, etc...</span></span>
+<span id="cb1-12"><a href="setup-del-ambiente.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;magrittr&quot;</span>)   <span class="co"># Operadores cañeria (pipes) %&gt;%</span></span>
+<span id="cb1-13"><a href="setup-del-ambiente.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;modelr&quot;</span>)     <span class="co"># Funciones de modelado compatibles con pipes</span></span>
+<span id="cb1-14"><a href="setup-del-ambiente.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;openssl&quot;</span>)    <span class="co"># Trabaja con certificados y encriptación SSL</span></span>
+<span id="cb1-15"><a href="setup-del-ambiente.html#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readr&quot;</span>)      <span class="co"># Traducción (pharsing) de archivos a una tibble </span></span>
+<span id="cb1-16"><a href="setup-del-ambiente.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)     <span class="co"># Permite leer archivos de Excel</span></span>
+<span id="cb1-17"><a href="setup-del-ambiente.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;stringr&quot;</span>)    <span class="co"># Operadores consistentes para strings</span></span>
+<span id="cb1-18"><a href="setup-del-ambiente.html#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tibble&quot;</span>)     <span class="co"># Dataframes del Siglo 21 (moderniza sintaxis)</span></span>
+<span id="cb1-19"><a href="setup-del-ambiente.html#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gapminder&quot;</span>)  <span class="co"># data de Gapminder</span></span>
+<span id="cb1-20"><a href="setup-del-ambiente.html#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gifski&quot;</span>)     <span class="co"># encoding de GIFs</span></span>
+<span id="cb1-21"><a href="setup-del-ambiente.html#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;av&quot;</span>)         <span class="co"># herramientas de audio y video</span></span>
+<span id="cb1-22"><a href="setup-del-ambiente.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;webshot&quot;</span>)    <span class="co"># screenshots de paginas web</span></span>
+<span id="cb1-23"><a href="setup-del-ambiente.html#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes de graficos</span></span>
+<span id="cb1-24"><a href="setup-del-ambiente.html#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)    <span class="co"># Graficos complejos</span></span>
+<span id="cb1-25"><a href="setup-del-ambiente.html#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;GGally&quot;</span>)     <span class="co"># extensión de ggplot2</span></span>
+<span id="cb1-26"><a href="setup-del-ambiente.html#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggsci&quot;</span>)      <span class="co"># paletas de colores para publicación</span></span>
+<span id="cb1-27"><a href="setup-del-ambiente.html#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggpubr&quot;</span>)     <span class="co"># ggplot simplificado para publicaciones</span></span>
+<span id="cb1-28"><a href="setup-del-ambiente.html#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gganimate&quot;</span>)  <span class="co"># graficos animados</span></span>
+<span id="cb1-29"><a href="setup-del-ambiente.html#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggmuller&quot;</span>)   <span class="co"># diagrama de evolucionarios Muller</span></span>
+<span id="cb1-30"><a href="setup-del-ambiente.html#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;autoplotly&quot;</span>) <span class="co"># visualizaciones interactivas</span></span>
+<span id="cb1-31"><a href="setup-del-ambiente.html#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gridExtra&quot;</span>)  <span class="co"># extensión de grid, para la creación de figuras</span></span>
+<span id="cb1-32"><a href="setup-del-ambiente.html#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Paqutes para completación de datos</span></span>
+<span id="cb1-33"><a href="setup-del-ambiente.html#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;missRanger&quot;</span>) <span class="co"># Permite completar data incompleta (gaps)</span></span>
+<span id="cb1-34"><a href="setup-del-ambiente.html#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;outForest&quot;</span>)  <span class="co"># Detección y reemplazo de outliers y gaps</span></span>
+<span id="cb1-35"><a href="setup-del-ambiente.html#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;OutlierDetection&quot;</span>) <span class="co"># Detección avanzada de outliers</span></span></code></pre></div>
+<p>Una vez instalados los paquetes, R no es necesario correr estos comandos de nuevo, solo se convocan via <code>library(PAQUETE)</code>.</p>
+<blockquote>
+<p>El repositorio funciona como una red sincronizada, y existen dos instancias en Chile: <a href="https://cran.dcc.uchile.cl/" class="uri">https://cran.dcc.uchile.cl/</a> (Departamento de Ciencias de la Computación) y <a href="https://cran.dme.ufro.cl/" class="uri">https://cran.dme.ufro.cl/</a> (Departamento de Matematicas y Estadistica).
+Por motivos de velocidad y para reducir carga sobre la red, es recomendable cambiar la configuración de RStudio en “Global Options / Packages / Primary CRAN Repository” y seleccionar uno de estos (asumiendo que estén en Chile).</p>
+</blockquote>
+</div>
+<div id="paquetes-de-bioconductor" class="section level2 unnumbered">
+<h2>Paquetes de Bioconductor</h2>
+<p>Existen otros repositorios especializados que contienen paquetes dedicados a areas especificas de investigación.</p>
+<p><a href="https://bioconductor.org">Bioconductor</a> tiene una colección dedicada al analisis de datos genomicos y pipelines asociadas a estos, con más de 1,900 paquetes, y software adicional no-basado en R.
+Estos se actualizan semi-anualmente siguiendo los releases de R.</p>
+<p>La isntalación de Bioconductor y paquetes asociados se maneja con el paquete <em>BiocManager</em>, disponible en CRAN.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup-del-ambiente.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando Bioconductor</span></span>
+<span id="cb2-2"><a href="setup-del-ambiente.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-3"><a href="setup-del-ambiente.html#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>) <span class="co"># Instala BiocManager de CRAN</span></span>
+<span id="cb2-4"><a href="setup-del-ambiente.html#cb2-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>() <span class="co"># Instala los paquetes base de Bioconductor</span></span>
+<span id="cb2-5"><a href="setup-del-ambiente.html#cb2-5" aria-hidden="true" tabindex="-1"></a>                       <span class="co"># Requiere input del usuario en la consola (a)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup-del-ambiente.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando paquetes de Bioconductor</span></span>
+<span id="cb3-2"><a href="setup-del-ambiente.html#cb3-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Biostrings&quot;</span>) <span class="co"># Manipulación de strings en biología</span></span>
+<span id="cb3-3"><a href="setup-del-ambiente.html#cb3-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;biomaRt&quot;</span>)    <span class="co"># Acceso a bases de datos biomedicas</span></span>
+<span id="cb3-4"><a href="setup-del-ambiente.html#cb3-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;GEOquery&quot;</span>)   <span class="co"># Bases de datos de expresión genica</span></span>
+<span id="cb3-5"><a href="setup-del-ambiente.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes complejos compilados desde codigo fuente</span></span>
+<span id="cb3-6"><a href="setup-del-ambiente.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Lasciate ogni speranza, voi ch&#39;entrate</span></span>
+<span id="cb3-7"><a href="setup-del-ambiente.html#cb3-7" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;RforProteomics&quot;</span>, <span class="co"># Tidiverse para proteómica</span></span>
+<span id="cb3-8"><a href="setup-del-ambiente.html#cb3-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ask =</span> F, <span class="co"># sin promps de &quot;Instalar (y/n)&quot; </span></span>
+<span id="cb3-9"><a href="setup-del-ambiente.html#cb3-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="co"># con Dependencias</span></span>
+<span id="cb3-10"><a href="setup-del-ambiente.html#cb3-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">type =</span> <span class="st">&quot;source&quot;</span>, <span class="co"># Compila de fuente</span></span>
+<span id="cb3-11"><a href="setup-del-ambiente.html#cb3-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>) <span class="co"># Valida install</span></span>
+<span id="cb3-12"><a href="setup-del-ambiente.html#cb3-12" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;MSnbase&quot;</span>, <span class="co"># Funciones para espectrometria de masas</span></span>
+<span id="cb3-13"><a href="setup-del-ambiente.html#cb3-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ask =</span> F, <span class="co"># sin promps de &quot;Instalar (y/n)&quot;</span></span>
+<span id="cb3-14"><a href="setup-del-ambiente.html#cb3-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="co"># con Dependencias</span></span>
+<span id="cb3-15"><a href="setup-del-ambiente.html#cb3-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">type =</span> <span class="st">&quot;source&quot;</span>, <span class="co"># Compila de fuente</span></span>
+<span id="cb3-16"><a href="setup-del-ambiente.html#cb3-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>) <span class="co"># Valida install</span></span></code></pre></div>
+</div>
+<div id="instalación-de-rstudio-en-windows" class="section level2 unnumbered">
+<h2>Instalación de R(Studio) en Windows</h2>
+<div id="usando-un-gestor-de-paquetes" class="section level3 unnumbered">
+<h3>Usando un gestor de paquetes</h3>
+<p>Un gestor de paquetes es como <em>apt-get</em> de Debian, o <em>install.packages()</em> de R.
+Windows no trae uno incluido, pero existen soluciones como <a href="https://chocolatey.org">Chocolatey</a>.
+Este se instala y maneja desde la consola de comandos PowerShell.
+Es la opción mas rápida, y funciona a largo plazo para cosas que no son R<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> .</p>
+<ol style="list-style-type: decimal">
+<li>Abrir <strong>Powershell como administrador</strong> (para que pueda instalar programas)</li>
+<li>Ejecutar el comando <code>Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))</code>. Esto instala Chocolatey.</li>
+<li>Ejecutar el comando <code>choco install r choco install rtools R.Studio --yes</code>. Esto instala R, R-Tools y RStudio.</li>
+<li>🎉 (Instalación lista!)</li>
+</ol>
+<p>En resumen (que se puede copiar y pegar en PowerShell):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="setup-del-ambiente.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando Chocolatey</span></span>
+<span id="cb4-2"><a href="setup-del-ambiente.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> Bypass -Scope <span class="kw">Process</span> -Force; <span class="fu">iex</span> ((<span class="fu">New-Object</span> System.<span class="fu">Net</span>.<span class="fu">WebClient</span>).<span class="fu">DownloadString</span>(&#39;https://chocolatey.<span class="fu">org</span>/install.<span class="fu">ps1</span>&#39;))</span>
+<span id="cb4-3"><a href="setup-del-ambiente.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="setup-del-ambiente.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando R y RStudio</span></span>
+<span id="cb4-5"><a href="setup-del-ambiente.html#cb4-5" aria-hidden="true" tabindex="-1"></a>choco install <span class="fu">r</span> choco install rtools <span class="fu">R</span>.<span class="fu">Studio</span> --yes</span></code></pre></div>
+</div>
+<div id="instalación-manual" class="section level3 unnumbered">
+<h3>Instalación manual</h3>
+<p>RStudio es un <em>Integrated Development Enviroment</em> (IDE) para R, similar a una mascara para dar una interfaz amigable.
+No contiene R en si.
+Por ello, es necesario <a href="https://cran.r-project.org/">descargar R de CRAN</a>, instalar el ejecutable, y luego <a href="https://rstudio.com/products/rstudio/download/#download">descargar e instalar RStudio</a>.</p>
+</div>
+<div id="instalando-r-tools-manualmente" class="section level3 unnumbered">
+<h3>Instalando R-tools manualmente</h3>
+<p>Ciertos paquetes estan escritos en C/C++ por motivos de rendimiento, por lo que Windows requiere un compilador C para instalarlos.
+En R, este se suple por R-tools, distribuido en forma de un instalador ejecutable (desafortunadamente no en Chocolatey).</p>
+<p><a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe"><strong>R-tools (64bit &amp; 32bit)</strong></a> o para sistemas antiguos de <a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-i686.exe">32bit</a></p>
+<p>Luego, en R ejecutar</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup-del-ambiente.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="st">&#39;PATH=&quot;${RTOOLS40_HOME}</span><span class="sc">\\</span><span class="st">usr</span><span class="sc">\\</span><span class="st">bin;${PATH}&quot;&#39;</span>, <span class="at">con =</span> <span class="st">&quot;~/.Renviron&quot;</span>)</span>
+<span id="cb5-2"><a href="setup-del-ambiente.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.which</span>(<span class="st">&quot;make&quot;</span>) <span class="co"># la salida deberia ser &quot;C:\\rtools40\\usr\\bin\\make.exe&quot;</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>Paquetes generales con Chocolatey</p>
+<p>El comando <code>choco install googlechrome steam choco install chimera</code> permite instalar Google Chrome, Steam, y UCSF Chimera, en una unica linea.
+Se le puede añadir la confirmación <em>si a todo</em> con la opción <code>--yes</code><a href="setup-del-ambiente.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown/edit/master/inst/examples/00-Setup-ambiente.rmd",
+"text": "Editar"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["clases.pdf", "clases.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

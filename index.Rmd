@@ -10,7 +10,7 @@ link-citations: yes
 description: "Clases de bioinformática para gente no informática."
 ---
 
-# Presentación
+# Presentación { .unnumbered}
 
 Los avances en la obtención de datos biológicos asociados a genes, proteínas y 
 metabolitos han dado lugar a un rápido aumento del volumen y complejidad de 

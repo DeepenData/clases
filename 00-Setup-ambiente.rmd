@@ -1,0 +1,134 @@
+# Setup del ambiente {.unnumbered}
+
+## Paquetes de CRAN {.unnumbered}
+
+CRAN (*Comprehensive R Archive Network*) es el repositorio principal de R, con más de 16,000 paquetes disponibles en multiples ambitos de analisis de datos, ciencias (astronomia, biología, matematica, sociología, etc.) y economía<!-- está así a proposito -->.
+De aqui instalamos:
+
+```{r Paquetes a utilizar, echo=TRUE, eval=FALSE}
+options(install.packages.check.source = "yes") # Chequea la fuente de los paquetes
+install.packages("devtools")   # Utilidades de manejo de archivos, descargas, etc.
+install.packages("tidyverse")  # Set de paquetes que hacen muchas cosas
+                               # Analisis no lineal, manipulación de texto, etc...
+# Paquetes que deberian estar incluidos en Tidyverse
+install.packages("broom")      # Convierte objetos de R a Tibbles, como "readr"
+install.packages("dbplyr")     # Manipulación de bases de datps (eg. SQL)
+install.packages("dplyr")      # Manipulación de datos mediante gramatica propia
+install.packages("fs")         # Operaciones agnosticas de sistemas de archivos
+install.packages("haven")      # Trabaja con archivos SPSS, Stata y SAS
+install.packages("httr")       # Herramientas del protocolo HTTP, como GET, etc...
+install.packages("magrittr")   # Operadores cañeria (pipes) %>%
+install.packages("modelr")     # Funciones de modelado compatibles con pipes
+install.packages("openssl")    # Trabaja con certificados y encriptación SSL
+install.packages("readr")      # Traducción (pharsing) de archivos a una tibble 
+install.packages("readxl")     # Permite leer archivos de Excel
+install.packages("stringr")    # Operadores consistentes para strings
+install.packages("tibble")     # Dataframes del Siglo 21 (moderniza sintaxis)
+install.packages("gapminder")  # data de Gapminder
+install.packages("gifski")     # encoding de GIFs
+install.packages("av")         # herramientas de audio y video
+install.packages("webshot")    # screenshots de paginas web
+# Paquetes de graficos
+install.packages("ggplot2")    # Graficos complejos
+install.packages("GGally")     # extensión de ggplot2
+install.packages("ggsci")      # paletas de colores para publicación
+install.packages("ggpubr")     # ggplot simplificado para publicaciones
+install.packages("gganimate")  # graficos animados
+install.packages("ggmuller")   # diagrama de evolucionarios Muller
+install.packages("autoplotly") # visualizaciones interactivas
+install.packages("gridExtra")  # extensión de grid, para la creación de figuras
+# Paqutes para completación de datos
+install.packages("missRanger") # Permite completar data incompleta (gaps)
+install.packages("outForest")  # Detección y reemplazo de outliers y gaps
+install.packages("OutlierDetection") # Detección avanzada de outliers
+```
+
+Una vez instalados los paquetes, R no es necesario correr estos comandos de nuevo, solo se convocan via `library(PAQUETE)`.
+
+> El repositorio funciona como una red sincronizada, y existen dos instancias en Chile: <https://cran.dcc.uchile.cl/> (Departamento de Ciencias de la Computación) y <https://cran.dme.ufro.cl/> (Departamento de Matematicas y Estadistica).
+> Por motivos de velocidad y para reducir carga sobre la red, es recomendable cambiar la configuración de RStudio en "Global Options / Packages / Primary CRAN Repository" y seleccionar uno de estos (asumiendo que estén en Chile).
+> \#\# Paquetes de Bioconductor
+
+Los monopolios son malos, y cualquier partida con (ex)amigos es prueba de ello.
+Existen otros repositorios especializados que contienen paquetes dedicados a areas especificas de investigación.
+
+[Bioconductor](https://bioconductor.org) tiene una colección dedicada al analisis de datos genomicos y pipelines asociadas a estos, con más de 1,900 paquetes, y software adicional no-basado en R.
+Estos se actualizan semi-anualmente siguiendo los releases de R.
+
+La isntalación de Bioconductor y paquetes asociados se maneja con el paquete *BiocManager*, disponible en CRAN.
+
+```{r Instalando Bioconductor, echo=TRUE, eval=FALSE}
+# Instalando Bioconductor
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager") # Instala BiocManager de CRAN
+BiocManager::install() # Instala los paquetes base de Bioconductor
+                       # Requiere input del usuario en la consola (a)
+```
+
+```{r Instalando paquetes de Bioconductor, echo=TRUE, eval=FALSE}
+# Instalando paquetes de Bioconductor
+BiocManager::install("Biostrings") # Manipulación de strings en biología
+BiocManager::install("biomaRt")    # Acceso a bases de datos biomedicas
+BiocManager::install("GEOquery")   # Bases de datos de expresión genica
+# Paquetes complejos compilados desde codigo fuente
+# Lasciate ogni speranza, voi ch'entrate
+BiocManager::install("RforProteomics", # Tidiverse para proteómica
+                     ask = F, # sin promps de "Instalar (y/n)" 
+                     dependencies = TRUE, # con Dependencias
+                     type = "source", # Compila de fuente
+                     checkBuilt = TRUE) # Valida install
+BiocManager::install("MSnbase", # Funciones para espectrometria de masas
+                     ask = F, # sin promps de "Instalar (y/n)"
+                     dependencies = TRUE, # con Dependencias
+                     type = "source", # Compila de fuente
+                     checkBuilt = TRUE) # Valida install
+```
+
+## Instalación de R(Studio) en Windows {.unnumbered}
+
+### Usando un gestor de paquetes {.unnumbered}
+
+Un gestor de paquetes es como *apt-get* de Debian, o *install.packages()* de R.
+Windows no trae uno incluido, pero existen soluciones como [Chocolatey](https://chocolatey.org).
+Este se instala y maneja desde la consola de comandos PowerShell.
+Es la opción mas rápida, y funciona a largo plazo para cosas que no son R[^setup-ambiente-1] .
+
+[^setup-ambiente-1]: Paquetes generales con Chocolatey
+
+    El comando `choco install googlechrome steam choco install chimera` permite instalar Google Chrome, Steam, y UCSF Chimera, en una unica linea.
+    Se le puede añadir la confirmación *si a todo* con la opción `--yes`
+
+1.  Abrir **Powershell como administrador** (para que pueda instalar programas)
+2.  Ejecutar el comando `Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`. Esto instala Chocolatey.
+3.  Ejecutar el comando `choco install r choco install rtools R.Studio --yes`. Esto instala R, R-Tools y RStudio.
+4.  🎉 (Instalación lista!)
+
+En resumen (que se puede copiar y pegar en PowerShell):
+
+``` {.powershell}
+# Instalando Chocolatey
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Instalando R y RStudio
+choco install r choco install rtools R.Studio --yes
+```
+
+### Instalación manual {.unnumbered}
+
+RStudio es un *Integrated Development Enviroment* (IDE) para R, similar a una mascara para dar una interfaz amigable.
+No contiene R en si.
+Por ello, es necesario [descargar R de CRAN](https://cran.r-project.org/), instalar el ejecutable, y luego [descargar e instalar RStudio](https://rstudio.com/products/rstudio/download/#download).
+
+### Instalando R-tools manualmente {.unnumbered}
+
+Ciertos paquetes estan escritos en C/C++ por motivos de rendimiento, por lo que Windows requiere un compilador C para instalarlos.
+En R, este se suple por R-tools, distribuido en forma de un instalador ejecutable (desafortunadamente no en Chocolatey).
+
+[**R-tools (64bit & 32bit)**](https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe) o para sistemas antiguos de [32bit](https://cran.r-project.org/bin/windows/Rtools/rtools40-i686.exe)
+
+Luego, en R ejecutar
+
+```{r Instalando R-tools, echo=TRUE, eval=FALSE}
+writeLines('PATH="${RTOOLS40_HOME}\\usr\\bin;${PATH}"', con = "~/.Renviron")
+Sys.which("make") # la salida deberia ser "C:\\rtools40\\usr\\bin\\make.exe"
+```

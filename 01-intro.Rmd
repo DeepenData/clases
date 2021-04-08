@@ -1,6 +1,6 @@
-# (PART) Herramientas computacionales y programación para bioinformática {-}
+# (PART) PRIMERA SECCIÓN - Herramientas computacionales y programación para bioinformática {-}
 
-# Conceptos generales, ejemplos de casos y nociones de lenguajes de programación
+# CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación
 
 ## Interacción con terminales
 

@@ -1,13 +1,17 @@
 --- 
 title: "Principios de bioinformática y ciencias de biodatos"
-author: "Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Universidad de Chile, deepen.data@gmail.com]; Manuel Muñoz-González^[_Pregrado_, Universidad de Chile]"
+author: Alejandro Acevedo-Aracena, _PhD_^[_FONDECYT Postdoctoral Fellow_, Universidad
+  de Chile, deepen.data@gmail.com]; Manuel Muñoz-González^[_Pregrado_, Universidad
+  de Chile]
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography:
+- book.bib
+- packages.bib
 biblio-style: apalike
 link-citations: yes
-description: "Clases de bioinformática para gente no informática."
+description: Clases de bioinformática para gente no informática.
 ---
 
 # Presentación { .unnumbered}

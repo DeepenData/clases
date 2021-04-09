@@ -62,7 +62,7 @@ La parte más compleja y menos interoperable es cuando usamos comandos con `-par
     - `curl <url> -o <archivo>` es valido en Windows base
 
 ```bash
-curl "https://datosrnaseq.s3.amazonaws.com/ejemplo.zip" -o "ejemplo.zip" # Descargando un ejemplo
+wget "https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz" # Descargando un ejemplo
 ```
 
 ### Descomprimiendo archivos
@@ -86,9 +86,8 @@ curl "https://datosrnaseq.s3.amazonaws.com/ejemplo.zip" -o "ejemplo.zip" # Desca
 
 - `7zip` tiene linea de comandos para Linux, Mac, Windows. 
 
-```
-unzip ejemplo.zip -d Ejemplo       # Linux
-Expand-Archive ejemplo.zip Ejemplo # PowerShell
+```bash
+tar xf baselines.tar.gz
 ```
 
 ### Explorando y renombrando archivos
@@ -126,30 +125,40 @@ cat script.r     # Explorando el script
 De cierta forma, la brecha entre lenguajes compilados se hace borrosa al considerar que una gran parte de las librerias que usamos en lenguajes interpretados son implementaciones escritas en C/C++, Fotran, u otros lenguajes compilados (ej. la libreria NumPy en Python); 
 y ademas es posible usar compiladores _just-in-time_ (JIT) para funciones de codigo interpretado (ej. Numba en Python, JIT en R). 
 
+Por el otro lado, existen herramientas que permiten trabajar (casi) linea a linea con lenguajes compilados, como el paquete [Pluto]() para Julia. 
+
 > **Lenguaje de marcado:** _JSON_, _LaTeX_, _Markdown_ son lenguajes que permiten especificar estructuras de documentos. 
 
 Existen formatos hibridos, como RMD, que incluyen la sintaxis de marcado de Markdown junto a la posibilidad de ejecutar codigo en R. 
+
+> El principal proposito de los RMD es que pueden ser compilados a documentos como informes, presentaciones, esta misma documentación, etc. usando el paquete `knitr` para exportarlos a formato HTML, Word, PDF, etc. 
+> Por esto incluyen una gramática de escritura simple y moderna, sin cosas como `\'` para tildes. 
+> Los RMD **no** son programas, pero pueden ser usados como si lo fueran, por ejemplo en una pipeline de procesamiento dentro de un cluster de computo. 
+> Como la mezcla de texto plano y codigo puede hacerlos confusos, es recomendable que usen programas `.r` en lugar de cuadernos `.rmd` para este tipo de cosas. 
+
+<!-- A diferencia de Jupyter que es totalmente horrible porque ni siquiera es Python plano
+O LaTeX, que es horrible porque 1) no vivimos en 1985 2) ni queremos usar macros \sarcasm{increiblemente} descripivos para todo 3) le concedo que es genial para ecuaciones, tho-->
 
 Cabe mencionar que el lenguaje de las SHELL puede ser considerado como un lenguaje interpretado, dado que ejecuta instrucciones de forma lineal aunque comunmente estas son llamar a programas ya compilados. 
 
 ### Integrated Development Environment
 
-Un IDE es comunmente una aplicacion con una interfaz 
+Un IDE es comunmente una aplicación con una interfaz 
 
 
-- **R Studio** fue originalmente creado para trabajar con R, pero actualmente es capaz de trabajar con multiples otros lenguajes como Python o BASH script directamente, apuntando a ser un entorno completo para datascience. 
+- **[R Studio](https://www.rstudio.com)** fue originalmente creado para trabajar con R, pero actualmente es capaz de trabajar con multiples otros lenguajes como Python o BASH script directamente, apuntando a ser un entorno completo para datascience. 
 
-- **VS Code** es originalmente un editor de texto, pero cuenta con extensiones que facilmente lo convierten en un IDE poliglota para trabajar con R, Python, C, Julia, y casi cualquier lenguaje existente. 
+- **[VS Code](https://code.visualstudio.com/)** es originalmente un editor de texto, pero cuenta con extensiones que facilmente lo convierten en un IDE poliglota para trabajar con R, Python, C, Julia, y casi cualquier lenguaje existente. 
   - Permite trabajar interactivamente con codigo R y Python
-  - La extension LiveShare permite trabajar con colaboradores en tiempo real, _a la_ Google Docs
-  - La extension Remotes-SSH permite conectarlo a un entorno en otra maquina fisica, lo cual es util para trabajar en sistemas como un cluster HPC
+  - La extensión LiveShare permite trabajar con colaboradores en tiempo real, _a la_ Google Docs
+  - La extensión Remotes-SSH permite conectarlo a un entorno en otra maquina física, lo cual es útil para trabajar en sistemas como un cluster HPC
 
-- **Jupyter** 
-  es un entorno para trabajar con _cuadernos_, originalmente en Python pero ahora con multiples interpretes como R o Julia. 
-  Dado que corre en un servidor y presenta una interfaz web, es comunmente usado conectado a un backend mas potente que el computador del usuario. 
-  Se puede usar en Google Colab. La version mas moderna es Jupyter Lab, que incluye funciones como multiples pestanas, terminales, etc.  
-  - Los cuadernos son faciles de usar, pero el codigo subyacente es un hibrido de Python y JSON para cada celda. 
-    Esto los hace mucho mas propensos a errores de replicabilidad, dado que un cambio en una celda NO afecta a las otras a menos que estas se corran de nuevo o se reinicie el Kernel. 
+- **[Jupyter](https://jupyter.org/)** 
+  es un entorno para trabajar con _cuadernos_, originalmente en Python pero ahora con múltiples interpretes como R o Julia. 
+  Dado que corre en un servidor y presenta una interfaz web, es comúnmente usado conectado a un backend mas potente que el computador del usuario. 
+  Se puede usar en Google Colab. La versión mas moderna es Jupyter Lab, que incluye funciones como múltiples pestañas, terminales, etc.  
+  - Los cuadernos son fáciles de usar, pero el código subyacente es un híbrido de Python y JSON para cada celda. 
+    Esto los hace mucho mas propensos a errores de replicabilidad, dado que un cambio en una celda **NO** afecta a las otras a menos que estas se corran de nuevo o se reinicie el Kernel. 
     Aparte, sin Jupyter para mostrar los archivos, es complicado leer el codigo JSON y entender que hace el programa. 
 
 ## Introducción a R y cuadernos
@@ -157,6 +166,7 @@ Un IDE es comunmente una aplicacion con una interfaz
 ### Formato de R notebooks
 
 La sintaxis de R permite que el codigo sea legible para personas, y es posible añadir comentarios explicativos como `# comentario`. 
+Aún así, para un documento técnico es necesaria más información, como figuras, _texto en italica_, etc. 
 
 Los cuadernos con extensión _.Rmd_ permiten tomar notas más largas, y aplicar formato como utilizando sintaxis [Markdown](https://www.markdownguide.org/basic-syntax), con algunas modificaciones.
 
@@ -178,7 +188,7 @@ Estas secciones luego pueden ejecutarse cada una como su propio script, accedien
 Por ejemplo, haciendo una definición de los tipos de objetos en R:
 ```{r }
 A <- 15.0  # Número
-B <- 15e2  # Número en notación cientifica
+B <- 15e2  # Número en notación científica
 C <-   pi  # Constantes definidas
 D <- 'cadena de texto' # Texto
 E <- FALSE # Valores binarios  
@@ -209,18 +219,17 @@ asgdj
 asdgs # Esto no tiene sentido y tirara error
 ```
 
-Un chunk sin ejecución automatica puede usarse para cargar las librerias al inicio de la clase, dado que luego no necesario recargarlas durante la sesión.
+Un chunk sin ejecución automática puede usarse para cargar las librerías al inicio de la clase, dado que luego no necesario recargarlas durante la sesión.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)  # Set de paquetes que hacen muchas cosas
 library(gapminder)  # data de Gapminder
 library(gifski)     # encoding de GIFs
-#library(av)         # herramientas de audio y video
 library(webshot)    # screenshots de paginas web
-library(ggplot2)    # Graficos complejos
+library(ggplot2)    # Gráficos complejos
 library(GGally)     # extensión de ggplot2
-library(ggsci)      # paletas de colores para publicacion
-library(gganimate)  # graficos animados
+library(ggsci)      # paletas de colores para publicación
+library(gganimate)  # gráficos animados
 library(ggmuller)   # diagrama de evolucionarios Muller
 library(autoplotly) # visualizaciones interactivas
 library(gridExtra)  # extensión de grid, para la creación de figuras
@@ -230,7 +239,7 @@ library(gridExtra)  # extensión de grid, para la creación de figuras
 
 ### Listas
 
-Un vector, definido como `c(1,2,"abc",...)` es util para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
+Un vector, definido como `c(1,2,"abc",...)` es útil para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
 Para elementos más complejos se recurre a las listas, definidas como `list("a",b <- c(1,2,3), 15e2)`. 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
@@ -257,17 +266,17 @@ head(sets.de.datos$sicoacademico)
 <!-- Porque usar pipes en lugar de funciones?
 - Es posible construir _pipes_ más largas, tomando las salidas sucesivas de las funciones.
 - Se ve más ordenado-
-- más facil cambiar inputs solo modificando la linea 1-->
+- más fácil cambiar inputs solo modificando la linea 1-->
 
 ## Exploración de datos
 <!-- TODO: deberiamos ordenarlos por base, utils, tidyverse? -->
-Para simplificar los analisis, trabajamos con un unico set.
+Para simplificar los análisis, trabajamos con un único set.
 
 ```{r Crea un subset, echo=TRUE, message=FALSE, warning=FALSE}
 mi.set = sets.de.datos$sicoacademico
 ```
 
-Existen varios funciones para el analisis de la estructura de datos. 
+Existen varios funciones para el análisis de la estructura de datos. 
 Paquetes como tibble (incluido en tidyverse) añaden funciones adicionales.
 
 ```{r Exploración de datos, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
@@ -279,12 +288,12 @@ mi.set %>% names()      # Nombre de las columnas del dataframe (locus..., self)
 mi.set %>% colnames()   # Nombre de las columnas. Similar a names()
 mi.set %>% attributes() # propiedades del objeto. Similar a class()
 mi.set %>% str()        # Convierte el dataframe a un string. <!-- R utils -->
-mi.set %>% glimpse()    # Muy util para explorar, muestra las columnas con algunos datos de ejemplo, señalando que tipo de datos son. (Podemos ver el error en "motivation" en que datos tipo "1, 3, 2, ..." son caracteres en lugar de integros) 
+mi.set %>% glimpse()    # Muy útil para explorar, muestra las columnas con algunos datos de ejemplo, señalando que tipo de datos son. (Podemos ver el error en "motivation" en que datos tipo "1, 3, 2, ..." son caracteres en lugar de integros) 
 ```
 
 ### Pipelines para limpieza de datos
 
-Es posible construir analisis más complejos usando el operador _pipe_.
+Es posible construir análisis más complejos usando el operador _pipe_.
 
 ```{r Pipelines para analisis de datos, echo=TRUE, message=FALSE, warning=FALSE}
 mi.set %>% colnames() %>% class() # Hace una lista del nombre de las columnas en el subset, y luego pregunta que tipo de data esta en esta lista.
@@ -293,12 +302,12 @@ mi.set %>% colnames() -> nombres.columnas # Hace una lista con los nombres de la
 # lo interesante es como se puede hacer lo mismo escribiendolo de dos formas.
 ```
 
-A menudo los datos vienen en un formato que no es conveniente para lo que queremos, ya sea porque los nombres son cripticos, o no coinciden con identificadores estándar que estamos usando. 
+A menudo los datos vienen en un formato que no es conveniente para lo que queremos, ya sea porque los nombres son crípticos, o no coinciden con identificadores estándar que estamos usando. 
 Un primer paso en limpieza de datos es renombrarlos a nuestro formato.
 
 ```{r Pipelines para limpieza de datos, echo=TRUE, message=FALSE, warning=FALSE}
 nombres.columnas %>% str_replace_all('_',' ') # Reemplaza los caracteres "_" por " " en la lista "nombres.columnas" (sin guardar el objeto). La función str_replace(a,b) busca "a" dentro de la entrada y lo reemplaza por "b"
-nombres.columnas  %>%  # Cambiamos el nombre de las columanas a español
+nombres.columnas  %>%  # Cambiamos el nombre de las columnas a español
   str_replace_all(c("locus_of_control" = "control",
                     "self_concept" = "consciencia",
                     'motivation'='motivación',

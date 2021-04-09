@@ -2,6 +2,7 @@ book_filename: "clases"
 output_dir: "../clases-rendered"
 delete_merged_file: true
 edit: https://github.com/DeepenData/clases/blob/master/%s
+rmd_subdir: true
 language:
   label:
     fig: 'Figura '

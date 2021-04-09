@@ -41,6 +41,12 @@ Este curso está orientado a alumnos sin ningún conocimiento previo sobre progr
 
 -----
 
+## Estructura de directorios
+
+Cada clase `NN-clase` incluye un `.rmd` con su mismo nombre, y archivos necesarios para dicha clase.  
+La carpeta _root_ (esta) incluye archivos para la compilación de la documentación 
+(https://deependata.github.io/clases/). 
+
 ## Información sobre _branches_ de este repo
 
 - `main` Incluye el codigo de las clases, datasets, y padding adicional para la salida de Bookdown

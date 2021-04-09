@@ -55,7 +55,7 @@ Existen otros repositorios especializados que contienen paquetes dedicados a are
 [Bioconductor](https://bioconductor.org) tiene una colección dedicada al analisis de datos genomicos y pipelines asociadas a estos, con más de 1,900 paquetes, y software adicional no-basado en R.
 Estos se actualizan semi-anualmente siguiendo los releases de R.
 
-La isntalación de Bioconductor y paquetes asociados se maneja con el paquete *BiocManager*, disponible en CRAN.
+La instalación de Bioconductor y paquetes asociados se maneja con el paquete *BiocManager*, disponible en CRAN.
 
 ```{r Instalando Bioconductor, echo=TRUE, eval=FALSE}
 # Instalando Bioconductor
@@ -100,7 +100,7 @@ Es la opción mas rápida, y funciona a largo plazo para cosas que no son R[^set
 
 1.  Abrir **Powershell como administrador** (para que pueda instalar programas)
 2.  Ejecutar el comando `Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`. Esto instala Chocolatey.
-3.  Ejecutar el comando `choco install r choco install rtools R.Studio --yes`. Esto instala R, R-Tools y RStudio.
+3.  Ejecutar el comando `choco install r rtools R.Studio --yes`. Esto instala R, R-Tools y RStudio.
 4.  🎉 (Instalación lista!)
 
 En resumen (que se puede copiar y pegar en PowerShell):
@@ -110,7 +110,7 @@ En resumen (que se puede copiar y pegar en PowerShell):
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Instalando R y RStudio
-choco install r choco install rtools R.Studio --yes
+choco install r rtools R.Studio --yes
 ```
 
 ### Instalación manual {.unnumbered}

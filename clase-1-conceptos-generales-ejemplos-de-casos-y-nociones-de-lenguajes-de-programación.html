@@ -24,7 +24,7 @@
 <meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
 
 
-<meta name="date" content="2021-04-08" />
+<meta name="date" content="2021-04-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -276,7 +276,7 @@ Son comprendidos por el sistema como si el archivo estuviese ahi, a diferencia d
 <li><code>curl &lt;url&gt; -o &lt;archivo&gt;</code> es valido en Windows base</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">&quot;https://datosrnaseq.s3.amazonaws.com/ejemplo.zip&quot;</span> -o <span class="st">&quot;ejemplo.zip&quot;</span> # Descargando un ejemplo</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="st">&quot;https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz&quot;</span> <span class="co"># Descargando un ejemplo</span></span></code></pre></div>
 </div>
 <div id="descomprimiendo-archivos" class="section level3" number="1.1.3">
 <h3><span class="header-section-number">1.1.3</span> Descomprimiendo archivos</h3>
@@ -303,8 +303,7 @@ Son comprendidos por el sistema como si el archivo estuviese ahi, a diferencia d
 </ul></li>
 <li><code>7zip</code> tiene linea de comandos para Linux, Mac, Windows.</li>
 </ul>
-<pre><code>unzip ejemplo.zip -d Ejemplo       # Linux
-Expand-Archive ejemplo.zip Ejemplo # PowerShell</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
 </div>
 <div id="explorando-y-renombrando-archivos" class="section level3" number="1.1.4">
 <h3><span class="header-section-number">1.1.4</span> Explorando y renombrando archivos</h3>
@@ -349,30 +348,39 @@ Expand-Archive ejemplo.zip Ejemplo # PowerShell</code></pre>
 </ul>
 <p>De cierta forma, la brecha entre lenguajes compilados se hace borrosa al considerar que una gran parte de las librerias que usamos en lenguajes interpretados son implementaciones escritas en C/C++, Fotran, u otros lenguajes compilados (ej. la libreria NumPy en Python);
 y ademas es posible usar compiladores <em>just-in-time</em> (JIT) para funciones de codigo interpretado (ej. Numba en Python, JIT en R).</p>
+<p>Por el otro lado, existen herramientas que permiten trabajar (casi) linea a linea con lenguajes compilados, como el paquete <a href="">Pluto</a> para Julia.</p>
 <blockquote>
 <p><strong>Lenguaje de marcado:</strong> <em>JSON</em>, <em>LaTeX</em>, <em>Markdown</em> son lenguajes que permiten especificar estructuras de documentos.</p>
 </blockquote>
 <p>Existen formatos hibridos, como RMD, que incluyen la sintaxis de marcado de Markdown junto a la posibilidad de ejecutar codigo en R.</p>
+<blockquote>
+<p>El principal proposito de los RMD es que pueden ser compilados a documentos como informes, presentaciones, esta misma documentación, etc. usando el paquete <code>knitr</code> para exportarlos a formato HTML, Word, PDF, etc.
+Por esto incluyen una gramática de escritura simple y moderna, sin cosas como <code>\'</code> para tildes.
+Los RMD <strong>no</strong> son programas, pero pueden ser usados como si lo fueran, por ejemplo en una pipeline de procesamiento dentro de un cluster de computo.
+Como la mezcla de texto plano y codigo puede hacerlos confusos, es recomendable que usen programas <code>.r</code> en lugar de cuadernos <code>.rmd</code> para este tipo de cosas.</p>
+</blockquote>
+<!-- A diferencia de Jupyter que es totalmente horrible porque ni siquiera es Python plano
+O LaTeX, que es horrible porque 1) no vivimos en 1985 2) ni queremos usar macros \sarcasm{increiblemente} descripivos para todo 3) le concedo que es genial para ecuaciones, tho-->
 <p>Cabe mencionar que el lenguaje de las SHELL puede ser considerado como un lenguaje interpretado, dado que ejecuta instrucciones de forma lineal aunque comunmente estas son llamar a programas ya compilados.</p>
 </div>
 <div id="integrated-development-environment" class="section level3" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> Integrated Development Environment</h3>
-<p>Un IDE es comunmente una aplicacion con una interfaz</p>
+<p>Un IDE es comunmente una aplicación con una interfaz</p>
 <ul>
-<li><p><strong>R Studio</strong> fue originalmente creado para trabajar con R, pero actualmente es capaz de trabajar con multiples otros lenguajes como Python o BASH script directamente, apuntando a ser un entorno completo para datascience.</p></li>
-<li><p><strong>VS Code</strong> es originalmente un editor de texto, pero cuenta con extensiones que facilmente lo convierten en un IDE poliglota para trabajar con R, Python, C, Julia, y casi cualquier lenguaje existente.</p>
+<li><p><strong><a href="https://www.rstudio.com">R Studio</a></strong> fue originalmente creado para trabajar con R, pero actualmente es capaz de trabajar con multiples otros lenguajes como Python o BASH script directamente, apuntando a ser un entorno completo para datascience.</p></li>
+<li><p><strong><a href="https://code.visualstudio.com/">VS Code</a></strong> es originalmente un editor de texto, pero cuenta con extensiones que facilmente lo convierten en un IDE poliglota para trabajar con R, Python, C, Julia, y casi cualquier lenguaje existente.</p>
 <ul>
 <li>Permite trabajar interactivamente con codigo R y Python</li>
-<li>La extension LiveShare permite trabajar con colaboradores en tiempo real, <em>a la</em> Google Docs</li>
-<li>La extension Remotes-SSH permite conectarlo a un entorno en otra maquina fisica, lo cual es util para trabajar en sistemas como un cluster HPC</li>
+<li>La extensión LiveShare permite trabajar con colaboradores en tiempo real, <em>a la</em> Google Docs</li>
+<li>La extensión Remotes-SSH permite conectarlo a un entorno en otra maquina física, lo cual es útil para trabajar en sistemas como un cluster HPC</li>
 </ul></li>
-<li><p><strong>Jupyter</strong>
-es un entorno para trabajar con <em>cuadernos</em>, originalmente en Python pero ahora con multiples interpretes como R o Julia.
-Dado que corre en un servidor y presenta una interfaz web, es comunmente usado conectado a un backend mas potente que el computador del usuario.
-Se puede usar en Google Colab. La version mas moderna es Jupyter Lab, que incluye funciones como multiples pestanas, terminales, etc.</p>
+<li><p><strong><a href="https://jupyter.org/">Jupyter</a></strong>
+es un entorno para trabajar con <em>cuadernos</em>, originalmente en Python pero ahora con múltiples interpretes como R o Julia.
+Dado que corre en un servidor y presenta una interfaz web, es comúnmente usado conectado a un backend mas potente que el computador del usuario.
+Se puede usar en Google Colab. La versión mas moderna es Jupyter Lab, que incluye funciones como múltiples pestañas, terminales, etc.</p>
 <ul>
-<li>Los cuadernos son faciles de usar, pero el codigo subyacente es un hibrido de Python y JSON para cada celda.
-Esto los hace mucho mas propensos a errores de replicabilidad, dado que un cambio en una celda NO afecta a las otras a menos que estas se corran de nuevo o se reinicie el Kernel.
+<li>Los cuadernos son fáciles de usar, pero el código subyacente es un híbrido de Python y JSON para cada celda.
+Esto los hace mucho mas propensos a errores de replicabilidad, dado que un cambio en una celda <strong>NO</strong> afecta a las otras a menos que estas se corran de nuevo o se reinicie el Kernel.
 Aparte, sin Jupyter para mostrar los archivos, es complicado leer el codigo JSON y entender que hace el programa.</li>
 </ul></li>
 </ul>
@@ -382,7 +390,8 @@ Aparte, sin Jupyter para mostrar los archivos, es complicado leer el codigo JSON
 <h2><span class="header-section-number">1.3</span> Introducción a R y cuadernos</h2>
 <div id="formato-de-r-notebooks" class="section level3" number="1.3.1">
 <h3><span class="header-section-number">1.3.1</span> Formato de R notebooks</h3>
-<p>La sintaxis de R permite que el codigo sea legible para personas, y es posible añadir comentarios explicativos como <code># comentario</code>.</p>
+<p>La sintaxis de R permite que el codigo sea legible para personas, y es posible añadir comentarios explicativos como <code># comentario</code>.
+Aún así, para un documento técnico es necesaria más información, como figuras, <em>texto en italica</em>, etc.</p>
 <p>Los cuadernos con extensión <em>.Rmd</em> permiten tomar notas más largas, y aplicar formato como utilizando sintaxis <a href="https://www.markdownguide.org/basic-syntax">Markdown</a>, con algunas modificaciones.</p>
 <ul>
 <li><code>_</code> <em>italica</em></li>
@@ -399,7 +408,7 @@ Podemos darles nombre de forma <code>```{r NOMBRE DEL CHUNK}</code></p>
 <p>Estas secciones luego pueden ejecutarse cada una como su propio script, accediendo a variables dejadas por las otras secciones.</p>
 <p>Por ejemplo, haciendo una definición de los tipos de objetos en R:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fl">15.0</span>  <span class="co"># Número</span></span>
-<span id="cb9-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">15e2</span>  <span class="co"># Número en notación cientifica</span></span>
+<span id="cb9-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">15e2</span>  <span class="co"># Número en notación científica</span></span>
 <span id="cb9-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span>   pi  <span class="co"># Constantes definidas</span></span>
 <span id="cb9-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-4" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="st">&#39;cadena de texto&#39;</span> <span class="co"># Texto</span></span>
 <span id="cb9-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-5" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># Valores binarios  </span></span></code></pre></div>
@@ -414,26 +423,25 @@ Podemos usar los objetos creados en estos chunks fuera, en otros chunks del cuad
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb11-1" aria-hidden="true" tabindex="-1"></a>V<span class="sc">*</span>A <span class="co"># Multiplicando un vector (1,2,5) por un escalar (15)</span></span></code></pre></div>
 <pre><code>## [1] 15 45 75</code></pre>
 <p>Luego, podemos usar el header del chunk (donde esta el nombre) para controlar otros atributos, como las salidas, warnings, o ejecución del chunk.</p>
-<p>Un chunk sin ejecución automatica puede usarse para cargar las librerias al inicio de la clase, dado que luego no necesario recargarlas durante la sesión.</p>
+<p>Un chunk sin ejecución automática puede usarse para cargar las librerías al inicio de la clase, dado que luego no necesario recargarlas durante la sesión.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># Set de paquetes que hacen muchas cosas</span></span>
 <span id="cb13-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)  <span class="co"># data de Gapminder</span></span>
 <span id="cb13-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)     <span class="co"># encoding de GIFs</span></span>
-<span id="cb13-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#library(av)         # herramientas de audio y video</span></span>
-<span id="cb13-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webshot)    <span class="co"># screenshots de paginas web</span></span>
-<span id="cb13-6"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)    <span class="co"># Graficos complejos</span></span>
-<span id="cb13-7"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)     <span class="co"># extensión de ggplot2</span></span>
-<span id="cb13-8"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci)      <span class="co"># paletas de colores para publicacion</span></span>
-<span id="cb13-9"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)  <span class="co"># graficos animados</span></span>
-<span id="cb13-10"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmuller)   <span class="co"># diagrama de evolucionarios Muller</span></span>
-<span id="cb13-11"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(autoplotly) <span class="co"># visualizaciones interactivas</span></span>
-<span id="cb13-12"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)  <span class="co"># extensión de grid, para la creación de figuras</span></span></code></pre></div>
+<span id="cb13-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webshot)    <span class="co"># screenshots de paginas web</span></span>
+<span id="cb13-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)    <span class="co"># Gráficos complejos</span></span>
+<span id="cb13-6"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)     <span class="co"># extensión de ggplot2</span></span>
+<span id="cb13-7"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci)      <span class="co"># paletas de colores para publicación</span></span>
+<span id="cb13-8"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)  <span class="co"># gráficos animados</span></span>
+<span id="cb13-9"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmuller)   <span class="co"># diagrama de evolucionarios Muller</span></span>
+<span id="cb13-10"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(autoplotly) <span class="co"># visualizaciones interactivas</span></span>
+<span id="cb13-11"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)  <span class="co"># extensión de grid, para la creación de figuras</span></span></code></pre></div>
 </div>
 </div>
 <div id="importación-y-analisis-de-datos" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> Importación y analisis de datos</h2>
 <div id="listas" class="section level3" number="1.4.1">
 <h3><span class="header-section-number">1.4.1</span> Listas</h3>
-<p>Un vector, definido como <code>c(1,2,"abc",...)</code> es util para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
+<p>Un vector, definido como <code>c(1,2,"abc",...)</code> es útil para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
 Para elementos más complejos se recurre a las listas, definidas como <code>list("a",b &lt;- c(1,2,3), 15e2)</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&#39;psychademic&#39;</span>) <span class="co"># requiere GGally</span></span>
 <span id="cb14-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&#39;diamonds&#39;</span>)    <span class="co"># requiere ggplot2</span></span>
@@ -454,15 +462,15 @@ Para elementos más complejos se recurre a las listas, definidas como <code>list
 <!-- Porque usar pipes en lugar de funciones?
 - Es posible construir _pipes_ más largas, tomando las salidas sucesivas de las funciones.
 - Se ve más ordenado-
-- más facil cambiar inputs solo modificando la linea 1-->
+- más fácil cambiar inputs solo modificando la linea 1-->
 </div>
 </div>
 <div id="exploración-de-datos" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Exploración de datos</h2>
 <!-- TODO: deberiamos ordenarlos por base, utils, tidyverse? -->
-<p>Para simplificar los analisis, trabajamos con un unico set.</p>
+<p>Para simplificar los análisis, trabajamos con un único set.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb16-1" aria-hidden="true" tabindex="-1"></a>mi.set <span class="ot">=</span> sets.de.datos<span class="sc">$</span>sicoacademico</span></code></pre></div>
-<p>Existen varios funciones para el analisis de la estructura de datos.
+<p>Existen varios funciones para el análisis de la estructura de datos.
 Paquetes como tibble (incluido en tidyverse) añaden funciones adicionales.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb17-1" aria-hidden="true" tabindex="-1"></a>mi.set <span class="sc">%&gt;%</span> <span class="fu">class</span>()      <span class="co"># tipo de objeto (es un dataframe)</span></span></code></pre></div>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
@@ -545,7 +553,7 @@ Paquetes como tibble (incluido en tidyverse) añaden funciones adicionales.</p>
 ##  $ sex             : chr  &quot;female&quot; &quot;female&quot; &quot;male&quot; &quot;male&quot; ...
 ##  - attr(*, &quot;academic&quot;)= chr [1:5] &quot;read&quot; &quot;write&quot; &quot;math&quot; &quot;science&quot; ...
 ##  - attr(*, &quot;psychology&quot;)= chr [1:3] &quot;locus_of_control&quot; &quot;self_concept&quot; &quot;motivation&quot;</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb33-1" aria-hidden="true" tabindex="-1"></a>mi.set <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()    <span class="co"># Muy util para explorar, muestra las columnas con algunos datos de ejemplo, señalando que tipo de datos son. (Podemos ver el error en &quot;motivation&quot; en que datos tipo &quot;1, 3, 2, ...&quot; son caracteres en lugar de integros) </span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb33-1" aria-hidden="true" tabindex="-1"></a>mi.set <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()    <span class="co"># Muy útil para explorar, muestra las columnas con algunos datos de ejemplo, señalando que tipo de datos son. (Podemos ver el error en &quot;motivation&quot; en que datos tipo &quot;1, 3, 2, ...&quot; son caracteres en lugar de integros) </span></span></code></pre></div>
 <pre><code>## Rows: 600
 ## Columns: 8
 ## $ locus_of_control &lt;dbl&gt; -0.84, -0.38, 0.89, 0.71, -0.64, 1.11, 0.06, -0.91, 0…
@@ -558,18 +566,18 @@ Paquetes como tibble (incluido en tidyverse) añaden funciones adicionales.</p>
 ## $ sex              &lt;chr&gt; &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female…</code></pre>
 <div id="pipelines-para-limpieza-de-datos" class="section level3" number="1.5.1">
 <h3><span class="header-section-number">1.5.1</span> Pipelines para limpieza de datos</h3>
-<p>Es posible construir analisis más complejos usando el operador <em>pipe</em>.</p>
+<p>Es posible construir análisis más complejos usando el operador <em>pipe</em>.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb35-1" aria-hidden="true" tabindex="-1"></a>mi.set <span class="sc">%&gt;%</span> <span class="fu">colnames</span>() <span class="sc">%&gt;%</span> <span class="fu">class</span>() <span class="co"># Hace una lista del nombre de las columnas en el subset, y luego pregunta que tipo de data esta en esta lista.</span></span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb37-1" aria-hidden="true" tabindex="-1"></a>nombres.filas <span class="ot">&lt;-</span> mi.set <span class="sc">%&gt;%</span> <span class="fu">rownames</span>() <span class="co"># Hace una lista con los nombres de las filas del subset &quot;mi.set&quot;, y luego los guarda como un objeto &quot;nombres.filas&quot;</span></span>
 <span id="cb37-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb37-2" aria-hidden="true" tabindex="-1"></a>mi.set <span class="sc">%&gt;%</span> <span class="fu">colnames</span>() <span class="ot">-&gt;</span> nombres.columnas <span class="co"># Hace una lista con los nombres de las columnas del subset &quot;mi.set&quot;, y luego los guarda como un objeto &quot;nombres.filas&quot;</span></span>
 <span id="cb37-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lo interesante es como se puede hacer lo mismo escribiendolo de dos formas.</span></span></code></pre></div>
-<p>A menudo los datos vienen en un formato que no es conveniente para lo que queremos, ya sea porque los nombres son cripticos, o no coinciden con identificadores estándar que estamos usando.
+<p>A menudo los datos vienen en un formato que no es conveniente para lo que queremos, ya sea porque los nombres son crípticos, o no coinciden con identificadores estándar que estamos usando.
 Un primer paso en limpieza de datos es renombrarlos a nuestro formato.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb38-1" aria-hidden="true" tabindex="-1"></a>nombres.columnas <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">&#39;_&#39;</span>,<span class="st">&#39; &#39;</span>) <span class="co"># Reemplaza los caracteres &quot;_&quot; por &quot; &quot; en la lista &quot;nombres.columnas&quot; (sin guardar el objeto). La función str_replace(a,b) busca &quot;a&quot; dentro de la entrada y lo reemplaza por &quot;b&quot;</span></span></code></pre></div>
 <pre><code>## [1] &quot;locus of control&quot; &quot;self concept&quot;     &quot;motivation&quot;       &quot;read&quot;            
 ## [5] &quot;write&quot;            &quot;math&quot;             &quot;science&quot;          &quot;sex&quot;</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb40-1" aria-hidden="true" tabindex="-1"></a>nombres.columnas  <span class="sc">%&gt;%</span>  <span class="co"># Cambiamos el nombre de las columanas a español</span></span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb40-1" aria-hidden="true" tabindex="-1"></a>nombres.columnas  <span class="sc">%&gt;%</span>  <span class="co"># Cambiamos el nombre de las columnas a español</span></span>
 <span id="cb40-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="fu">c</span>(<span class="st">&quot;locus_of_control&quot;</span> <span class="ot">=</span> <span class="st">&quot;control&quot;</span>,</span>
 <span id="cb40-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb40-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;self_concept&quot;</span> <span class="ot">=</span> <span class="st">&quot;consciencia&quot;</span>,</span>
 <span id="cb40-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb40-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;motivation&#39;</span><span class="ot">=</span><span class="st">&#39;motivación&#39;</span>,</span>
@@ -768,7 +776,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DeepenData/clases/blob/master/01-intro.Rmd",
+"link": "https://github.com/DeepenData/clases/blob/master/01-intro/01-intro.Rmd",
 "text": "Editar"
 },
 "history": {
@@ -779,7 +787,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["clases.pdf", "clases.epub"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }

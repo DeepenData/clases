@@ -1,0 +1,80 @@
+# Creación y exploración de estructuras de datos
+
+## Creación de dataframes
+
+## Descargando data desde internet
+
+### Descarga desde página web
+
+Bibliotecas de datasets y cosas similares 
+
+### Descarga desde dropbox
+
+[Dropbox]()
+
+> Google Drive es comunmente pagado por universidades y empresas como parte de GSuite, 
+> pero no expone interfaces que permitan descargar facilemnte archivos con herramientas
+> como `wget` o `curl`. 
+
+### Descarga desde GitHub
+
+Para proyectos de ciencia abierta 
+
+### Descarga de lista de URLs
+
+En caso de tener un millon de cosas 
+
+## Leyendo archivos extraños 
+
+### Lectura de los archivos descargados
+
+### Lectura con delimitadores especiales
+
+### Escritura de archivos con delimitadores (csv, tsv, txt, xls, rds)
+
+## Exploración de dataframes 
+
+### Exploración de dataframes
+
+### Visualización de dataframes
+
+## Listas
+
+Un vector, definido como `c(1,2,"abc",...)` es útil para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
+Para elementos más complejos se recurre a las listas, definidas como `list("a",b <- c(1,2,3), 15e2)`. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data('psychademic') # requiere GGally
+data('diamonds')    # requiere ggplot2
+data('iris')        # no requiere más paquetes
+
+sets.de.datos                    <- list()      # Crea una lista "set.de.datos"
+
+sets.de.datos[['sicoacademico']] <- psychademic # Añadimos los datos de psychademic
+sets.de.datos[['diamantes']]     <- diamonds    # Añadimos los datos de diamonds
+sets.de.datos[['flores']]        <- iris        # Añadimos los datos de iris
+```
+
+### Ventajas de las listas
+
+Una lista sirve para contener objetos complejos como figuras y dataframes, por lo 
+que podemos guardar un analisis complicado como un unico `.Rds` serializado. 
+
+``` codigo del .RDS```
+
+Adiconalmente, una lista es un objeto iterable, por lo que podemos procesar cada item 
+dentro usando **for loops** o la función **map**. 
+
+## Directorios en R
+
+Creación de directorios de resultados, codigos, figuras, etc. 
+
+### Navegación de directorios
+
+
+### Generación de listas de archivos de los directorios
+
+
+### Creación de directorios y de archivos dentro de R
+
+

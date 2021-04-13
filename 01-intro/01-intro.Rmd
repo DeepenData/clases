@@ -2,6 +2,10 @@
 
 # CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación
 
+<iframe width="1132" height="637" src="https://www.youtube.com/embed/nvOI8PaY5t8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
 ## Interacción con terminales
 
 La terminal es una herramienta que nos permite comunicarnos directamente con la computadora para ejecutar acciones complejas en unos pocos comandos. 
@@ -237,168 +241,30 @@ library(gridExtra)  # extensión de grid, para la creación de figuras
 
 ## Importación y analisis de datos
 
-### Listas
-
-Un vector, definido como `c(1,2,"abc",...)` es útil para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
-Para elementos más complejos se recurre a las listas, definidas como `list("a",b <- c(1,2,3), 15e2)`. 
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data('psychademic') # requiere GGally
-data('diamonds')    # requiere ggplot2
-data('iris')        # no requiere más paquetes
-sets.de.datos                    <- list()      # Crea una lista "set.de.datos"
-sets.de.datos[['sicoacademico']] <- psychademic # Añadimos los datos de psychademic
-sets.de.datos[['diamantes']]     <- diamonds    # Añadimos los datos de diamonds
-sets.de.datos[['flores']]        <- iris        # Añadimos los datos de iris
+```{bash}
+ls
+wget https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
+wget https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv 
 ```
 
-### Flujo de datos
-
-Para controlar cascadas de datos, utilizamos el operador `%>%` , _pipe_, el cual toma la salida de una función o los datos presentados, y los introduce como entrada en la siguiente función.
-
-```r
-#{r Flujo de datos, echo=TRUE}
-# Utilizando %>% (pipe)
-sets.de.datos$sicoacademico %>% head()
-# Formato estándar para funciones
-head(sets.de.datos$sicoacademico)
-```
-<!-- Porque usar pipes en lugar de funciones?
-- Es posible construir _pipes_ más largas, tomando las salidas sucesivas de las funciones.
-- Se ve más ordenado-
-- más fácil cambiar inputs solo modificando la linea 1-->
-
-## Exploración de datos
-<!-- TODO: deberiamos ordenarlos por base, utils, tidyverse? -->
-Para simplificar los análisis, trabajamos con un único set.
-
-```{r Crea un subset, echo=TRUE, message=FALSE, warning=FALSE}
-mi.set = sets.de.datos$sicoacademico
+```{bash}
+tar xf baselines.tar.gz
 ```
 
-Existen varios funciones para el análisis de la estructura de datos. 
-Paquetes como tibble (incluido en tidyverse) añaden funciones adicionales.
+```{r}
+library(tidyverse)
+library(readxl)
 
-```{r Exploración de datos, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-mi.set %>% class()      # tipo de objeto (es un dataframe)
-mi.set %>% dim()        # dimensiones del dataframe (600 x 8)
-mi.set %>% length()     # largo (columnas) del dataframe
-mi.set %>% head()       # primeras 10 filas del dataframe <!-- R utils -->
-mi.set %>% names()      # Nombre de las columnas del dataframe (locus..., self)
-mi.set %>% colnames()   # Nombre de las columnas. Similar a names()
-mi.set %>% attributes() # propiedades del objeto. Similar a class()
-mi.set %>% str()        # Convierte el dataframe a un string. <!-- R utils -->
-mi.set %>% glimpse()    # Muy útil para explorar, muestra las columnas con algunos datos de ejemplo, señalando que tipo de datos son. (Podemos ver el error en "motivation" en que datos tipo "1, 3, 2, ..." son caracteres en lugar de integros) 
+baseline_csv <- read_csv("baseline.csv") 
+baseline_tsv <- read_tsv("baseline.tsv") 
+baseline_xlsx <- read_excel("baseline.xlsx") 
 ```
 
-### Pipelines para limpieza de datos
-
-Es posible construir análisis más complejos usando el operador _pipe_.
-
-```{r Pipelines para analisis de datos, echo=TRUE, message=FALSE, warning=FALSE}
-mi.set %>% colnames() %>% class() # Hace una lista del nombre de las columnas en el subset, y luego pregunta que tipo de data esta en esta lista.
-nombres.filas <- mi.set %>% rownames() # Hace una lista con los nombres de las filas del subset "mi.set", y luego los guarda como un objeto "nombres.filas"
-mi.set %>% colnames() -> nombres.columnas # Hace una lista con los nombres de las columnas del subset "mi.set", y luego los guarda como un objeto "nombres.filas"
-# lo interesante es como se puede hacer lo mismo escribiendolo de dos formas.
+```{r}
+head( baseline_csv  )
+head( baseline_tsv  )
+head( baseline_xlsx )
 ```
-
-A menudo los datos vienen en un formato que no es conveniente para lo que queremos, ya sea porque los nombres son crípticos, o no coinciden con identificadores estándar que estamos usando. 
-Un primer paso en limpieza de datos es renombrarlos a nuestro formato.
-
-```{r Pipelines para limpieza de datos, echo=TRUE, message=FALSE, warning=FALSE}
-nombres.columnas %>% str_replace_all('_',' ') # Reemplaza los caracteres "_" por " " en la lista "nombres.columnas" (sin guardar el objeto). La función str_replace(a,b) busca "a" dentro de la entrada y lo reemplaza por "b"
-nombres.columnas  %>%  # Cambiamos el nombre de las columnas a español
-  str_replace_all(c("locus_of_control" = "control",
-                    "self_concept" = "consciencia",
-                    'motivation'='motivación',
-                    'read'='lectura',
-                    'write'='escritura',
-                    'math'='matemáticas',
-                    'science'='ciencias',
-                    'sex'='sexo')
-                  ) -> nuevas.cols # Guardamos el nuevo objeto
-colnames(mi.set)           <- nuevas.cols         # Renombra las columnas del dataset "mi.set" con los nombres en la lista "nuveas.cols"
-attr(mi.set, "psychology") <- nuevas.cols[c(1:3)] # Renombra atributos internos del dataset "mi.set" con los valores 1-3 en la lista "nuevas.cols"
-attr(mi.set, "academic")   <- nuevas.cols[c(4:8)] # Renombra atributos internos del dataset "mi.set" con los valores 4-8 en la lista "nuevas.cols"
-attributes(mi.set)                                # Muestra los atributos del dataset "mi.set". Ahora son distintos dado que los renombramos. 
-```
-
-### Visualización de datos
-
-Aún dentro de las exploraciones iniciales, resulta conveniente visualizar los datos para encontrar patrones que luego podamos usar para análisis.
-Para esto podemos usar funciones como _plot()_, ya incluida en R, o paquetes como _ggPlot2_, que permiten generar gráficos más complejos.
-
-```{r Plot de psychademic, echo=TRUE,fig.align = 'center', fig.height=3, fig.width=5, message=FALSE, warning=FALSE, cache=TRUE}
-mi.set$motivación <- as.factor(mi.set$motivación)
-# Creamos un objeto "dp" como plot
-dp <- ggplot(mi.set, aes(x=motivación, y=matemáticas, # Plots en x e y (motivación y matematicas)
-                         fill=motivación))+           # Coloreando segun x (motivacion)
-             geom_violin(trim=FALSE)+                 # Añade un violin-plot
-             geom_boxplot(width=0.1, fill="white")+   # Fill de las barras de Desviación Estandar
-             labs(title="Desempeño",x="Motivación", y = "Ciencias") # Etiquetas (titulo, x, y)
-# con ggplot2 es posible usar "+" para añadir elementos al plot
-dp + scale_fill_brewer(palette="jco") + theme_classic() -> dp
-dp %>% plot() # Podemos usar pipes para plots
-```
-
-Una forma de explorar la interacción entre variables es haciendo una matriz que muestre la correlación de estas. 
-
-```{r echo=TRUE,fig.align = 'center', fig.height=7, fig.width=15, message=FALSE, warning=FALSE, cache=TRUE}
-academic_variables <- attr(mi.set, "academic")   # Agrupamos las variables academicas
-ggpairs(mi.set, academic_variables, title = "Segun variables academicas") # Permite hacer una matriz de plots a partir de grupos de variables, calculando la correlación entre estas
-```
-
-Se pueden construir plots complejos añadiendo elementos en ggplot2.
-
-```{r Plot de diamantes}
-# Otro subset de datos
-mi.set2 = sets.de.datos$diamantes 
-p1 <- ggplot(subset(mi.set2, carat >= 2.2), # Selecciona solo los diamantes de más de 2.2 carat
-  aes(x = table, y = price, colour = cut))+ # Define los ejes
-  geom_point(alpha = 0.7) +                 # Añadimos un punto para cada dato, con opacidad 70%
-  geom_smooth(method = "loess", alpha = 0.05, size = 1, span = 1)+ # Suavizamos las lineas
-  theme_bw() # Utiliza bw, el tema clasico de ggplot2. Más en ggtheme()
-p2 <- ggplot(subset(mi.set2, carat > 2.2 & depth > 55 & depth < 70), # Podemos usar "&" como AND para sumar requisitos, entonces serian solo los de más de 2.2 carats, y profundidad entre 55-70
-  aes(x = depth, fill = cut))+ # Solo los destribuye segun el corte
-  geom_histogram(colour = "black", binwidth = 1, position = "dodge")+ # Define el plot como histograma
-  theme_bw() # Usa el tema clasico
-```
-
-Podemos usar estos plots para crear nuevos graficos, ya sea añadiendo elementos, o sumandolos para hacer figuras. 
-
-```{r Reusando plots de ggplot 2, echo=TRUE, fig.align = 'center', fig.height=5, fig.width=15, message=FALSE, warning=FALSE, cache=TRUE}
-p1_lancet <- p1 + scale_color_lancet() # Añade colores del Lancet Oncology al plot p1
-p2_lancet <- p2 + scale_fill_lancet()  # Añade colores del Lancet Oncology al plot p2
-figura <- grid.arrange(p1_lancet, p2_lancet, ncol = 2) # Crea una figura a partir de los plots recoloreados
-```
-
-### Visualizaciones interactivas
-
-Existen varios paquetes en R capaces de crear visualizaciones interactivas.
-Estas se pueden ampliar, reescalar, rotar, o más, dependiendo del paquete usado. 
-
-```{r Reducción dimensional, fig.cap='Componentes principales de un dataset de Flores', fig.align = 'center', fig.height=5, fig.width=7, echo=TRUE, message=FALSE, warning=FALSE, cache=TRUE}
-# Plot interactivo generado automaticamente usando analisis de `stats::prcomp`
-p <- autoplotly(prcomp(iris[c(1, 2, 3, 4)]), data = iris,         # HAce un analisis PCA de los datos Iris
-  colour = 'Species', label = TRUE, label.size = 3, frame = TRUE) # Colores, segun especie 
-# Añadiendo elementos al plot PCA
-p + ggplot2::ggtitle("Analisis de componentes principales")+ # Titulo
-    ggplot2::labs(x = "Primer componente principal",         # Coordenada 1
-                  y = "Segundo componente principal") -> p   # Coordenada 2, guarda p
-# Añadiendo anotaciones, como una flecha
-p %>% plotly::layout(annotations = list(
-  text = "Flecha apuntando",
-  font = list(
-    family = "Courier New, monospace",
-    size = 18,
-    color = "black"),
-  x = 0,
-  y = 0,
-  showarrow = TRUE))
-```
-
-Esta figura es creada usando el paquete [Plotly](https://plotly.com/), tambien disponible en Python, JavaScript y Julia. 
-Es una buena alternativa si quieren un lenguaje de graficos multiplataforma. 
 
 <!--
 

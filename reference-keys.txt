@@ -11,9 +11,3 @@ introducción-a-r-y-cuadernos
 formato-de-r-notebooks
 trabajando-con-chunks
 importación-y-analisis-de-datos
-listas
-flujo-de-datos
-exploración-de-datos
-pipelines-para-limpieza-de-datos
-visualización-de-datos
-visualizaciones-interactivas

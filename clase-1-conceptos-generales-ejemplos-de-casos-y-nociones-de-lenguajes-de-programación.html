@@ -24,7 +24,7 @@
 <meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
 
 
-<meta name="date" content="2021-04-13" />
+<meta name="date" content="2021-04-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="setup-del-ambiente.html"/>
-
+<link rel="next" href="clase-2-creación-y-exploración-de-estructuras-de-datos.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -167,6 +167,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.2" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#trabajando-con-chunks"><i class="fa fa-check"></i><b>1.3.2</b> Trabajando con chunks</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#importación-y-analisis-de-datos"><i class="fa fa-check"></i><b>1.4</b> Importación y analisis de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><i class="fa fa-check"></i><b>2</b> CLASE 2 - Creación y exploración de estructuras de datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#creación-de-dataframes"><i class="fa fa-check"></i><b>2.1</b> Creación de dataframes</a></li>
+<li class="chapter" data-level="2.2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#descargando-data-desde-internet"><i class="fa fa-check"></i><b>2.2</b> Descargando data desde internet</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#descarga-desde-página-web"><i class="fa fa-check"></i><b>2.2.1</b> Descarga desde página web</a></li>
+<li class="chapter" data-level="2.2.2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#descarga-desde-github"><i class="fa fa-check"></i><b>2.2.2</b> Descarga desde GitHub</a></li>
+<li class="chapter" data-level="2.2.3" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#descarga-de-lista-de-urls"><i class="fa fa-check"></i><b>2.2.3</b> Descarga de lista de URLs</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#leyendo-archivos-extraños"><i class="fa fa-check"></i><b>2.3</b> Leyendo archivos extraños</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#escritura-de-archivos-con-delimitadores-csv-tsv-txt-etc."><i class="fa fa-check"></i><b>2.3.1</b> Escritura de archivos con delimitadores (csv, tsv, txt, etc.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#directorios-en-r"><i class="fa fa-check"></i><b>2.4</b> Directorios en R</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#generación-de-listas-de-archivos-de-los-directorios"><i class="fa fa-check"></i><b>2.4.1</b> Generación de listas de archivos de los directorios</a></li>
+<li class="chapter" data-level="2.4.2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#creación-de-directorios-y-de-archivos-dentro-de-r"><i class="fa fa-check"></i><b>2.4.2</b> Creación de directorios y de archivos dentro de R</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
@@ -427,38 +446,38 @@ Podemos usar los objetos creados en estos chunks fuera, en otros chunks del cuad
 <p>Podemos descargar datasets desde sitios publicos usando programas de la terminal, como <code>wget</code></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz</span>
 <span id="cb14-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv </span></code></pre></div>
-<pre><code>## --2021-04-13 00:46:05--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.154.49, 52.218.170.26
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.154.49|:443... connected.
+<pre><code>## --2021-04-16 02:54:50--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.232.185, 52.218.229.1
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.232.185|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 368703 (360K) [application/x-tar]
-## Saving to: ‘baselines.tar.gz.2’
+## Saving to: ‘baselines.tar.gz.4’
 ## 
-##      0K .......... .......... .......... .......... .......... 13%  207K 1s
-##     50K .......... .......... .......... .......... .......... 27%  211K 1s
-##    100K .......... .......... .......... .......... .......... 41%  250K 1s
-##    150K .......... .......... .......... .......... .......... 55% 2.78M 1s
-##    200K .......... .......... .......... .......... .......... 69% 5.76M 0s
-##    250K .......... .......... .......... .......... .......... 83%  257K 0s
-##    300K .......... .......... .......... .......... .......... 97% 3.07M 0s
-##    350K ..........                                            100% 2.87M=0.9s
+##      0K .......... .......... .......... .......... .......... 13%  268K 1s
+##     50K .......... .......... .......... .......... .......... 27%  253K 1s
+##    100K .......... .......... .......... .......... .......... 41%  273K 1s
+##    150K .......... .......... .......... .......... .......... 55% 1.75M 0s
+##    200K .......... .......... .......... .......... .......... 69% 3.26M 0s
+##    250K .......... .......... .......... .......... .......... 83%  237K 0s
+##    300K .......... .......... .......... .......... .......... 97% 5.64M 0s
+##    350K ..........                                            100% 5.32M=0.8s
 ## 
-## 2021-04-13 00:46:07 (392 KB/s) - ‘baselines.tar.gz.2’ saved [368703/368703]
+## 2021-04-16 02:54:52 (433 KB/s) - ‘baselines.tar.gz.4’ saved [368703/368703]
 ## 
-## --2021-04-13 00:46:07--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.154.49, 52.218.228.17
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.154.49|:443... connected.
+## --2021-04-16 02:54:52--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.250.233, 52.218.229.1
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.250.233|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 206369 (202K) [text/csv]
-## Saving to: ‘baseline.csv.2’
+## Saving to: ‘baseline.csv.4’
 ## 
-##      0K .......... .......... .......... .......... .......... 24%  225K 1s
-##     50K .......... .......... .......... .......... .......... 49%  243K 0s
-##    100K .......... .......... .......... .......... .......... 74% 4.47M 0s
-##    150K .......... .......... .......... .......... .......... 99%  248K 0s
+##      0K .......... .......... .......... .......... .......... 24%  180K 1s
+##     50K .......... .......... .......... .......... .......... 49%  329K 0s
+##    100K .......... .......... .......... .......... .......... 74%  242K 0s
+##    150K .......... .......... .......... .......... .......... 99% 4.43M 0s
 ##    200K .                                                     100% 2922G=0.6s
 ## 
-## 2021-04-13 00:46:09 (315 KB/s) - ‘baseline.csv.2’ saved [206369/206369]</code></pre>
+## 2021-04-16 02:54:53 (311 KB/s) - ‘baseline.csv.4’ saved [206369/206369]</code></pre>
 <p>El archivo <code>baselines.tar.gz</code> es un comprimido, por lo que es necesario abrirlo con <code>tar</code>, desde la terminal.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
 <p>Finalmente, importar los archivos descargados a la sesión de R.</p>
@@ -512,23 +531,13 @@ Las tareas son por niveles, partiendo por algo basico a algo avanzado
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="setup-del-ambiente.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="setup-del-ambiente.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

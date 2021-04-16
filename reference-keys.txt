@@ -11,3 +11,16 @@ introducción-a-r-y-cuadernos
 formato-de-r-notebooks
 trabajando-con-chunks
 importación-y-analisis-de-datos
+clase-2---creación-y-exploración-de-estructuras-de-datos
+creación-de-dataframes
+descargando-data-desde-internet
+descarga-desde-página-web
+descarga-desde-github
+descarga-de-lista-de-urls
+leyendo-archivos-extraños
+escritura-de-archivos-con-delimitadores-csv-tsv-txt-etc.
+escribiendo-dataframes-en-excel
+listas-y-serializados
+directorios-en-r
+generación-de-listas-de-archivos-de-los-directorios
+creación-de-directorios-y-de-archivos-dentro-de-r

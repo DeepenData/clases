@@ -1,0 +1,75 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+
+pcr.region.mincie <- "https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto7/PCR.csv" # Dirección del dataset publico
+
+MINCIENCIA_PCR <- read_csv( pcr.region.mincie )
+MINCIENCIA_PCR$Region -> my_col_names
+MINCIENCIA_PCR %>% select(contains('20')) -> only_dates
+only_dates %>% t %>% as.data.frame() %>% set_names(my_col_names) -> my_data
+```
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+my_data%>% rownames_to_column("Fecha") %>% 
+  pivot_longer(!Fecha, names_to = "Región", values_to = "Tests")-> my_data_for_plot
+
+p1 <- ggplot(my_data_for_plot, aes(x=Fecha, y = Tests)) +
+        geom_point(shape = 4)
+p1
+```
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p1+ scale_y_log10() -> p2
+p2
+```
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p1+ scale_y_log10() -> p2
+p2
+```
+
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p2 +   labs(x = "Tiempo (días)", y = "Número de tests PCR") + theme(axis.ticks = element_blank(), axis.text.x=element_blank())  -> p3
+p3
+```
+
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+
+
+p3+aes( color = Región)+ theme(legend.position = "bottom", legend.box = "horizontal") -> p4
+p4
+
+             
+```
+```{r fig.height=4, fig.width=20}
+ggplot(my_data_for_plot, aes(x=Fecha, y = Tests,  color = Región)) +
+        geom_point( alpha=0.5)+  theme(legend.position = "bottom", legend.box = "horizontal")+ scale_y_log10()+ theme(axis.ticks = element_blank(), axis.text.x=element_blank())  +   labs(x = "Tiempo (días)", y = "Número de tests PCR") -> my_plot
+my_plot
+```
+
+```{r}
+ggsave(file="my_plot.png", plot=my_plot, height=4, width=20, dpi = 200)
+
+?read.delim2
+```
+
+```{r message=FALSE, warning=FALSE}
+library(ggthemes)
+
+ggplot(my_data_for_plot, aes(x=Región, y=Tests, color=Región))+geom_bar(stat="identity") +
+        theme_economist() +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
+
+
+
+
+
+

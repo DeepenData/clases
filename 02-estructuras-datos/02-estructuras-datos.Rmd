@@ -1,4 +1,4 @@
-# Creación y exploración de estructuras de datos
+# CLASE 2 - Creación y exploración de estructuras de datos
 
 ## Creación de dataframes
 
@@ -42,7 +42,7 @@ suplementaria.excel.url <- "https://cdn.elifesciences.org/articles/65202/elife-6
 
 # Para LINUX y WINDOMS  usar httr::GET()
 GET(suplementaria.excel.url , # Dirección de descarga
-    write_disk(tf <- tempfile(fileext = ".xlsx"))) # Guardar como "tf" temporal
+    write_disk(tf <- tempfile(fileext = "suplementaria_excel.xlsx"))) # Guardar como "tf" temporal
 suplementaria.excel <- read_excel(tf) # Lee "tf"
 
 
@@ -257,10 +257,6 @@ saveRDS( plots, "plots.RDS" )
 ```
 
 ## Directorios en R
-
-Creación de directorios de resultados, codigos, figuras, etc. 
-
-### Navegación de directorios
 
 Si bien es posible trabajar con todos los codigos, datasets, resultados, resplados y demas en una unica carpeta, esto es lejos de ser agradable.
 

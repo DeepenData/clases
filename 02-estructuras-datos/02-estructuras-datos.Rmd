@@ -24,7 +24,7 @@ destfile <- "pnas_1800165115_sd01.xlsx"
 download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "wget") 
 
 #Para WINDOWS usar:
-download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx.xlsx', method = "libcurl")
+download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "libcurl")
 
 suplementaria.bonita <- read_excel( "sup_bonita.xlsx" )
 suplementaria.bonita
@@ -96,6 +96,56 @@ Es importante notar que esta esta en **raw.githubusercontent...**, lo cual seria
 
 -   `https://raw.githubusercontent.com/` tiene el archivo de data puro que queremos descargar
 
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+
+MINCIENCIA_PCR$Region -> my_col_names
+
+MINCIENCIA_PCR %>% select(contains('20')) -> only_dates
+
+only_dates %>% t %>% as.data.frame() %>% set_names(my_col_names) -> my_data
+```
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+my_data %>%
+  rownames_to_column("Fecha") %>%
+  pivot_longer(!Fecha, names_to = "Región", values_to = "Tests") -> my_data_for_plot
+p1 <- ggplot(my_data_for_plot, aes(x = Fecha, y = Tests)) +
+  geom_point(shape = 4)
+p1
+```
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p1+ scale_y_log10() -> p2
+p2
+```
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p1+ scale_y_log10() -> p2
+p2
+```
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p2 +   labs(x = "Tiempo (días)", y = "Número de tests PCR") + theme(axis.ticks = element_blank(), axis.text.x=element_blank())  -> p3
+p3
+```
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p3+aes( color = Región)+ theme(legend.position = "bottom", legend.box = "horizontal") -> p4
+p4
+             
+```
+```{r fig.height=4, fig.width=20}
+ggplot(my_data_for_plot, aes(x=Fecha, y = Tests,  color = Región)) +
+        geom_point( alpha=0.5)+  theme(legend.position = "bottom", legend.box = "horizontal")+ scale_y_log10()+ theme(axis.ticks = element_blank(), axis.text.x=element_blank())  +   labs(x = "Tiempo (días)", y = "Número de tests PCR") -> my_plot
+my_plot
+```
+
+```{r message=FALSE, warning=FALSE}
+library(ggthemes)
+ggplot(my_data_for_plot, aes(x=Región, y=Tests, color=Región))+geom_bar(stat="identity") +
+        theme_economist() +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
 ### Descarga de lista de URLs
 
 Puede ser el caso de que tengamos un grupo de datasets que queramos descargar; lo cual seria largo de hacer manualmente, pero relativamente corto de implementar con un loop.
@@ -118,7 +168,7 @@ En un archivo de texto plano, denominamos un caracter especifico como *delimitad
 
 -   `\t` en archivos *Tab Separated Values*
 
--    suele ser un separador comun en archivos de texto o al copiar y pegar desde Excel
+-   suele ser un separador comun en archivos de texto o al copiar y pegar desde Excel
 
 La función **readr::read_delim()** puede aceptar delimitadores arbitrarios a la hora de leer archivos de texto plano.
 Esto puede resultar util para tareas como parsear la salida de un programa y generar una tabla informativa.
@@ -169,45 +219,67 @@ log.info
 
 #### Escribiendo DataFrames en Excel
 
-#### Archivos serializados
+Aunque francamente suele ser un dolor de cabeza, es el formato _de facto_ para compartir datos. 
+Por favor, no contribuyan a este problema en el mundo de la ciencia. 
+O al menos hagan Excels con sentido, sin arreglos esotericos de columnas y filas. 
 
-## Exploración de dataframes
+```{r}
+colnames( log.info ) <- c("Process ID","Node","Alpha") # Pone nombres de columna
 
-### Exploración de dataframes
+writexl::write_xlsx( log.info , path = "logs_hpc.xlsx") # Guarda el Excel
 
-### Visualización de dataframes
-
-## Listas
-
-Un vector, definido como `c(1,2,"abc",...)` es útil para contener datos simples, como los valores obtenidos de mediciones repetidas o los nombres de personas.
-Para elementos más complejos se recurre a las listas, definidas como `list("a",b <- c(1,2,3), 15e2)`.
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data('psychademic') # requiere GGally
-data('diamonds')    # requiere ggplot2
-data('iris')        # no requiere más paquetes
-
-sets.de.datos                    <- list()      # Crea una lista "set.de.datos"
-
-sets.de.datos[['sicoacademico']] <- psychademic # Añadimos los datos de psychademic
-sets.de.datos[['diamantes']]     <- diamonds    # Añadimos los datos de diamonds
-sets.de.datos[['flores']]        <- iris        # Añadimos los datos de iris
 ```
 
-### Ventajas de las listas
+#### Listas y serializados
 
-Una lista sirve para contener objetos complejos como figuras y dataframes, por lo que podemos guardar un analisis complicado como un unico `.Rds` serializado.
+En datasets de gran tamaño, o donde una cantidad significativa de los datos son _NaN_, es convieniente usar formatos de archivos binarios, es decir, procesados y comprimidos, como un `.zip` o los archivos R Data Serial `.RDS`. 
 
-`codigo del .RDS`
+```{r}
+saveRDS( suplementaria.bonita , "sup_bonita.rds" ) # Pesa 26.1 kB, ~43% el tamaño del Excel original
+```
 
-Adiconalmente, una lista es un objeto iterable, por lo que podemos procesar cada item dentro usando **for loops** o la función **map**.
+En caso de tener multiples objetos, podemos pasar estos dentro de una lista. 
+Estas son similares a vectores `c()`, en el sentido de que son objetos ordenados e iterables, paro a diferencia de los vectores, una lista puede contener multiples tipos de objetos, y estos pueden ser objetos complejos en lugar de tipos simples
+
+Creamos listas con `list()`. Podemos guardar objetos como los plots hechos anteriormente. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+plots <- list(
+    p1, # Fig 1
+    p2, # Fig 2
+    p3, # Fig 3
+    p4  # Fig 4
+)
+
+# Y guardamos todos los plots dentro de un RDS
+saveRDS( plots, "plots.RDS" )
+
+```
 
 ## Directorios en R
 
-Creación de directorios de resultados, codigos, figuras, etc.
+Creación de directorios de resultados, codigos, figuras, etc. 
 
 ### Navegación de directorios
 
+Si bien es posible trabajar con todos los codigos, datasets, resultados, resplados y demas en una unica carpeta, esto es lejos de ser agradable.
+
+![Ejemplo](https://www.chip.com.tr/images/content/manset/2017032417423176772/masaustu-nasil-temizlenir-temiz-tutulur.jpg)
+
 ### Generación de listas de archivos de los directorios
 
+Podemos listar todo lo que hay en un directorio
+
+```{r}
+list.files(getwd() , pattern=NULL, all.files=FALSE)
+```
+
 ### Creación de directorios y de archivos dentro de R
+
+```{r Comentario sobre rutas, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+getwd()                          # Obtiene el directorio de trabajo
+paste0(getwd(),'/hola')          # Convierte getwkd() a caracter y concatena
+file.path(getwd(),'hola')        # Hace direcciones independientes del SO
+file.path(getwd(),'hola','cosas') # Podemos definir sub-directorios
+
+```

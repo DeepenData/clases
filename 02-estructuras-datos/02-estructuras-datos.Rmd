@@ -1,0 +1,281 @@
+# CLASE 2 - Creación y exploración de estructuras de datos
+
+## Creación de dataframes
+
+## Descargando data desde internet
+
+### Descarga desde página web
+
+R cuenta con multiples metodos para descargar archivos.
+El paquete **utils** usa programas del sistema como metodos para `download.file()`, como *curl*, *wget*, *wininet*, etc. los cuales pueden no estar instalados en el sistema.
+Por ejemplo, `download.file(URL, method = "wget")` usualmente falla en Windows.
+Especificando otro metodo, `download.file(URL, method = "libcurl")` funciona.
+
+Podemos descargar datasets directamente desde R, lo cual resulta util a la hora de evaluar data de publicaciones presente como *Información suplementaria*.
+
+```{r Suplementaria bonita, message=FALSE, warning=FALSE, paged.print=TRUE}
+library(readxl)
+
+# Data suplementaria bonita
+suplementaria.url <- "https://www.pnas.org/highwire/filestream/794560/field_highwire_adjunct_files/0/pnas.1800165115.sd01.xlsx"
+destfile <- "pnas_1800165115_sd01.xlsx"
+
+#Para LINUX usar:
+download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "wget") 
+
+#Para WINDOWS usar:
+download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "libcurl")
+
+suplementaria.bonita <- read_excel( "sup_bonita.xlsx" )
+suplementaria.bonita
+
+```
+
+Por motivos de compatibilidad, puede ser preferible usar `GET()`, pero en general los metodos de `download.file()` suelen ser más rapidos y la mayor parte de la gente en bioinformatica usa sistemas basados en Linux.
+
+```{r Descargando data en linea, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+library(utils) # Usar download.file() para descargar
+library(httr)  # Usa GET() para descargar
+
+# Sitio web arbitrario
+suplementaria.excel.url <- "https://cdn.elifesciences.org/articles/65202/elife-65202-fig5-data1-v1.xlsx"
+
+# Para LINUX y WINDOMS  usar httr::GET()
+GET(suplementaria.excel.url , # Dirección de descarga
+    write_disk(tf <- tempfile(fileext = "suplementaria_excel.xlsx"))) # Guardar como "tf" temporal
+suplementaria.excel <- read_excel(tf) # Lee "tf"
+
+
+# Para LINUX USAR
+download.file(url= suplementaria.excel.url,  # Dirección de descarga
+              destfile= "suplementaria_excel.xlsx", # Guardar como...
+              method = "wget")  # Usando wget, incluido en Linux
+suplementaria.excel <- read_excel("suplementaria_excel.xlsx")
+
+
+suplementaria.excel # Abriendo la data
+
+```
+
+Como advertencia respecto a los **xsls**, estos usualmente no tienden a ser "estandar", por lo que muchas veces hay que post-procesar un dataset descargado para hacer algo util con el.
+Comunmente, solo es omitir lineas y columnas que no contienen información relevante.
+
+```{r Suplementaria excel re-formateada, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+suplementaria.excel.reformateada <- read_excel("suplementaria_excel.xlsx", 
+    skip = 2,  # Omite filas sin información
+    n_max = 11 # Omite filas de resumen
+    )
+
+suplementaria.excel.reformateada
+
+```
+
+### Descarga desde GitHub
+
+[GitHub](https://github.com) es un servicio de repositorios para control de versiones de codigo basado en Git.
+Actualmente es la plataforma más popular para hosting del codigo de software, con proyectos como [RStudio](https://github.com/rstudio), [el catalogo de cursos de FreeCodeCamp](https://github.com/freeCodeCamp/freeCodeCamp), [este mismo curso](https://github.com/DeepenData/clases/), etc.
+Muchos proyectos de ciencia abierta, ciencia ciudadana, y cada vez más publicaciones ponen la data a disposición de la comunidad; con el mismo historial de versiones que el codigo usado para generar y analizar dicha data.
+
+El Ministerio de Ciencia de Chile dispone la [data de Coronavirus](https://github.com/MinCiencia/Datos-COVID19) como tablas CSV facilmente descargables desde un repositorio en Github.
+Por ejemplo, la data de examenes PCR tomados por region.
+
+```{r Desgarga desde github, message=FALSE, warning=FALSE, paged.print=TRUE}
+library(readr)
+
+github.url <- "https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto7/PCR.csv" # Dirección del dataset publico
+
+MINCIENCIA_PCR <- read_csv( github.url ) # Podemos leer los archivos directamente
+
+MINCIENCIA_PCR
+```
+
+Es importante notar que esta esta en **raw.githubusercontent...**, lo cual seria distinto a `https://github.com/MinCiencia/Datos-COVID19/blob/master/output/producto7/PCR.csv` , que es donde llegamos explorando el repo metiante links.
+
+-   `https://github.com/` muestra la data con opciones como un historial de cambios y un README.md, pero es una pagina web completa
+
+-   `https://raw.githubusercontent.com/` tiene el archivo de data puro que queremos descargar
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+
+MINCIENCIA_PCR$Region -> my_col_names
+
+MINCIENCIA_PCR %>% select(contains('20')) -> only_dates
+
+only_dates %>% t %>% as.data.frame() %>% set_names(my_col_names) -> my_data
+```
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+my_data %>%
+  rownames_to_column("Fecha") %>%
+  pivot_longer(!Fecha, names_to = "Región", values_to = "Tests") -> my_data_for_plot
+p1 <- ggplot(my_data_for_plot, aes(x = Fecha, y = Tests)) +
+  geom_point(shape = 4)
+p1
+```
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p1+ scale_y_log10() -> p2
+p2
+```
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p1+ scale_y_log10() -> p2
+p2
+```
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p2 +   labs(x = "Tiempo (días)", y = "Número de tests PCR") + theme(axis.ticks = element_blank(), axis.text.x=element_blank())  -> p3
+p3
+```
+
+```{r fig.height=5, fig.width=20, message=FALSE, warning=FALSE}
+p3+aes( color = Región)+ theme(legend.position = "bottom", legend.box = "horizontal") -> p4
+p4
+             
+```
+```{r fig.height=4, fig.width=20}
+ggplot(my_data_for_plot, aes(x=Fecha, y = Tests,  color = Región)) +
+        geom_point( alpha=0.5)+  theme(legend.position = "bottom", legend.box = "horizontal")+ scale_y_log10()+ theme(axis.ticks = element_blank(), axis.text.x=element_blank())  +   labs(x = "Tiempo (días)", y = "Número de tests PCR") -> my_plot
+my_plot
+```
+
+```{r message=FALSE, warning=FALSE}
+library(ggthemes)
+ggplot(my_data_for_plot, aes(x=Región, y=Tests, color=Región))+geom_bar(stat="identity") +
+        theme_economist() +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
+### Descarga de lista de URLs
+
+Puede ser el caso de que tengamos un grupo de datasets que queramos descargar; lo cual seria largo de hacer manualmente, pero relativamente corto de implementar con un loop.
+
+```{r}
+datasets.descargar <- c()
+
+
+```
+
+## Leyendo archivos extraños
+
+### Escritura de archivos con delimitadores (csv, tsv, txt, etc.)
+
+En un archivo de texto plano, denominamos un caracter especifico como *delimitador*.
+
+-   `,` en archivos *Coma Separated Values*
+
+    -   `;` en archivos CSV que por motivos incluyen comas
+
+-   `\t` en archivos *Tab Separated Values*
+
+-   suele ser un separador comun en archivos de texto o al copiar y pegar desde Excel
+
+La función **readr::read_delim()** puede aceptar delimitadores arbitrarios a la hora de leer archivos de texto plano.
+Esto puede resultar util para tareas como parsear la salida de un programa y generar una tabla informativa.
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+# Output real de un programa de HPC; tira los valores a print() como forma
+# de mostrar que esta haciendo algo en lugar de estar 10h sin noticias
+stout <- "
+(pid=7648)#EX_na1(e)#0.006122665930025846
+(pid=7651)#EX_pro-L(e)#0.006122663829443571
+(pid=7655)#EX_orn(e)#0.006122663638493012
+(pid=7643)#EX_leu-L(e)#0.006122663638095198
+(pid=7647)#EX_pyr(e)#0.006122663829665405
+(pid=7659)#10FTHF6GLUtm#0.00612267089307223
+(pid=7667)#EX_val-L(e)#0.006122663638095198
+(pid=7617)#DM_fald#0.006122663638115122
+(pid=7618)#DM_ahcys#0.006122663639234617
+(pid=7621)#DM_pheme(c)#0.006122663638166545
+(pid=7625)#EX_acac(e)#0.00612266382975526
+(pid=7627)#EX_asn-L(e)#0.006122663638508968
+"
+
+log.info <- read_delim( stout , delim= '#' , col_names = FALSE)
+log.info
+```
+
+```{r Ejemplo oculto, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, paged.print=TRUE}
+# Output legible de un programa de HPC; tira los valores a print() como forma
+# de mostrar que esta haciendo algo en lugar de estar 10h sin noticias
+stout <- "
+(pid=7648) --- EX_na1(e) --- 0.006122665930025846 
+(pid=7651) --- EX_pro-L(e) --- 0.006122663829443571 
+(pid=7655) --- EX_orn(e) --- 0.006122663638493012 
+(pid=7643) --- EX_leu-L(e) --- 0.006122663638095198 
+(pid=7647) --- EX_pyr(e) --- 0.006122663829665405 
+(pid=7659) --- 10FTHF6GLUtm --- 0.00612267089307223 
+(pid=7667) --- EX_val-L(e) --- 0.006122663638095198 
+(pid=7617) --- DM_fald --- 0.006122663638115122 
+(pid=7618) --- DM_ahcys --- 0.006122663639234617 
+(pid=7621) --- DM_pheme(c) --- 0.006122663638166545 
+(pid=7625) --- EX_acac(e) --- 0.00612266382975526 
+(pid=7627) --- EX_asn-L(e) --- 0.006122663638508968 
+"
+
+log.info <- read_delim( stout , delim= ' --- ' , col_names = FALSE)
+log.info
+```
+
+#### Escribiendo DataFrames en Excel
+
+Aunque francamente suele ser un dolor de cabeza, es el formato _de facto_ para compartir datos. 
+Por favor, no contribuyan a este problema en el mundo de la ciencia. 
+O al menos hagan Excels con sentido, sin arreglos esotericos de columnas y filas. 
+
+```{r}
+colnames( log.info ) <- c("Process ID","Node","Alpha") # Pone nombres de columna
+
+writexl::write_xlsx( log.info , path = "logs_hpc.xlsx") # Guarda el Excel
+
+```
+
+#### Listas y serializados
+
+En datasets de gran tamaño, o donde una cantidad significativa de los datos son _NaN_, es convieniente usar formatos de archivos binarios, es decir, procesados y comprimidos, como un `.zip` o los archivos R Data Serial `.RDS`. 
+
+```{r}
+saveRDS( suplementaria.bonita , "sup_bonita.rds" ) # Pesa 26.1 kB, ~43% el tamaño del Excel original
+```
+
+En caso de tener multiples objetos, podemos pasar estos dentro de una lista. 
+Estas son similares a vectores `c()`, en el sentido de que son objetos ordenados e iterables, paro a diferencia de los vectores, una lista puede contener multiples tipos de objetos, y estos pueden ser objetos complejos en lugar de tipos simples
+
+Creamos listas con `list()`. Podemos guardar objetos como los plots hechos anteriormente. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+plots <- list(
+    p1, # Fig 1
+    p2, # Fig 2
+    p3, # Fig 3
+    p4  # Fig 4
+)
+
+# Y guardamos todos los plots dentro de un RDS
+saveRDS( plots, "plots.RDS" )
+
+```
+
+## Directorios en R
+
+Si bien es posible trabajar con todos los codigos, datasets, resultados, resplados y demas en una unica carpeta, esto es lejos de ser agradable.
+
+![Ejemplo](https://www.chip.com.tr/images/content/manset/2017032417423176772/masaustu-nasil-temizlenir-temiz-tutulur.jpg)
+
+### Generación de listas de archivos de los directorios
+
+Podemos listar todo lo que hay en un directorio
+
+```{r}
+list.files(getwd() , pattern=NULL, all.files=FALSE)
+```
+
+### Creación de directorios y de archivos dentro de R
+
+```{r Comentario sobre rutas, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+getwd()                          # Obtiene el directorio de trabajo
+paste0(getwd(),'/hola')          # Convierte getwkd() a caracter y concatena
+file.path(getwd(),'hola')        # Hace direcciones independientes del SO
+file.path(getwd(),'hola','cosas') # Podemos definir sub-directorios
+
+```

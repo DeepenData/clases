@@ -2,9 +2,7 @@
 
 # CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación
 
-<iframe width="1132" height="637" src="https://www.youtube.com/embed/nvOI8PaY5t8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
+<iframe width="768" height="480" src="https://www.youtube.com/embed/nvOI8PaY5t8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Interacción con terminales
 
@@ -15,7 +13,7 @@ Dependiendo de en que sistema nos encontramos, tenemos distintas SHELLs que inte
 
 Por conveniencia, usaremos principalmente `BASH`, que es la SHELL mas comun encontrada en entornos Linux, que a su vez son los mas comunes en tareas de programacion para datascience y bioinformatica. 
 
-Es posible instalar un entorno Linux en Windows usando WSL ([[Windows-Subsystem-for-Linux]]). 
+Es posible instalar un entorno Linux en Windows usando [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/). 
 
 La mayor parte de estos comandos existen tanto en Linux como en Windows Powershell (aunque en este ultimo realmente son alias). 
 La principal diferencia es como las shells manejan directorios, con `/` en POSIX y `\` en Windows; 
@@ -190,6 +188,7 @@ Podemos darles nombre de forma `` ```{r NOMBRE DEL CHUNK}``
 Estas secciones luego pueden ejecutarse cada una como su propio script, accediendo a variables dejadas por las otras secciones. 
 
 Por ejemplo, haciendo una definición de los tipos de objetos en R:
+
 ```{r }
 A <- 15.0  # Número
 B <- 15e2  # Número en notación científica
@@ -199,6 +198,7 @@ E <- FALSE # Valores binarios
 ```
 
 Más otros objetos: 
+
 ```{r}
 V <- c(1, 3, 5)                 # Un vector 
 W <- 7:9                        # Otro vector, naturales desde 7 a 9
@@ -241,17 +241,22 @@ library(gridExtra)  # extensión de grid, para la creación de figuras
 
 ## Importación y analisis de datos
 
+Podemos descargar datasets desde sitios publicos usando programas de la terminal, como `wget`
+
 ```{bash}
-ls
 wget https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
 wget https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv 
 ```
+
+El archivo `baselines.tar.gz` es un comprimido, por lo que es necesario abrirlo con `tar`, desde la terminal. 
 
 ```{bash}
 tar xf baselines.tar.gz
 ```
 
-```{r}
+Finalmente, importar los archivos descargados a la sesión de R. 
+
+```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 library(readxl)
 
@@ -260,10 +265,10 @@ baseline_tsv <- read_tsv("baseline.tsv")
 baseline_xlsx <- read_excel("baseline.xlsx") 
 ```
 
+Viendo el contenido de uno de estos archivos 
+
 ```{r}
 head( baseline_csv  )
-head( baseline_tsv  )
-head( baseline_xlsx )
 ```
 
 <!--

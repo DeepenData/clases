@@ -18,7 +18,7 @@ library(readxl)
 
 # Data suplementaria bonita
 suplementaria.url <- "https://www.pnas.org/highwire/filestream/794560/field_highwire_adjunct_files/0/pnas.1800165115.sd01.xlsx"
-destfile <- "pnas_1800165115_sd01.xlsx"
+destfile <- "sup_bonita.xlsx"
 
 #Para LINUX usar:
 download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "wget") 
@@ -28,46 +28,6 @@ download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "li
 
 suplementaria.bonita <- read_excel( "sup_bonita.xlsx" )
 suplementaria.bonita
-
-```
-
-Por motivos de compatibilidad, puede ser preferible usar `GET()`, pero en general los metodos de `download.file()` suelen ser más rapidos y la mayor parte de la gente en bioinformatica usa sistemas basados en Linux.
-
-```{r Descargando data en linea, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-library(utils) # Usar download.file() para descargar
-library(httr)  # Usa GET() para descargar
-
-# Sitio web arbitrario
-suplementaria.excel.url <- "https://cdn.elifesciences.org/articles/65202/elife-65202-fig5-data1-v1.xlsx"
-
-# Para LINUX y WINDOMS  usar httr::GET()
-GET(suplementaria.excel.url , # Dirección de descarga
-    write_disk(tf <- tempfile(fileext = "suplementaria_excel.xlsx"))) # Guardar como "tf" temporal
-suplementaria.excel <- read_excel(tf) # Lee "tf"
-
-
-# Para LINUX USAR
-download.file(url= suplementaria.excel.url,  # Dirección de descarga
-              destfile= "suplementaria_excel.xlsx", # Guardar como...
-              method = "wget")  # Usando wget, incluido en Linux
-suplementaria.excel <- read_excel("suplementaria_excel.xlsx")
-
-
-suplementaria.excel # Abriendo la data
-
-```
-
-Como advertencia respecto a los **xsls**, estos usualmente no tienden a ser "estandar", por lo que muchas veces hay que post-procesar un dataset descargado para hacer algo util con el.
-Comunmente, solo es omitir lineas y columnas que no contienen información relevante.
-
-```{r Suplementaria excel re-formateada, message=FALSE, warning=FALSE, paged.print=TRUE}
-
-suplementaria.excel.reformateada <- read_excel("suplementaria_excel.xlsx", 
-    skip = 2,  # Omite filas sin información
-    n_max = 11 # Omite filas de resumen
-    )
-
-suplementaria.excel.reformateada
 
 ```
 
@@ -146,16 +106,6 @@ ggplot(my_data_for_plot, aes(x=Región, y=Tests, color=Región))+geom_bar(stat="
   theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
 ```
 
-### Descarga de lista de URLs
-
-Puede ser el caso de que tengamos un grupo de datasets que queramos descargar; lo cual seria largo de hacer manualmente, pero relativamente corto de implementar con un loop.
-
-```{r}
-datasets.descargar <- c()
-
-
-```
-
 ## Leyendo archivos extraños
 
 ### Escritura de archivos con delimitadores (csv, tsv, txt, etc.)
@@ -195,28 +145,6 @@ log.info <- read_delim( stout , delim= '#' , col_names = FALSE)
 log.info
 ```
 
-```{r Ejemplo oculto, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, paged.print=TRUE}
-# Output legible de un programa de HPC; tira los valores a print() como forma
-# de mostrar que esta haciendo algo en lugar de estar 10h sin noticias
-stout <- "
-(pid=7648) --- EX_na1(e) --- 0.006122665930025846 
-(pid=7651) --- EX_pro-L(e) --- 0.006122663829443571 
-(pid=7655) --- EX_orn(e) --- 0.006122663638493012 
-(pid=7643) --- EX_leu-L(e) --- 0.006122663638095198 
-(pid=7647) --- EX_pyr(e) --- 0.006122663829665405 
-(pid=7659) --- 10FTHF6GLUtm --- 0.00612267089307223 
-(pid=7667) --- EX_val-L(e) --- 0.006122663638095198 
-(pid=7617) --- DM_fald --- 0.006122663638115122 
-(pid=7618) --- DM_ahcys --- 0.006122663639234617 
-(pid=7621) --- DM_pheme(c) --- 0.006122663638166545 
-(pid=7625) --- EX_acac(e) --- 0.00612266382975526 
-(pid=7627) --- EX_asn-L(e) --- 0.006122663638508968 
-"
-
-log.info <- read_delim( stout , delim= ' --- ' , col_names = FALSE)
-log.info
-```
-
 #### Escribiendo DataFrames en Excel
 
 Aunque francamente suele ser un dolor de cabeza, es el formato _de facto_ para compartir datos. 
@@ -230,12 +158,26 @@ writexl::write_xlsx( log.info , path = "logs_hpc.xlsx") # Guarda el Excel
 
 ```
 
+#### Guardando datos en formato RDS y RData
+
+R posee formatos propios para guardar datasets, 
+los que tienen la ventaja de conservar propiedades como
+ etiquetas, la estructura, etc; y
+permitir serializar y comprimir (usando _gzip_) los datos. 
+Dependiendo de la data, un RDS puede ser 10 veces más pequeño que un CSV. 
+
+
 #### Listas y serializados
 
 En datasets de gran tamaño, o donde una cantidad significativa de los datos son _NaN_, es convieniente usar formatos de archivos binarios, es decir, procesados y comprimidos, como un `.zip` o los archivos R Data Serial `.RDS`. 
 
-```{r}
+- `.RDS` son _R Data Single_, un unico objeto. 
+- `.RData` o `.Rda`, multiples objetos de R. 
+
+```r
 saveRDS( suplementaria.bonita , "sup_bonita.rds" ) # Pesa 26.1 kB, ~43% el tamaño del Excel original
+
+load("sub_bonita.rds") # Usamos load() para cargar los serializados
 ```
 
 En caso de tener multiples objetos, podemos pasar estos dentro de una lista. 

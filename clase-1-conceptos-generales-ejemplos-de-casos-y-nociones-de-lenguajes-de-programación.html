@@ -201,6 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.3</b> Expresiones regulares</a></li>
 <li class="chapter" data-level="3.4" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
+<li class="chapter" data-level="3.5" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#ejemplo-de-vida-real"><i class="fa fa-check"></i><b>3.5</b> Ejemplo de vida real</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
@@ -461,38 +462,38 @@ Podemos usar los objetos creados en estos chunks fuera, en otros chunks del cuad
 <p>Podemos descargar datasets desde sitios publicos usando programas de la terminal, como <code>wget</code></p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz</span>
 <span id="cb28-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv </span></code></pre></div>
-<pre><code>## --2021-04-23 01:32:24--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.219.81
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.219.81|:443... connected.
+<pre><code>## --2021-04-23 01:40:21--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.209.65, 52.218.182.97
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.209.65|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 368703 (360K) [application/x-tar]
-## Saving to: ‘baselines.tar.gz.10’
+## Saving to: ‘baselines.tar.gz.12’
 ## 
-##      0K .......... .......... .......... .......... .......... 13%  257K 1s
-##     50K .......... .......... .......... .......... .......... 27%  254K 1s
-##    100K .......... .......... .......... .......... .......... 41%  266K 1s
-##    150K .......... .......... .......... .......... .......... 55%  801K 1s
-##    200K .......... .......... .......... .......... .......... 69%  391K 0s
-##    250K .......... .......... .......... .......... .......... 83% 1.81M 0s
-##    300K .......... .......... .......... .......... .......... 97% 3.61M 0s
-##    350K ..........                                            100% 7.56M=0.8s
+##      0K .......... .......... .......... .......... .......... 13%  118K 3s
+##     50K .......... .......... .......... .......... .......... 27% 1.86M 1s
+##    100K .......... .......... .......... .......... .......... 41%  641K 1s
+##    150K .......... .......... .......... .......... .......... 55%  237K 1s
+##    200K .......... .......... .......... .......... .......... 69% 3.28M 0s
+##    250K .......... .......... .......... .......... .......... 83%  577K 0s
+##    300K .......... .......... .......... .......... .......... 97% 1.90M 0s
+##    350K ..........                                            100% 5.53M=0.9s
 ## 
-## 2021-04-23 01:32:26 (444 KB/s) - ‘baselines.tar.gz.10’ saved [368703/368703]
+## 2021-04-23 01:40:23 (414 KB/s) - ‘baselines.tar.gz.12’ saved [368703/368703]
 ## 
-## --2021-04-23 01:32:26--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.230.49, 52.218.228.137
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.230.49|:443... connected.
+## --2021-04-23 01:40:23--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.209.65
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.209.65|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 206369 (202K) [text/csv]
-## Saving to: ‘baseline.csv.10’
+## Saving to: ‘baseline.csv.12’
 ## 
-##      0K .......... .......... .......... .......... .......... 24%  187K 1s
-##     50K .......... .......... .......... .......... .......... 49%  326K 0s
-##    100K .......... .......... .......... .......... .......... 74% 6.69M 0s
-##    150K .......... .......... .......... .......... .......... 99%  253K 0s
-##    200K .                                                     100% 2.17M=0.6s
+##      0K .......... .......... .......... .......... .......... 24%  240K 1s
+##     50K .......... .......... .......... .......... .......... 49%  233K 0s
+##    100K .......... .......... .......... .......... .......... 74%  258K 0s
+##    150K .......... .......... .......... .......... .......... 99% 3.91M 0s
+##    200K .                                                     100% 2922G=0.6s
 ## 
-## 2021-04-23 01:32:27 (322 KB/s) - ‘baseline.csv.10’ saved [206369/206369]</code></pre>
+## 2021-04-23 01:40:25 (320 KB/s) - ‘baseline.csv.12’ saved [206369/206369]</code></pre>
 <p>El archivo <code>baselines.tar.gz</code> es un comprimido, por lo que es necesario abrirlo con <code>tar</code>, desde la terminal.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
 <p>Finalmente, importar los archivos descargados a la sesión de R.</p>

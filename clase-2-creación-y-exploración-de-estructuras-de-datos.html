@@ -201,6 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.3</b> Expresiones regulares</a></li>
 <li class="chapter" data-level="3.4" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
+<li class="chapter" data-level="3.5" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#ejemplo-de-vida-real"><i class="fa fa-check"></i><b>3.5</b> Ejemplo de vida real</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
@@ -474,20 +475,21 @@ Estas son similares a vectores <code>c()</code>, en el sentido de que son objeto
 <pre><code>##  [1] &quot;_bookdown_files&quot;       &quot;_bookdown.yml&quot;         &quot;_output.yml&quot;          
 ##  [4] &quot;00-setup&quot;              &quot;01-intro&quot;              &quot;02-estructuras-datos&quot; 
 ##  [7] &quot;03-mutate-pipes-regex&quot; &quot;baseline.csv&quot;          &quot;baseline.csv.1&quot;       
-## [10] &quot;baseline.csv.10&quot;       &quot;baseline.csv.2&quot;        &quot;baseline.csv.3&quot;       
-## [13] &quot;baseline.csv.4&quot;        &quot;baseline.csv.5&quot;        &quot;baseline.csv.6&quot;       
-## [16] &quot;baseline.csv.7&quot;        &quot;baseline.csv.8&quot;        &quot;baseline.csv.9&quot;       
-## [19] &quot;baseline.pkl&quot;          &quot;baseline.tsv&quot;          &quot;baseline.xlsx&quot;        
-## [22] &quot;baselines.tar.gz&quot;      &quot;baselines.tar.gz.1&quot;    &quot;baselines.tar.gz.10&quot;  
-## [25] &quot;baselines.tar.gz.2&quot;    &quot;baselines.tar.gz.3&quot;    &quot;baselines.tar.gz.4&quot;   
-## [28] &quot;baselines.tar.gz.5&quot;    &quot;baselines.tar.gz.6&quot;    &quot;baselines.tar.gz.7&quot;   
-## [31] &quot;baselines.tar.gz.8&quot;    &quot;baselines.tar.gz.9&quot;    &quot;book.bib&quot;             
-## [34] &quot;clases_cache&quot;          &quot;clases_files&quot;          &quot;clases.log&quot;           
-## [37] &quot;clases.Rmd&quot;            &quot;clases.Rproj&quot;          &quot;cosas_ggplot2.nb.html&quot;
-## [40] &quot;cosas_ggplot2.Rmd&quot;     &quot;index.Rmd&quot;             &quot;logs_hpc.xlsx&quot;        
-## [43] &quot;my_plot.png&quot;           &quot;packages.bib&quot;          &quot;plots.RDS&quot;            
-## [46] &quot;README.md&quot;             &quot;style.css&quot;             &quot;sup_bonita.rds&quot;       
-## [49] &quot;sup_bonita.xlsx&quot;       &quot;xkcd.ttf&quot;</code></pre>
+## [10] &quot;baseline.csv.10&quot;       &quot;baseline.csv.11&quot;       &quot;baseline.csv.12&quot;      
+## [13] &quot;baseline.csv.2&quot;        &quot;baseline.csv.3&quot;        &quot;baseline.csv.4&quot;       
+## [16] &quot;baseline.csv.5&quot;        &quot;baseline.csv.6&quot;        &quot;baseline.csv.7&quot;       
+## [19] &quot;baseline.csv.8&quot;        &quot;baseline.csv.9&quot;        &quot;baseline.pkl&quot;         
+## [22] &quot;baseline.tsv&quot;          &quot;baseline.xlsx&quot;         &quot;baselines.tar.gz&quot;     
+## [25] &quot;baselines.tar.gz.1&quot;    &quot;baselines.tar.gz.10&quot;   &quot;baselines.tar.gz.11&quot;  
+## [28] &quot;baselines.tar.gz.12&quot;   &quot;baselines.tar.gz.2&quot;    &quot;baselines.tar.gz.3&quot;   
+## [31] &quot;baselines.tar.gz.4&quot;    &quot;baselines.tar.gz.5&quot;    &quot;baselines.tar.gz.6&quot;   
+## [34] &quot;baselines.tar.gz.7&quot;    &quot;baselines.tar.gz.8&quot;    &quot;baselines.tar.gz.9&quot;   
+## [37] &quot;book.bib&quot;              &quot;clases_cache&quot;          &quot;clases_files&quot;         
+## [40] &quot;clases.log&quot;            &quot;clases.Rmd&quot;            &quot;clases.Rproj&quot;         
+## [43] &quot;cosas_ggplot2.nb.html&quot; &quot;cosas_ggplot2.Rmd&quot;     &quot;index.Rmd&quot;            
+## [46] &quot;logs_hpc.xlsx&quot;         &quot;my_plot.png&quot;           &quot;packages.bib&quot;         
+## [49] &quot;plots.RDS&quot;             &quot;README.md&quot;             &quot;style.css&quot;            
+## [52] &quot;sup_bonita.rds&quot;        &quot;sup_bonita.xlsx&quot;       &quot;xkcd.ttf&quot;</code></pre>
 </div>
 <div id="creación-de-directorios-y-de-archivos-dentro-de-r" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Creación de directorios y de archivos dentro de R</h3>

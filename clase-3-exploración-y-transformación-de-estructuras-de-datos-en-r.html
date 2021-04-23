@@ -201,6 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.3</b> Expresiones regulares</a></li>
 <li class="chapter" data-level="3.4" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
+<li class="chapter" data-level="3.5" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#ejemplo-de-vida-real"><i class="fa fa-check"></i><b>3.5</b> Ejemplo de vida real</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
@@ -316,35 +317,35 @@ e idealmente definir un comportamiento de error para las funciones.</p>
 ## 4 bg_4  4      20926171      47644294      88937903   599913422    43731828
 ## 5 bg_5  5     164374922     728256656      68959572   495906095  1510632311
 ##   control_3 A Mean treatment A Mean control A log2Ratio A treatment_1 B
-## 1  4478205827        123556836     1621078037   -3.713707     312514583
-## 2    24453279         29007743     1397205107   -5.589962     312514583
-## 3    53031820       3613187872      106413553    5.085518     312514583
-## 4   297274234         52502790      313639828   -2.578643     312514583
-## 5   417270587        320530383      807936331   -1.333780     312514583
+## 1  4478205827        123556836     1621078037   -3.713707     275696750
+## 2    24453279         29007743     1397205107   -5.589962     275696750
+## 3    53031820       3613187872      106413553    5.085518     275696750
+## 4   297274234         52502790      313639828   -2.578643     275696750
+## 5   417270587        320530383      807936331   -1.333780     275696750
 ##   treatment_2 B treatment_3 B control_1 B control_2 B control_3 B
-## 1     172157532     686413534    70057879   314970404  4478205827
-## 2     172157532     686413534  3431646477   735515564    24453279
-## 3     172157532     686413534   254444555    11764283    53031820
-## 4     172157532     686413534   599913422    43731828   297274234
-## 5     172157532     686413534   495906095  1510632311   417270587
+## 1     154439693     647965407    70057879   314970404  4478205827
+## 2     154439693     647965407  3431646477   735515564    24453279
+## 3     154439693     647965407   254444555    11764283    53031820
+## 4     154439693     647965407   599913422    43731828   297274234
+## 5     154439693     647965407   495906095  1510632311   417270587
 ##   Mean treatment B Mean control B log2Ratio B treatment_1 C treatment_2 C
-## 1        390361883     1621078037  -2.0540694      21067708      12210506
-## 2        390361883     1397205107  -1.8396597      21067708      12210506
-## 3        390361883      106413553   1.8751303      21067708      12210506
-## 4        390361883      313639828   0.3157034      21067708      12210506
-## 5        390361883      807936331  -1.0494294      21067708      12210506
+## 1        359367283     1621078037  -2.1734226      21556626      11911440
+## 2        359367283     1397205107  -1.9590128      21556626      11911440
+## 3        359367283      106413553   1.7557772      21556626      11911440
+## 4        359367283      313639828   0.1963503      21556626      11911440
+## 5        359367283      807936331  -1.1687825      21556626      11911440
 ##   treatment_3 C control_1 C control_2 C control_3 C Mean treatment C
-## 1      45344507    70057879   314970404  4478205827         26207573
-## 2      45344507  3431646477   735515564    24453279         26207573
-## 3      45344507   254444555    11764283    53031820         26207573
-## 4      45344507   599913422    43731828   297274234         26207573
-## 5      45344507   495906095  1510632311   417270587         26207573
+## 1      45213832    70057879   314970404  4478205827         26227299
+## 2      45213832  3431646477   735515564    24453279         26227299
+## 3      45213832   254444555    11764283    53031820         26227299
+## 4      45213832   599913422    43731828   297274234         26227299
+## 5      45213832   495906095  1510632311   417270587         26227299
 ##   Mean control C log2Ratio C
-## 1     1621078037   -5.950826
-## 2     1397205107   -5.736416
-## 3      106413553   -2.021626
-## 4      313639828   -3.581053
-## 5      807936331   -4.946186</code></pre>
+## 1     1621078037   -5.949740
+## 2     1397205107   -5.735331
+## 3      106413553   -2.020541
+## 4      313639828   -3.579968
+## 5      807936331   -4.945100</code></pre>
 </div>
 </div>
 <div id="pipes-complicadas" class="section level2" number="3.2">
@@ -460,8 +461,8 @@ Sitios como <a href="regex101.com/">regex101</a> permiten testear y analizar exp
 <span id="cb81-4"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="st">&quot;subsyst.*&quot;</span>, <span class="st">&quot;comparment&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb81-5"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb81-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.exclude</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb81-6"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb81-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="dv">10</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;system 2.7.9&quot; &quot;system 1&quot;     &quot;comparment&quot;   &quot;comparment&quot;   &quot;system 2.7.9&quot;
-##  [6] &quot;comparment&quot;   &quot;system 1&quot;     &quot;system 2.7.9&quot; &quot;system 2.7.9&quot; &quot;comparment&quot;</code></pre>
+<pre><code>##  [1] &quot;comparment&quot;   &quot;system 2.7.9&quot; &quot;comparment&quot;   &quot;comparment&quot;   &quot;comparment&quot;  
+##  [6] &quot;comparment&quot;   &quot;comparment&quot;   &quot;system 2.7.9&quot; &quot;comparment&quot;   &quot;comparment&quot;</code></pre>
 </div>
 <div id="workflow-de-la-vida-real" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Workflow de la vida real</h2>
@@ -492,39 +493,47 @@ Sitios como <a href="regex101.com/">regex101</a> permiten testear y analizar exp
 <span id="cb84-13"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb84-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">&amp;</span> <span class="co"># sin diferencias Minuscula/Mayuscula</span></span>
 <span id="cb84-14"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb84-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">log2Ratio C</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="co"># Y el fold-change es menor a 0</span></span>
 <span id="cb84-15"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb84-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">matches</span>(<span class="st">&quot;log|name|term&quot;</span>))</span></code></pre></div>
-<pre><code>##      name log2Ratio A log2Ratio B log2Ratio C    terms.col
-## 1    DE_8   5.2948504  2.94089262  -0.9558639 system 2.7.9
-## 2   DE_11   3.1002144  0.12297254  -3.7737840 system 2.7.9
-## 3   DE_23   3.1452809  0.60715137  -3.2896051 system 2.7.9
-## 4   DE_32   4.0986117  1.64444380  -2.2523127 system 2.7.9
-## 5   DE_33   2.0408055 -0.37912407  -4.2758806 system 2.7.9
-## 6   DE_34   4.6089610  1.96418330  -1.9325732 system 2.7.9
-## 7   DE_38   2.2109843  0.12390313  -3.7728534 system 2.7.9
-## 8   DE_49   0.7515679 -1.95683892  -5.8535954 system 2.7.9
-## 9   DE_65   2.3464060  0.37112468  -3.5256318 system 2.7.9
-## 10  DE_71   4.1983508  0.10666699  -3.7900895 system 2.7.9
-## 11 DE_122  -0.6278188 -1.68725999  -5.5840165 system 2.7.9
-## 12 DE_137   1.1980705  1.42120658  -2.4755499 system 2.7.9
-## 13 DE_163   4.8984352  3.14468790  -0.7520686 system 2.7.9
-## 14 DE_169   1.7767308 -0.04921754  -3.9459740 system 2.7.9
-## 15 DE_170   5.8818895  3.29179033  -0.6049662 system 2.7.9
-## 16 DE_179   3.6587613  0.87213215  -3.0246243 system 2.7.9
-## 17 DE_208   0.9470748  1.58895982  -2.3077967 system 2.7.9
-## 18 DE_212   3.1173041  3.13859519  -0.7581613 system 2.7.9
-## 19 DE_218   4.5499707  2.76316527  -1.1335912 system 2.7.9
-## 20 DE_231   4.9471447  2.71768832  -1.1790682 system 2.7.9
-## 21 DE_232   4.2706511  1.78456068  -2.1121958 system 2.7.9
-## 22 DE_233   3.1487651  1.98022325  -1.9165333 system 2.7.9
-## 23 DE_237   3.8982776  1.43682573  -2.4599308 system 2.7.9
-## 24 DE_241   5.4974703  2.11328250  -1.7834740 system 2.7.9
-## 25 DE_243   6.6198107  2.88111606  -1.0156404 system 2.7.9
-## 26 DE_251   4.7819649  2.38115841  -1.5155981 system 2.7.9
-## 27 DE_252   6.3501118  3.31006905  -0.5866875 system 2.7.9
-## 28 DE_266   3.2137383  1.13645223  -2.7603043 system 2.7.9
-## 29 DE_268   4.7399001  3.05235356  -0.8444029 system 2.7.9
-## 30 DE_284   5.7720249  2.69236881  -1.2043877 system 2.7.9
-## 31 DE_287   4.4482315  3.11781849  -0.7789380 system 2.7.9
-## 32 DE_298   7.0581324  3.46779849  -0.4289580 system 2.7.9</code></pre>
+<pre><code>##      name log2Ratio A  log2Ratio B log2Ratio C    terms.col
+## 1    DE_8  5.29485037  2.821539501  -0.9547784 system 2.7.9
+## 2   DE_10  3.20495248  1.616548475  -2.1597694 system 2.7.9
+## 3   DE_11  3.10021441  0.003619419  -3.7726985 system 2.7.9
+## 4   DE_14  1.86778488 -0.027659715  -3.8039776 system 2.7.9
+## 5   DE_15  3.80516034  2.094028270  -1.6822896 system 2.7.9
+## 6   DE_20  4.43634665  0.947534777  -2.8287831 system 2.7.9
+## 7   DE_26  2.66435689 -0.976987609  -4.7533055 system 2.7.9
+## 8   DE_30 -0.84050767 -2.820402659  -6.5967206 system 2.7.9
+## 9   DE_32  4.09861174  1.525090682  -2.2512272 system 2.7.9
+## 10  DE_46  5.75484739  2.585143805  -1.1911741 system 2.7.9
+## 11  DE_56  4.23552845  2.845787980  -0.9305299 system 2.7.9
+## 12  DE_57  4.08254435  1.671794638  -2.1045233 system 2.7.9
+## 13  DE_59  5.60000511  1.855588525  -1.9207294 system 2.7.9
+## 14  DE_66  0.33984239 -1.735838665  -5.5121566 system 2.7.9
+## 15  DE_71  4.19835078 -0.012686126  -3.7890040 system 2.7.9
+## 16  DE_80  1.43123237 -1.675170004  -5.4514879 system 2.7.9
+## 17  DE_92  0.03191443 -1.680417925  -5.4567358 system 2.7.9
+## 18  DE_95 -0.57691078 -1.799650802  -5.5759687 system 2.7.9
+## 19  DE_97  3.80597760  1.369896396  -2.4064215 system 2.7.9
+## 20 DE_108  3.80469249  1.445871635  -2.3304463 system 2.7.9
+## 21 DE_112  3.49934378  1.397727482  -2.3785904 system 2.7.9
+## 22 DE_125  5.51197271  2.646066448  -1.1302515 system 2.7.9
+## 23 DE_129  4.75642719  2.525257912  -1.2510600 system 2.7.9
+## 24 DE_131  4.70996518  1.856236573  -1.9200813 system 2.7.9
+## 25 DE_153  2.10094475  2.144927701  -1.6313902 system 2.7.9
+## 26 DE_158 -0.86489619 -1.763392813  -5.5397107 system 2.7.9
+## 27 DE_160  5.33994500  3.467939663  -0.3083783 system 2.7.9
+## 28 DE_172  6.16225439  3.555298911  -0.2210190 system 2.7.9
+## 29 DE_174  5.51470263  2.109433088  -1.6668848 system 2.7.9
+## 30 DE_183  5.14553162  2.280560918  -1.4957570 system 2.7.9
+## 31 DE_194  5.35465006  2.787509535  -0.9888084 system 2.7.9
+## 32 DE_195  5.31475901  2.927011692  -0.8493062 system 2.7.9
+## 33 DE_201  2.29450580  1.410222287  -2.3660956 system 2.7.9
+## 34 DE_204  5.61359500  3.641491559  -0.1348264 system 2.7.9
+## 35 DE_227  4.65981873  1.470581187  -2.3057367 system 2.7.9
+## 36 DE_228  6.03492708  3.549237310  -0.2270806 system 2.7.9
+## 37 DE_234  3.90509509  3.337114838  -0.4392031 system 2.7.9
+## 38 DE_266  3.21373828  1.017099115  -2.7592188 system 2.7.9
+## 39 DE_268  4.73990008  2.933000448  -0.8433175 system 2.7.9
+## 40 DE_276  1.56721271  3.124901389  -0.6514165 system 2.7.9</code></pre>
 <ul>
 <li><code>%in%</code> permite detectar si un elemento esta en un objeto. Devuelve TRUE/FALSE.<br />
 Puede usarse como un complemento de los comparadores <code>==</code>, <code>&gt;</code>, <code>&lt;=</code> en sentencias <code>if(){}</code></li>
@@ -543,6 +552,165 @@ Puede usarse como un complemento de los comparadores <code>==</code>, <code>&gt;
 <span id="cb90-7"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="ot">-&gt;</span> unicos</span></code></pre></div>
 <pre><code>## [1] &quot;ok&quot;</code></pre>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb92-1" aria-hidden="true" tabindex="-1"></a>mis.datos <span class="ot">&lt;-</span> <span class="fu">list</span>(final.data.with.terms.nas, unicos, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="cn">NA</span>))</span></code></pre></div>
+</div>
+<div id="ejemplo-de-vida-real" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Ejemplo de vida real</h2>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb93-2"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb93-3"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co">#fba &lt;-  read.csv(&#39;clase_3_datos.csv&#39;)</span></span>
+<span id="cb93-4"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb93-4" aria-hidden="true" tabindex="-1"></a>fba <span class="ot">&lt;-</span>  <span class="fu">read_csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/DeepenData/clases/944d24e71390c75ab16c9a00a941ce6f3de1369d/03-mutate-pipes-regex/clase_3_datos.csv&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   X1 = col_double(),
+##   ID = col_character(),
+##   Name = col_character(),
+##   Reaction = col_character(),
+##   Flux = col_double(),
+##   Sensitivity = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb96-1" aria-hidden="true" tabindex="-1"></a>fba   <span class="sc">%&lt;&gt;%</span> <span class="fu">select</span>(<span class="fu">c</span>(<span class="st">&#39;ID&#39;</span>, <span class="fu">matches</span>(<span class="st">&#39;flux&#39;</span>), <span class="fu">contains</span>(<span class="st">&#39;Reac&#39;</span>),<span class="fu">matches</span>(<span class="st">&#39;*ame.*|sen&#39;</span>))) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(ID, <span class="fu">regex</span>(<span class="st">&#39;DM|sink&#39;</span>, <span class="at">ignore_case =</span> T)))  <span class="sc">%&gt;%</span></span>
+<span id="cb96-2"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb96-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Node type</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(Reaction, <span class="fu">regex</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">[[a-z]A</span><span class="sc">\\</span><span class="st">]&#39;</span>,              <span class="at">ignore_case =</span> T)), <span class="st">&#39;Astrocyte&#39;</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-3"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb96-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Node type</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(Reaction, <span class="fu">regex</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">[[a-z]N</span><span class="sc">\\</span><span class="st">]&#39;</span>,              <span class="at">ignore_case =</span> T)), <span class="st">&#39;Neuron&#39;</span>, <span class="st">`</span><span class="at">Node type</span><span class="st">`</span>))  <span class="sc">%&gt;%</span> </span>
+<span id="cb96-4"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb96-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(Flux <span class="sc">&gt;</span> <span class="fl">0.1</span> <span class="sc">&amp;</span> <span class="fu">abs</span>(Sensitivity) <span class="sc">&gt;</span>  <span class="dv">0</span>)  <span class="sc">%&gt;%</span> <span class="fu">column_to_rownames</span>(<span class="st">&quot;ID&quot;</span>)</span>
+<span id="cb96-5"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#cb96-5" aria-hidden="true" tabindex="-1"></a>fba</span></code></pre></div>
+<pre><code>##                      Flux
+## ENO                7.0380
+## GAPD               7.0380
+## GLCt1r             3.5190
+## GLNS               4.2228
+## HEX1               3.5190
+## PFK                3.5190
+## PYK                7.0380
+## BTNt4i_Int         2.1114
+## GLUt6_Int          4.2228
+## NaKt_Int           2.8152
+## ASPGLUm_Neuron    10.8026
+## CSm_Neuron        10.8026
+## CYOOm2_Neuron     32.4078
+## CYOR-u10m_Neuron  64.8156
+## ENO_Neuron         3.7646
+## FUMm_Neuron       10.8026
+## GAPD_Neuron        3.7646
+## GLUNm_Neuron       4.2228
+## HEX1_Neuron        1.8823
+## HMGCOASim_Neuron  10.8026
+## ICDHyrm_Neuron    10.8026
+## L-LACt2r_Neuron    7.0380
+## LDH_L_Neuron       7.0380
+## MDHm_Neuron       21.6052
+## NH4t3r_Neuron      4.2228
+## PFK_Neuron         1.8823
+## PGI_Neuron         1.8823
+## PIt2m_Neuron     151.2364
+## PYRt2m_Neuron     10.8026
+## SUCD1m_Neuron     10.8026
+## GLNtN1_Neuron      4.2228
+## NaEX_Neuron      346.7718
+## GLCt1r_Neuron      1.8823
+##                                                                                                          Reaction
+## ENO                                                                                 2pg[cA] &lt;=&gt; h2o[cA] + pep[cA]
+## GAPD                                                  g3p[cA] + nad[cA] + pi[cA] &lt;=&gt; 13dpg[cA] + h[cA] + nadh[cA]
+## GLCt1r                                                                                     glc-D[e] --&gt; glc-D[cA]
+## GLNS                                       atp[cA] + glu-L[cA] + nh4[cA] --&gt; adp[cA] + gln-L[cA] + h[cA] + pi[cA]
+## HEX1                                                            atp[cA] + glc-D[cA] --&gt; adp[cA] + g6p[cA] + h[cA]
+## PFK                                                               atp[cA] + f6p[cA] --&gt; adp[cA] + fdp[cA] + h[cA]
+## PYK                                                               adp[cA] + h[cA] + pep[cA] --&gt; atp[cA] + pyr[cA]
+## BTNt4i_Int                                                                      btn[I] + h[cA] --&gt; btn[cA] + h[I]
+## GLUt6_Int                         glu-L[I] + h[I] + k[cA] + 3.0 na1[I] --&gt; glu-L[cA] + h[cA] + k[I] + 3.0 na1[cA]
+## NaKt_Int         atp[cA] + h2o[cA] + 2.0 k[I] + 3.0 na1[cA] --&gt; adp[cA] + h[cA] + 2.0 k[cA] + 3.0 na1[I] + pi[cA]
+## ASPGLUm_Neuron                                    asp-L[mN] + glu-L[cN] + h[cN] --&gt; asp-L[cN] + glu-L[mN] + h[mN]
+## CSm_Neuron                                            accoa[mN] + h2o[mN] + oaa[mN] --&gt; cit[mN] + coa[mN] + h[mN]
+## CYOOm2_Neuron                    4.0 focytC[mN] + 8.0 h[mN] + o2[mN] --&gt; 4.0 ficytC[mN] + 2.0 h2o[mN] + 4.0 h[cN]
+## CYOR-u10m_Neuron                  2.0 ficytC[mN] + 2.0 h[mN] + q10h2[mN] --&gt; 2.0 focytC[mN] + 4.0 h[cN] + q10[mN]
+## ENO_Neuron                                                                          2pg[cN] &lt;=&gt; h2o[cN] + pep[cN]
+## FUMm_Neuron                                                                       fum[mN] + h2o[mN] &lt;=&gt; mal-L[mN]
+## GAPD_Neuron                                           g3p[cN] + nad[cN] + pi[cN] &lt;=&gt; 13dpg[cN] + h[cN] + nadh[cN]
+## GLUNm_Neuron                                                          gln-L[mN] + h2o[mN] --&gt; glu-L[mN] + nh4[mN]
+## HEX1_Neuron                                                     atp[cN] + glc-D[cN] --&gt; adp[cN] + g6p[cN] + h[cN]
+## HMGCOASim_Neuron                                 aacoa[mN] + accoa[mN] + h2o[mN] --&gt; coa[mN] + h[mN] + hmgcoa[mN]
+## ICDHyrm_Neuron                                              icit[mN] + nadp[mN] &lt;=&gt; akg[mN] + co2[mN] + nadph[mN]
+## L-LACt2r_Neuron                                                             h[I] + lac-L[I] --&gt; h[cN] + lac-L[cN]
+## LDH_L_Neuron                                                   lac-L[cN] + nad[cN] --&gt; h[cN] + nadh[cN] + pyr[cN]
+## MDHm_Neuron                                                    mal-L[mN] + nad[mN] &lt;=&gt; h[mN] + nadh[mN] + oaa[mN]
+## NH4t3r_Neuron                                                                   h[I] + nh4[cN] &lt;=&gt; h[cN] + nh4[I]
+## PFK_Neuron                                                        atp[cN] + f6p[cN] --&gt; adp[cN] + fdp[cN] + h[cN]
+## PGI_Neuron                                                                                    g6p[cN] &lt;=&gt; f6p[cN]
+## PIt2m_Neuron                                                                    h[cN] + pi[cN] &lt;=&gt; h[mN] + pi[mN]
+## PYRt2m_Neuron                                                                 h[cN] + pyr[cN] &lt;=&gt; h[mN] + pyr[mN]
+## SUCD1m_Neuron                                                          fad[mN] + succ[mN] &lt;=&gt; fadh2[mN] + fum[mN]
+## GLNtN1_Neuron                                            gln-L[I] + h[cN] + na1[I] &lt;=&gt; gln-L[cN] + h[I] + na1[cN]
+## NaEX_Neuron                                                                                    na1[e] &lt;=&gt; na1[cN]
+## GLCt1r_Neuron                                                                              glc-D[e] --&gt; glc-D[cN]
+##                                                                                           Name
+## ENO                                                                          enolase Astrocyte
+## GAPD                                        glyceraldehyde-3-phosphate dehydrogenase Astrocyte
+## GLCt1r                                                   glucose transport (uniport) Astrocyte
+## GLNS                                                            glutamine synthetase Astrocyte
+## HEX1                                                      hexokinase (D-glucose:ATP) Astrocyte
+## PFK                                                              phosphofructokinase Astrocyte
+## PYK                                                                  pyruvate kinase Astrocyte
+## BTNt4i_Int                                   Biotin uptake (antiport) Interstitial And Synapse
+## GLUt6_Int        Glutamate transport via Na, H symport and K antiport Interstitial And Synapse
+## NaKt_Int                                     Na+/K+ exchanging ATPase Interstitial And Synapse
+## ASPGLUm_Neuron                                aspartate-glutamate mitochondrial shuttle Neuron
+## CSm_Neuron                                                             citrate synthase Neuron
+## CYOOm2_Neuron                            cytochrome c oxidase, mitochondrial Complex IV Neuron
+## CYOR-u10m_Neuron                        ubiquinol-6 cytochrome c reductase, Complex III Neuron
+## ENO_Neuron                                                                      enolase Neuron
+## FUMm_Neuron                                                     fumarase, mitochondrial Neuron
+## GAPD_Neuron                                    glyceraldehyde-3-phosphate dehydrogenase Neuron
+## GLUNm_Neuron                                                glutaminase (mitochondrial) Neuron
+## HEX1_Neuron                                                  hexokinase (D-glucose:ATP) Neuron
+## HMGCOASim_Neuron                                Hydroxymethylglutaryl CoA synthase (ir) Neuron
+## ICDHyrm_Neuron                                         Isocitrate dehydrogenase (NADP+) Neuron
+## L-LACt2r_Neuron                       L-lactate reversible transport via proton symport Neuron
+## LDH_L_Neuron                                                    L-lactate dehydrogenase Neuron
+## MDHm_Neuron                                         malate dehydrogenase, mitochondrial Neuron
+## NH4t3r_Neuron                                     ammonia transport via proton antiport Neuron
+## PFK_Neuron                                                          phosphofructokinase Neuron
+## PGI_Neuron                                                glucose-6-phosphate isomerase Neuron
+## PIt2m_Neuron                                       phosphate transporter, mitochondrial Neuron
+## PYRt2m_Neuron                       pyruvate mitochondrial transport via proton symport Neuron
+## SUCD1m_Neuron                                                   succinate dehydrogenase Neuron
+## GLNtN1_Neuron                                                     Glutamine transporter Neuron
+## NaEX_Neuron                                            Sodium transport (added for simulation)
+## GLCt1r_Neuron                                                       Glucose transporter_Neuron
+##                    Sensitivity Node type
+## ENO               9.020562e-16 Astrocyte
+## GAPD              1.110223e-15 Astrocyte
+## GLCt1r            6.652000e+01 Astrocyte
+## GLNS              1.332268e-15 Astrocyte
+## HEX1             -1.998401e-15 Astrocyte
+## PFK              -1.998401e-15 Astrocyte
+## PYK               2.153833e-14 Astrocyte
+## BTNt4i_Int        3.328007e-31 Astrocyte
+## GLUt6_Int        -3.328007e-31 Astrocyte
+## NaKt_Int          2.220446e-16 Astrocyte
+## ASPGLUm_Neuron    2.109424e-15    Neuron
+## CSm_Neuron       -1.165734e-15    Neuron
+## CYOOm2_Neuron    -4.884981e-15    Neuron
+## CYOR-u10m_Neuron -1.776357e-15    Neuron
+## ENO_Neuron        8.881784e-16    Neuron
+## FUMm_Neuron      -8.881784e-16    Neuron
+## GAPD_Neuron      -1.054712e-15    Neuron
+## GLUNm_Neuron      8.881784e-16    Neuron
+## HEX1_Neuron       1.776357e-15    Neuron
+## HMGCOASim_Neuron  2.386980e-15    Neuron
+## ICDHyrm_Neuron    8.881784e-16    Neuron
+## L-LACt2r_Neuron   3.328007e-31    Neuron
+## LDH_L_Neuron     -6.106227e-16    Neuron
+## MDHm_Neuron      -2.775558e-16    Neuron
+## NH4t3r_Neuron     1.776357e-15    Neuron
+## PFK_Neuron        1.776357e-15    Neuron
+## PGI_Neuron       -2.842171e-14    Neuron
+## PIt2m_Neuron     -5.551115e-17    Neuron
+## PYRt2m_Neuron     3.330669e-16    Neuron
+## SUCD1m_Neuron    -6.661338e-16    Neuron
+## GLNtN1_Neuron    -2.664535e-15    Neuron
+## NaEX_Neuron       2.812565e-15    Neuron
+## GLCt1r_Neuron     6.000000e+01    Neuron</code></pre>
 
 </div>
 </div>

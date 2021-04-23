@@ -461,38 +461,38 @@ Podemos usar los objetos creados en estos chunks fuera, en otros chunks del cuad
 <p>Podemos descargar datasets desde sitios publicos usando programas de la terminal, como <code>wget</code></p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="01-intro.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz</span>
 <span id="cb28-2"><a href="01-intro.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv </span></code></pre></div>
-<pre><code>## --2021-04-23 01:22:23--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.177.217, 52.218.242.17
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.177.217|:443... connected.
+<pre><code>## --2021-04-23 01:28:29--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.240.65
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.240.65|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 368703 (360K) [application/x-tar]
-## Saving to: ‘baselines.tar.gz.8’
+## Saving to: ‘baselines.tar.gz.9’
 ## 
 ##      0K .......... .......... .......... .......... .......... 13%  234K 1s
-##     50K .......... .......... .......... .......... .......... 27%  230K 1s
-##    100K .......... .......... .......... .......... .......... 41%  255K 1s
-##    150K .......... .......... .......... .......... .......... 55% 2.50M 1s
-##    200K .......... .......... .......... .......... .......... 69% 3.78M 0s
-##    250K .......... .......... .......... .......... .......... 83%  251K 0s
-##    300K .......... .......... .......... .......... .......... 97% 7.53M 0s
-##    350K ..........                                            100% 13.8M=0.9s
+##     50K .......... .......... .......... .......... .......... 27%  244K 1s
+##    100K .......... .......... .......... .......... .......... 41%  244K 1s
+##    150K .......... .......... .......... .......... .......... 55% 4.24M 1s
+##    200K .......... .......... .......... .......... .......... 69% 4.39M 0s
+##    250K .......... .......... .......... .......... .......... 83%  255K 0s
+##    300K .......... .......... .......... .......... .......... 97% 4.03M 0s
+##    350K ..........                                            100% 5.81M=0.9s
 ## 
-## 2021-04-23 01:22:25 (416 KB/s) - ‘baselines.tar.gz.8’ saved [368703/368703]
+## 2021-04-23 01:28:31 (421 KB/s) - ‘baselines.tar.gz.9’ saved [368703/368703]
 ## 
-## --2021-04-23 01:22:25--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.177.217, 52.218.242.17
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.177.217|:443... connected.
+## --2021-04-23 01:28:31--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.240.65
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.240.65|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 206369 (202K) [text/csv]
-## Saving to: ‘baseline.csv.8’
+## Saving to: ‘baseline.csv.9’
 ## 
-##      0K .......... .......... .......... .......... .......... 24%  243K 1s
+##      0K .......... .......... .......... .......... .......... 24%  253K 1s
 ##     50K .......... .......... .......... .......... .......... 49%  221K 0s
-##    100K .......... .......... .......... .......... .......... 74%  356K 0s
-##    150K .......... .......... .......... .......... .......... 99%  559K 0s
-##    200K .                                                     100% 2922G=0.7s
+##    100K .......... .......... .......... .......... .......... 74%  953K 0s
+##    150K .......... .......... .......... .......... .......... 99%  295K 0s
+##    200K .                                                     100% 2922G=0.6s
 ## 
-## 2021-04-23 01:22:27 (305 KB/s) - ‘baseline.csv.8’ saved [206369/206369]</code></pre>
+## 2021-04-23 01:28:33 (312 KB/s) - ‘baseline.csv.9’ saved [206369/206369]</code></pre>
 <p>El archivo <code>baselines.tar.gz</code> es un comprimido, por lo que es necesario abrirlo con <code>tar</code>, desde la terminal.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="01-intro.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
 <p>Finalmente, importar los archivos descargados a la sesión de R.</p>

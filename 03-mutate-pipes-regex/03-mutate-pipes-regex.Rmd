@@ -35,7 +35,7 @@ Dado que un dataframe puede contener dataframes, este modo de acceso puede ir va
 - ``sim.without.outliers[c(10:110) ,c(2:6)]`` saca las filas 10 a 110 (100 en total) de las columnas 2 a 6
 - ``sim.without.outliers[[1]]`` Sacamos la columna 1 como vector
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Accediendo a data en un objeto
 sim.without.outliers[c(10:200), -c(1:2)] %>% rowMeans()
 sim.without.outliers["treatment_1"] / sim.without.outliers["treatment_2"] %>% log2() -> hola
@@ -108,7 +108,11 @@ cbind(
   select(B, matches("tre|con|log")), # Añade columnas de B
   select(C, matches("tre|con|log"))
 ) -> final.data # Añade columnas de C y guarda
-final.data
+```
+
+
+```{r echo=FALSE}
+head( final.data , 5) # Output largo, así solo salen 5 lineas
 ```
 
 ## Pipes complicadas
@@ -149,10 +153,11 @@ full_join(final.data, my.info, by = c("name" = "names.sample")) -> final.data.wi
 
 ### Filtrado de filas
 
-```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+```{r echo=TRUE, results='hide'}
 final.data.with.terms.nas %>% # Nuestra data media sucia sin los nombres sistemicos
   filter(`log2Ratio A` < 0 & `log2Ratio B` < 0 & `log2Ratio C` < 0) %>% # TODO: porque no funciona con "?
   drop_na() # Elimina todas las filas con NA
+# CHUNK SIN OUTPUT
 ```
 
 ## Expresiones regulares
@@ -165,44 +170,71 @@ Sitios como [regex101](regex101.com/) permiten testear y analizar expresiones re
 
 <!-- Tabla regex -->
 
-```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
 # Detectando un patron
 final.data.with.terms.nas %>%
   .[["name"]] %>%
   str_detect("DE") %>% # Detecta si hay o no, tira un vectro booleano
   which() # Tira una lista de las columnas donde es str_detect es TRUE
 # TODO: que hacia any()?
+```
+
+
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hold'}
 final.data.with.terms.nas %>%
   .[["name"]] %>%
   str_detect("DE") %>%
   any()
+```
+
+
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
 final.data.with.terms.nas %>%
   .[["name"]] %>%
   str_extract("DE.\\d+") %>%
   .[!is.na(.)]
+# CHUNK SIN OUTPUT
 ```
 
 
-```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hold'}
 # Detección de patrones algo más avanzada
 final.data.with.terms.nas %>%
   .[["name"]] %>%
   str_extract("[aA-zZ]E.1\\d$") %>%
   .[!is.na(.)]
+```
+
+
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hold'}
 final.data.with.terms.nas %>%
   .[["name"]] %>%
   str_extract("[aA-zZ]E.1\\d+") %>%
   .[!is.na(.)]
+```
+
+
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
 final.data.with.terms.nas %>%
   .[["name"]] %>%
   str_extract("[aA-zZ]E.1\\d.+") %>%
   .[!is.na(.)]
+# CHUNK SIN OUTPUT
+```
+
+
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
 final.data.with.terms.nas %>%
   .[["terms.col"]] %>%
   str_extract("^s.*m") %>%
   na.exclude() %>% # Es como lo de arriba, pero tira más cosas. Puede ser incomodo
   sample(10) %>%
   unique()
+# CHUNK SIN OUTPUT
+```
+
+
+```{r , echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hold'}
 # Reemplazo de patrones (subsystem -> comparment) # TODO: compartment?
 final.data.with.terms.nas %>%
   .[["terms.col"]] %>%
@@ -213,7 +245,7 @@ final.data.with.terms.nas %>%
 
 ## Workflow de la vida real
 
-```{r paged.print=TRUE}
+```{r paged.print=TRUE, results='hide'}
 final.data.with.terms.nas %>%
   filter(str_detect(
     name, # en la columna "name"
@@ -225,6 +257,7 @@ final.data.with.terms.nas %>%
       terms.col, # Busca en la columna "term.cols"
       regex("B.*A", ignore_case = F)
     )) # ...terminos que empiezan con B y terminan en A
+# CHUNK SIN OUTPUT
 ```
 
 ```{r paged.print=TRUE}
@@ -263,3 +296,16 @@ mis.datos <- list(final.data.with.terms.nas, unicos, c(1, 2, 4, 5, 5, NA))
 ```
 
 
+## Ejemplo de vida real
+
+```{r}
+library(tidyverse)
+library(magrittr)
+#fba <-  read.csv('clase_3_datos.csv')
+fba <-  read_csv('https://raw.githubusercontent.com/DeepenData/clases/944d24e71390c75ab16c9a00a941ce6f3de1369d/03-mutate-pipes-regex/clase_3_datos.csv')
+fba   %<>% select(c('ID', matches('flux'), contains('Reac'),matches('*ame.*|sen'))) %>% filter(!str_detect(ID, regex('DM|sink', ignore_case = T)))  %>%
+         mutate(`Node type` = ifelse(str_detect(Reaction, regex('\\[[a-z]A\\]',              ignore_case = T)), 'Astrocyte', NA)) %>% 
+         mutate(`Node type` = ifelse(str_detect(Reaction, regex('\\[[a-z]N\\]',              ignore_case = T)), 'Neuron', `Node type`))  %>% 
+         filter(Flux > 0.1 & abs(Sensitivity) >  0)  %>% column_to_rownames("ID")
+fba
+```

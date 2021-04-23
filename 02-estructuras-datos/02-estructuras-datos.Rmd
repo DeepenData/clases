@@ -18,7 +18,7 @@ library(readxl)
 
 # Data suplementaria bonita
 suplementaria.url <- "https://www.pnas.org/highwire/filestream/794560/field_highwire_adjunct_files/0/pnas.1800165115.sd01.xlsx"
-destfile <- "pnas_1800165115_sd01.xlsx"
+destfile <- "sup_bonita.xlsx"
 
 #Para LINUX usar:
 download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "wget") 
@@ -28,46 +28,6 @@ download.file(url= suplementaria.url,  destfile= 'sup_bonita.xlsx', method = "li
 
 suplementaria.bonita <- read_excel( "sup_bonita.xlsx" )
 suplementaria.bonita
-
-```
-
-Por motivos de compatibilidad, puede ser preferible usar `GET()`, pero en general los metodos de `download.file()` suelen ser más rapidos y la mayor parte de la gente en bioinformatica usa sistemas basados en Linux.
-
-```{r Descargando data en linea, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-library(utils) # Usar download.file() para descargar
-library(httr)  # Usa GET() para descargar
-
-# Sitio web arbitrario
-suplementaria.excel.url <- "https://cdn.elifesciences.org/articles/65202/elife-65202-fig5-data1-v1.xlsx"
-
-# Para LINUX y WINDOMS  usar httr::GET()
-GET(suplementaria.excel.url , # Dirección de descarga
-    write_disk(tf <- tempfile(fileext = "suplementaria_excel.xlsx"))) # Guardar como "tf" temporal
-suplementaria.excel <- read_excel(tf) # Lee "tf"
-
-
-# Para LINUX USAR
-download.file(url= suplementaria.excel.url,  # Dirección de descarga
-              destfile= "suplementaria_excel.xlsx", # Guardar como...
-              method = "wget")  # Usando wget, incluido en Linux
-suplementaria.excel <- read_excel("suplementaria_excel.xlsx")
-
-
-suplementaria.excel # Abriendo la data
-
-```
-
-Como advertencia respecto a los **xsls**, estos usualmente no tienden a ser "estandar", por lo que muchas veces hay que post-procesar un dataset descargado para hacer algo util con el.
-Comunmente, solo es omitir lineas y columnas que no contienen información relevante.
-
-```{r Suplementaria excel re-formateada, message=FALSE, warning=FALSE, paged.print=TRUE}
-
-suplementaria.excel.reformateada <- read_excel("suplementaria_excel.xlsx", 
-    skip = 2,  # Omite filas sin información
-    n_max = 11 # Omite filas de resumen
-    )
-
-suplementaria.excel.reformateada
 
 ```
 
@@ -214,7 +174,7 @@ En datasets de gran tamaño, o donde una cantidad significativa de los datos son
 - `.RDS` son _R Data Single_, un unico objeto. 
 - `.RData` o `.Rda`, multiples objetos de R. 
 
-```{r}
+```r
 saveRDS( suplementaria.bonita , "sup_bonita.rds" ) # Pesa 26.1 kB, ~43% el tamaño del Excel original
 
 load("sub_bonita.rds") # Usamos load() para cargar los serializados

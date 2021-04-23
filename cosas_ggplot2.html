@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="cosas_ggplot2.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="00-Setup-ambiente.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -222,40 +222,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">R Notebook</h1>
-<p class="author"><em>Alejandro Acevedo-Aracena, <em>PhD</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>; Manuel Muñoz-González<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></em></p>
-<p class="date"><em>2021-04-23</em></p>
-</div>
-<div id="presentación" class="section level1 unnumbered">
-<h1>Presentación</h1>
-<p>Los avances en la obtención de datos biológicos asociados a genes, proteínas y
-metabolitos han dado lugar a un rápido aumento del volumen y complejidad de
-datos publicados en distintos repositorios de libre acceso
-(por ejemplo <em>Gene Expression Omnibus</em> de NCBI).
-Actualmente se requiere de bioinformáticos que apliquen herramientas
-bioinformáticas y ciencia de datos para generar resultados biológicamente
-interpretables desde datos complejos y diversos.</p>
-<p>Este curso está orientado a <strong>alumnos sin ningún conocimiento
-previo sobre programación y computacional ni bioinformática</strong>. Se
-espera que al final del curso los alumnos dominen herramientas
-básicas de bioinformática y principios generales de ciencia de datos
-para aplicarlos en sus respectivas áreas de investigación.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="cosas_ggplot2.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="cosas_ggplot2.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-3"><a href="cosas_ggplot2.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="cosas_ggplot2.html#cb1-4" aria-hidden="true" tabindex="-1"></a>pcr.region.mincie <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto7/PCR.csv&quot;</span> <span class="co"># Dirección del dataset publico</span></span>
+<span id="cb1-5"><a href="cosas_ggplot2.html#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="cosas_ggplot2.html#cb1-6" aria-hidden="true" tabindex="-1"></a>MINCIENCIA_PCR <span class="ot">&lt;-</span> <span class="fu">read_csv</span>( pcr.region.mincie )</span>
+<span id="cb1-7"><a href="cosas_ggplot2.html#cb1-7" aria-hidden="true" tabindex="-1"></a>MINCIENCIA_PCR<span class="sc">$</span>Region <span class="ot">-&gt;</span> my_col_names</span>
+<span id="cb1-8"><a href="cosas_ggplot2.html#cb1-8" aria-hidden="true" tabindex="-1"></a>MINCIENCIA_PCR <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&#39;20&#39;</span>)) <span class="ot">-&gt;</span> only_dates</span>
+<span id="cb1-9"><a href="cosas_ggplot2.html#cb1-9" aria-hidden="true" tabindex="-1"></a>only_dates <span class="sc">%&gt;%</span> t <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(my_col_names) <span class="ot">-&gt;</span> my_data</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="cosas_ggplot2.html#cb2-1" aria-hidden="true" tabindex="-1"></a>my_data<span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>(<span class="st">&quot;Fecha&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="cosas_ggplot2.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>Fecha, <span class="at">names_to =</span> <span class="st">&quot;Región&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Tests&quot;</span>)<span class="ot">-&gt;</span> my_data_for_plot</span>
+<span id="cb2-3"><a href="cosas_ggplot2.html#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="cosas_ggplot2.html#cb2-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(my_data_for_plot, <span class="fu">aes</span>(<span class="at">x=</span>Fecha, <span class="at">y =</span> Tests)) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="cosas_ggplot2.html#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">4</span>)</span>
+<span id="cb2-6"><a href="cosas_ggplot2.html#cb2-6" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-2-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="cosas_ggplot2.html#cb3-1" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">+</span> <span class="fu">scale_y_log10</span>() <span class="ot">-&gt;</span> p2</span>
+<span id="cb3-2"><a href="cosas_ggplot2.html#cb3-2" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-3-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="cosas_ggplot2.html#cb4-1" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">+</span> <span class="fu">scale_y_log10</span>() <span class="ot">-&gt;</span> p2</span>
+<span id="cb4-2"><a href="cosas_ggplot2.html#cb4-2" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-4-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="cosas_ggplot2.html#cb5-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tiempo (días)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de tests PCR&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>())  <span class="ot">-&gt;</span> p3</span>
+<span id="cb5-2"><a href="cosas_ggplot2.html#cb5-2" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-5-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="cosas_ggplot2.html#cb6-1" aria-hidden="true" tabindex="-1"></a>p3<span class="sc">+</span><span class="fu">aes</span>( <span class="at">color =</span> Región)<span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.box =</span> <span class="st">&quot;horizontal&quot;</span>) <span class="ot">-&gt;</span> p4</span>
+<span id="cb6-2"><a href="cosas_ggplot2.html#cb6-2" aria-hidden="true" tabindex="-1"></a>p4</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-6-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="cosas_ggplot2.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_data_for_plot, <span class="fu">aes</span>(<span class="at">x=</span>Fecha, <span class="at">y =</span> Tests,  <span class="at">color =</span> Región)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="cosas_ggplot2.html#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>( <span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.box =</span> <span class="st">&quot;horizontal&quot;</span>)<span class="sc">+</span> <span class="fu">scale_y_log10</span>()<span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>())  <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tiempo (días)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de tests PCR&quot;</span>) <span class="ot">-&gt;</span> my_plot</span>
+<span id="cb7-3"><a href="cosas_ggplot2.html#cb7-3" aria-hidden="true" tabindex="-1"></a>my_plot</span></code></pre></div>
+<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>## Warning: Removed 40 rows containing missing values (geom_point).</code></pre>
+<p><img src="clases_files/figure-html/unnamed-chunk-7-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="cosas_ggplot2.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file=</span><span class="st">&quot;my_plot.png&quot;</span>, <span class="at">plot=</span>my_plot, <span class="at">height=</span><span class="dv">4</span>, <span class="at">width=</span><span class="dv">20</span>, <span class="at">dpi =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>## Warning: Removed 40 rows containing missing values (geom_point).</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="cosas_ggplot2.html#cb13-1" aria-hidden="true" tabindex="-1"></a>?read.delim2</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="cosas_ggplot2.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb14-2"><a href="cosas_ggplot2.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="cosas_ggplot2.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_data_for_plot, <span class="fu">aes</span>(<span class="at">x=</span>Región, <span class="at">y=</span>Tests, <span class="at">color=</span>Región))<span class="sc">+</span><span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="cosas_ggplot2.html#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_economist</span>() <span class="sc">+</span></span>
+<span id="cb14-5"><a href="cosas_ggplot2.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>, <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) </span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p><em>FONDECYT Postdoctoral Fellow</em>, Universidad de Chile, <a href="mailto:deepen.data@gmail.com" class="email">deepen.data@gmail.com</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p><em>Pregrado</em>, Universidad de Chile<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="cosas_ggplot2.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="00-Setup-ambiente.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -277,7 +296,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DeepenData/clases/blob/master/index.Rmd",
+"link": "https://github.com/DeepenData/clases/blob/master/cosas_ggplot2.Rmd",
 "text": "Editar"
 },
 "history": {

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 CLASE 3 - Exploración y transformación de estructuras de datos en R | R Notebook</title>
+  <meta name="description" content="Clases de bioinformática para gente no informática." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 CLASE 3 - Exploración y transformación de estructuras de datos en R | R Notebook" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Clases de bioinformática para gente no informática." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 CLASE 3 - Exploración y transformación de estructuras de datos en R | R Notebook" />
+  
+  <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
+  
+
+<meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
+
+
+<meta name="date" content="2021-04-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="02-estructuras-datos.html"/>
+
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li> <img src="https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Manu/calamar_3.png" alt="Calamar" width="300">  </li>
+<li><a href="https://github.com/DeepenData/clases">📄 ./source</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Presentación</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html"><i class="fa fa-check"></i>Setup del ambiente</a>
+<ul>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#paquetes-de-cran"><i class="fa fa-check"></i>Paquetes de CRAN</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#paquetes-de-bioconductor"><i class="fa fa-check"></i>Paquetes de Bioconductor</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalación-de-rstudio-en-windows"><i class="fa fa-check"></i>Instalación de R(Studio) en Windows</a>
+<ul>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#usando-un-gestor-de-paquetes"><i class="fa fa-check"></i>Usando un gestor de paquetes</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalación-manual"><i class="fa fa-check"></i>Instalación manual</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalando-r-tools-manualmente"><i class="fa fa-check"></i>Instalando R-tools manualmente</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I PRIMERA SECCIÓN - Herramientas computacionales y programación para bioinformática</b></span></li>
+<li class="chapter" data-level="1" data-path="01-intro.html"><a href="01-intro.html"><i class="fa fa-check"></i><b>1</b> CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="01-intro.html"><a href="01-intro.html#interacción-con-terminales"><i class="fa fa-check"></i><b>1.1</b> Interacción con terminales</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="01-intro.html"><a href="01-intro.html#navegación-del-sistema"><i class="fa fa-check"></i><b>1.1.1</b> Navegación del sistema</a></li>
+<li class="chapter" data-level="1.1.2" data-path="01-intro.html"><a href="01-intro.html#descargando-archivos"><i class="fa fa-check"></i><b>1.1.2</b> Descargando archivos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="01-intro.html"><a href="01-intro.html#descomprimiendo-archivos"><i class="fa fa-check"></i><b>1.1.3</b> Descomprimiendo archivos</a></li>
+<li class="chapter" data-level="1.1.4" data-path="01-intro.html"><a href="01-intro.html#explorando-y-renombrando-archivos"><i class="fa fa-check"></i><b>1.1.4</b> Explorando y renombrando archivos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="01-intro.html"><a href="01-intro.html#lenguajes-de-programación-e-ides"><i class="fa fa-check"></i><b>1.2</b> Lenguajes de programación e IDEs</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="01-intro.html"><a href="01-intro.html#tipos-de-lenguajes-de-programacion"><i class="fa fa-check"></i><b>1.2.1</b> Tipos de lenguajes de programacion</a></li>
+<li class="chapter" data-level="1.2.2" data-path="01-intro.html"><a href="01-intro.html#integrated-development-environment"><i class="fa fa-check"></i><b>1.2.2</b> Integrated Development Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="01-intro.html"><a href="01-intro.html#introducción-a-r-y-cuadernos"><i class="fa fa-check"></i><b>1.3</b> Introducción a R y cuadernos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="01-intro.html"><a href="01-intro.html#formato-de-r-notebooks"><i class="fa fa-check"></i><b>1.3.1</b> Formato de R notebooks</a></li>
+<li class="chapter" data-level="1.3.2" data-path="01-intro.html"><a href="01-intro.html#trabajando-con-chunks"><i class="fa fa-check"></i><b>1.3.2</b> Trabajando con chunks</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="01-intro.html"><a href="01-intro.html#importación-y-analisis-de-datos"><i class="fa fa-check"></i><b>1.4</b> Importación y analisis de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html"><i class="fa fa-check"></i><b>2</b> CLASE 2 - Creación y exploración de estructuras de datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#creación-de-dataframes"><i class="fa fa-check"></i><b>2.1</b> Creación de dataframes</a></li>
+<li class="chapter" data-level="2.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descargando-data-desde-internet"><i class="fa fa-check"></i><b>2.2</b> Descargando data desde internet</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descarga-desde-página-web"><i class="fa fa-check"></i><b>2.2.1</b> Descarga desde página web</a></li>
+<li class="chapter" data-level="2.2.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descarga-desde-github"><i class="fa fa-check"></i><b>2.2.2</b> Descarga desde GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#leyendo-archivos-extraños"><i class="fa fa-check"></i><b>2.3</b> Leyendo archivos extraños</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#escritura-de-archivos-con-delimitadores-csv-tsv-txt-etc."><i class="fa fa-check"></i><b>2.3.1</b> Escritura de archivos con delimitadores (csv, tsv, txt, etc.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#directorios-en-r"><i class="fa fa-check"></i><b>2.4</b> Directorios en R</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#generación-de-listas-de-archivos-de-los-directorios"><i class="fa fa-check"></i><b>2.4.1</b> Generación de listas de archivos de los directorios</a></li>
+<li class="chapter" data-level="2.4.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#creación-de-directorios-y-de-archivos-dentro-de-r"><i class="fa fa-check"></i><b>2.4.2</b> Creación de directorios y de archivos dentro de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html"><i class="fa fa-check"></i><b>3</b> CLASE 3 - Exploración y transformación de estructuras de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#utilizando-mutate-para-manipulación-de-datos"><i class="fa fa-check"></i><b>3.1</b> Utilizando mutate para manipulación de datos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#accediendo-a-datos-tabulados"><i class="fa fa-check"></i><b>3.1.1</b> Accediendo a datos tabulados</a></li>
+<li class="chapter" data-level="3.1.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#funciones-personalizadas"><i class="fa fa-check"></i><b>3.1.2</b> Funciones personalizadas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#pipes-complicadas"><i class="fa fa-check"></i><b>3.2</b> Pipes complicadas</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#tipos-de-pipes"><i class="fa fa-check"></i><b>3.2.1</b> Tipos de Pipes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#usando-sistemas-de-identificadores"><i class="fa fa-check"></i><b>3.2.2</b> Usando sistemas de identificadores</a></li>
+<li class="chapter" data-level="3.2.3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#filtrado-de-filas"><i class="fa fa-check"></i><b>3.2.3</b> Filtrado de filas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.3</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Notebook</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="clase-3---exploración-y-transformación-de-estructuras-de-datos-en-r" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> CLASE 3 - Exploración y transformación de estructuras de datos en R</h1>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="03-mutate-pipes-regex.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># Muchas cosas cool</span></span>
+<span id="cb56-2"><a href="03-mutate-pipes-regex.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Incluidas en tidyverse, en caso de errores cargandolo</span></span>
+<span id="cb56-3"><a href="03-mutate-pipes-regex.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>) <span class="co"># Manipulación de datos mediante gramatica propia</span></span>
+<span id="cb56-4"><a href="03-mutate-pipes-regex.html#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;magrittr&quot;</span>) <span class="co"># Operadores cañeria (pipes) %&gt;%)</span></span>
+<span id="cb56-5"><a href="03-mutate-pipes-regex.html#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;readr&quot;</span>) <span class="co"># Traducción (pharsing) de archivos a una tibble</span></span>
+<span id="cb56-6"><a href="03-mutate-pipes-regex.html#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stringr&quot;</span>) <span class="co"># Operadores consistentes para strings</span></span></code></pre></div>
+<p>La función <em>mutate()</em> de <strong>dplyr</strong> permite crear nuevas variables manteniendo las ya existentes.
+Por ejemplo, sacando el promedio de dos variables u operaciones similares.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="03-mutate-pipes-regex.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importando datos de un CSV</span></span>
+<span id="cb57-2"><a href="03-mutate-pipes-regex.html#cb57-2" aria-hidden="true" tabindex="-1"></a>data.location <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/DeepenData/clases/2bd7d93d9f23b2fe3fc679ca44e40a286f292ffe/06_mutate_pipes_regex/data_oct_08_2020.csv&quot;</span></span>
+<span id="cb57-3"><a href="03-mutate-pipes-regex.html#cb57-3" aria-hidden="true" tabindex="-1"></a>sim.without.outliers <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data.location) <span class="co"># Importa la data a &quot;sim.without.outliers&quot;</span></span></code></pre></div>
+<div id="utilizando-mutate-para-manipulación-de-datos" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Utilizando mutate para manipulación de datos</h2>
+<div id="accediendo-a-datos-tabulados" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Accediendo a datos tabulados</h3>
+<p>La gramatica de R utiliza <code>[]</code> y <code>$</code> para acceder a objetos dentro de una estructura de datos.
+Con un dataframe como el sacado de un CSV, esto son las filas, columnas, celdas individuales, etc.
+Dado que un dataframe puede contener dataframes, este modo de acceso puede ir varios niveles de profundidad
+<!-- Como conspiraciones dentro de conspiraciones dentro de conspiraciones en _The X-Files_-->.</p>
+<ul>
+<li><code>sim.without.outliers$1</code> saca la primera como vector</li>
+<li><code>sim.without.outliers[1]</code> saca la columna 1</li>
+<li><code>sim.without.outliers[ ,c(1,6)]</code> saca las columnas 1 y 6</li>
+<li><code>sim.without.outliers[ ,c(1:6)]</code> saca las columnas de 1 a 6</li>
+<li><code>sim.without.outliers[ ,-c(1,6)]</code> saca todas las columnas <strong>menos</strong> la 1 y 6</li>
+<li><code>sim.without.outliers[c(10:110) ,c(2:6)]</code> saca las filas 10 a 110 (100 en total) de las columnas 2 a 6</li>
+<li><code>sim.without.outliers[[1]]</code> Sacamos la columna 1 como vector</li>
+</ul>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="03-mutate-pipes-regex.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accediendo a data en un objeto</span></span>
+<span id="cb58-2"><a href="03-mutate-pipes-regex.html#cb58-2" aria-hidden="true" tabindex="-1"></a>sim.without.outliers[<span class="fu">c</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">200</span>), <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)] <span class="sc">%&gt;%</span> <span class="fu">rowMeans</span>()</span>
+<span id="cb58-3"><a href="03-mutate-pipes-regex.html#cb58-3" aria-hidden="true" tabindex="-1"></a>sim.without.outliers[<span class="st">&quot;treatment_1&quot;</span>] <span class="sc">/</span> sim.without.outliers[<span class="st">&quot;treatment_2&quot;</span>] <span class="sc">%&gt;%</span> <span class="fu">log2</span>() <span class="ot">-&gt;</span> hola</span>
+<span id="cb58-4"><a href="03-mutate-pipes-regex.html#cb58-4" aria-hidden="true" tabindex="-1"></a>sim.without.outliers<span class="sc">$</span>nueva_columna <span class="ot">&lt;-</span> hola <span class="co"># Llena la columna con &quot;hola&quot;</span></span>
+<span id="cb58-5"><a href="03-mutate-pipes-regex.html#cb58-5" aria-hidden="true" tabindex="-1"></a>sim.without.outliers<span class="sc">$</span>nueva_columna <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co"># Elimina una columna</span></span></code></pre></div>
+<p>Para trabajar con columnas en un dataframe, usamos <strong>dplyr::mutate()</strong>.
+Esto crea una nueva columna a partir de existentes, preservando las originales.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="03-mutate-pipes-regex.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modificando la tabla con mutate() para calcular el Fold-change (log2/log2)</span></span>
+<span id="cb59-2"><a href="03-mutate-pipes-regex.html#cb59-2" aria-hidden="true" tabindex="-1"></a>sim.without.outliers <span class="sc">%&gt;%</span> <span class="co"># Tirando data por la cañeria</span></span>
+<span id="cb59-3"><a href="03-mutate-pipes-regex.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hace un promedio de las columnas TREAT(MENT)</span></span>
+<span id="cb59-4"><a href="03-mutate-pipes-regex.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Mean treatment</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">rowMeans</span>(<span class="fu">select</span>(., <span class="fu">starts_with</span>(<span class="st">&quot;treat&quot;</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb59-5"><a href="03-mutate-pipes-regex.html#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hace un promedio de las columnas CONTROL</span></span>
+<span id="cb59-6"><a href="03-mutate-pipes-regex.html#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Mean control</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">rowMeans</span>(<span class="fu">select</span>(., <span class="fu">starts_with</span>(<span class="st">&quot;control&quot;</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb59-7"><a href="03-mutate-pipes-regex.html#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula el fold-change de TRATAMIENTO sobre CONTROL</span></span>
+<span id="cb59-8"><a href="03-mutate-pipes-regex.html#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">log2Ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">log2</span>(.[[<span class="st">&quot;Mean treatment&quot;</span>]] <span class="sc">/</span> .[[<span class="st">&quot;Mean control&quot;</span>]])) <span class="ot">-&gt;</span> mutated.sim</span></code></pre></div>
+</div>
+<div id="funciones-personalizadas" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Funciones personalizadas</h3>
+<p>Creamos funciones para evitar escribir miles de lineas de codigo cada vez que queremos repetir algo.
+Podemos agruparlas y hacer una libreria para proyectos grandes, donde reutilizamos las funciones, o para recursiones.</p>
+<p>Es importante considerar que las funciones son para cosas con un comportamiento predecible, e idealmente estable.
+Para analisis de datos, usualmente tenemos que limpiar los datasets,
+para tener una estructura “estándar” que nuestras funciones acepten,
+e idealmente definir un comportamiento de error para las funciones.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="03-mutate-pipes-regex.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creamos funciones personalizadas para reutilizar codigo</span></span>
+<span id="cb60-2"><a href="03-mutate-pipes-regex.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Aumenta por el cambio +- fracción del cambio. Es decir 3 +- 0.3 (2.7-3.3)</span></span>
+<span id="cb60-3"><a href="03-mutate-pipes-regex.html#cb60-3" aria-hidden="true" tabindex="-1"></a>an.increase <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">change =</span> <span class="dv">3</span>, <span class="at">fraction =</span> .<span class="dv">1</span>) {</span>
+<span id="cb60-4"><a href="03-mutate-pipes-regex.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> (change <span class="sc">*</span> x <span class="sc">-</span> fraction <span class="sc">*</span> (change <span class="sc">*</span> x)), <span class="at">max =</span> (change <span class="sc">*</span> x <span class="sc">+</span> fraction <span class="sc">*</span> (change <span class="sc">*</span> x)))</span>
+<span id="cb60-5"><a href="03-mutate-pipes-regex.html#cb60-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb60-6"><a href="03-mutate-pipes-regex.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Disminuye por el cambio +- fracción del cambio. Es decir 0.2 +- 0.1 (0.1-0.3)</span></span>
+<span id="cb60-7"><a href="03-mutate-pipes-regex.html#cb60-7" aria-hidden="true" tabindex="-1"></a>a.decrease <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">change =</span> .<span class="dv">2</span>, <span class="at">fraction =</span> .<span class="dv">1</span>) {</span>
+<span id="cb60-8"><a href="03-mutate-pipes-regex.html#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> (change <span class="sc">*</span> x <span class="sc">-</span> fraction <span class="sc">*</span> (change <span class="sc">*</span> x)), <span class="at">max =</span> (change <span class="sc">*</span> x <span class="sc">+</span> fraction <span class="sc">*</span> (change <span class="sc">*</span> x)))</span>
+<span id="cb60-9"><a href="03-mutate-pipes-regex.html#cb60-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Podemos crear una función para el pipeline más complejo que hicimos para el calculo del fold-change.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="03-mutate-pipes-regex.html#cb61-1" aria-hidden="true" tabindex="-1"></a>generate_mean_log2Ratio <span class="ot">&lt;-</span> <span class="cf">function</span>(x, a.letter) {</span>
+<span id="cb61-2"><a href="03-mutate-pipes-regex.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%&gt;%</span></span>
+<span id="cb61-3"><a href="03-mutate-pipes-regex.html#cb61-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Mean treatment</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">rowMeans</span>(<span class="fu">select</span>(., <span class="fu">starts_with</span>(<span class="st">&quot;treat&quot;</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb61-4"><a href="03-mutate-pipes-regex.html#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Mean control</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">rowMeans</span>(<span class="fu">select</span>(., <span class="fu">starts_with</span>(<span class="st">&quot;control&quot;</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb61-5"><a href="03-mutate-pipes-regex.html#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">log2Ratio =</span> <span class="fu">log2</span>(.[[<span class="st">&quot;Mean treatment&quot;</span>]] <span class="sc">/</span> .[[<span class="st">&quot;Mean control&quot;</span>]])) <span class="sc">%&gt;%</span></span>
+<span id="cb61-6"><a href="03-mutate-pipes-regex.html#cb61-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Les añadiremos un identidicador al final, por &quot;&quot;&quot;motivos&quot;&quot;&quot; (ver luego)</span></span>
+<span id="cb61-7"><a href="03-mutate-pipes-regex.html#cb61-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename_at</span>(<span class="fu">vars</span>(<span class="fu">matches</span>(<span class="st">&quot;^treat|^contr|^mean|log2&quot;</span>, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)), <span class="fu">funs</span>(<span class="fu">paste0</span>(., a.letter)))</span>
+<span id="cb61-8"><a href="03-mutate-pipes-regex.html#cb61-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="03-mutate-pipes-regex.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generando sets para correlaciones</span></span>
+<span id="cb62-2"><a href="03-mutate-pipes-regex.html#cb62-2" aria-hidden="true" tabindex="-1"></a>sim.without.outliers <span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="03-mutate-pipes-regex.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate_mean_log2Ratio</span>(<span class="st">&quot; A&quot;</span>) <span class="ot">-&gt;</span> A <span class="co"># Calcula el fold-change inicial sin cambios</span></span>
+<span id="cb62-4"><a href="03-mutate-pipes-regex.html#cb62-4" aria-hidden="true" tabindex="-1"></a>sim.without.outliers <span class="sc">%&gt;%</span></span>
+<span id="cb62-5"><a href="03-mutate-pipes-regex.html#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;treatment&quot;</span>), an.increase)) <span class="sc">%&gt;%</span></span>
+<span id="cb62-6"><a href="03-mutate-pipes-regex.html#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate_mean_log2Ratio</span>(<span class="st">&quot; B&quot;</span>) <span class="ot">-&gt;</span> B <span class="co"># Fold-change aumenta 1.4-1.7 veces</span></span>
+<span id="cb62-7"><a href="03-mutate-pipes-regex.html#cb62-7" aria-hidden="true" tabindex="-1"></a>sim.without.outliers <span class="sc">%&gt;%</span></span>
+<span id="cb62-8"><a href="03-mutate-pipes-regex.html#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;treatment&quot;</span>), a.decrease)) <span class="sc">%&gt;%</span></span>
+<span id="cb62-9"><a href="03-mutate-pipes-regex.html#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate_mean_log2Ratio</span>(<span class="st">&quot; C&quot;</span>) <span class="ot">-&gt;</span> C <span class="co"># Fold-change disminuye -3.3 - -1.7 veces</span></span>
+<span id="cb62-10"><a href="03-mutate-pipes-regex.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Creando el dataset final</span></span>
+<span id="cb62-11"><a href="03-mutate-pipes-regex.html#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(</span>
+<span id="cb62-12"><a href="03-mutate-pipes-regex.html#cb62-12" aria-hidden="true" tabindex="-1"></a>  A, <span class="co"># Parte con la data A</span></span>
+<span id="cb62-13"><a href="03-mutate-pipes-regex.html#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(B, <span class="fu">matches</span>(<span class="st">&quot;tre|con|log&quot;</span>)), <span class="co"># Añade columnas de B</span></span>
+<span id="cb62-14"><a href="03-mutate-pipes-regex.html#cb62-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(C, <span class="fu">matches</span>(<span class="st">&quot;tre|con|log&quot;</span>))</span>
+<span id="cb62-15"><a href="03-mutate-pipes-regex.html#cb62-15" aria-hidden="true" tabindex="-1"></a>) <span class="ot">-&gt;</span> final.data <span class="co"># Añade columnas de C y guarda</span></span></code></pre></div>
+<pre><code>##   name ID treatment_1 A treatment_2 A treatment_3 A control_1 A control_2 A
+## 1 bg_1  1      98769372      55528721     216372415    70057879   314970404
+## 2 bg_2  2      21576971      15703117      49743142  3431646477   735515564
+## 3 bg_3  3     574350430    1537885240    8727327947   254444555    11764283
+## 4 bg_4  4      20926171      47644294      88937903   599913422    43731828
+## 5 bg_5  5     164374922     728256656      68959572   495906095  1510632311
+##   control_3 A Mean treatment A Mean control A log2Ratio A treatment_1 B
+## 1  4478205827        123556836     1621078037   -3.713707     316166036
+## 2    24453279         29007743     1397205107   -5.589962     316166036
+## 3    53031820       3613187872      106413553    5.085518     316166036
+## 4   297274234         52502790      313639828   -2.578643     316166036
+## 5   417270587        320530383      807936331   -1.333780     316166036
+##   treatment_2 B treatment_3 B control_1 B control_2 B control_3 B
+## 1     160418954     674477023    70057879   314970404  4478205827
+## 2     160418954     674477023  3431646477   735515564    24453279
+## 3     160418954     674477023   254444555    11764283    53031820
+## 4     160418954     674477023   599913422    43731828   297274234
+## 5     160418954     674477023   495906095  1510632311   417270587
+##   Mean treatment B Mean control B log2Ratio B treatment_1 C treatment_2 C
+## 1        383687338     1621078037  -2.0789505      19514913      10216199
+## 2        383687338     1397205107  -1.8645408      19514913      10216199
+## 3        383687338      106413553   1.8502493      19514913      10216199
+## 4        383687338      313639828   0.2908224      19514913      10216199
+## 5        383687338      807936331  -1.0743105      19514913      10216199
+##   treatment_3 C control_1 C control_2 C control_3 C Mean treatment C
+## 1      39985290    70057879   314970404  4478205827         23238801
+## 2      39985290  3431646477   735515564    24453279         23238801
+## 3      39985290   254444555    11764283    53031820         23238801
+## 4      39985290   599913422    43731828   297274234         23238801
+## 5      39985290   495906095  1510632311   417270587         23238801
+##   Mean control C log2Ratio C
+## 1     1621078037   -6.124274
+## 2     1397205107   -5.909864
+## 3      106413553   -2.195074
+## 4      313639828   -3.754501
+## 5      807936331   -5.119634</code></pre>
+</div>
+</div>
+<div id="pipes-complicadas" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Pipes complicadas</h2>
+<div id="tipos-de-pipes" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Tipos de Pipes</h3>
+<p>Las funciones de pipes vienen mejor definidas en <strong>magrittr</strong>.<br />
+R no incluye pipes en base.</p>
+<ul>
+<li><code>%&gt;%</code> la pipe tradicional que conocemos y amamos; pasa un obejeto a la entrada de la función<br />
+</li>
+<li><code>%$%</code> permite pasar adicionalmente los nombres del objeto<br />
+</li>
+<li><code>%&lt;&gt;%</code> pipe bidireccional, que sirve para modificar el objeto de la entrada<br />
+</li>
+<li><code>%T%</code> una tee, que permite sacar muestras del pipeline, o derivar a otros pipes</li>
+</ul>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="03-mutate-pipes-regex.html#cb64-1" aria-hidden="true" tabindex="-1"></a>final.data <span class="sc">%$%</span> name <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="03-mutate-pipes-regex.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="co"># Sin head el output es de 3300 cosas</span></span></code></pre></div>
+<pre><code>## [1] &quot;bg_1&quot; &quot;bg_2&quot; &quot;bg_3&quot; &quot;bg_4&quot; &quot;bg_5&quot; &quot;bg_6&quot;</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="03-mutate-pipes-regex.html#cb66-1" aria-hidden="true" tabindex="-1"></a>final.data <span class="sc">%$%</span> <span class="fu">cor</span>(<span class="st">`</span><span class="at">log2Ratio A</span><span class="st">`</span>, <span class="st">`</span><span class="at">log2Ratio B</span><span class="st">`</span>) <span class="co"># Correlación entre A y B</span></span></code></pre></div>
+<pre><code>## [1] 0.7043315</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="03-mutate-pipes-regex.html#cb68-1" aria-hidden="true" tabindex="-1"></a>final.data <span class="sc">%$%</span> <span class="fu">cbind</span>(<span class="st">`</span><span class="at">log2Ratio A</span><span class="st">`</span>, <span class="st">`</span><span class="at">log2Ratio B</span><span class="st">`</span>, <span class="st">`</span><span class="at">log2Ratio C</span><span class="st">`</span>) <span class="sc">%&gt;%</span> <span class="fu">colSums</span>() <span class="ot">-&gt;</span> my.col.sum</span>
+<span id="cb68-2"><a href="03-mutate-pipes-regex.html#cb68-2" aria-hidden="true" tabindex="-1"></a>my.col.sum <span class="sc">%&gt;%</span> <span class="fu">subset</span>(. <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="ot">-&gt;</span> my.col.sum</span>
+<span id="cb68-3"><a href="03-mutate-pipes-regex.html#cb68-3" aria-hidden="true" tabindex="-1"></a>my.col.sum <span class="sc">%&lt;&gt;%</span> <span class="fu">subset</span>(. <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># Pipe bidireccional util para actualizar cosas</span></span>
+<span id="cb68-4"><a href="03-mutate-pipes-regex.html#cb68-4" aria-hidden="true" tabindex="-1"></a>final.data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">matches</span>(<span class="st">&quot;log2&quot;</span>)) <span class="sc">%T&gt;%</span> <span class="fu">plot</span>() <span class="sc">%&gt;%</span> <span class="co"># %T% permite sacar &quot;muestras&quot; del pipe</span></span>
+<span id="cb68-5"><a href="03-mutate-pipes-regex.html#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">matches</span>(<span class="st">&quot;B|C&quot;</span>)) <span class="ot">-&gt;</span> my.cols</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-34-1.png" width="288" /></p>
+</div>
+<div id="usando-sistemas-de-identificadores" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Usando sistemas de identificadores</h3>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="03-mutate-pipes-regex.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Esto crea las descripciones del sistema o como estan descritas</span></span>
+<span id="cb69-2"><a href="03-mutate-pipes-regex.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Molestias de los datos ómicos</span></span>
+<span id="cb69-3"><a href="03-mutate-pipes-regex.html#cb69-3" aria-hidden="true" tabindex="-1"></a>my.terms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;system 1&quot;</span>, <span class="st">&quot;system 2.7.9&quot;</span>, <span class="st">&quot;subsystem A&quot;</span>, <span class="st">&quot;subsystem B and A&quot;</span>) <span class="co"># Sistemas super-sistemicos</span></span>
+<span id="cb69-4"><a href="03-mutate-pipes-regex.html#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(my.terms, <span class="fu">nrow</span>(final.data) <span class="sc">/</span> <span class="dv">2</span>, <span class="at">replace =</span> T) <span class="ot">-&gt;</span> terms.col <span class="co"># Genera una columna de terminos de 1650 lineas .</span></span>
+<span id="cb69-5"><a href="03-mutate-pipes-regex.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(final.data<span class="sc">$</span>name, <span class="fu">nrow</span>(final.data) <span class="sc">/</span> <span class="dv">2</span>, <span class="at">replace =</span> F) <span class="ot">-&gt;</span> names.sample <span class="co"># saca 1650 nombres sin duplicados, para una tabla donde habran termiminos para sistemas de identificadores</span></span>
+<span id="cb69-6"><a href="03-mutate-pipes-regex.html#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(terms.col, names.sample) <span class="ot">-&gt;</span> my.info <span class="co"># hacemos una tabla con datos de multiples funciones</span></span>
+<span id="cb69-7"><a href="03-mutate-pipes-regex.html#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(final.data, my.info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span> <span class="ot">=</span> <span class="st">&quot;names.sample&quot;</span>)) <span class="ot">-&gt;</span> final.data.with.terms <span class="co"># elimina los datos que no tienen los terminos de sistemas que usamos</span></span>
+<span id="cb69-8"><a href="03-mutate-pipes-regex.html#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(final.data, my.info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span> <span class="ot">=</span> <span class="st">&quot;names.sample&quot;</span>)) <span class="ot">-&gt;</span> final.data.with.terms.nas <span class="co"># terminos en que algunos tienen descriptores y otros no</span></span></code></pre></div>
+</div>
+<div id="filtrado-de-filas" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Filtrado de filas</h3>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="03-mutate-pipes-regex.html#cb70-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span> <span class="co"># Nuestra data media sucia sin los nombres sistemicos</span></span>
+<span id="cb70-2"><a href="03-mutate-pipes-regex.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">log2Ratio A</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">log2Ratio B</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">log2Ratio C</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="co"># </span><span class="al">TODO</span><span class="co">: porque no funciona con &quot;?</span></span>
+<span id="cb70-3"><a href="03-mutate-pipes-regex.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="co"># Elimina todas las filas con NA</span></span>
+<span id="cb70-4"><a href="03-mutate-pipes-regex.html#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># CHUNK SIN OUTPUT</span></span></code></pre></div>
+</div>
+</div>
+<div id="expresiones-regulares" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Expresiones regulares</h2>
+<p>Las expresiones regulares, <em>regex</em>, son (generalizadamente) patrones de texto que definen un criterio de busqeda en un string.
+Por ejemplo, <code>a...</code> se referiria a cualquier string que sea “a” seguido por tres caracteres, como “aaaa,” “a123,” “a,” etc.
+Diversos lenguajes usan distintas gramaticas de <em>regex</em>, pero en general usan los mismos comodines y expresiones base.
+R incluye paquetes base que usan <em>regex</em>, pero <strong>stringr</strong> tiene funciones más detalladas.
+Sitios como <a href="regex101.com/">regex101</a> permiten testear y analizar expresiones regulares.</p>
+<!-- Tabla regex -->
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="03-mutate-pipes-regex.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detectando un patron</span></span>
+<span id="cb71-2"><a href="03-mutate-pipes-regex.html#cb71-2" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a href="03-mutate-pipes-regex.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;name&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb71-4"><a href="03-mutate-pipes-regex.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="st">&quot;DE&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Detecta si hay o no, tira un vectro booleano</span></span>
+<span id="cb71-5"><a href="03-mutate-pipes-regex.html#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">which</span>() <span class="co"># Tira una lista de las columnas donde es str_detect es TRUE</span></span>
+<span id="cb71-6"><a href="03-mutate-pipes-regex.html#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: que hacia any()?</span></span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="03-mutate-pipes-regex.html#cb72-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb72-2"><a href="03-mutate-pipes-regex.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;name&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb72-3"><a href="03-mutate-pipes-regex.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="st">&quot;DE&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb72-4"><a href="03-mutate-pipes-regex.html#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">any</span>()</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="03-mutate-pipes-regex.html#cb74-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb74-2"><a href="03-mutate-pipes-regex.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;name&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb74-3"><a href="03-mutate-pipes-regex.html#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(<span class="st">&quot;DE.</span><span class="sc">\\</span><span class="st">d+&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb74-4"><a href="03-mutate-pipes-regex.html#cb74-4" aria-hidden="true" tabindex="-1"></a>  .[<span class="sc">!</span><span class="fu">is.na</span>(.)]</span>
+<span id="cb74-5"><a href="03-mutate-pipes-regex.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CHUNK SIN OUTPUT</span></span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="03-mutate-pipes-regex.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detección de patrones algo más avanzada</span></span>
+<span id="cb75-2"><a href="03-mutate-pipes-regex.html#cb75-2" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb75-3"><a href="03-mutate-pipes-regex.html#cb75-3" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;name&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb75-4"><a href="03-mutate-pipes-regex.html#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(<span class="st">&quot;[aA-zZ]E.1</span><span class="sc">\\</span><span class="st">d$&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb75-5"><a href="03-mutate-pipes-regex.html#cb75-5" aria-hidden="true" tabindex="-1"></a>  .[<span class="sc">!</span><span class="fu">is.na</span>(.)]</span></code></pre></div>
+<pre><code>##  [1] &quot;DE_10&quot; &quot;DE_11&quot; &quot;DE_12&quot; &quot;DE_13&quot; &quot;DE_14&quot; &quot;DE_15&quot; &quot;DE_16&quot; &quot;DE_17&quot; &quot;DE_18&quot;
+## [10] &quot;DE_19&quot;</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="03-mutate-pipes-regex.html#cb77-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb77-2"><a href="03-mutate-pipes-regex.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;name&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb77-3"><a href="03-mutate-pipes-regex.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(<span class="st">&quot;[aA-zZ]E.1</span><span class="sc">\\</span><span class="st">d+&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb77-4"><a href="03-mutate-pipes-regex.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  .[<span class="sc">!</span><span class="fu">is.na</span>(.)]</span></code></pre></div>
+<pre><code>##   [1] &quot;DE_10&quot;  &quot;DE_11&quot;  &quot;DE_12&quot;  &quot;DE_13&quot;  &quot;DE_14&quot;  &quot;DE_15&quot;  &quot;DE_16&quot;  &quot;DE_17&quot; 
+##   [9] &quot;DE_18&quot;  &quot;DE_19&quot;  &quot;DE_100&quot; &quot;DE_101&quot; &quot;DE_102&quot; &quot;DE_103&quot; &quot;DE_104&quot; &quot;DE_105&quot;
+##  [17] &quot;DE_106&quot; &quot;DE_107&quot; &quot;DE_108&quot; &quot;DE_109&quot; &quot;DE_110&quot; &quot;DE_111&quot; &quot;DE_112&quot; &quot;DE_113&quot;
+##  [25] &quot;DE_114&quot; &quot;DE_115&quot; &quot;DE_116&quot; &quot;DE_117&quot; &quot;DE_118&quot; &quot;DE_119&quot; &quot;DE_120&quot; &quot;DE_121&quot;
+##  [33] &quot;DE_122&quot; &quot;DE_123&quot; &quot;DE_124&quot; &quot;DE_125&quot; &quot;DE_126&quot; &quot;DE_127&quot; &quot;DE_128&quot; &quot;DE_129&quot;
+##  [41] &quot;DE_130&quot; &quot;DE_131&quot; &quot;DE_132&quot; &quot;DE_133&quot; &quot;DE_134&quot; &quot;DE_135&quot; &quot;DE_136&quot; &quot;DE_137&quot;
+##  [49] &quot;DE_138&quot; &quot;DE_139&quot; &quot;DE_140&quot; &quot;DE_141&quot; &quot;DE_142&quot; &quot;DE_143&quot; &quot;DE_144&quot; &quot;DE_145&quot;
+##  [57] &quot;DE_146&quot; &quot;DE_147&quot; &quot;DE_148&quot; &quot;DE_149&quot; &quot;DE_150&quot; &quot;DE_151&quot; &quot;DE_152&quot; &quot;DE_153&quot;
+##  [65] &quot;DE_154&quot; &quot;DE_155&quot; &quot;DE_156&quot; &quot;DE_157&quot; &quot;DE_158&quot; &quot;DE_159&quot; &quot;DE_160&quot; &quot;DE_161&quot;
+##  [73] &quot;DE_162&quot; &quot;DE_163&quot; &quot;DE_164&quot; &quot;DE_165&quot; &quot;DE_166&quot; &quot;DE_167&quot; &quot;DE_168&quot; &quot;DE_169&quot;
+##  [81] &quot;DE_170&quot; &quot;DE_171&quot; &quot;DE_172&quot; &quot;DE_173&quot; &quot;DE_174&quot; &quot;DE_175&quot; &quot;DE_176&quot; &quot;DE_177&quot;
+##  [89] &quot;DE_178&quot; &quot;DE_179&quot; &quot;DE_180&quot; &quot;DE_181&quot; &quot;DE_182&quot; &quot;DE_183&quot; &quot;DE_184&quot; &quot;DE_185&quot;
+##  [97] &quot;DE_186&quot; &quot;DE_187&quot; &quot;DE_188&quot; &quot;DE_189&quot; &quot;DE_190&quot; &quot;DE_191&quot; &quot;DE_192&quot; &quot;DE_193&quot;
+## [105] &quot;DE_194&quot; &quot;DE_195&quot; &quot;DE_196&quot; &quot;DE_197&quot; &quot;DE_198&quot; &quot;DE_199&quot;</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="03-mutate-pipes-regex.html#cb79-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb79-2"><a href="03-mutate-pipes-regex.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;name&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb79-3"><a href="03-mutate-pipes-regex.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(<span class="st">&quot;[aA-zZ]E.1</span><span class="sc">\\</span><span class="st">d.+&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb79-4"><a href="03-mutate-pipes-regex.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  .[<span class="sc">!</span><span class="fu">is.na</span>(.)]</span>
+<span id="cb79-5"><a href="03-mutate-pipes-regex.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CHUNK SIN OUTPUT</span></span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="03-mutate-pipes-regex.html#cb80-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb80-2"><a href="03-mutate-pipes-regex.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;terms.col&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb80-3"><a href="03-mutate-pipes-regex.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(<span class="st">&quot;^s.*m&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-4"><a href="03-mutate-pipes-regex.html#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.exclude</span>() <span class="sc">%&gt;%</span> <span class="co"># Es como lo de arriba, pero tira más cosas. Puede ser incomodo</span></span>
+<span id="cb80-5"><a href="03-mutate-pipes-regex.html#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-6"><a href="03-mutate-pipes-regex.html#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb80-7"><a href="03-mutate-pipes-regex.html#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="co"># CHUNK SIN OUTPUT</span></span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="03-mutate-pipes-regex.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reemplazo de patrones (subsystem -&gt; comparment) # </span><span class="al">TODO</span><span class="co">: compartment?</span></span>
+<span id="cb81-2"><a href="03-mutate-pipes-regex.html#cb81-2" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb81-3"><a href="03-mutate-pipes-regex.html#cb81-3" aria-hidden="true" tabindex="-1"></a>  .[[<span class="st">&quot;terms.col&quot;</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb81-4"><a href="03-mutate-pipes-regex.html#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="st">&quot;subsyst.*&quot;</span>, <span class="st">&quot;comparment&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb81-5"><a href="03-mutate-pipes-regex.html#cb81-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.exclude</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb81-6"><a href="03-mutate-pipes-regex.html#cb81-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;comparment&quot;   &quot;comparment&quot;   &quot;system 2.7.9&quot; &quot;comparment&quot;   &quot;system 2.7.9&quot;
+##  [6] &quot;comparment&quot;   &quot;system 1&quot;     &quot;system 2.7.9&quot; &quot;system 1&quot;     &quot;comparment&quot;</code></pre>
+</div>
+<div id="workflow-de-la-vida-real" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Workflow de la vida real</h2>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="03-mutate-pipes-regex.html#cb83-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb83-2"><a href="03-mutate-pipes-regex.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(</span>
+<span id="cb83-3"><a href="03-mutate-pipes-regex.html#cb83-3" aria-hidden="true" tabindex="-1"></a>    name, <span class="co"># en la columna &quot;name&quot;</span></span>
+<span id="cb83-4"><a href="03-mutate-pipes-regex.html#cb83-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">regex</span>(<span class="st">&quot;de.*&quot;</span>, <span class="co"># Busca &quot;de*&quot;</span></span>
+<span id="cb83-5"><a href="03-mutate-pipes-regex.html#cb83-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">ignore_case =</span> T</span>
+<span id="cb83-6"><a href="03-mutate-pipes-regex.html#cb83-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb83-7"><a href="03-mutate-pipes-regex.html#cb83-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&amp;</span> <span class="co"># sin diferencias Minuscula/Mayuscula</span></span>
+<span id="cb83-8"><a href="03-mutate-pipes-regex.html#cb83-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(</span>
+<span id="cb83-9"><a href="03-mutate-pipes-regex.html#cb83-9" aria-hidden="true" tabindex="-1"></a>      terms.col, <span class="co"># Busca en la columna &quot;term.cols&quot;</span></span>
+<span id="cb83-10"><a href="03-mutate-pipes-regex.html#cb83-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">regex</span>(<span class="st">&quot;B.*A&quot;</span>, <span class="at">ignore_case =</span> F)</span>
+<span id="cb83-11"><a href="03-mutate-pipes-regex.html#cb83-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="co"># ...terminos que empiezan con B y terminan en A</span></span>
+<span id="cb83-12"><a href="03-mutate-pipes-regex.html#cb83-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CHUNK SIN OUTPUT</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="03-mutate-pipes-regex.html#cb84-1" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb84-2"><a href="03-mutate-pipes-regex.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(</span>
+<span id="cb84-3"><a href="03-mutate-pipes-regex.html#cb84-3" aria-hidden="true" tabindex="-1"></a>    name, <span class="co"># en la columna &quot;name&quot;</span></span>
+<span id="cb84-4"><a href="03-mutate-pipes-regex.html#cb84-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">regex</span>(<span class="st">&quot;de.*&quot;</span>, <span class="co"># ... el patrón &quot;de*&quot;</span></span>
+<span id="cb84-5"><a href="03-mutate-pipes-regex.html#cb84-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">ignore_case =</span> T</span>
+<span id="cb84-6"><a href="03-mutate-pipes-regex.html#cb84-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb84-7"><a href="03-mutate-pipes-regex.html#cb84-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&amp;</span> <span class="co"># sin diferencias Minuscula/Mayuscula</span></span>
+<span id="cb84-8"><a href="03-mutate-pipes-regex.html#cb84-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(</span>
+<span id="cb84-9"><a href="03-mutate-pipes-regex.html#cb84-9" aria-hidden="true" tabindex="-1"></a>      terms.col, <span class="co"># en la columna &quot;term.cols&quot;</span></span>
+<span id="cb84-10"><a href="03-mutate-pipes-regex.html#cb84-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">regex</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">d.</span><span class="sc">\\</span><span class="st">d&quot;</span>, <span class="co"># ... el patrón &quot;\\d.\\d&quot;</span></span>
+<span id="cb84-11"><a href="03-mutate-pipes-regex.html#cb84-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">ignore_case =</span> F</span>
+<span id="cb84-12"><a href="03-mutate-pipes-regex.html#cb84-12" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb84-13"><a href="03-mutate-pipes-regex.html#cb84-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">&amp;</span> <span class="co"># sin diferencias Minuscula/Mayuscula</span></span>
+<span id="cb84-14"><a href="03-mutate-pipes-regex.html#cb84-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">log2Ratio C</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="co"># Y el fold-change es menor a 0</span></span>
+<span id="cb84-15"><a href="03-mutate-pipes-regex.html#cb84-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">matches</span>(<span class="st">&quot;log|name|term&quot;</span>))</span></code></pre></div>
+<pre><code>##      name log2Ratio A log2Ratio B log2Ratio C    terms.col
+## 1    DE_3  2.60975820  1.40948211 -2.63584153 system 2.7.9
+## 2    DE_5  2.19261554  1.73652624 -2.30879739 system 2.7.9
+## 3    DE_8  5.29485037  2.91601158 -1.12931205 system 2.7.9
+## 4   DE_18  5.97886526  2.36037515 -1.68494848 system 2.7.9
+## 5   DE_30 -0.84050767 -2.72593058 -6.77125421 system 2.7.9
+## 6   DE_40  5.29281179  2.03350932 -2.01181432 system 2.7.9
+## 7   DE_47  2.06194709 -0.50833714 -4.55366077 system 2.7.9
+## 8   DE_50  0.93832520 -2.04235441 -6.08767804 system 2.7.9
+## 9   DE_60  2.73800563  1.66818134 -2.37714229 system 2.7.9
+## 10  DE_62 -0.87436390 -2.09331583 -6.13863946 system 2.7.9
+## 11  DE_68 -0.09331807 -1.62616944 -5.67149307 system 2.7.9
+## 12  DE_70  0.60076118 -2.27125260 -6.31657623 system 2.7.9
+## 13  DE_80  1.43123237 -1.58069792 -5.62602155 system 2.7.9
+## 14  DE_84  5.59155773  2.35497556 -1.69034807 system 2.7.9
+## 15  DE_85  3.69637923  2.63193003 -1.41339360 system 2.7.9
+## 16  DE_90  1.91008483  1.08977384 -2.95554979 system 2.7.9
+## 17  DE_93  4.29039193  1.65915091 -2.38617272 system 2.7.9
+## 18 DE_107  2.72766434  1.68406936 -2.36125427 system 2.7.9
+## 19 DE_108  3.80469249  1.54034372 -2.50497991 system 2.7.9
+## 20 DE_109  5.27261242  1.82938419 -2.21593944 system 2.7.9
+## 21 DE_112  3.49934378  1.49219956 -2.55312407 system 2.7.9
+## 22 DE_119  0.80244815  0.13296414 -3.91235949 system 2.7.9
+## 23 DE_122 -0.62781881 -1.71214102 -5.75746466 system 2.7.9
+## 24 DE_128  4.21464660  2.54203299 -1.50329064 system 2.7.9
+## 25 DE_152  4.61256373  1.84575751 -2.19956612 system 2.7.9
+## 26 DE_154  5.07855305  2.14288725 -1.90243638 system 2.7.9
+## 27 DE_157  4.39544279  1.57049245 -2.47483118 system 2.7.9
+## 28 DE_166  6.43066722  3.13656272 -0.90876091 system 2.7.9
+## 29 DE_169  1.77673083 -0.07409857 -4.11942220 system 2.7.9
+## 30 DE_179  3.65876128  0.84725112 -3.19807251 system 2.7.9
+## 31 DE_188  4.36918589  1.67031793 -2.37500570 system 2.7.9
+## 32 DE_194  5.35465006  2.88198162 -1.16334201 system 2.7.9
+## 33 DE_200  4.52669804  3.23578488 -0.80953875 system 2.7.9
+## 34 DE_201  2.29450580  1.50469437 -2.54062926 system 2.7.9
+## 35 DE_209  4.51490260  2.38535187 -1.65997176 system 2.7.9
+## 36 DE_227  4.65981873  1.56505327 -2.48027036 system 2.7.9
+## 37 DE_232  4.27065106  1.75967964 -2.28564399 system 2.7.9
+## 38 DE_254  6.10902777  3.96985019 -0.07547344 system 2.7.9
+## 39 DE_257  4.69191607  3.47382466 -0.57149897 system 2.7.9
+## 40 DE_258  3.67338989  3.48734403 -0.55797960 system 2.7.9
+## 41 DE_260  6.55700077  3.97428798 -0.07103566 system 2.7.9
+## 42 DE_276  1.56721271  3.21937347 -0.82595016 system 2.7.9</code></pre>
+<ul>
+<li><code>%in%</code> permite detectar si un elemento esta en un objeto. Devuelve TRUE/FALSE.<br />
+Puede usarse como un complemento de los comparadores <code>==</code>, <code>&gt;</code>, <code>&lt;=</code> en sentencias <code>if(){}</code></li>
+</ul>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="03-mutate-pipes-regex.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (T) {<span class="st">&quot;ok&quot;</span>}</span></code></pre></div>
+<pre><code>## [1] &quot;ok&quot;</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="03-mutate-pipes-regex.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (F) {<span class="st">&quot;ok&quot;</span>}</span>
+<span id="cb88-2"><a href="03-mutate-pipes-regex.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;system 2.7.9&quot;</span> <span class="sc">%in%</span> final.data.with.terms.nas<span class="sc">$</span>terms.col) {<span class="st">&quot;ok&quot;</span>}</span></code></pre></div>
+<pre><code>## [1] &quot;ok&quot;</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="03-mutate-pipes-regex.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;system 2.7.9&quot; está en &quot;final.data...&quot; así que TRUE -&gt; &#39;ok&#39;</span></span>
+<span id="cb90-2"><a href="03-mutate-pipes-regex.html#cb90-2" aria-hidden="true" tabindex="-1"></a>final.data.with.terms.nas <span class="sc">%&gt;%</span></span>
+<span id="cb90-3"><a href="03-mutate-pipes-regex.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb90-4"><a href="03-mutate-pipes-regex.html#cb90-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="st">&quot;system 2.7.9&quot;</span> <span class="sc">%in%</span> final.data.with.terms.nas<span class="sc">$</span>terms.col) <span class="fu">print</span>(<span class="st">&quot;ok&quot;</span>) <span class="cf">else</span> <span class="fu">str_extract</span>(.[[<span class="st">&quot;terms.col&quot;</span>]], <span class="st">&quot;system.*&quot;</span>)</span>
+<span id="cb90-5"><a href="03-mutate-pipes-regex.html#cb90-5" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">%&gt;%</span></span>
+<span id="cb90-6"><a href="03-mutate-pipes-regex.html#cb90-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb90-7"><a href="03-mutate-pipes-regex.html#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="ot">-&gt;</span> unicos</span></code></pre></div>
+<pre><code>## [1] &quot;ok&quot;</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="03-mutate-pipes-regex.html#cb92-1" aria-hidden="true" tabindex="-1"></a>mis.datos <span class="ot">&lt;-</span> <span class="fu">list</span>(final.data.with.terms.nas, unicos, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="cn">NA</span>))</span></code></pre></div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="02-estructuras-datos.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/DeepenData/clases/blob/master/03-mutate-pipes-regex/03-mutate-pipes-regex.Rmd",
+"text": "Editar"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

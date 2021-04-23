@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 CLASE 2 - Creación y exploración de estructuras de datos | R Notebook</title>
+  <meta name="description" content="Clases de bioinformática para gente no informática." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 CLASE 2 - Creación y exploración de estructuras de datos | R Notebook" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Clases de bioinformática para gente no informática." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 CLASE 2 - Creación y exploración de estructuras de datos | R Notebook" />
+  
+  <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
+  
+
+<meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
+
+
+<meta name="date" content="2021-04-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="01-intro.html"/>
+<link rel="next" href="03-mutate-pipes-regex.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li> <img src="https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Manu/calamar_3.png" alt="Calamar" width="300">  </li>
+<li><a href="https://github.com/DeepenData/clases">📄 ./source</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Presentación</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html"><i class="fa fa-check"></i>Setup del ambiente</a>
+<ul>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#paquetes-de-cran"><i class="fa fa-check"></i>Paquetes de CRAN</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#paquetes-de-bioconductor"><i class="fa fa-check"></i>Paquetes de Bioconductor</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalación-de-rstudio-en-windows"><i class="fa fa-check"></i>Instalación de R(Studio) en Windows</a>
+<ul>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#usando-un-gestor-de-paquetes"><i class="fa fa-check"></i>Usando un gestor de paquetes</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalación-manual"><i class="fa fa-check"></i>Instalación manual</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalando-r-tools-manualmente"><i class="fa fa-check"></i>Instalando R-tools manualmente</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I PRIMERA SECCIÓN - Herramientas computacionales y programación para bioinformática</b></span></li>
+<li class="chapter" data-level="1" data-path="01-intro.html"><a href="01-intro.html"><i class="fa fa-check"></i><b>1</b> CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="01-intro.html"><a href="01-intro.html#interacción-con-terminales"><i class="fa fa-check"></i><b>1.1</b> Interacción con terminales</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="01-intro.html"><a href="01-intro.html#navegación-del-sistema"><i class="fa fa-check"></i><b>1.1.1</b> Navegación del sistema</a></li>
+<li class="chapter" data-level="1.1.2" data-path="01-intro.html"><a href="01-intro.html#descargando-archivos"><i class="fa fa-check"></i><b>1.1.2</b> Descargando archivos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="01-intro.html"><a href="01-intro.html#descomprimiendo-archivos"><i class="fa fa-check"></i><b>1.1.3</b> Descomprimiendo archivos</a></li>
+<li class="chapter" data-level="1.1.4" data-path="01-intro.html"><a href="01-intro.html#explorando-y-renombrando-archivos"><i class="fa fa-check"></i><b>1.1.4</b> Explorando y renombrando archivos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="01-intro.html"><a href="01-intro.html#lenguajes-de-programación-e-ides"><i class="fa fa-check"></i><b>1.2</b> Lenguajes de programación e IDEs</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="01-intro.html"><a href="01-intro.html#tipos-de-lenguajes-de-programacion"><i class="fa fa-check"></i><b>1.2.1</b> Tipos de lenguajes de programacion</a></li>
+<li class="chapter" data-level="1.2.2" data-path="01-intro.html"><a href="01-intro.html#integrated-development-environment"><i class="fa fa-check"></i><b>1.2.2</b> Integrated Development Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="01-intro.html"><a href="01-intro.html#introducción-a-r-y-cuadernos"><i class="fa fa-check"></i><b>1.3</b> Introducción a R y cuadernos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="01-intro.html"><a href="01-intro.html#formato-de-r-notebooks"><i class="fa fa-check"></i><b>1.3.1</b> Formato de R notebooks</a></li>
+<li class="chapter" data-level="1.3.2" data-path="01-intro.html"><a href="01-intro.html#trabajando-con-chunks"><i class="fa fa-check"></i><b>1.3.2</b> Trabajando con chunks</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="01-intro.html"><a href="01-intro.html#importación-y-analisis-de-datos"><i class="fa fa-check"></i><b>1.4</b> Importación y analisis de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html"><i class="fa fa-check"></i><b>2</b> CLASE 2 - Creación y exploración de estructuras de datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#creación-de-dataframes"><i class="fa fa-check"></i><b>2.1</b> Creación de dataframes</a></li>
+<li class="chapter" data-level="2.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descargando-data-desde-internet"><i class="fa fa-check"></i><b>2.2</b> Descargando data desde internet</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descarga-desde-página-web"><i class="fa fa-check"></i><b>2.2.1</b> Descarga desde página web</a></li>
+<li class="chapter" data-level="2.2.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descarga-desde-github"><i class="fa fa-check"></i><b>2.2.2</b> Descarga desde GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#leyendo-archivos-extraños"><i class="fa fa-check"></i><b>2.3</b> Leyendo archivos extraños</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#escritura-de-archivos-con-delimitadores-csv-tsv-txt-etc."><i class="fa fa-check"></i><b>2.3.1</b> Escritura de archivos con delimitadores (csv, tsv, txt, etc.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#directorios-en-r"><i class="fa fa-check"></i><b>2.4</b> Directorios en R</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#generación-de-listas-de-archivos-de-los-directorios"><i class="fa fa-check"></i><b>2.4.1</b> Generación de listas de archivos de los directorios</a></li>
+<li class="chapter" data-level="2.4.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#creación-de-directorios-y-de-archivos-dentro-de-r"><i class="fa fa-check"></i><b>2.4.2</b> Creación de directorios y de archivos dentro de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html"><i class="fa fa-check"></i><b>3</b> CLASE 3 - Exploración y transformación de estructuras de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#utilizando-mutate-para-manipulación-de-datos"><i class="fa fa-check"></i><b>3.1</b> Utilizando mutate para manipulación de datos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#accediendo-a-datos-tabulados"><i class="fa fa-check"></i><b>3.1.1</b> Accediendo a datos tabulados</a></li>
+<li class="chapter" data-level="3.1.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#funciones-personalizadas"><i class="fa fa-check"></i><b>3.1.2</b> Funciones personalizadas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#pipes-complicadas"><i class="fa fa-check"></i><b>3.2</b> Pipes complicadas</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#tipos-de-pipes"><i class="fa fa-check"></i><b>3.2.1</b> Tipos de Pipes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#usando-sistemas-de-identificadores"><i class="fa fa-check"></i><b>3.2.2</b> Usando sistemas de identificadores</a></li>
+<li class="chapter" data-level="3.2.3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#filtrado-de-filas"><i class="fa fa-check"></i><b>3.2.3</b> Filtrado de filas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.3</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Notebook</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="clase-2---creación-y-exploración-de-estructuras-de-datos" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> CLASE 2 - Creación y exploración de estructuras de datos</h1>
+<div id="creación-de-dataframes" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Creación de dataframes</h2>
+</div>
+<div id="descargando-data-desde-internet" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Descargando data desde internet</h2>
+<div id="descarga-desde-página-web" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Descarga desde página web</h3>
+<p>R cuenta con multiples metodos para descargar archivos.
+El paquete <strong>utils</strong> usa programas del sistema como metodos para <code>download.file()</code>, como <em>curl</em>, <em>wget</em>, <em>wininet</em>, etc. los cuales pueden no estar instalados en el sistema.
+Por ejemplo, <code>download.file(URL, method = "wget")</code> usualmente falla en Windows.
+Especificando otro metodo, <code>download.file(URL, method = "libcurl")</code> funciona.</p>
+<p>Podemos descargar datasets directamente desde R, lo cual resulta util a la hora de evaluar data de publicaciones presente como <em>Información suplementaria</em>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="02-estructuras-datos.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb34-2"><a href="02-estructuras-datos.html#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="02-estructuras-datos.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Data suplementaria bonita</span></span>
+<span id="cb34-4"><a href="02-estructuras-datos.html#cb34-4" aria-hidden="true" tabindex="-1"></a>suplementaria.url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.pnas.org/highwire/filestream/794560/field_highwire_adjunct_files/0/pnas.1800165115.sd01.xlsx&quot;</span></span>
+<span id="cb34-5"><a href="02-estructuras-datos.html#cb34-5" aria-hidden="true" tabindex="-1"></a>destfile <span class="ot">&lt;-</span> <span class="st">&quot;sup_bonita.xlsx&quot;</span></span>
+<span id="cb34-6"><a href="02-estructuras-datos.html#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="02-estructuras-datos.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Para LINUX usar:</span></span>
+<span id="cb34-8"><a href="02-estructuras-datos.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url=</span> suplementaria.url,  <span class="at">destfile=</span> <span class="st">&#39;sup_bonita.xlsx&#39;</span>, <span class="at">method =</span> <span class="st">&quot;wget&quot;</span>) </span>
+<span id="cb34-9"><a href="02-estructuras-datos.html#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="02-estructuras-datos.html#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Para WINDOWS usar:</span></span>
+<span id="cb34-11"><a href="02-estructuras-datos.html#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url=</span> suplementaria.url,  <span class="at">destfile=</span> <span class="st">&#39;sup_bonita.xlsx&#39;</span>, <span class="at">method =</span> <span class="st">&quot;libcurl&quot;</span>)</span>
+<span id="cb34-12"><a href="02-estructuras-datos.html#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="02-estructuras-datos.html#cb34-13" aria-hidden="true" tabindex="-1"></a>suplementaria.bonita <span class="ot">&lt;-</span> <span class="fu">read_excel</span>( <span class="st">&quot;sup_bonita.xlsx&quot;</span> )</span>
+<span id="cb34-14"><a href="02-estructuras-datos.html#cb34-14" aria-hidden="true" tabindex="-1"></a>suplementaria.bonita</span></code></pre></div>
+<pre><code>## # A tibble: 368 x 11
+##    GeneID  `Entrez Gene Na… P7MeanFPKM P32MeanFPKM `10wkMeanFPKM` `9.5mMeanFPKM`
+##    &lt;chr&gt;   &lt;chr&gt;                 &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Ctss    cathepsin S           0.59        1.13            3.03           8.32
+##  2 Oasl2   2&#39;-5&#39; oligoaden…      1.06        3.37            3.70          36.1 
+##  3 Zc3hav1 zinc finger CCC…      0.58        1.42            1.53           6.84
+##  4 Ggta1   glycoprotein ga…      1.65        0.993           1.04           4.89
+##  5 Lyz2    lysozyme              1.01        1.44            3.46           4.57
+##  6 Ifit1   interferon-indu…      0.773       2.08            2.12          13   
+##  7 Tyrobp  TYRO protein ty…      3.06        4.73            3.33           4.15
+##  8 C4b     complement comp…      1.37        7.39            8.02          23.1 
+##  9 Wdfy1   WD repeat and F…     10.3         4.07            1.36           1.65
+## 10 Osmr    oncostatin M re…      6.49        6.40            4.52          13.3 
+## # … with 358 more rows, and 5 more variables: 2yrMeanFPKM &lt;dbl&gt;, log2 FC &lt;dbl&gt;,
+## #   logCPM &lt;dbl&gt;, PValue &lt;dbl&gt;, FDR &lt;dbl&gt;</code></pre>
+</div>
+<div id="descarga-desde-github" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Descarga desde GitHub</h3>
+<p><a href="https://github.com">GitHub</a> es un servicio de repositorios para control de versiones de codigo basado en Git.
+Actualmente es la plataforma más popular para hosting del codigo de software, con proyectos como <a href="https://github.com/rstudio">RStudio</a>, <a href="https://github.com/freeCodeCamp/freeCodeCamp">el catalogo de cursos de FreeCodeCamp</a>, <a href="https://github.com/DeepenData/clases/">este mismo curso</a>, etc.
+Muchos proyectos de ciencia abierta, ciencia ciudadana, y cada vez más publicaciones ponen la data a disposición de la comunidad; con el mismo historial de versiones que el codigo usado para generar y analizar dicha data.</p>
+<p>El Ministerio de Ciencia de Chile dispone la <a href="https://github.com/MinCiencia/Datos-COVID19">data de Coronavirus</a> como tablas CSV facilmente descargables desde un repositorio en Github.
+Por ejemplo, la data de examenes PCR tomados por region.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="02-estructuras-datos.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb36-2"><a href="02-estructuras-datos.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="02-estructuras-datos.html#cb36-3" aria-hidden="true" tabindex="-1"></a>github.url <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto7/PCR.csv&quot;</span> <span class="co"># Dirección del dataset publico</span></span>
+<span id="cb36-4"><a href="02-estructuras-datos.html#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="02-estructuras-datos.html#cb36-5" aria-hidden="true" tabindex="-1"></a>MINCIENCIA_PCR <span class="ot">&lt;-</span> <span class="fu">read_csv</span>( github.url ) <span class="co"># Podemos leer los archivos directamente</span></span>
+<span id="cb36-6"><a href="02-estructuras-datos.html#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="02-estructuras-datos.html#cb36-7" aria-hidden="true" tabindex="-1"></a>MINCIENCIA_PCR</span></code></pre></div>
+<pre><code>## # A tibble: 16 x 382
+##    Region       `Codigo region` Poblacion `2020-04-09` `2020-04-10` `2020-04-11`
+##    &lt;chr&gt;        &lt;chr&gt;               &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+##  1 Arica y Par… 15                 252110           70           NA           93
+##  2 Tarapacá     01                 382773           NA           NA           NA
+##  3 Antofagasta  02                 691854          182          128          107
+##  4 Atacama      03                 314709           57           52           60
+##  5 Coquimbo     04                 836096           NA           NA           NA
+##  6 Valparaíso   05                1960170          301          249          248
+##  7 Metropolita… 13                8125072         5383         3185         2105
+##  8 O’Higgins    06                 991063           68           NA           74
+##  9 Maule        07                1131939          397          219           NA
+## 10 Ñuble        16                 511551          364           NA          259
+## 11 Biobío       08                1663696          592          149          281
+## 12 Araucanía    09                1014343          124          148          126
+## 13 Los Ríos     14                 405835           NA           91           NA
+## 14 Los Lagos    10                 891440          341          199          178
+## 15 Aysén        11                 107297           10           NA           NA
+## 16 Magallanes   12                 178362           73           24           46
+## # … with 376 more variables: 2020-04-12 &lt;dbl&gt;, 2020-04-13 &lt;dbl&gt;,
+## #   2020-04-14 &lt;dbl&gt;, 2020-04-15 &lt;dbl&gt;, 2020-04-16 &lt;dbl&gt;, 2020-04-17 &lt;dbl&gt;,
+## #   2020-04-18 &lt;dbl&gt;, 2020-04-19 &lt;dbl&gt;, 2020-04-20 &lt;dbl&gt;, 2020-04-21 &lt;dbl&gt;,
+## #   2020-04-22 &lt;dbl&gt;, 2020-04-23 &lt;dbl&gt;, 2020-04-24 &lt;dbl&gt;, 2020-04-25 &lt;dbl&gt;,
+## #   2020-04-26 &lt;dbl&gt;, 2020-04-27 &lt;dbl&gt;, 2020-04-28 &lt;dbl&gt;, 2020-04-29 &lt;dbl&gt;,
+## #   2020-04-30 &lt;dbl&gt;, 2020-05-01 &lt;dbl&gt;, 2020-05-02 &lt;dbl&gt;, 2020-05-03 &lt;dbl&gt;,
+## #   2020-05-04 &lt;dbl&gt;, 2020-05-05 &lt;dbl&gt;, 2020-05-06 &lt;dbl&gt;, 2020-05-07 &lt;dbl&gt;,
+## #   2020-05-08 &lt;dbl&gt;, 2020-05-09 &lt;dbl&gt;, 2020-05-10 &lt;dbl&gt;, 2020-05-11 &lt;dbl&gt;,
+## #   2020-05-12 &lt;dbl&gt;, 2020-05-13 &lt;dbl&gt;, 2020-05-14 &lt;dbl&gt;, 2020-05-15 &lt;dbl&gt;,
+## #   2020-05-16 &lt;dbl&gt;, 2020-05-17 &lt;dbl&gt;, 2020-05-18 &lt;dbl&gt;, 2020-05-19 &lt;dbl&gt;,
+## #   2020-05-20 &lt;dbl&gt;, 2020-05-21 &lt;dbl&gt;, 2020-05-22 &lt;dbl&gt;, 2020-05-23 &lt;dbl&gt;,
+## #   2020-05-24 &lt;dbl&gt;, 2020-05-25 &lt;dbl&gt;, 2020-05-26 &lt;dbl&gt;, 2020-05-27 &lt;dbl&gt;,
+## #   2020-05-28 &lt;dbl&gt;, 2020-05-29 &lt;dbl&gt;, 2020-05-30 &lt;dbl&gt;, 2020-05-31 &lt;dbl&gt;,
+## #   2020-06-01 &lt;dbl&gt;, 2020-06-02 &lt;dbl&gt;, 2020-06-03 &lt;dbl&gt;, 2020-06-04 &lt;dbl&gt;,
+## #   2020-06-05 &lt;dbl&gt;, 2020-06-06 &lt;dbl&gt;, 2020-06-07 &lt;dbl&gt;, 2020-06-08 &lt;dbl&gt;,
+## #   2020-06-09 &lt;dbl&gt;, 2020-06-10 &lt;dbl&gt;, 2020-06-11 &lt;dbl&gt;, 2020-06-12 &lt;dbl&gt;,
+## #   2020-06-13 &lt;dbl&gt;, 2020-06-14 &lt;dbl&gt;, 2020-06-15 &lt;dbl&gt;, 2020-06-16 &lt;dbl&gt;,
+## #   2020-06-17 &lt;dbl&gt;, 2020-06-18 &lt;dbl&gt;, 2020-06-19 &lt;dbl&gt;, 2020-06-20 &lt;dbl&gt;,
+## #   2020-06-21 &lt;dbl&gt;, 2020-06-22 &lt;dbl&gt;, 2020-06-23 &lt;dbl&gt;, 2020-06-24 &lt;dbl&gt;,
+## #   2020-06-25 &lt;dbl&gt;, 2020-06-26 &lt;dbl&gt;, 2020-06-27 &lt;dbl&gt;, 2020-06-28 &lt;dbl&gt;,
+## #   2020-06-29 &lt;dbl&gt;, 2020-06-30 &lt;dbl&gt;, 2020-07-01 &lt;dbl&gt;, 2020-07-02 &lt;dbl&gt;,
+## #   2020-07-03 &lt;dbl&gt;, 2020-07-04 &lt;dbl&gt;, 2020-07-05 &lt;dbl&gt;, 2020-07-06 &lt;dbl&gt;,
+## #   2020-07-07 &lt;dbl&gt;, 2020-07-08 &lt;dbl&gt;, 2020-07-09 &lt;dbl&gt;, 2020-07-10 &lt;dbl&gt;,
+## #   2020-07-11 &lt;dbl&gt;, 2020-07-12 &lt;dbl&gt;, 2020-07-13 &lt;dbl&gt;, 2020-07-14 &lt;dbl&gt;,
+## #   2020-07-15 &lt;dbl&gt;, 2020-07-16 &lt;dbl&gt;, 2020-07-17 &lt;dbl&gt;, 2020-07-18 &lt;dbl&gt;,
+## #   2020-07-19 &lt;dbl&gt;, 2020-07-20 &lt;dbl&gt;, …</code></pre>
+<p>Es importante notar que esta esta en <strong>raw.githubusercontent…</strong>, lo cual seria distinto a <code>https://github.com/MinCiencia/Datos-COVID19/blob/master/output/producto7/PCR.csv</code> , que es donde llegamos explorando el repo metiante links.</p>
+<ul>
+<li><p><code>https://github.com/</code> muestra la data con opciones como un historial de cambios y un README.md, pero es una pagina web completa</p></li>
+<li><p><code>https://raw.githubusercontent.com/</code> tiene el archivo de data puro que queremos descargar</p></li>
+</ul>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="02-estructuras-datos.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb38-2"><a href="02-estructuras-datos.html#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="02-estructuras-datos.html#cb38-3" aria-hidden="true" tabindex="-1"></a>MINCIENCIA_PCR<span class="sc">$</span>Region <span class="ot">-&gt;</span> my_col_names</span>
+<span id="cb38-4"><a href="02-estructuras-datos.html#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="02-estructuras-datos.html#cb38-5" aria-hidden="true" tabindex="-1"></a>MINCIENCIA_PCR <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&#39;20&#39;</span>)) <span class="ot">-&gt;</span> only_dates</span>
+<span id="cb38-6"><a href="02-estructuras-datos.html#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="02-estructuras-datos.html#cb38-7" aria-hidden="true" tabindex="-1"></a>only_dates <span class="sc">%&gt;%</span> t <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(my_col_names) <span class="ot">-&gt;</span> my_data</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="02-estructuras-datos.html#cb39-1" aria-hidden="true" tabindex="-1"></a>my_data <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="02-estructuras-datos.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Fecha&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="02-estructuras-datos.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>Fecha, <span class="at">names_to =</span> <span class="st">&quot;Región&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Tests&quot;</span>) <span class="ot">-&gt;</span> my_data_for_plot</span>
+<span id="cb39-4"><a href="02-estructuras-datos.html#cb39-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(my_data_for_plot, <span class="fu">aes</span>(<span class="at">x =</span> Fecha, <span class="at">y =</span> Tests)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="02-estructuras-datos.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">4</span>)</span>
+<span id="cb39-6"><a href="02-estructuras-datos.html#cb39-6" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-19-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="02-estructuras-datos.html#cb40-1" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">+</span> <span class="fu">scale_y_log10</span>() <span class="ot">-&gt;</span> p2</span>
+<span id="cb40-2"><a href="02-estructuras-datos.html#cb40-2" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-20-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="02-estructuras-datos.html#cb41-1" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">+</span> <span class="fu">scale_y_log10</span>() <span class="ot">-&gt;</span> p2</span>
+<span id="cb41-2"><a href="02-estructuras-datos.html#cb41-2" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-21-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="02-estructuras-datos.html#cb42-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tiempo (días)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de tests PCR&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>())  <span class="ot">-&gt;</span> p3</span>
+<span id="cb42-2"><a href="02-estructuras-datos.html#cb42-2" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-22-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="02-estructuras-datos.html#cb43-1" aria-hidden="true" tabindex="-1"></a>p3<span class="sc">+</span><span class="fu">aes</span>( <span class="at">color =</span> Región)<span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.box =</span> <span class="st">&quot;horizontal&quot;</span>) <span class="ot">-&gt;</span> p4</span>
+<span id="cb43-2"><a href="02-estructuras-datos.html#cb43-2" aria-hidden="true" tabindex="-1"></a>p4</span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-23-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="02-estructuras-datos.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_data_for_plot, <span class="fu">aes</span>(<span class="at">x=</span>Fecha, <span class="at">y =</span> Tests,  <span class="at">color =</span> Región)) <span class="sc">+</span></span>
+<span id="cb44-2"><a href="02-estructuras-datos.html#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>( <span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.box =</span> <span class="st">&quot;horizontal&quot;</span>)<span class="sc">+</span> <span class="fu">scale_y_log10</span>()<span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>())  <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tiempo (días)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de tests PCR&quot;</span>) <span class="ot">-&gt;</span> my_plot</span>
+<span id="cb44-3"><a href="02-estructuras-datos.html#cb44-3" aria-hidden="true" tabindex="-1"></a>my_plot</span></code></pre></div>
+<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>## Warning: Removed 40 rows containing missing values (geom_point).</code></pre>
+<p><img src="clases_files/figure-html/unnamed-chunk-24-1.png" width="1920" /></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="02-estructuras-datos.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb47-2"><a href="02-estructuras-datos.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_data_for_plot, <span class="fu">aes</span>(<span class="at">x=</span>Región, <span class="at">y=</span>Tests, <span class="at">color=</span>Región))<span class="sc">+</span><span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="02-estructuras-datos.html#cb47-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_economist</span>() <span class="sc">+</span></span>
+<span id="cb47-4"><a href="02-estructuras-datos.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>, <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) </span></code></pre></div>
+<p><img src="clases_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+</div>
+<div id="leyendo-archivos-extraños" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Leyendo archivos extraños</h2>
+<div id="escritura-de-archivos-con-delimitadores-csv-tsv-txt-etc." class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Escritura de archivos con delimitadores (csv, tsv, txt, etc.)</h3>
+<p>En un archivo de texto plano, denominamos un caracter especifico como <em>delimitador</em>.</p>
+<ul>
+<li><p><code>,</code> en archivos <em>Coma Separated Values</em></p>
+<ul>
+<li><code>;</code> en archivos CSV que por motivos incluyen comas</li>
+</ul></li>
+<li><p><code>\t</code> en archivos <em>Tab Separated Values</em></p></li>
+<li><p>suele ser un separador comun en archivos de texto o al copiar y pegar desde Excel</p></li>
+</ul>
+<p>La función <strong>readr::read_delim()</strong> puede aceptar delimitadores arbitrarios a la hora de leer archivos de texto plano.
+Esto puede resultar util para tareas como parsear la salida de un programa y generar una tabla informativa.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="02-estructuras-datos.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Output real de un programa de HPC; tira los valores a print() como forma</span></span>
+<span id="cb48-2"><a href="02-estructuras-datos.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># de mostrar que esta haciendo algo en lugar de estar 10h sin noticias</span></span>
+<span id="cb48-3"><a href="02-estructuras-datos.html#cb48-3" aria-hidden="true" tabindex="-1"></a>stout <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb48-4"><a href="02-estructuras-datos.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7648)#EX_na1(e)#0.006122665930025846</span></span>
+<span id="cb48-5"><a href="02-estructuras-datos.html#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7651)#EX_pro-L(e)#0.006122663829443571</span></span>
+<span id="cb48-6"><a href="02-estructuras-datos.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7655)#EX_orn(e)#0.006122663638493012</span></span>
+<span id="cb48-7"><a href="02-estructuras-datos.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7643)#EX_leu-L(e)#0.006122663638095198</span></span>
+<span id="cb48-8"><a href="02-estructuras-datos.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7647)#EX_pyr(e)#0.006122663829665405</span></span>
+<span id="cb48-9"><a href="02-estructuras-datos.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7659)#10FTHF6GLUtm#0.00612267089307223</span></span>
+<span id="cb48-10"><a href="02-estructuras-datos.html#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7667)#EX_val-L(e)#0.006122663638095198</span></span>
+<span id="cb48-11"><a href="02-estructuras-datos.html#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7617)#DM_fald#0.006122663638115122</span></span>
+<span id="cb48-12"><a href="02-estructuras-datos.html#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7618)#DM_ahcys#0.006122663639234617</span></span>
+<span id="cb48-13"><a href="02-estructuras-datos.html#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7621)#DM_pheme(c)#0.006122663638166545</span></span>
+<span id="cb48-14"><a href="02-estructuras-datos.html#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7625)#EX_acac(e)#0.00612266382975526</span></span>
+<span id="cb48-15"><a href="02-estructuras-datos.html#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="st">(pid=7627)#EX_asn-L(e)#0.006122663638508968</span></span>
+<span id="cb48-16"><a href="02-estructuras-datos.html#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb48-17"><a href="02-estructuras-datos.html#cb48-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-18"><a href="02-estructuras-datos.html#cb48-18" aria-hidden="true" tabindex="-1"></a>log.info <span class="ot">&lt;-</span> <span class="fu">read_delim</span>( stout , <span class="at">delim=</span> <span class="st">&#39;#&#39;</span> , <span class="at">col_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb48-19"><a href="02-estructuras-datos.html#cb48-19" aria-hidden="true" tabindex="-1"></a>log.info</span></code></pre></div>
+<pre><code>## # A tibble: 12 x 3
+##    X1         X2                X3
+##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;
+##  1 (pid=7648) EX_na1(e)    0.00612
+##  2 (pid=7651) EX_pro-L(e)  0.00612
+##  3 (pid=7655) EX_orn(e)    0.00612
+##  4 (pid=7643) EX_leu-L(e)  0.00612
+##  5 (pid=7647) EX_pyr(e)    0.00612
+##  6 (pid=7659) 10FTHF6GLUtm 0.00612
+##  7 (pid=7667) EX_val-L(e)  0.00612
+##  8 (pid=7617) DM_fald      0.00612
+##  9 (pid=7618) DM_ahcys     0.00612
+## 10 (pid=7621) DM_pheme(c)  0.00612
+## 11 (pid=7625) EX_acac(e)   0.00612
+## 12 (pid=7627) EX_asn-L(e)  0.00612</code></pre>
+<div id="escribiendo-dataframes-en-excel" class="section level4" number="2.3.1.1">
+<h4><span class="header-section-number">2.3.1.1</span> Escribiendo DataFrames en Excel</h4>
+<p>Aunque francamente suele ser un dolor de cabeza, es el formato <em>de facto</em> para compartir datos.
+Por favor, no contribuyan a este problema en el mundo de la ciencia.
+O al menos hagan Excels con sentido, sin arreglos esotericos de columnas y filas.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="02-estructuras-datos.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>( log.info ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Process ID&quot;</span>,<span class="st">&quot;Node&quot;</span>,<span class="st">&quot;Alpha&quot;</span>) <span class="co"># Pone nombres de columna</span></span>
+<span id="cb50-2"><a href="02-estructuras-datos.html#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="02-estructuras-datos.html#cb50-3" aria-hidden="true" tabindex="-1"></a>writexl<span class="sc">::</span><span class="fu">write_xlsx</span>( log.info , <span class="at">path =</span> <span class="st">&quot;logs_hpc.xlsx&quot;</span>) <span class="co"># Guarda el Excel</span></span></code></pre></div>
+</div>
+<div id="guardando-datos-en-formato-rds-y-rdata" class="section level4" number="2.3.1.2">
+<h4><span class="header-section-number">2.3.1.2</span> Guardando datos en formato RDS y RData</h4>
+<p>R posee formatos propios para guardar datasets,
+los que tienen la ventaja de conservar propiedades como
+etiquetas, la estructura, etc; y
+permitir serializar y comprimir (usando <em>gzip</em>) los datos.
+Dependiendo de la data, un RDS puede ser 10 veces más pequeño que un CSV.</p>
+</div>
+<div id="listas-y-serializados" class="section level4" number="2.3.1.3">
+<h4><span class="header-section-number">2.3.1.3</span> Listas y serializados</h4>
+<p>En datasets de gran tamaño, o donde una cantidad significativa de los datos son <em>NaN</em>, es convieniente usar formatos de archivos binarios, es decir, procesados y comprimidos, como un <code>.zip</code> o los archivos R Data Serial <code>.RDS</code>.</p>
+<ul>
+<li><code>.RDS</code> son <em>R Data Single</em>, un unico objeto.</li>
+<li><code>.RData</code> o <code>.Rda</code>, multiples objetos de R.</li>
+</ul>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="02-estructuras-datos.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( suplementaria.bonita , <span class="st">&quot;sup_bonita.rds&quot;</span> ) <span class="co"># Pesa 26.1 kB, ~43% el tamaño del Excel original</span></span>
+<span id="cb51-2"><a href="02-estructuras-datos.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="02-estructuras-datos.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;sub_bonita.rds&quot;</span>) <span class="co"># Usamos load() para cargar los serializados</span></span></code></pre></div>
+<p>En caso de tener multiples objetos, podemos pasar estos dentro de una lista.
+Estas son similares a vectores <code>c()</code>, en el sentido de que son objetos ordenados e iterables, paro a diferencia de los vectores, una lista puede contener multiples tipos de objetos, y estos pueden ser objetos complejos en lugar de tipos simples</p>
+<p>Creamos listas con <code>list()</code>. Podemos guardar objetos como los plots hechos anteriormente.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="02-estructuras-datos.html#cb52-1" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb52-2"><a href="02-estructuras-datos.html#cb52-2" aria-hidden="true" tabindex="-1"></a>    p1, <span class="co"># Fig 1</span></span>
+<span id="cb52-3"><a href="02-estructuras-datos.html#cb52-3" aria-hidden="true" tabindex="-1"></a>    p2, <span class="co"># Fig 2</span></span>
+<span id="cb52-4"><a href="02-estructuras-datos.html#cb52-4" aria-hidden="true" tabindex="-1"></a>    p3, <span class="co"># Fig 3</span></span>
+<span id="cb52-5"><a href="02-estructuras-datos.html#cb52-5" aria-hidden="true" tabindex="-1"></a>    p4  <span class="co"># Fig 4</span></span>
+<span id="cb52-6"><a href="02-estructuras-datos.html#cb52-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb52-7"><a href="02-estructuras-datos.html#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="02-estructuras-datos.html#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Y guardamos todos los plots dentro de un RDS</span></span>
+<span id="cb52-9"><a href="02-estructuras-datos.html#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( plots, <span class="st">&quot;plots.RDS&quot;</span> )</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="directorios-en-r" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Directorios en R</h2>
+<p>Si bien es posible trabajar con todos los codigos, datasets, resultados, resplados y demas en una unica carpeta, esto es lejos de ser agradable.</p>
+<div class="figure">
+<img src="https://www.chip.com.tr/images/content/manset/2017032417423176772/masaustu-nasil-temizlenir-temiz-tutulur.jpg" alt="" />
+<p class="caption">Ejemplo</p>
+</div>
+<div id="generación-de-listas-de-archivos-de-los-directorios" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Generación de listas de archivos de los directorios</h3>
+<p>Podemos listar todo lo que hay en un directorio</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="02-estructuras-datos.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">getwd</span>() , <span class="at">pattern=</span><span class="cn">NULL</span>, <span class="at">all.files=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;_bookdown_files&quot;       &quot;_bookdown.yml&quot;         &quot;_output.yml&quot;          
+##  [4] &quot;00-setup&quot;              &quot;01-intro&quot;              &quot;02-estructuras-datos&quot; 
+##  [7] &quot;03-mutate-pipes-regex&quot; &quot;baseline.csv&quot;          &quot;baseline.csv.1&quot;       
+## [10] &quot;baseline.csv.2&quot;        &quot;baseline.csv.3&quot;        &quot;baseline.csv.4&quot;       
+## [13] &quot;baseline.csv.5&quot;        &quot;baseline.csv.6&quot;        &quot;baseline.csv.7&quot;       
+## [16] &quot;baseline.csv.8&quot;        &quot;baseline.pkl&quot;          &quot;baseline.tsv&quot;         
+## [19] &quot;baseline.xlsx&quot;         &quot;baselines.tar.gz&quot;      &quot;baselines.tar.gz.1&quot;   
+## [22] &quot;baselines.tar.gz.2&quot;    &quot;baselines.tar.gz.3&quot;    &quot;baselines.tar.gz.4&quot;   
+## [25] &quot;baselines.tar.gz.5&quot;    &quot;baselines.tar.gz.6&quot;    &quot;baselines.tar.gz.7&quot;   
+## [28] &quot;baselines.tar.gz.8&quot;    &quot;book.bib&quot;              &quot;clases_cache&quot;         
+## [31] &quot;clases_files&quot;          &quot;clases.log&quot;            &quot;clases.Rmd&quot;           
+## [34] &quot;clases.Rproj&quot;          &quot;cosas_ggplot2.nb.html&quot; &quot;cosas_ggplot2.Rmd&quot;    
+## [37] &quot;index.Rmd&quot;             &quot;logs_hpc.xlsx&quot;         &quot;my_plot.png&quot;          
+## [40] &quot;packages.bib&quot;          &quot;plots.RDS&quot;             &quot;README.md&quot;            
+## [43] &quot;style.css&quot;             &quot;sup_bonita.rds&quot;        &quot;sup_bonita.xlsx&quot;      
+## [46] &quot;xkcd.ttf&quot;</code></pre>
+</div>
+<div id="creación-de-directorios-y-de-archivos-dentro-de-r" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Creación de directorios y de archivos dentro de R</h3>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="02-estructuras-datos.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()                          <span class="co"># Obtiene el directorio de trabajo</span></span>
+<span id="cb55-2"><a href="02-estructuras-datos.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&#39;/hola&#39;</span>)          <span class="co"># Convierte getwkd() a caracter y concatena</span></span>
+<span id="cb55-3"><a href="02-estructuras-datos.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">file.path</span>(<span class="fu">getwd</span>(),<span class="st">&#39;hola&#39;</span>)        <span class="co"># Hace direcciones independientes del SO</span></span>
+<span id="cb55-4"><a href="02-estructuras-datos.html#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">file.path</span>(<span class="fu">getwd</span>(),<span class="st">&#39;hola&#39;</span>,<span class="st">&#39;cosas&#39;</span>) <span class="co"># Podemos definir sub-directorios</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="01-intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="03-mutate-pipes-regex.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/DeepenData/clases/blob/master/02-estructuras-datos/02-estructuras-datos.Rmd",
+"text": "Editar"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

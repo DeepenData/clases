@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | R Notebook</title>
+  <meta name="description" content="Clases de bioinformática para gente no informática." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | R Notebook" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Clases de bioinformática para gente no informática." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | R Notebook" />
+  
+  <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
+  
+
+<meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
+
+
+<meta name="date" content="2021-04-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="00-Setup-ambiente.html"/>
+<link rel="next" href="02-estructuras-datos.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li> <img src="https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Manu/calamar_3.png" alt="Calamar" width="300">  </li>
+<li><a href="https://github.com/DeepenData/clases">📄 ./source</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Presentación</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html"><i class="fa fa-check"></i>Setup del ambiente</a>
+<ul>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#paquetes-de-cran"><i class="fa fa-check"></i>Paquetes de CRAN</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#paquetes-de-bioconductor"><i class="fa fa-check"></i>Paquetes de Bioconductor</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalación-de-rstudio-en-windows"><i class="fa fa-check"></i>Instalación de R(Studio) en Windows</a>
+<ul>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#usando-un-gestor-de-paquetes"><i class="fa fa-check"></i>Usando un gestor de paquetes</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalación-manual"><i class="fa fa-check"></i>Instalación manual</a></li>
+<li class="chapter" data-level="" data-path="00-Setup-ambiente.html"><a href="00-Setup-ambiente.html#instalando-r-tools-manualmente"><i class="fa fa-check"></i>Instalando R-tools manualmente</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I PRIMERA SECCIÓN - Herramientas computacionales y programación para bioinformática</b></span></li>
+<li class="chapter" data-level="1" data-path="01-intro.html"><a href="01-intro.html"><i class="fa fa-check"></i><b>1</b> CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="01-intro.html"><a href="01-intro.html#interacción-con-terminales"><i class="fa fa-check"></i><b>1.1</b> Interacción con terminales</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="01-intro.html"><a href="01-intro.html#navegación-del-sistema"><i class="fa fa-check"></i><b>1.1.1</b> Navegación del sistema</a></li>
+<li class="chapter" data-level="1.1.2" data-path="01-intro.html"><a href="01-intro.html#descargando-archivos"><i class="fa fa-check"></i><b>1.1.2</b> Descargando archivos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="01-intro.html"><a href="01-intro.html#descomprimiendo-archivos"><i class="fa fa-check"></i><b>1.1.3</b> Descomprimiendo archivos</a></li>
+<li class="chapter" data-level="1.1.4" data-path="01-intro.html"><a href="01-intro.html#explorando-y-renombrando-archivos"><i class="fa fa-check"></i><b>1.1.4</b> Explorando y renombrando archivos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="01-intro.html"><a href="01-intro.html#lenguajes-de-programación-e-ides"><i class="fa fa-check"></i><b>1.2</b> Lenguajes de programación e IDEs</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="01-intro.html"><a href="01-intro.html#tipos-de-lenguajes-de-programacion"><i class="fa fa-check"></i><b>1.2.1</b> Tipos de lenguajes de programacion</a></li>
+<li class="chapter" data-level="1.2.2" data-path="01-intro.html"><a href="01-intro.html#integrated-development-environment"><i class="fa fa-check"></i><b>1.2.2</b> Integrated Development Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="01-intro.html"><a href="01-intro.html#introducción-a-r-y-cuadernos"><i class="fa fa-check"></i><b>1.3</b> Introducción a R y cuadernos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="01-intro.html"><a href="01-intro.html#formato-de-r-notebooks"><i class="fa fa-check"></i><b>1.3.1</b> Formato de R notebooks</a></li>
+<li class="chapter" data-level="1.3.2" data-path="01-intro.html"><a href="01-intro.html#trabajando-con-chunks"><i class="fa fa-check"></i><b>1.3.2</b> Trabajando con chunks</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="01-intro.html"><a href="01-intro.html#importación-y-analisis-de-datos"><i class="fa fa-check"></i><b>1.4</b> Importación y analisis de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html"><i class="fa fa-check"></i><b>2</b> CLASE 2 - Creación y exploración de estructuras de datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#creación-de-dataframes"><i class="fa fa-check"></i><b>2.1</b> Creación de dataframes</a></li>
+<li class="chapter" data-level="2.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descargando-data-desde-internet"><i class="fa fa-check"></i><b>2.2</b> Descargando data desde internet</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descarga-desde-página-web"><i class="fa fa-check"></i><b>2.2.1</b> Descarga desde página web</a></li>
+<li class="chapter" data-level="2.2.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#descarga-desde-github"><i class="fa fa-check"></i><b>2.2.2</b> Descarga desde GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#leyendo-archivos-extraños"><i class="fa fa-check"></i><b>2.3</b> Leyendo archivos extraños</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#escritura-de-archivos-con-delimitadores-csv-tsv-txt-etc."><i class="fa fa-check"></i><b>2.3.1</b> Escritura de archivos con delimitadores (csv, tsv, txt, etc.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#directorios-en-r"><i class="fa fa-check"></i><b>2.4</b> Directorios en R</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#generación-de-listas-de-archivos-de-los-directorios"><i class="fa fa-check"></i><b>2.4.1</b> Generación de listas de archivos de los directorios</a></li>
+<li class="chapter" data-level="2.4.2" data-path="02-estructuras-datos.html"><a href="02-estructuras-datos.html#creación-de-directorios-y-de-archivos-dentro-de-r"><i class="fa fa-check"></i><b>2.4.2</b> Creación de directorios y de archivos dentro de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html"><i class="fa fa-check"></i><b>3</b> CLASE 3 - Exploración y transformación de estructuras de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#utilizando-mutate-para-manipulación-de-datos"><i class="fa fa-check"></i><b>3.1</b> Utilizando mutate para manipulación de datos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#accediendo-a-datos-tabulados"><i class="fa fa-check"></i><b>3.1.1</b> Accediendo a datos tabulados</a></li>
+<li class="chapter" data-level="3.1.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#funciones-personalizadas"><i class="fa fa-check"></i><b>3.1.2</b> Funciones personalizadas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#pipes-complicadas"><i class="fa fa-check"></i><b>3.2</b> Pipes complicadas</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#tipos-de-pipes"><i class="fa fa-check"></i><b>3.2.1</b> Tipos de Pipes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#usando-sistemas-de-identificadores"><i class="fa fa-check"></i><b>3.2.2</b> Usando sistemas de identificadores</a></li>
+<li class="chapter" data-level="3.2.3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#filtrado-de-filas"><i class="fa fa-check"></i><b>3.2.3</b> Filtrado de filas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.3</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4" data-path="03-mutate-pipes-regex.html"><a href="03-mutate-pipes-regex.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Notebook</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="clase-1---conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación</h1>
+<iframe width="768" height="480" src="https://www.youtube.com/embed/nvOI8PaY5t8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<div id="interacción-con-terminales" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Interacción con terminales</h2>
+<p>La terminal es una herramienta que nos permite comunicarnos directamente con la computadora para ejecutar acciones complejas en unos pocos comandos.
+En si, es similar a como trabajamos con lenguajes interpretados como R, en el sentido de que enviamos comandos y recibimos respuestas (casi) inmediatas.</p>
+<p>Dependiendo de en que sistema nos encontramos, tenemos distintas SHELLs que interpretan los comandos, siguiendo una sintaxis u otra, con distintos niveles de ayuda al usuario.</p>
+<p>Por conveniencia, usaremos principalmente <code>BASH</code>, que es la SHELL mas comun encontrada en entornos Linux, que a su vez son los mas comunes en tareas de programacion para datascience y bioinformatica.</p>
+<p>Es posible instalar un entorno Linux en Windows usando <a href="https://docs.microsoft.com/en-us/windows/wsl/">Windows Subsystem for Linux</a>.</p>
+<p>La mayor parte de estos comandos existen tanto en Linux como en Windows Powershell (aunque en este ultimo realmente son alias).
+La principal diferencia es como las shells manejan directorios, con <code>/</code> en POSIX y <code>\</code> en Windows;
+y como manejan comandos multilinea, <code>\</code> y <code>`</code> respectivamente.</p>
+<p>La parte más compleja y menos interoperable es cuando usamos comandos con <code>-parametros</code>.</p>
+<div id="navegación-del-sistema" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Navegación del sistema</h3>
+<ul>
+<li><code>ls</code> es <em>LiSt</em>, mapeado a <em>Get-ChilItem</em> en Powershell.
+<ul>
+<li><code>ls -a</code> lista todos los objetos en el directorio, incluyendo ocultos</li>
+<li><code>ls -lh</code> genera una lista en formato lista, con permisos, dueños, grupos, tamaño, etc.</li>
+<li><code>ls -r1 | sort | uniq -c | sort -nr</code> permite listar rapidamente archivos duplicados (por nombre) en un directorio y subdirectorios</li>
+<li><strong>Los parametros no funcionan en Get-ChildItem</strong></li>
+</ul></li>
+<li><code>cd</code> es <em>Change Directory</em>, mapea <em>Set-Directory</em> en Powershell.
+<ul>
+<li><code>cd /un/path/especifico</code> cambia a un directorio segun un path directo o relativo<br />
+</li>
+<li><code>cd $VAR</code> dirige a un directorio definido por una variable ambiental, como <code>$HOME</code><br />
+</li>
+<li><code>cd ..</code> permite subir al directorio superior, como en <code>/home/directory</code> a <code>/home</code><br />
+</li>
+<li><code>cd -</code> es para volver rapidamente al directorio anterior. Util si cambian rapidamente entre un sub-sub-subdirectorio<br />
+</li>
+<li><strong>Los paths usan <code>\</code> en Windows. <code>/</code> no funciona</strong></li>
+</ul></li>
+<li><code>mkdir</code> es <em>MaKe DIRectory</em>, mapea a <em>New-Item</em> en Powershell.
+<ul>
+<li>En *nix podemos crear multiples directorios y subdirectorios como <code>mkdir -p Directorio/{Sub1,Sub2,Sub3}</code> (sin espacios, solo <code>,</code>)</li>
+<li>En Powershell necesitamos una sintaxis explicita; ie. <code>mkdir Directorio\Sub1, Directorio\Sub2, ...</code></li>
+</ul></li>
+<li><code>ln</code>,es <em>LiNk</em>, no existe un map directo en Powershell.
+<ul>
+<li><code>ln -s &lt;target&gt; &lt;link&gt;</code> permite crear un vinculo <code>-s</code>imbolico</li>
+<li><code>ln -sf &lt;target&gt; &lt;link&gt;</code> permite actualizar el vinculo simbolico</li>
+<li><strong>Una opción en Windows es desempolvar la vieja CMD.exe, y usar <code>MKLINK</code></strong></li>
+<li><code>MKLINK \D &lt;link&gt; &lt;target&gt;</code> señala un link de <code>\D</code>irectorios</li>
+<li>Los links son una forma comoda de apuntar a un archivo/directorio especifico que no está en nuestro ambiente local.
+Son comprendidos por el sistema como si el archivo estuviese ahi, a diferencia de un <em>acceso directo</em>.</li>
+</ul></li>
+</ul>
+</div>
+<div id="descargando-archivos" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Descargando archivos</h3>
+<ul>
+<li><code>curl</code> es <em>C (see) URL</em>, mapeado a <em>Invoke-WebRequest</em> en Powershell.
+<ul>
+<li><code>curl &lt;url&gt; -o &lt;archivo&gt;</code> descarga una URL para guardarla en un archivo</li>
+<li><code>curl -O &lt;url&gt;</code> descarga la URL a un archvio con su nombre. Usualmente usamos esto</li>
+</ul></li>
+<li><code>wget</code> es <em>Web GET</em>, mapeado a <em>Invoke-WebRequest</em> en Powershell. Es el más facil de usar.
+<ul>
+<li><code>wget &lt;url&gt; &lt;url2…&gt;</code> descarga la URL a un archvio con su nombre</li>
+<li><code>wget -c &lt;url&gt;</code> permite continuar una descarga interrumpida (muy util para cosas de varios GB)</li>
+</ul></li>
+<li><code>Invoke-WebRequest</code> requiere un output explicito.
+<ul>
+<li><code>Invoke-WebRequest &lt;url&gt; -OutFile &lt;archivo&gt;</code></li>
+<li><code>Invoke-WebRequest &lt;url&gt; -Method Get -o &lt;archivo&gt;</code> funciona igual que Wget</li>
+<li><code>curl &lt;url&gt; -o &lt;archivo&gt;</code> es valido en Windows base</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="01-intro.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="st">&quot;https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz&quot;</span> <span class="co"># Descargando un ejemplo</span></span></code></pre></div>
+</div>
+<div id="descomprimiendo-archivos" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Descomprimiendo archivos</h3>
+<ul>
+<li><code>tar</code>, no existe en Windows.
+<ul>
+<li><code>… xf …</code> son parametros para <em>eXtract</em> y <em>File</em></li>
+<li><code>tar xf &lt;tar.gz.bz2.xz&gt;</code> desempaca un tar (comprimido) al directorio local</li>
+<li><code>tar xf &lt;tar.gz.bz2.xz&gt; -C &lt;directorio&gt;</code> desempaca el tar a un directorio especifico</li>
+<li>Los tar por defecto no están comprimidos. Un tar.gz si lo está.</li>
+<li><code>tar cf &lt;nuevo.tar&gt; &lt;archivo1 directorio/*&gt;</code> crea un archivo tar.</li>
+<li><code>tar cgf &lt;nuevo.tar.gz&gt; &lt;archivo1 directorio/*&gt;</code> crea un archivo tar comprimido.</li>
+</ul></li>
+<li><code>unzip</code>, no existe en Windows.
+<ul>
+<li><code>unzip &lt;zip&gt;</code> extrae los contenidos de un zip en el directorio actual</li>
+<li><code>unzip &lt;zip&gt; -d &lt;directorio&gt;</code> extrae el zip a una carpeta especifica</li>
+<li><code>zip -r &lt;nuevo.zip&gt; &lt;directorio&gt;</code> comprime un directorio a un zip.</li>
+</ul></li>
+<li><code>Expand-Archive</code> es una utilidad de Windows que funciona como <code>unzip</code>
+<ul>
+<li><code>Expand-Archive &lt;zip&gt; &lt;directorio&gt;</code> descomprime un zip en un directorio existente o nuevo</li>
+<li><code>Compress-Archive -Path &lt;directorio\*&gt; -DestinationPath &lt;nuevo.zip&gt;</code> crea un zip con los contenidos de <em>directorio</em></li>
+</ul></li>
+<li><code>7zip</code> tiene linea de comandos para Linux, Mac, Windows.</li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="01-intro.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
+</div>
+<div id="explorando-y-renombrando-archivos" class="section level3" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> Explorando y renombrando archivos</h3>
+<ul>
+<li><code>cat</code> es <em>conCATenate</em>, mapeado a <em>Get-Content</em> en Powershell.
+<ul>
+<li><code>cat &lt;archivo&gt;</code> pasa los contenidos de <em>archivo</em> a la terminal, mostrandolos</li>
+<li><code>cat &lt;archivo1&gt; &lt;archivo2&gt; &gt; &lt;nuevo&gt;</code> reemplaza los contenidos de <em>nuevo</em> por la concatenación de <em>archivo1</em> y <em>archivo2</em></li>
+<li><code>cat &lt;achivo3&gt; &gt;&gt; &lt;nuevo&gt;</code> concatena <em>archivo3</em> a <em>nuevo</em></li>
+</ul></li>
+<li><code>head</code>, no existe en Windows.
+<ul>
+<li><code>head &lt;archivo&gt;</code> muestra las 10 primeras lineas de <em>archivo</em></li>
+<li><code>head -n &lt;archivo&gt;</code> muestra las <em>n</em> primeras lineas de <em>archivo</em></li>
+<li>En Windows, <code>Get-Content &lt;archivo&gt; -TotalCount 10</code> tiene el mismo comportamiento</li>
+</ul></li>
+<li><code>tail</code>, no existe en Windows.
+<ul>
+<li><code>tail &lt;archivo&gt;</code> muestra las 10 ultimas lineas de <em>archivo</em></li>
+<li><code>tail -n &lt;archivo&gt;</code> muestra las <em>n</em> ultimas lineas de <em>archivo</em></li>
+<li>En Windows, <code>Get-Content &lt;archivo&gt; -Tail 10</code> tiene el mismo comportamiento</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="01-intro.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Ejemplo       # Entra al directorio descomprimido</span>
+<span id="cb22-2"><a href="01-intro.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> script.r     # Explorando el script</span></code></pre></div>
+</div>
+</div>
+<div id="lenguajes-de-programación-e-ides" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Lenguajes de programación e IDEs</h2>
+<div id="tipos-de-lenguajes-de-programacion" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Tipos de lenguajes de programacion</h3>
+<ul>
+<li><strong>Lenguajes de programacion interpretados:</strong> son lenguajes en que cada linea es compilada e interpretada en evaluacion, dentro del llamado <em>Read-Eval-Print-Loop</em> (REPL). Esto premite que sean interactivos, dado que cada instruccion devuelve una respuesta inmediata, agilizando significativamente el desarrollo de programas.
+<ul>
+<li>Python, R, etc.</li>
+</ul></li>
+<li><strong>Lenguaje de programacion compilados:</strong> a diferencia de un lenguaje interpretado, este es compilado en su totalidad previa ejecucion del programa. Por esto, tienden a ser significativamente mas rapidos en ejecucion, a costa del tiempo de compilacion.
+<ul>
+<li>C, C++, Fortran, Julia, etc.</li>
+</ul></li>
+<li><strong>Lenguaje maquina:</strong> representan el nivel más bajo al que el compilador traduce las instrucciones, el denominado codigo binario que opera fisicamente en el procesador.</li>
+</ul>
+<p>De cierta forma, la brecha entre lenguajes compilados se hace borrosa al considerar que una gran parte de las librerias que usamos en lenguajes interpretados son implementaciones escritas en C/C++, Fotran, u otros lenguajes compilados (ej. la libreria NumPy en Python);
+y ademas es posible usar compiladores <em>just-in-time</em> (JIT) para funciones de codigo interpretado (ej. Numba en Python, JIT en R).</p>
+<p>Por el otro lado, existen herramientas que permiten trabajar (casi) linea a linea con lenguajes compilados, como el paquete <a href="">Pluto</a> para Julia.</p>
+<blockquote>
+<p><strong>Lenguaje de marcado:</strong> <em>JSON</em>, <em>LaTeX</em>, <em>Markdown</em> son lenguajes que permiten especificar estructuras de documentos.</p>
+</blockquote>
+<p>Existen formatos hibridos, como RMD, que incluyen la sintaxis de marcado de Markdown junto a la posibilidad de ejecutar codigo en R.</p>
+<blockquote>
+<p>El principal proposito de los RMD es que pueden ser compilados a documentos como informes, presentaciones, esta misma documentación, etc. usando el paquete <code>knitr</code> para exportarlos a formato HTML, Word, PDF, etc.
+Por esto incluyen una gramática de escritura simple y moderna, sin cosas como <code>\'</code> para tildes.
+Los RMD <strong>no</strong> son programas, pero pueden ser usados como si lo fueran, por ejemplo en una pipeline de procesamiento dentro de un cluster de computo.
+Como la mezcla de texto plano y codigo puede hacerlos confusos, es recomendable que usen programas <code>.r</code> en lugar de cuadernos <code>.rmd</code> para este tipo de cosas.</p>
+</blockquote>
+<!-- A diferencia de Jupyter que es totalmente horrible porque ni siquiera es Python plano
+O LaTeX, que es horrible porque 1) no vivimos en 1985 2) ni queremos usar macros \sarcasm{increiblemente} descripivos para todo 3) le concedo que es genial para ecuaciones, tho-->
+<p>Cabe mencionar que el lenguaje de las SHELL puede ser considerado como un lenguaje interpretado, dado que ejecuta instrucciones de forma lineal aunque comunmente estas son llamar a programas ya compilados.</p>
+</div>
+<div id="integrated-development-environment" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Integrated Development Environment</h3>
+<p>Un IDE es comunmente una aplicación con una interfaz</p>
+<ul>
+<li><p><strong><a href="https://www.rstudio.com">R Studio</a></strong> fue originalmente creado para trabajar con R, pero actualmente es capaz de trabajar con multiples otros lenguajes como Python o BASH script directamente, apuntando a ser un entorno completo para datascience.</p></li>
+<li><p><strong><a href="https://code.visualstudio.com/">VS Code</a></strong> es originalmente un editor de texto, pero cuenta con extensiones que facilmente lo convierten en un IDE poliglota para trabajar con R, Python, C, Julia, y casi cualquier lenguaje existente.</p>
+<ul>
+<li>Permite trabajar interactivamente con codigo R y Python</li>
+<li>La extensión LiveShare permite trabajar con colaboradores en tiempo real, <em>a la</em> Google Docs</li>
+<li>La extensión Remotes-SSH permite conectarlo a un entorno en otra maquina física, lo cual es útil para trabajar en sistemas como un cluster HPC</li>
+</ul></li>
+<li><p><strong><a href="https://jupyter.org/">Jupyter</a></strong>
+es un entorno para trabajar con <em>cuadernos</em>, originalmente en Python pero ahora con múltiples interpretes como R o Julia.
+Dado que corre en un servidor y presenta una interfaz web, es comúnmente usado conectado a un backend mas potente que el computador del usuario.
+Se puede usar en Google Colab. La versión mas moderna es Jupyter Lab, que incluye funciones como múltiples pestañas, terminales, etc.</p>
+<ul>
+<li>Los cuadernos son fáciles de usar, pero el código subyacente es un híbrido de Python y JSON para cada celda.
+Esto los hace mucho mas propensos a errores de replicabilidad, dado que un cambio en una celda <strong>NO</strong> afecta a las otras a menos que estas se corran de nuevo o se reinicie el Kernel.
+Aparte, sin Jupyter para mostrar los archivos, es complicado leer el codigo JSON y entender que hace el programa.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="introducción-a-r-y-cuadernos" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Introducción a R y cuadernos</h2>
+<div id="formato-de-r-notebooks" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Formato de R notebooks</h3>
+<p>La sintaxis de R permite que el codigo sea legible para personas, y es posible añadir comentarios explicativos como <code># comentario</code>.
+Aún así, para un documento técnico es necesaria más información, como figuras, <em>texto en italica</em>, etc.</p>
+<p>Los cuadernos con extensión <em>.Rmd</em> permiten tomar notas más largas, y aplicar formato como utilizando sintaxis <a href="https://www.markdownguide.org/basic-syntax">Markdown</a>, con algunas modificaciones.</p>
+<ul>
+<li><code>_</code> <em>italica</em></li>
+<li><code>**</code> <strong>negrita</strong></li>
+<li><code>`</code> <code>monoespaciado</code></li>
+</ul>
+<p>Podemos añadir <em>#</em> al inicio de una linea para marcarla como titulo, sub-titulo, sub-sub-titulo, etc… para así hacer un esquema más ordenado.</p>
+<!-- > [Markdown](https://www.markdownguide.org/basic-syntax) es un lenguaje de marcado como HTML o LaTeX, pero para gente viviendo en el 2000 que no consideran ``\~{n}`` un uso adecuado de su tiempo. -->
+</div>
+<div id="trabajando-con-chunks" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Trabajando con chunks</h3>
+<p>Los cuadernos seccionan el codigo en <strong>chunks</strong>, o secciones cortas de codigo.
+Podemos darles nombre de forma <code>```{r NOMBRE DEL CHUNK}</code></p>
+<p>Estas secciones luego pueden ejecutarse cada una como su propio script, accediendo a variables dejadas por las otras secciones.</p>
+<p>Por ejemplo, haciendo una definición de los tipos de objetos en R:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="01-intro.html#cb23-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fl">15.0</span>  <span class="co"># Número</span></span>
+<span id="cb23-2"><a href="01-intro.html#cb23-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">15e2</span>  <span class="co"># Número en notación científica</span></span>
+<span id="cb23-3"><a href="01-intro.html#cb23-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span>   pi  <span class="co"># Constantes definidas</span></span>
+<span id="cb23-4"><a href="01-intro.html#cb23-4" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="st">&#39;cadena de texto&#39;</span> <span class="co"># Texto</span></span>
+<span id="cb23-5"><a href="01-intro.html#cb23-5" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># Valores binarios  </span></span></code></pre></div>
+<p>Más otros objetos:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="01-intro.html#cb24-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)                 <span class="co"># Un vector </span></span>
+<span id="cb24-2"><a href="01-intro.html#cb24-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>                        <span class="co"># Otro vector, naturales desde 7 a 9</span></span>
+<span id="cb24-3"><a href="01-intro.html#cb24-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">list</span>(V, x <span class="ot">&lt;-</span> <span class="dv">2</span>, <span class="st">&quot;texto&quot;</span>)   <span class="co"># Una lista, con distintos tipos de objetos con nombre</span></span>
+<span id="cb24-4"><a href="01-intro.html#cb24-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(V, W, <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>)) <span class="co"># Una lista con elementos del mismo largo</span></span>
+<span id="cb24-5"><a href="01-intro.html#cb24-5" aria-hidden="true" tabindex="-1"></a>                                <span class="co"># son más complejos, y los veremos en detalle</span></span></code></pre></div>
+<p>Estos dos chunks son independientes, por lo que podriamos modificarlos sin que se afecten entre si.
+Podemos usar los objetos creados en estos chunks fuera, en otros chunks del cuaderno:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="01-intro.html#cb25-1" aria-hidden="true" tabindex="-1"></a>V<span class="sc">*</span>A <span class="co"># Multiplicando un vector (1,2,5) por un escalar (15)</span></span></code></pre></div>
+<pre><code>## [1] 15 45 75</code></pre>
+<p>Luego, podemos usar el header del chunk (donde esta el nombre) para controlar otros atributos, como las salidas, warnings, o ejecución del chunk.</p>
+<p>Un chunk sin ejecución automática puede usarse para cargar las librerías al inicio de la clase, dado que luego no necesario recargarlas durante la sesión.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="01-intro.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># Set de paquetes que hacen muchas cosas</span></span>
+<span id="cb27-2"><a href="01-intro.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)  <span class="co"># data de Gapminder</span></span>
+<span id="cb27-3"><a href="01-intro.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)     <span class="co"># encoding de GIFs</span></span>
+<span id="cb27-4"><a href="01-intro.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webshot)    <span class="co"># screenshots de paginas web</span></span>
+<span id="cb27-5"><a href="01-intro.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)    <span class="co"># Gráficos complejos</span></span>
+<span id="cb27-6"><a href="01-intro.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)     <span class="co"># extensión de ggplot2</span></span>
+<span id="cb27-7"><a href="01-intro.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci)      <span class="co"># paletas de colores para publicación</span></span>
+<span id="cb27-8"><a href="01-intro.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)  <span class="co"># gráficos animados</span></span>
+<span id="cb27-9"><a href="01-intro.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmuller)   <span class="co"># diagrama de evolucionarios Muller</span></span>
+<span id="cb27-10"><a href="01-intro.html#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(autoplotly) <span class="co"># visualizaciones interactivas</span></span>
+<span id="cb27-11"><a href="01-intro.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)  <span class="co"># extensión de grid, para la creación de figuras</span></span></code></pre></div>
+</div>
+</div>
+<div id="importación-y-analisis-de-datos" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Importación y analisis de datos</h2>
+<p>Podemos descargar datasets desde sitios publicos usando programas de la terminal, como <code>wget</code></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="01-intro.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz</span>
+<span id="cb28-2"><a href="01-intro.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv </span></code></pre></div>
+<pre><code>## --2021-04-23 01:22:23--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.177.217, 52.218.242.17
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.177.217|:443... connected.
+## HTTP request sent, awaiting response... 200 OK
+## Length: 368703 (360K) [application/x-tar]
+## Saving to: ‘baselines.tar.gz.8’
+## 
+##      0K .......... .......... .......... .......... .......... 13%  234K 1s
+##     50K .......... .......... .......... .......... .......... 27%  230K 1s
+##    100K .......... .......... .......... .......... .......... 41%  255K 1s
+##    150K .......... .......... .......... .......... .......... 55% 2.50M 1s
+##    200K .......... .......... .......... .......... .......... 69% 3.78M 0s
+##    250K .......... .......... .......... .......... .......... 83%  251K 0s
+##    300K .......... .......... .......... .......... .......... 97% 7.53M 0s
+##    350K ..........                                            100% 13.8M=0.9s
+## 
+## 2021-04-23 01:22:25 (416 KB/s) - ‘baselines.tar.gz.8’ saved [368703/368703]
+## 
+## --2021-04-23 01:22:25--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.177.217, 52.218.242.17
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.177.217|:443... connected.
+## HTTP request sent, awaiting response... 200 OK
+## Length: 206369 (202K) [text/csv]
+## Saving to: ‘baseline.csv.8’
+## 
+##      0K .......... .......... .......... .......... .......... 24%  243K 1s
+##     50K .......... .......... .......... .......... .......... 49%  221K 0s
+##    100K .......... .......... .......... .......... .......... 74%  356K 0s
+##    150K .......... .......... .......... .......... .......... 99%  559K 0s
+##    200K .                                                     100% 2922G=0.7s
+## 
+## 2021-04-23 01:22:27 (305 KB/s) - ‘baseline.csv.8’ saved [206369/206369]</code></pre>
+<p>El archivo <code>baselines.tar.gz</code> es un comprimido, por lo que es necesario abrirlo con <code>tar</code>, desde la terminal.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="01-intro.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
+<p>Finalmente, importar los archivos descargados a la sesión de R.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="01-intro.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb31-2"><a href="01-intro.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb31-3"><a href="01-intro.html#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="01-intro.html#cb31-4" aria-hidden="true" tabindex="-1"></a>baseline_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;baseline.csv&quot;</span>) </span>
+<span id="cb31-5"><a href="01-intro.html#cb31-5" aria-hidden="true" tabindex="-1"></a>baseline_tsv <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;baseline.tsv&quot;</span>) </span>
+<span id="cb31-6"><a href="01-intro.html#cb31-6" aria-hidden="true" tabindex="-1"></a>baseline_xlsx <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;baseline.xlsx&quot;</span>) </span></code></pre></div>
+<p>Viendo el contenido de uno de estos archivos</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="01-intro.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( baseline_csv  )</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 10
+##   X1      harmonic_central… eigenvector_cent… betweenness_cent… closeness_centr…
+##   &lt;chr&gt;               &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;            &lt;dbl&gt;
+## 1 DM_10f…              223.        0.00000739                 0            0.189
+## 2 DM_10f…              223.        0.00000739                 0            0.189
+## 3 DM_10f…              223.        0.00000370                 0            0.189
+## 4 DM_5thf              224.        0.00000741                 0            0.190
+## 5 DM_6dhf              223.        0.00000739                 0            0.189
+## 6 DM_6thf              223.        0.00000739                 0            0.189
+## # … with 5 more variables: load_centrality &lt;dbl&gt;, information_centrality &lt;dbl&gt;,
+## #   communicability_betweenness_centrality &lt;dbl&gt;, katz_centrality_numpy &lt;dbl&gt;,
+## #   pagerank &lt;dbl&gt;</code></pre>
+<!--
+
+# Tarea de la semana
+
+Las tareas son por niveles, partiendo por algo basico a algo avanzado
+
+1. Crear un cuaderno y obtener 
+2. Crear graficos explicando como se relacionan las variables
+3. Crear graficos interactivos con Plotly
+
+-----
+
+# Material suplementario
+
+## Dataframes y relacionados
+
+- Manipulación de estructuras: https://rpubs.com/Cisco_Self_Serve/315139
+- Manipulación de estructuras: https://rpubs.com/williamsurles/292547
+- Manipulación de estructuras: https://rpubs.com/JoanClaverol/493728
+
+## Visualizaciones de datos
+
+- Gráficos: https://rpubs.com/rdelgado/429190
+- Gráficos: https://rpubs.com/RUsersGroup-Ecuador/ggplot2
+- Galería: https://www.r-graph-gallery.com/all-graphs.html
+
+-->
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="00-Setup-ambiente.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="02-estructuras-datos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/DeepenData/clases/blob/master/01-intro/01-intro.Rmd",
+"text": "Editar"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

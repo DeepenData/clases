@@ -14,7 +14,7 @@ Por ejemplo, sacando el promedio de dos variables u operaciones similares.
 
 ```{r Importación de datos,echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 # Importando datos de un CSV
-data.location <- "https://raw.githubusercontent.com/DeepenData/clases/master/06_mutate_pipes_regex/data_oct_08_2020.csv" # Reemplazar por dirección local si bajan el archivo
+data.location <- "https://raw.githubusercontent.com/DeepenData/clases/2bd7d93d9f23b2fe3fc679ca44e40a286f292ffe/06_mutate_pipes_regex/data_oct_08_2020.csv"
 sim.without.outliers <- read_csv(data.location) # Importa la data a "sim.without.outliers"
 ```
 

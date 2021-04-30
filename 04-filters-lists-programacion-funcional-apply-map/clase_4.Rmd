@@ -1,0 +1,131 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+library(readr)
+library(tidyverse)
+
+genes_url       <- 'https://raw.githubusercontent.com/DeepenData/clases/master/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv'
+metabolites_url <- 'https://raw.githubusercontent.com/DeepenData/clases/master/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv'
+reactions_url   <- 'https://raw.githubusercontent.com/DeepenData/clases/master/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv'
+
+import_my_csv <- function(url){readr::read_csv(url) %>% dplyr::select(-matches("x1")) %>% return}
+
+genes_url       %>% import_my_csv -> genes
+metabolites_url %>% import_my_csv -> metabolites
+reactions_url   %>% import_my_csv -> reactions
+```
+
+```{r message=FALSE, warning=FALSE}
+library(magrittr)
+
+list(genes_url,reactions_url, metabolites_url) -> my_list
+lapply(my_list, import_my_csv)                -> recon3_list.lapply
+sapply(my_list, import_my_csv)                -> recon3_list.sapply
+purrr::map(my_list, import_my_csv)            -> recon3_list.map
+
+list(recon3_list.lapply,recon3_list.sapply,recon3_list.map) %>% map(length)
+
+my_names <- c('genes', 'reactions', 'metabolites')
+
+recon3_list.map %<>% purrr::set_names(my_names)
+
+rename_ids <- function(df){df %>% as_tibble %>% rename_with(tolower) %>%  rename_with(~str_replace(., '.*id.*','ID'))}
+
+rename_ids <- function(df){df %>% as_tibble %>% rename_with(~str_replace(.,regex('.*iD.*', ignore_case = T) ,'ID'))}
+
+recon3_list.map$genes %>% rename_ids
+
+map(recon3_list.map,rename_ids ) ->recon3_list
+#data.table::setnames(my_names)
+```
+Filter
+```{r}
+recon3_list %>%pluck('genes') %>% filter(ID == 314.2)
+recon3_list %>%pluck('genes') %>% filter(ID %in% c(3948.1,314.2))
+recon3_list %>%pluck('genes') %>% filter(str_detect(ID,"^284.*0.*")) %>% .[["Reactions"]] %>% .[2] -> my_reactions
+my_reactions %<>% str_split(',', simplify = T) %>% str_extract('\\w+')
+recon3_list %>%pluck('reactions') %>% filter(ID %in% my_reactions)
+```
+
+#Creatins my functions
+```{r}
+
+name_pattern_to_IDs <- function(my_list, entry, name_pattern){
+regex(name_pattern, ignore_case = T) -> name_pattern
+my_list %>% pluck(entry) %>% names %>% str_extract(regex('.*nAme.*', ignore_case = T)) %>% na.exclude %>% as.character -> my_col
+my_list %>% pluck(entry) %>% select(c("ID", my_col)) %>%filter(str_detect(.[[2]],name_pattern)) %>% .[['ID']] %>% return()
+}
+
+name_pattern_to_IDs(recon3_list, 'reactions', 'glutamate') -> found_rxns
+```
+
+```{r}
+reactionIDs_to_genes <- function(reaction_list){
+recon3_list %>%pluck('genes') -> genes_df
+genes_df$Reactions %>% str_extract_all('\\w+') %>% tibble( gene = genes_df$ID, rxn=.) %>% unnest(cols = rxn) -> gene_rxns
+gene_rxns %>% filter(rxn %in% reaction_list) %>% .[["gene"]] %>% unique() %>% return()
+}
+
+reactionIDs_to_genes(found_rxns) -> found_genes
+```
+
+```{r}
+
+name_pattern_to_IDs_2 <- function(pattern){name_pattern_to_IDs(recon3_list, 'reactions', pattern)}
+
+purrr::compose(reactionIDs_to_genes, name_pattern_to_IDs_2 ) -> rxn_name_to_genes
+
+
+rxn_name_to_genes('atp')
+
+```
+
+```{r}
+c("glucose","phenyl","rna") -> some_keywords
+
+map(some_keywords, rxn_name_to_genes) %>% set_names(some_keywords) %>% tibble(genes=., keyword = some_keywords) %>% unnest(cols = c(genes))
+set_long_df <- function(a_list, keywords){a_list %>% set_names(keywords) %>% tibble(genes=., keyword = keywords) %>% unnest(cols = c(genes))}
+some_keywords %>%map(rxn_name_to_genes)%>% set_long_df(some_keywords)
+```
+```{r}
+keywords_to_genes <- function(some_keywords){some_keywords %>%map(rxn_name_to_genes)%>% set_long_df(some_keywords)}
+keywords_to_genes(c("reductase","peroxide","thioredoxin","glutathione") ) %>% tidyr::nest(genes= genes) -> resultados #%>% unnest(genes)
+```
+```{r}
+resultados%>% unnest(genes) %>% count(keyword) %>% mutate("%" = 100*n/sum(n))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

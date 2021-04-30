@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 CLASE 4 - Descargas desde repositorios e interacción con objetos descargados | Principios de bioinformática y ciencias de biodatos</title>
+  <meta name="description" content="Clases de bioinformática para gente no informática." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 CLASE 4 - Descargas desde repositorios e interacción con objetos descargados | Principios de bioinformática y ciencias de biodatos" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Clases de bioinformática para gente no informática." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 CLASE 4 - Descargas desde repositorios e interacción con objetos descargados | Principios de bioinformática y ciencias de biodatos" />
+  
+  <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
+  
+
+<meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
+
+
+<meta name="date" content="2021-04-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"/>
+
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li> <img src="https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Manu/calamar_3.png" alt="Calamar" width="300">  </li>
+<li><a href="https://github.com/DeepenData/clases">📄 ./source</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Presentación</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html"><i class="fa fa-check"></i>Setup del ambiente</a>
+<ul>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#paquetes-de-cran"><i class="fa fa-check"></i>Paquetes de CRAN</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#paquetes-de-bioconductor"><i class="fa fa-check"></i>Paquetes de Bioconductor</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalación-de-rstudio-en-windows"><i class="fa fa-check"></i>Instalación de R(Studio) en Windows</a>
+<ul>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#usando-un-gestor-de-paquetes"><i class="fa fa-check"></i>Usando un gestor de paquetes</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalación-manual"><i class="fa fa-check"></i>Instalación manual</a></li>
+<li class="chapter" data-level="" data-path="setup-del-ambiente.html"><a href="setup-del-ambiente.html#instalando-r-tools-manualmente"><i class="fa fa-check"></i>Instalando R-tools manualmente</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I PRIMERA SECCIÓN - Herramientas computacionales y programación para bioinformática</b></span></li>
+<li class="chapter" data-level="1" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><i class="fa fa-check"></i><b>1</b> CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#interacción-con-terminales"><i class="fa fa-check"></i><b>1.1</b> Interacción con terminales</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#navegación-del-sistema"><i class="fa fa-check"></i><b>1.1.1</b> Navegación del sistema</a></li>
+<li class="chapter" data-level="1.1.2" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#descargando-archivos"><i class="fa fa-check"></i><b>1.1.2</b> Descargando archivos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#descomprimiendo-archivos"><i class="fa fa-check"></i><b>1.1.3</b> Descomprimiendo archivos</a></li>
+<li class="chapter" data-level="1.1.4" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#explorando-y-renombrando-archivos"><i class="fa fa-check"></i><b>1.1.4</b> Explorando y renombrando archivos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#lenguajes-de-programación-e-ides"><i class="fa fa-check"></i><b>1.2</b> Lenguajes de programación e IDEs</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#tipos-de-lenguajes-de-programacion"><i class="fa fa-check"></i><b>1.2.1</b> Tipos de lenguajes de programacion</a></li>
+<li class="chapter" data-level="1.2.2" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#integrated-development-environment"><i class="fa fa-check"></i><b>1.2.2</b> Integrated Development Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#introducción-a-r-y-cuadernos"><i class="fa fa-check"></i><b>1.3</b> Introducción a R y cuadernos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#formato-de-r-notebooks"><i class="fa fa-check"></i><b>1.3.1</b> Formato de R notebooks</a></li>
+<li class="chapter" data-level="1.3.2" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#trabajando-con-chunks"><i class="fa fa-check"></i><b>1.3.2</b> Trabajando con chunks</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#importación-y-analisis-de-datos"><i class="fa fa-check"></i><b>1.4</b> Importación y analisis de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><i class="fa fa-check"></i><b>2</b> CLASE 2 - Creación y exploración de estructuras de datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#creación-de-dataframes"><i class="fa fa-check"></i><b>2.1</b> Creación de dataframes</a></li>
+<li class="chapter" data-level="2.2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#descargando-data-desde-internet"><i class="fa fa-check"></i><b>2.2</b> Descargando data desde internet</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#descarga-desde-página-web"><i class="fa fa-check"></i><b>2.2.1</b> Descarga desde página web</a></li>
+<li class="chapter" data-level="2.2.2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#descarga-desde-github"><i class="fa fa-check"></i><b>2.2.2</b> Descarga desde GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#leyendo-archivos-extraños"><i class="fa fa-check"></i><b>2.3</b> Leyendo archivos extraños</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#escritura-de-archivos-con-delimitadores-csv-tsv-txt-etc."><i class="fa fa-check"></i><b>2.3.1</b> Escritura de archivos con delimitadores (csv, tsv, txt, etc.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#directorios-en-r"><i class="fa fa-check"></i><b>2.4</b> Directorios en R</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#generación-de-listas-de-archivos-de-los-directorios"><i class="fa fa-check"></i><b>2.4.1</b> Generación de listas de archivos de los directorios</a></li>
+<li class="chapter" data-level="2.4.2" data-path="clase-2-creación-y-exploración-de-estructuras-de-datos.html"><a href="clase-2-creación-y-exploración-de-estructuras-de-datos.html#creación-de-directorios-y-de-archivos-dentro-de-r"><i class="fa fa-check"></i><b>2.4.2</b> Creación de directorios y de archivos dentro de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><i class="fa fa-check"></i><b>3</b> CLASE 3 - Exploración y transformación de estructuras de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#utilizando-mutate-para-manipulación-de-datos"><i class="fa fa-check"></i><b>3.1</b> Utilizando mutate para manipulación de datos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#accediendo-a-datos-tabulados"><i class="fa fa-check"></i><b>3.1.1</b> Accediendo a datos tabulados</a></li>
+<li class="chapter" data-level="3.1.2" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#funciones-personalizadas"><i class="fa fa-check"></i><b>3.1.2</b> Funciones personalizadas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#pipes-complicadas"><i class="fa fa-check"></i><b>3.2</b> Pipes complicadas</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#tipos-de-pipes"><i class="fa fa-check"></i><b>3.2.1</b> Tipos de Pipes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#usando-sistemas-de-identificadores"><i class="fa fa-check"></i><b>3.2.2</b> Usando sistemas de identificadores</a></li>
+<li class="chapter" data-level="3.2.3" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#filtrado-de-filas"><i class="fa fa-check"></i><b>3.2.3</b> Filtrado de filas</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#expresiones-regulares"><i class="fa fa-check"></i><b>3.3</b> Expresiones regulares</a></li>
+<li class="chapter" data-level="3.4" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
+<li class="chapter" data-level="3.5" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#ejemplo-de-vida-real"><i class="fa fa-check"></i><b>3.5</b> Ejemplo de vida real</a></li>
+</ul></li>
+<li class="part"><span><b>II SEGUNDA SECCIÓN - Obtención y pre-procesamiento de datos biológicos y metadatos asociados</b></span></li>
+<li class="chapter" data-level="4" data-path="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html"><i class="fa fa-check"></i><b>4</b> CLASE 4 - Descargas desde repositorios e interacción con objetos descargados</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principios de bioinformática y ciencias de biodatos</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="clase-4---descargas-desde-repositorios-e-interacción-con-objetos-descargados" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> CLASE 4 - Descargas desde repositorios e interacción con objetos descargados</h1>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb84-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb84-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-4"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-4" aria-hidden="true" tabindex="-1"></a>genes_url       <span class="ot">&lt;-</span> <span class="st">&#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv&#39;</span></span>
+<span id="cb84-5"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-5" aria-hidden="true" tabindex="-1"></a>metabolites_url <span class="ot">&lt;-</span> <span class="st">&#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv&#39;</span></span>
+<span id="cb84-6"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-6" aria-hidden="true" tabindex="-1"></a>reactions_url   <span class="ot">&lt;-</span> <span class="st">&#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv&#39;</span></span>
+<span id="cb84-7"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-8"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-8" aria-hidden="true" tabindex="-1"></a>import_my_csv <span class="ot">&lt;-</span> <span class="cf">function</span>(url){readr<span class="sc">::</span><span class="fu">read_csv</span>(url) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">matches</span>(<span class="st">&quot;x1&quot;</span>)) <span class="sc">%&gt;%</span> return}</span>
+<span id="cb84-9"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-10"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-10" aria-hidden="true" tabindex="-1"></a>genes_url       <span class="sc">%&gt;%</span> import_my_csv <span class="ot">-&gt;</span> genes</span>
+<span id="cb84-11"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-11" aria-hidden="true" tabindex="-1"></a>metabolites_url <span class="sc">%&gt;%</span> import_my_csv <span class="ot">-&gt;</span> metabolites</span>
+<span id="cb84-12"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb84-12" aria-hidden="true" tabindex="-1"></a>reactions_url   <span class="sc">%&gt;%</span> import_my_csv <span class="ot">-&gt;</span> reactions</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb85-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(genes_url,reactions_url, metabolites_url) <span class="ot">-&gt;</span> my_list</span>
+<span id="cb85-4"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(my_list, import_my_csv)                <span class="ot">-&gt;</span> recon3_list.lapply</span>
+<span id="cb85-5"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(my_list, import_my_csv)                <span class="ot">-&gt;</span> recon3_list.sapply</span>
+<span id="cb85-6"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-6" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(my_list, import_my_csv)            <span class="ot">-&gt;</span> recon3_list.map</span>
+<span id="cb85-7"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-8"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(recon3_list.lapply,recon3_list.sapply,recon3_list.map) <span class="sc">%&gt;%</span> <span class="fu">map</span>(length)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 3
+## 
+## [[2]]
+## [1] 3
+## 
+## [[3]]
+## [1] 3</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-1" aria-hidden="true" tabindex="-1"></a>my_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;genes&#39;</span>, <span class="st">&#39;reactions&#39;</span>, <span class="st">&#39;metabolites&#39;</span>)</span>
+<span id="cb87-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-3" aria-hidden="true" tabindex="-1"></a>recon3_list.map <span class="sc">%&lt;&gt;%</span> purrr<span class="sc">::</span><span class="fu">set_names</span>(my_names)</span>
+<span id="cb87-4"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-5" aria-hidden="true" tabindex="-1"></a>rename_ids <span class="ot">&lt;-</span> <span class="cf">function</span>(df){df <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> <span class="fu">rename_with</span>(tolower) <span class="sc">%&gt;%</span>  <span class="fu">rename_with</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">&#39;.*id.*&#39;</span>,<span class="st">&#39;ID&#39;</span>))}</span>
+<span id="cb87-6"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-7"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-7" aria-hidden="true" tabindex="-1"></a>rename_ids <span class="ot">&lt;-</span> <span class="cf">function</span>(df){df <span class="sc">%&gt;%</span> as_tibble <span class="sc">%&gt;%</span> <span class="fu">rename_with</span>(<span class="sc">~</span><span class="fu">str_replace</span>(.,<span class="fu">regex</span>(<span class="st">&#39;.*iD.*&#39;</span>, <span class="at">ignore_case =</span> T) ,<span class="st">&#39;ID&#39;</span>))}</span>
+<span id="cb87-8"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-9"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb87-9" aria-hidden="true" tabindex="-1"></a>recon3_list.map<span class="sc">$</span>genes <span class="sc">%&gt;%</span> rename_ids</span></code></pre></div>
+<pre><code>## # A tibble: 2,248 x 2
+##         ID Reactions                                                            
+##      &lt;dbl&gt; &lt;chr&gt;                                                                
+##  1    26.1 [&#39;RE0690E&#39;, &#39;13DAMPPOX&#39;, &#39;42A12BOOX&#39;, &#39;r0281&#39;, &#39;RE0827E&#39;, &#39;TRYPTAOX&#39;…
+##  2   314.  [&#39;13DAMPPOX&#39;, &#39;42A12BOOX&#39;, &#39;TRYPTAOX&#39;, &#39;PEAMNO&#39;, &#39;HISTASE&#39;, &#39;MAOX&#39;, …
+##  3  8639.  [&#39;MAOX&#39;, &#39;AACTOOR&#39;, &#39;13DAMPPOX&#39;, &#39;42A12BOOX&#39;, &#39;PTRCOX1&#39;, &#39;MHISOR&#39;]   
+##  4   314.  [&#39;13DAMPPOX&#39;, &#39;42A12BOOX&#39;, &#39;TRYPTAOX&#39;, &#39;PEAMNO&#39;, &#39;HISTASE&#39;, &#39;MAOX&#39;, …
+##  5  1591.  [&#39;24_25VITD2Hm&#39;, &#39;24_25VITD3Hm&#39;]                                     
+##  6  1594.  [&#39;25VITD2Hm&#39;, &#39;25HVITD3c&#39;, &#39;25VITD3Hm&#39;]                              
+##  7 10993.  [&#39;r0060&#39;, &#39;2AMACHYD&#39;, &#39;THRD_L&#39;, &#39;SERHL&#39;]                             
+##  8  6818.  [&#39;5ADTSTSTERONESULT&#39;, &#39;2AMACSULT&#39;, &#39;NRPPHRSULT&#39;, &#39;HMR_6844&#39;, &#39;CHSTER…
+##  9 89874.  [&#39;2OXOADPTm&#39;, &#39;r0879&#39;, &#39;2AMADPTm&#39;]                                   
+## 10  3948.  [&#39;2HIVc&#39;, &#39;GLXO1&#39;, &#39;2HBO&#39;, &#39;HPYRR2x&#39;, &#39;r0173&#39;, &#39;LDH_L&#39;, &#39;2H3MVc&#39;, &#39;M…
+## # … with 2,238 more rows</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(recon3_list.map,rename_ids ) <span class="ot">-&gt;</span>recon3_list</span>
+<span id="cb89-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co">#data.table::setnames(my_names)</span></span></code></pre></div>
+<p>Filter</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb90-1" aria-hidden="true" tabindex="-1"></a>recon3_list <span class="sc">%&gt;%</span><span class="fu">pluck</span>(<span class="st">&#39;genes&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ID <span class="sc">==</span> <span class="fl">314.2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##      ID Reactions                                                               
+##   &lt;dbl&gt; &lt;chr&gt;                                                                   
+## 1  314. [&#39;13DAMPPOX&#39;, &#39;42A12BOOX&#39;, &#39;TRYPTAOX&#39;, &#39;PEAMNO&#39;, &#39;HISTASE&#39;, &#39;MAOX&#39;, &#39;PT…</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb92-1" aria-hidden="true" tabindex="-1"></a>recon3_list <span class="sc">%&gt;%</span><span class="fu">pluck</span>(<span class="st">&#39;genes&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fl">3948.1</span>,<span class="fl">314.2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##      ID Reactions                                                               
+##   &lt;dbl&gt; &lt;chr&gt;                                                                   
+## 1  314. [&#39;13DAMPPOX&#39;, &#39;42A12BOOX&#39;, &#39;TRYPTAOX&#39;, &#39;PEAMNO&#39;, &#39;HISTASE&#39;, &#39;MAOX&#39;, &#39;PT…
+## 2 3948. [&#39;2HIVc&#39;, &#39;GLXO1&#39;, &#39;2HBO&#39;, &#39;HPYRR2x&#39;, &#39;r0173&#39;, &#39;LDH_L&#39;, &#39;2H3MVc&#39;, &#39;MCLO…</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb94-1" aria-hidden="true" tabindex="-1"></a>recon3_list <span class="sc">%&gt;%</span><span class="fu">pluck</span>(<span class="st">&#39;genes&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(ID,<span class="st">&quot;^284.*0.*&quot;</span>)) <span class="sc">%&gt;%</span> .[[<span class="st">&quot;Reactions&quot;</span>]] <span class="sc">%&gt;%</span> .[<span class="dv">2</span>] <span class="ot">-&gt;</span> my_reactions</span>
+<span id="cb94-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb94-2" aria-hidden="true" tabindex="-1"></a>my_reactions <span class="sc">%&lt;&gt;%</span> <span class="fu">str_split</span>(<span class="st">&#39;,&#39;</span>, <span class="at">simplify =</span> T) <span class="sc">%&gt;%</span> <span class="fu">str_extract</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">w+&#39;</span>)</span>
+<span id="cb94-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb94-3" aria-hidden="true" tabindex="-1"></a>recon3_list <span class="sc">%&gt;%</span><span class="fu">pluck</span>(<span class="st">&#39;reactions&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ID <span class="sc">%in%</span> my_reactions)</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   ID      rxn_names        reactions               rxn_bounds rxn_subsystems    
+##   &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;                   &lt;chr&gt;      &lt;chr&gt;             
+## 1 HMR_08… Beta-N-Acetylhe… gbside_hs_c + h2o_c --… (0.0, 100… Glycosphingolipid…
+## 2 HMR_08… Beta-N-Acetylhe… gbside_hs_l + h2o_l --… (0.0, 100… Glycosphingolipid…
+## 3 HMR_08… Beta-N-Acetylhe… ga2_hs_c + h2o_c --&gt; a… (0.0, 100… Glycosphingolipid…
+## 4 HMR_08… Beta-N-Acetylhe… gm2_hs_c + h2o_c --&gt; a… (0.0, 100… Glycosphingolipid…
+## 5 HMR_08… Beta-N-Acetylhe… M02013_l + h2o_l --&gt; M… (0.0, 100… Glycosphingolipid…</code></pre>
+<p>Creando funciones</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb96-1" aria-hidden="true" tabindex="-1"></a>name_pattern_to_IDs <span class="ot">&lt;-</span> <span class="cf">function</span>(my_list, entry, name_pattern){</span>
+<span id="cb96-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">regex</span>(name_pattern, <span class="at">ignore_case =</span> T) <span class="ot">-&gt;</span> name_pattern</span>
+<span id="cb96-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb96-3" aria-hidden="true" tabindex="-1"></a>my_list <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(entry) <span class="sc">%&gt;%</span> names <span class="sc">%&gt;%</span> <span class="fu">str_extract</span>(<span class="fu">regex</span>(<span class="st">&#39;.*nAme.*&#39;</span>, <span class="at">ignore_case =</span> T)) <span class="sc">%&gt;%</span> na.exclude <span class="sc">%&gt;%</span> as.character <span class="ot">-&gt;</span> my_col</span>
+<span id="cb96-4"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb96-4" aria-hidden="true" tabindex="-1"></a>my_list <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(entry) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, my_col)) <span class="sc">%&gt;%</span><span class="fu">filter</span>(<span class="fu">str_detect</span>(.[[<span class="dv">2</span>]],name_pattern)) <span class="sc">%&gt;%</span> .[[<span class="st">&#39;ID&#39;</span>]] <span class="sc">%&gt;%</span> <span class="fu">return</span>()</span>
+<span id="cb96-5"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb96-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb96-6"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb96-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-7"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="fu">name_pattern_to_IDs</span>(recon3_list, <span class="st">&#39;reactions&#39;</span>, <span class="st">&#39;glutamate&#39;</span>) <span class="ot">-&gt;</span> found_rxns</span></code></pre></div>
+<pre><code>## Note: Using an external vector in selections is ambiguous.
+## ℹ Use `all_of(my_col)` instead of `my_col` to silence this message.
+## ℹ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
+## This message is displayed once per session.</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb98-1" aria-hidden="true" tabindex="-1"></a>reactionIDs_to_genes <span class="ot">&lt;-</span> <span class="cf">function</span>(reaction_list){</span>
+<span id="cb98-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb98-2" aria-hidden="true" tabindex="-1"></a>recon3_list <span class="sc">%&gt;%</span><span class="fu">pluck</span>(<span class="st">&#39;genes&#39;</span>) <span class="ot">-&gt;</span> genes_df</span>
+<span id="cb98-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb98-3" aria-hidden="true" tabindex="-1"></a>genes_df<span class="sc">$</span>Reactions <span class="sc">%&gt;%</span> <span class="fu">str_extract_all</span>(<span class="st">&#39;</span><span class="sc">\\</span><span class="st">w+&#39;</span>) <span class="sc">%&gt;%</span> <span class="fu">tibble</span>( <span class="at">gene =</span> genes_df<span class="sc">$</span>ID, <span class="at">rxn=</span>.) <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="at">cols =</span> rxn) <span class="ot">-&gt;</span> gene_rxns</span>
+<span id="cb98-4"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb98-4" aria-hidden="true" tabindex="-1"></a>gene_rxns <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rxn <span class="sc">%in%</span> reaction_list) <span class="sc">%&gt;%</span> .[[<span class="st">&quot;gene&quot;</span>]] <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">return</span>()</span>
+<span id="cb98-5"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb98-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb98-6"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb98-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-7"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="fu">reactionIDs_to_genes</span>(found_rxns) <span class="ot">-&gt;</span> found_genes</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb99-1" aria-hidden="true" tabindex="-1"></a>name_pattern_to_IDs_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(pattern){<span class="fu">name_pattern_to_IDs</span>(recon3_list, <span class="st">&#39;reactions&#39;</span>, pattern)}</span>
+<span id="cb99-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb99-3" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">compose</span>(reactionIDs_to_genes, name_pattern_to_IDs_2 ) <span class="ot">-&gt;</span> rxn_name_to_genes</span>
+<span id="cb99-4"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb99-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-5"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb99-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-6"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rxn_name_to_genes</span>(<span class="st">&#39;atp&#39;</span>)</span></code></pre></div>
+<pre><code>##   [1]      4363.1      6571.1      6570.1      6572.1        47.2        47.1
+##   [7]       204.1       205.1     26289.1    245972.1       525.1       535.1
+##  [13]     10312.1       523.1     10312.2     50617.1     51606.1       534.1
+##  [19]       529.1    245973.1      9114.1      9550.1    127124.1     50617.2
+##  [25]       526.1       528.1     51382.1     51606.2       533.1    127124.2
+##  [31]     90423.1      9296.1     50617.3       527.1      8992.1     23545.1
+##  [37]     51606.3       534.2       528.2       954.1       953.1       956.1
+##  [43]       957.1       955.1       954.2    377841.1       292.1       291.1
+##  [49]       293.1    140679.1     10599.1      8714.1      1244.1     28234.1
+##  [55]       491.1       490.1       492.1       493.1      6579.1      8647.1
+##  [61]        19.1      1160.1    548596.1      1159.1      1152.1      1158.1
+##  [67]     83549.1      7371.1     51727.1      1633.1      1716.1     11309.1
+##  [73]     60386.1      7083.1      7084.1     11001.1     10257.1     10999.1
+##  [79]    376497.1     57030.1    246213.1     57084.1      3098.4      2645.2
+##  [85]      3098.1      2645.3      3098.5      3098.3      2645.1      3101.1
+##  [91]      3098.2     80201.1      3099.1       495.1       496.1      4598.1
+##  [97]     23439.1       476.1       481.1       480.1       478.1       477.1
+## [103]       482.1       483.1      4832.1      4830.2     29922.1     10201.1
+## [109]     29922.2      4831.1      4830.1      4833.1     26873.1    117283.1
+## [115]      9807.1     51447.1    113278.1     54963.1     80347.1      5313.1
+## [121]      5211.1    132158.1     55229.1     79646.1     80025.1     53354.1
+## [127]     64241.1     64240.1     10057.1       215.1      5825.1     85320.1
+## [133]     10057.2    122481.1       203.1      2987.1 100507855.1      3705.1
+## [139]     23262.1      9677.1     26007.1      9551.1     10632.1       516.1
+## [145]       514.2     27109.1       515.2       509.1       518.2       514.1
+## [151]       515.3       517.1       515.1       513.1       522.3       509.2
+## [157]       517.2       498.3       522.2       518.3       498.1       521.1
+## [163]      4905.1      9551.2       513.2       539.1    267020.1       516.2
+## [169]     10476.2       506.1       522.5      9551.3       518.1       522.4
+## [175]     10476.1       498.2       522.1</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;glucose&quot;</span>,<span class="st">&quot;phenyl&quot;</span>,<span class="st">&quot;rna&quot;</span>) <span class="ot">-&gt;</span> some_keywords</span>
+<span id="cb101-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(some_keywords, rxn_name_to_genes) <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(some_keywords) <span class="sc">%&gt;%</span> <span class="fu">tibble</span>(<span class="at">genes=</span>., <span class="at">keyword =</span> some_keywords) <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(genes))</span></code></pre></div>
+<pre><code>## # A tibble: 112 x 2
+##     genes keyword
+##     &lt;dbl&gt; &lt;chr&gt;  
+##  1 57818. glucose
+##  2 92579. glucose
+##  3  2538. glucose
+##  4  6517. glucose
+##  5  6515. glucose
+##  6  6513. glucose
+##  7 84920. glucose
+##  8  5169. glucose
+##  9  5167. glucose
+## 10 66035. glucose
+## # … with 102 more rows</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb103-1" aria-hidden="true" tabindex="-1"></a>set_long_df <span class="ot">&lt;-</span> <span class="cf">function</span>(a_list, keywords){a_list <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(keywords) <span class="sc">%&gt;%</span> <span class="fu">tibble</span>(<span class="at">genes=</span>., <span class="at">keyword =</span> keywords) <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(genes))}</span>
+<span id="cb103-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb103-2" aria-hidden="true" tabindex="-1"></a>some_keywords <span class="sc">%&gt;%</span><span class="fu">map</span>(rxn_name_to_genes)<span class="sc">%&gt;%</span> <span class="fu">set_long_df</span>(some_keywords)</span></code></pre></div>
+<pre><code>## # A tibble: 112 x 2
+##     genes keyword
+##     &lt;dbl&gt; &lt;chr&gt;  
+##  1 57818. glucose
+##  2 92579. glucose
+##  3  2538. glucose
+##  4  6517. glucose
+##  5  6515. glucose
+##  6  6513. glucose
+##  7 84920. glucose
+##  8  5169. glucose
+##  9  5167. glucose
+## 10 66035. glucose
+## # … with 102 more rows</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb105-1" aria-hidden="true" tabindex="-1"></a>keywords_to_genes <span class="ot">&lt;-</span> <span class="cf">function</span>(some_keywords){some_keywords <span class="sc">%&gt;%</span><span class="fu">map</span>(rxn_name_to_genes)<span class="sc">%&gt;%</span> <span class="fu">set_long_df</span>(some_keywords)}</span>
+<span id="cb105-2"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords_to_genes</span>(<span class="fu">c</span>(<span class="st">&quot;reductase&quot;</span>,<span class="st">&quot;peroxide&quot;</span>,<span class="st">&quot;thioredoxin&quot;</span>,<span class="st">&quot;glutathione&quot;</span>) ) <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">nest</span>(<span class="at">genes=</span> genes) <span class="ot">-&gt;</span> resultados <span class="co">#%&gt;% unnest(genes)</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html#cb106-1" aria-hidden="true" tabindex="-1"></a>resultados<span class="sc">%&gt;%</span> <span class="fu">unnest</span>(genes) <span class="sc">%&gt;%</span> <span class="fu">count</span>(keyword) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="st">&quot;%&quot;</span> <span class="ot">=</span> <span class="dv">100</span><span class="sc">*</span>n<span class="sc">/</span><span class="fu">sum</span>(n))</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   keyword         n   `%`
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1 glutathione    30 12.0 
+## 2 peroxide       14  5.58
+## 3 reductase     200 79.7 
+## 4 thioredoxin     7  2.79</code></pre>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/DeepenData/clases/blob/master/04-filters-lists-programacion-funcional-apply-map/04-clase.Rmd",
+"text": "Editar"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

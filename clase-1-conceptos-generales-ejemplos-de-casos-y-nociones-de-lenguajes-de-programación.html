@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | R Notebook</title>
+  <title>1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | Principios de bioinformática y ciencias de biodatos</title>
   <meta name="description" content="Clases de bioinformática para gente no informática." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | R Notebook" />
+  <meta property="og:title" content="1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | Principios de bioinformática y ciencias de biodatos" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | R Notebook" />
+  <meta name="twitter:title" content="1 CLASE 1 - Conceptos generales, ejemplos de casos y nociones de lenguajes de programación | Principios de bioinformática y ciencias de biodatos" />
   
   <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
 
 
-<meta name="date" content="2021-04-23" />
+<meta name="date" content="2021-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -203,6 +203,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
 <li class="chapter" data-level="3.5" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#ejemplo-de-vida-real"><i class="fa fa-check"></i><b>3.5</b> Ejemplo de vida real</a></li>
 </ul></li>
+<li class="part"><span><b>II SEGUNDA SECCIÓN - Obtención y pre-procesamiento de datos biológicos y metadatos asociados</b></span></li>
+<li class="chapter" data-level="4" data-path="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html"><i class="fa fa-check"></i><b>4</b> CLASE 4 - Descargas desde repositorios e interacción con objetos descargados</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
 
@@ -215,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Notebook</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principios de bioinformática y ciencias de biodatos</a>
           </h1>
         </div>
 
@@ -296,7 +298,7 @@ Son comprendidos por el sistema como si el archivo estuviese ahi, a diferencia d
 <li><code>curl &lt;url&gt; -o &lt;archivo&gt;</code> es valido en Windows base</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="st">&quot;https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz&quot;</span> <span class="co"># Descargando un ejemplo</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="st">&quot;https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz&quot;</span> <span class="co"># Descargando un ejemplo</span></span></code></pre></div>
 </div>
 <div id="descomprimiendo-archivos" class="section level3" number="1.1.3">
 <h3><span class="header-section-number">1.1.3</span> Descomprimiendo archivos</h3>
@@ -323,7 +325,7 @@ Son comprendidos por el sistema como si el archivo estuviese ahi, a diferencia d
 </ul></li>
 <li><code>7zip</code> tiene linea de comandos para Linux, Mac, Windows.</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
 </div>
 <div id="explorando-y-renombrando-archivos" class="section level3" number="1.1.4">
 <h3><span class="header-section-number">1.1.4</span> Explorando y renombrando archivos</h3>
@@ -347,8 +349,8 @@ Son comprendidos por el sistema como si el archivo estuviese ahi, a diferencia d
 <li>En Windows, <code>Get-Content &lt;archivo&gt; -Tail 10</code> tiene el mismo comportamiento</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Ejemplo       # Entra al directorio descomprimido</span>
-<span id="cb22-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> script.r     # Explorando el script</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Ejemplo       # Entra al directorio descomprimido</span>
+<span id="cb8-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> script.r     # Explorando el script</span></code></pre></div>
 </div>
 </div>
 <div id="lenguajes-de-programación-e-ides" class="section level2" number="1.2">
@@ -427,84 +429,84 @@ Aún así, para un documento técnico es necesaria más información, como figur
 Podemos darles nombre de forma <code>```{r NOMBRE DEL CHUNK}</code></p>
 <p>Estas secciones luego pueden ejecutarse cada una como su propio script, accediendo a variables dejadas por las otras secciones.</p>
 <p>Por ejemplo, haciendo una definición de los tipos de objetos en R:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb23-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fl">15.0</span>  <span class="co"># Número</span></span>
-<span id="cb23-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb23-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">15e2</span>  <span class="co"># Número en notación científica</span></span>
-<span id="cb23-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb23-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span>   pi  <span class="co"># Constantes definidas</span></span>
-<span id="cb23-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb23-4" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="st">&#39;cadena de texto&#39;</span> <span class="co"># Texto</span></span>
-<span id="cb23-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb23-5" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># Valores binarios  </span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fl">15.0</span>  <span class="co"># Número</span></span>
+<span id="cb9-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">15e2</span>  <span class="co"># Número en notación científica</span></span>
+<span id="cb9-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span>   pi  <span class="co"># Constantes definidas</span></span>
+<span id="cb9-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-4" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="st">&#39;cadena de texto&#39;</span> <span class="co"># Texto</span></span>
+<span id="cb9-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb9-5" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># Valores binarios  </span></span></code></pre></div>
 <p>Más otros objetos:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb24-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)                 <span class="co"># Un vector </span></span>
-<span id="cb24-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb24-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>                        <span class="co"># Otro vector, naturales desde 7 a 9</span></span>
-<span id="cb24-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb24-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">list</span>(V, x <span class="ot">&lt;-</span> <span class="dv">2</span>, <span class="st">&quot;texto&quot;</span>)   <span class="co"># Una lista, con distintos tipos de objetos con nombre</span></span>
-<span id="cb24-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb24-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(V, W, <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>)) <span class="co"># Una lista con elementos del mismo largo</span></span>
-<span id="cb24-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb24-5" aria-hidden="true" tabindex="-1"></a>                                <span class="co"># son más complejos, y los veremos en detalle</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb10-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)                 <span class="co"># Un vector </span></span>
+<span id="cb10-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb10-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>                        <span class="co"># Otro vector, naturales desde 7 a 9</span></span>
+<span id="cb10-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb10-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">list</span>(V, x <span class="ot">&lt;-</span> <span class="dv">2</span>, <span class="st">&quot;texto&quot;</span>)   <span class="co"># Una lista, con distintos tipos de objetos con nombre</span></span>
+<span id="cb10-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb10-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(V, W, <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>)) <span class="co"># Una lista con elementos del mismo largo</span></span>
+<span id="cb10-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb10-5" aria-hidden="true" tabindex="-1"></a>                                <span class="co"># son más complejos, y los veremos en detalle</span></span></code></pre></div>
 <p>Estos dos chunks son independientes, por lo que podriamos modificarlos sin que se afecten entre si.
 Podemos usar los objetos creados en estos chunks fuera, en otros chunks del cuaderno:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb25-1" aria-hidden="true" tabindex="-1"></a>V<span class="sc">*</span>A <span class="co"># Multiplicando un vector (1,2,5) por un escalar (15)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb11-1" aria-hidden="true" tabindex="-1"></a>V<span class="sc">*</span>A <span class="co"># Multiplicando un vector (1,2,5) por un escalar (15)</span></span></code></pre></div>
 <pre><code>## [1] 15 45 75</code></pre>
 <p>Luego, podemos usar el header del chunk (donde esta el nombre) para controlar otros atributos, como las salidas, warnings, o ejecución del chunk.</p>
 <p>Un chunk sin ejecución automática puede usarse para cargar las librerías al inicio de la clase, dado que luego no necesario recargarlas durante la sesión.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># Set de paquetes que hacen muchas cosas</span></span>
-<span id="cb27-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)  <span class="co"># data de Gapminder</span></span>
-<span id="cb27-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)     <span class="co"># encoding de GIFs</span></span>
-<span id="cb27-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webshot)    <span class="co"># screenshots de paginas web</span></span>
-<span id="cb27-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)    <span class="co"># Gráficos complejos</span></span>
-<span id="cb27-6"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)     <span class="co"># extensión de ggplot2</span></span>
-<span id="cb27-7"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci)      <span class="co"># paletas de colores para publicación</span></span>
-<span id="cb27-8"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)  <span class="co"># gráficos animados</span></span>
-<span id="cb27-9"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmuller)   <span class="co"># diagrama de evolucionarios Muller</span></span>
-<span id="cb27-10"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(autoplotly) <span class="co"># visualizaciones interactivas</span></span>
-<span id="cb27-11"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)  <span class="co"># extensión de grid, para la creación de figuras</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># Set de paquetes que hacen muchas cosas</span></span>
+<span id="cb13-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)  <span class="co"># data de Gapminder</span></span>
+<span id="cb13-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)     <span class="co"># encoding de GIFs</span></span>
+<span id="cb13-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webshot)    <span class="co"># screenshots de paginas web</span></span>
+<span id="cb13-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)    <span class="co"># Gráficos complejos</span></span>
+<span id="cb13-6"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)     <span class="co"># extensión de ggplot2</span></span>
+<span id="cb13-7"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci)      <span class="co"># paletas de colores para publicación</span></span>
+<span id="cb13-8"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)  <span class="co"># gráficos animados</span></span>
+<span id="cb13-9"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmuller)   <span class="co"># diagrama de evolucionarios Muller</span></span>
+<span id="cb13-10"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(autoplotly) <span class="co"># visualizaciones interactivas</span></span>
+<span id="cb13-11"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)  <span class="co"># extensión de grid, para la creación de figuras</span></span></code></pre></div>
 </div>
 </div>
 <div id="importación-y-analisis-de-datos" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> Importación y analisis de datos</h2>
 <p>Podemos descargar datasets desde sitios publicos usando programas de la terminal, como <code>wget</code></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz</span>
-<span id="cb28-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv </span></code></pre></div>
-<pre><code>## --2021-04-23 01:40:21--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.209.65, 52.218.182.97
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.209.65|:443... connected.
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz</span>
+<span id="cb14-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv </span></code></pre></div>
+<pre><code>## --2021-04-30 06:05:16--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baselines.tar.gz
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.246.177, 52.218.229.169
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.246.177|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 368703 (360K) [application/x-tar]
-## Saving to: ‘baselines.tar.gz.12’
+## Saving to: ‘baselines.tar.gz’
 ## 
-##      0K .......... .......... .......... .......... .......... 13%  118K 3s
-##     50K .......... .......... .......... .......... .......... 27% 1.86M 1s
-##    100K .......... .......... .......... .......... .......... 41%  641K 1s
-##    150K .......... .......... .......... .......... .......... 55%  237K 1s
-##    200K .......... .......... .......... .......... .......... 69% 3.28M 0s
-##    250K .......... .......... .......... .......... .......... 83%  577K 0s
-##    300K .......... .......... .......... .......... .......... 97% 1.90M 0s
-##    350K ..........                                            100% 5.53M=0.9s
+##      0K .......... .......... .......... .......... .......... 13%  256K 1s
+##     50K .......... .......... .......... .......... .......... 27%  266K 1s
+##    100K .......... .......... .......... .......... .......... 41%  287K 1s
+##    150K .......... .......... .......... .......... .......... 55% 2.49M 0s
+##    200K .......... .......... .......... .......... .......... 69% 6.43M 0s
+##    250K .......... .......... .......... .......... .......... 83%  291K 0s
+##    300K .......... .......... .......... .......... .......... 97% 5.12M 0s
+##    350K ..........                                            100% 15.5M=0.8s
 ## 
-## 2021-04-23 01:40:23 (414 KB/s) - ‘baselines.tar.gz.12’ saved [368703/368703]
+## 2021-04-30 06:05:18 (469 KB/s) - ‘baselines.tar.gz’ saved [368703/368703]
 ## 
-## --2021-04-23 01:40:23--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
-## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.209.65
-## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.209.65|:443... connected.
+## --2021-04-30 06:05:18--  https://pseudo-dropbox.s3-us-west-2.amazonaws.com/Alejandro/baseline.csv
+## Resolving pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)... 52.218.201.105, 52.218.229.169
+## Connecting to pseudo-dropbox.s3-us-west-2.amazonaws.com (pseudo-dropbox.s3-us-west-2.amazonaws.com)|52.218.201.105|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 206369 (202K) [text/csv]
-## Saving to: ‘baseline.csv.12’
+## Saving to: ‘baseline.csv’
 ## 
-##      0K .......... .......... .......... .......... .......... 24%  240K 1s
-##     50K .......... .......... .......... .......... .......... 49%  233K 0s
-##    100K .......... .......... .......... .......... .......... 74%  258K 0s
-##    150K .......... .......... .......... .......... .......... 99% 3.91M 0s
+##      0K .......... .......... .......... .......... .......... 24%  245K 1s
+##     50K .......... .......... .......... .......... .......... 49%  237K 0s
+##    100K .......... .......... .......... .......... .......... 74% 1.03M 0s
+##    150K .......... .......... .......... .......... .......... 99%  311K 0s
 ##    200K .                                                     100% 2922G=0.6s
 ## 
-## 2021-04-23 01:40:25 (320 KB/s) - ‘baseline.csv.12’ saved [206369/206369]</code></pre>
+## 2021-04-30 06:05:20 (323 KB/s) - ‘baseline.csv’ saved [206369/206369]</code></pre>
 <p>El archivo <code>baselines.tar.gz</code> es un comprimido, por lo que es necesario abrirlo con <code>tar</code>, desde la terminal.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xf baselines.tar.gz</span></code></pre></div>
 <p>Finalmente, importar los archivos descargados a la sesión de R.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb31-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb31-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb31-4" aria-hidden="true" tabindex="-1"></a>baseline_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;baseline.csv&quot;</span>) </span>
-<span id="cb31-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb31-5" aria-hidden="true" tabindex="-1"></a>baseline_tsv <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;baseline.tsv&quot;</span>) </span>
-<span id="cb31-6"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb31-6" aria-hidden="true" tabindex="-1"></a>baseline_xlsx <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;baseline.xlsx&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb17-2"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb17-3"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb17-4" aria-hidden="true" tabindex="-1"></a>baseline_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;baseline.csv&quot;</span>) </span>
+<span id="cb17-5"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb17-5" aria-hidden="true" tabindex="-1"></a>baseline_tsv <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;baseline.tsv&quot;</span>) </span>
+<span id="cb17-6"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb17-6" aria-hidden="true" tabindex="-1"></a>baseline_xlsx <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;baseline.xlsx&quot;</span>) </span></code></pre></div>
 <p>Viendo el contenido de uno de estos archivos</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( baseline_csv  )</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="clase-1-conceptos-generales-ejemplos-de-casos-y-nociones-de-lenguajes-de-programación.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( baseline_csv  )</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 10
 ##   X1      harmonic_central… eigenvector_cent… betweenness_cent… closeness_centr…
 ##   &lt;chr&gt;               &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;            &lt;dbl&gt;

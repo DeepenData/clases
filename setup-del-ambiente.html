@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Setup del ambiente | R Notebook</title>
+  <title>Setup del ambiente | Principios de bioinformática y ciencias de biodatos</title>
   <meta name="description" content="Clases de bioinformática para gente no informática." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Setup del ambiente | R Notebook" />
+  <meta property="og:title" content="Setup del ambiente | Principios de bioinformática y ciencias de biodatos" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Setup del ambiente | R Notebook" />
+  <meta name="twitter:title" content="Setup del ambiente | Principios de bioinformática y ciencias de biodatos" />
   
   <meta name="twitter:description" content="Clases de bioinformática para gente no informática." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Alejandro Acevedo-Aracena, PhD; Manuel Muñoz-González" />
 
 
-<meta name="date" content="2021-04-23" />
+<meta name="date" content="2021-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -203,6 +203,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#workflow-de-la-vida-real"><i class="fa fa-check"></i><b>3.4</b> Workflow de la vida real</a></li>
 <li class="chapter" data-level="3.5" data-path="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html"><a href="clase-3-exploración-y-transformación-de-estructuras-de-datos-en-r.html#ejemplo-de-vida-real"><i class="fa fa-check"></i><b>3.5</b> Ejemplo de vida real</a></li>
 </ul></li>
+<li class="part"><span><b>II SEGUNDA SECCIÓN - Obtención y pre-procesamiento de datos biológicos y metadatos asociados</b></span></li>
+<li class="chapter" data-level="4" data-path="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html"><a href="clase-4-descargas-desde-repositorios-e-interacción-con-objetos-descargados.html"><i class="fa fa-check"></i><b>4</b> CLASE 4 - Descargas desde repositorios e interacción con objetos descargados</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con Bookdown</a></li>
 
@@ -215,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Notebook</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principios de bioinformática y ciencias de biodatos</a>
           </h1>
         </div>
 
@@ -229,41 +231,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Paquetes de CRAN</h2>
 <p>CRAN (<em>Comprehensive R Archive Network</em>) es el repositorio principal de R, con más de 16,000 paquetes disponibles en multiples ambitos de analisis de datos, ciencias (astronomia, biología, matematica, sociología, etc.) y economía<!-- está así a proposito -->.
 De aqui instalamos:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="setup-del-ambiente.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">install.packages.check.source =</span> <span class="st">&quot;yes&quot;</span>) <span class="co"># Chequea la fuente de los paquetes</span></span>
-<span id="cb15-2"><a href="setup-del-ambiente.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)   <span class="co"># Utilidades de manejo de archivos, descargas, etc.</span></span>
-<span id="cb15-3"><a href="setup-del-ambiente.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># Set de paquetes que hacen muchas cosas</span></span>
-<span id="cb15-4"><a href="setup-del-ambiente.html#cb15-4" aria-hidden="true" tabindex="-1"></a>                               <span class="co"># Analisis no lineal, manipulación de texto, etc...</span></span>
-<span id="cb15-5"><a href="setup-del-ambiente.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes que deberian estar incluidos en Tidyverse</span></span>
-<span id="cb15-6"><a href="setup-del-ambiente.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># Convierte objetos de R a Tibbles, como &quot;readr&quot;</span></span>
-<span id="cb15-7"><a href="setup-del-ambiente.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dbplyr&quot;</span>)     <span class="co"># Manipulación de bases de datps (eg. SQL)</span></span>
-<span id="cb15-8"><a href="setup-del-ambiente.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)      <span class="co"># Manipulación de datos mediante gramatica propia</span></span>
-<span id="cb15-9"><a href="setup-del-ambiente.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fs&quot;</span>)         <span class="co"># Operaciones agnosticas de sistemas de archivos</span></span>
-<span id="cb15-10"><a href="setup-del-ambiente.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)      <span class="co"># Trabaja con archivos SPSS, Stata y SAS</span></span>
-<span id="cb15-11"><a href="setup-del-ambiente.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;httr&quot;</span>)       <span class="co"># Herramientas del protocolo HTTP, como GET, etc...</span></span>
-<span id="cb15-12"><a href="setup-del-ambiente.html#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;magrittr&quot;</span>)   <span class="co"># Operadores cañeria (pipes) %&gt;%</span></span>
-<span id="cb15-13"><a href="setup-del-ambiente.html#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;modelr&quot;</span>)     <span class="co"># Funciones de modelado compatibles con pipes</span></span>
-<span id="cb15-14"><a href="setup-del-ambiente.html#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;openssl&quot;</span>)    <span class="co"># Trabaja con certificados y encriptación SSL</span></span>
-<span id="cb15-15"><a href="setup-del-ambiente.html#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readr&quot;</span>)      <span class="co"># Traducción (pharsing) de archivos a una tibble </span></span>
-<span id="cb15-16"><a href="setup-del-ambiente.html#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)     <span class="co"># Permite leer archivos de Excel</span></span>
-<span id="cb15-17"><a href="setup-del-ambiente.html#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;stringr&quot;</span>)    <span class="co"># Operadores consistentes para strings</span></span>
-<span id="cb15-18"><a href="setup-del-ambiente.html#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tibble&quot;</span>)     <span class="co"># Dataframes del Siglo 21 (moderniza sintaxis)</span></span>
-<span id="cb15-19"><a href="setup-del-ambiente.html#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gapminder&quot;</span>)  <span class="co"># data de Gapminder</span></span>
-<span id="cb15-20"><a href="setup-del-ambiente.html#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gifski&quot;</span>)     <span class="co"># encoding de GIFs</span></span>
-<span id="cb15-21"><a href="setup-del-ambiente.html#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;av&quot;</span>)         <span class="co"># herramientas de audio y video</span></span>
-<span id="cb15-22"><a href="setup-del-ambiente.html#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;webshot&quot;</span>)    <span class="co"># screenshots de paginas web</span></span>
-<span id="cb15-23"><a href="setup-del-ambiente.html#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes de graficos</span></span>
-<span id="cb15-24"><a href="setup-del-ambiente.html#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)    <span class="co"># Graficos complejos</span></span>
-<span id="cb15-25"><a href="setup-del-ambiente.html#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;GGally&quot;</span>)     <span class="co"># extensión de ggplot2</span></span>
-<span id="cb15-26"><a href="setup-del-ambiente.html#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggsci&quot;</span>)      <span class="co"># paletas de colores para publicación</span></span>
-<span id="cb15-27"><a href="setup-del-ambiente.html#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggpubr&quot;</span>)     <span class="co"># ggplot simplificado para publicaciones</span></span>
-<span id="cb15-28"><a href="setup-del-ambiente.html#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gganimate&quot;</span>)  <span class="co"># graficos animados</span></span>
-<span id="cb15-29"><a href="setup-del-ambiente.html#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggmuller&quot;</span>)   <span class="co"># diagrama de evolucionarios Muller</span></span>
-<span id="cb15-30"><a href="setup-del-ambiente.html#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;autoplotly&quot;</span>) <span class="co"># visualizaciones interactivas</span></span>
-<span id="cb15-31"><a href="setup-del-ambiente.html#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gridExtra&quot;</span>)  <span class="co"># extensión de grid, para la creación de figuras</span></span>
-<span id="cb15-32"><a href="setup-del-ambiente.html#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Paqutes para completación de datos</span></span>
-<span id="cb15-33"><a href="setup-del-ambiente.html#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;missRanger&quot;</span>) <span class="co"># Permite completar data incompleta (gaps)</span></span>
-<span id="cb15-34"><a href="setup-del-ambiente.html#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;outForest&quot;</span>)  <span class="co"># Detección y reemplazo de outliers y gaps</span></span>
-<span id="cb15-35"><a href="setup-del-ambiente.html#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;OutlierDetection&quot;</span>) <span class="co"># Detección avanzada de outliers</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup-del-ambiente.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">install.packages.check.source =</span> <span class="st">&quot;yes&quot;</span>) <span class="co"># Chequea la fuente de los paquetes</span></span>
+<span id="cb1-2"><a href="setup-del-ambiente.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)   <span class="co"># Utilidades de manejo de archivos, descargas, etc.</span></span>
+<span id="cb1-3"><a href="setup-del-ambiente.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># Set de paquetes que hacen muchas cosas</span></span>
+<span id="cb1-4"><a href="setup-del-ambiente.html#cb1-4" aria-hidden="true" tabindex="-1"></a>                               <span class="co"># Analisis no lineal, manipulación de texto, etc...</span></span>
+<span id="cb1-5"><a href="setup-del-ambiente.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes que deberian estar incluidos en Tidyverse</span></span>
+<span id="cb1-6"><a href="setup-del-ambiente.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># Convierte objetos de R a Tibbles, como &quot;readr&quot;</span></span>
+<span id="cb1-7"><a href="setup-del-ambiente.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dbplyr&quot;</span>)     <span class="co"># Manipulación de bases de datps (eg. SQL)</span></span>
+<span id="cb1-8"><a href="setup-del-ambiente.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)      <span class="co"># Manipulación de datos mediante gramatica propia</span></span>
+<span id="cb1-9"><a href="setup-del-ambiente.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fs&quot;</span>)         <span class="co"># Operaciones agnosticas de sistemas de archivos</span></span>
+<span id="cb1-10"><a href="setup-del-ambiente.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)      <span class="co"># Trabaja con archivos SPSS, Stata y SAS</span></span>
+<span id="cb1-11"><a href="setup-del-ambiente.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;httr&quot;</span>)       <span class="co"># Herramientas del protocolo HTTP, como GET, etc...</span></span>
+<span id="cb1-12"><a href="setup-del-ambiente.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;magrittr&quot;</span>)   <span class="co"># Operadores cañeria (pipes) %&gt;%</span></span>
+<span id="cb1-13"><a href="setup-del-ambiente.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;modelr&quot;</span>)     <span class="co"># Funciones de modelado compatibles con pipes</span></span>
+<span id="cb1-14"><a href="setup-del-ambiente.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;openssl&quot;</span>)    <span class="co"># Trabaja con certificados y encriptación SSL</span></span>
+<span id="cb1-15"><a href="setup-del-ambiente.html#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readr&quot;</span>)      <span class="co"># Traducción (pharsing) de archivos a una tibble </span></span>
+<span id="cb1-16"><a href="setup-del-ambiente.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)     <span class="co"># Permite leer archivos de Excel</span></span>
+<span id="cb1-17"><a href="setup-del-ambiente.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;stringr&quot;</span>)    <span class="co"># Operadores consistentes para strings</span></span>
+<span id="cb1-18"><a href="setup-del-ambiente.html#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tibble&quot;</span>)     <span class="co"># Dataframes del Siglo 21 (moderniza sintaxis)</span></span>
+<span id="cb1-19"><a href="setup-del-ambiente.html#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gapminder&quot;</span>)  <span class="co"># data de Gapminder</span></span>
+<span id="cb1-20"><a href="setup-del-ambiente.html#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gifski&quot;</span>)     <span class="co"># encoding de GIFs</span></span>
+<span id="cb1-21"><a href="setup-del-ambiente.html#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;av&quot;</span>)         <span class="co"># herramientas de audio y video</span></span>
+<span id="cb1-22"><a href="setup-del-ambiente.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;webshot&quot;</span>)    <span class="co"># screenshots de paginas web</span></span>
+<span id="cb1-23"><a href="setup-del-ambiente.html#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes de graficos</span></span>
+<span id="cb1-24"><a href="setup-del-ambiente.html#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)    <span class="co"># Graficos complejos</span></span>
+<span id="cb1-25"><a href="setup-del-ambiente.html#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;GGally&quot;</span>)     <span class="co"># extensión de ggplot2</span></span>
+<span id="cb1-26"><a href="setup-del-ambiente.html#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggsci&quot;</span>)      <span class="co"># paletas de colores para publicación</span></span>
+<span id="cb1-27"><a href="setup-del-ambiente.html#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggpubr&quot;</span>)     <span class="co"># ggplot simplificado para publicaciones</span></span>
+<span id="cb1-28"><a href="setup-del-ambiente.html#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gganimate&quot;</span>)  <span class="co"># graficos animados</span></span>
+<span id="cb1-29"><a href="setup-del-ambiente.html#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggmuller&quot;</span>)   <span class="co"># diagrama de evolucionarios Muller</span></span>
+<span id="cb1-30"><a href="setup-del-ambiente.html#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;autoplotly&quot;</span>) <span class="co"># visualizaciones interactivas</span></span>
+<span id="cb1-31"><a href="setup-del-ambiente.html#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gridExtra&quot;</span>)  <span class="co"># extensión de grid, para la creación de figuras</span></span>
+<span id="cb1-32"><a href="setup-del-ambiente.html#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Paqutes para completación de datos</span></span>
+<span id="cb1-33"><a href="setup-del-ambiente.html#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;missRanger&quot;</span>) <span class="co"># Permite completar data incompleta (gaps)</span></span>
+<span id="cb1-34"><a href="setup-del-ambiente.html#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;outForest&quot;</span>)  <span class="co"># Detección y reemplazo de outliers y gaps</span></span>
+<span id="cb1-35"><a href="setup-del-ambiente.html#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;OutlierDetection&quot;</span>) <span class="co"># Detección avanzada de outliers</span></span></code></pre></div>
 <p>Una vez instalados los paquetes, R no es necesario correr estos comandos de nuevo, solo se convocan via <code>library(PAQUETE)</code>.</p>
 <blockquote>
 <p>El repositorio funciona como una red sincronizada, y existen dos instancias en Chile: <a href="https://cran.dcc.uchile.cl/" class="uri">https://cran.dcc.uchile.cl/</a> (Departamento de Ciencias de la Computación) y <a href="https://cran.dme.ufro.cl/" class="uri">https://cran.dme.ufro.cl/</a> (Departamento de Matematicas y Estadistica).
@@ -276,27 +278,27 @@ Por motivos de velocidad y para reducir carga sobre la red, es recomendable camb
 <p><a href="https://bioconductor.org">Bioconductor</a> tiene una colección dedicada al analisis de datos genomicos y pipelines asociadas a estos, con más de 1,900 paquetes, y software adicional no-basado en R.
 Estos se actualizan semi-anualmente siguiendo los releases de R.</p>
 <p>La instalación de Bioconductor y paquetes asociados se maneja con el paquete <em>BiocManager</em>, disponible en CRAN.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="setup-del-ambiente.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando Bioconductor</span></span>
-<span id="cb16-2"><a href="setup-del-ambiente.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb16-3"><a href="setup-del-ambiente.html#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>) <span class="co"># Instala BiocManager de CRAN</span></span>
-<span id="cb16-4"><a href="setup-del-ambiente.html#cb16-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>() <span class="co"># Instala los paquetes base de Bioconductor</span></span>
-<span id="cb16-5"><a href="setup-del-ambiente.html#cb16-5" aria-hidden="true" tabindex="-1"></a>                       <span class="co"># Requiere input del usuario en la consola (a)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="setup-del-ambiente.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando paquetes de Bioconductor</span></span>
-<span id="cb17-2"><a href="setup-del-ambiente.html#cb17-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Biostrings&quot;</span>) <span class="co"># Manipulación de strings en biología</span></span>
-<span id="cb17-3"><a href="setup-del-ambiente.html#cb17-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;biomaRt&quot;</span>)    <span class="co"># Acceso a bases de datos biomedicas</span></span>
-<span id="cb17-4"><a href="setup-del-ambiente.html#cb17-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;GEOquery&quot;</span>)   <span class="co"># Bases de datos de expresión genica</span></span>
-<span id="cb17-5"><a href="setup-del-ambiente.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes complejos compilados desde codigo fuente</span></span>
-<span id="cb17-6"><a href="setup-del-ambiente.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Lasciate ogni speranza, voi ch&#39;entrate</span></span>
-<span id="cb17-7"><a href="setup-del-ambiente.html#cb17-7" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;RforProteomics&quot;</span>, <span class="co"># Tidiverse para proteómica</span></span>
-<span id="cb17-8"><a href="setup-del-ambiente.html#cb17-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ask =</span> F, <span class="co"># sin promps de &quot;Instalar (y/n)&quot; </span></span>
-<span id="cb17-9"><a href="setup-del-ambiente.html#cb17-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="co"># con Dependencias</span></span>
-<span id="cb17-10"><a href="setup-del-ambiente.html#cb17-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">type =</span> <span class="st">&quot;source&quot;</span>, <span class="co"># Compila de fuente</span></span>
-<span id="cb17-11"><a href="setup-del-ambiente.html#cb17-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>) <span class="co"># Valida install</span></span>
-<span id="cb17-12"><a href="setup-del-ambiente.html#cb17-12" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;MSnbase&quot;</span>, <span class="co"># Funciones para espectrometria de masas</span></span>
-<span id="cb17-13"><a href="setup-del-ambiente.html#cb17-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ask =</span> F, <span class="co"># sin promps de &quot;Instalar (y/n)&quot;</span></span>
-<span id="cb17-14"><a href="setup-del-ambiente.html#cb17-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="co"># con Dependencias</span></span>
-<span id="cb17-15"><a href="setup-del-ambiente.html#cb17-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">type =</span> <span class="st">&quot;source&quot;</span>, <span class="co"># Compila de fuente</span></span>
-<span id="cb17-16"><a href="setup-del-ambiente.html#cb17-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>) <span class="co"># Valida install</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup-del-ambiente.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando Bioconductor</span></span>
+<span id="cb2-2"><a href="setup-del-ambiente.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-3"><a href="setup-del-ambiente.html#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>) <span class="co"># Instala BiocManager de CRAN</span></span>
+<span id="cb2-4"><a href="setup-del-ambiente.html#cb2-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>() <span class="co"># Instala los paquetes base de Bioconductor</span></span>
+<span id="cb2-5"><a href="setup-del-ambiente.html#cb2-5" aria-hidden="true" tabindex="-1"></a>                       <span class="co"># Requiere input del usuario en la consola (a)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup-del-ambiente.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando paquetes de Bioconductor</span></span>
+<span id="cb3-2"><a href="setup-del-ambiente.html#cb3-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Biostrings&quot;</span>) <span class="co"># Manipulación de strings en biología</span></span>
+<span id="cb3-3"><a href="setup-del-ambiente.html#cb3-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;biomaRt&quot;</span>)    <span class="co"># Acceso a bases de datos biomedicas</span></span>
+<span id="cb3-4"><a href="setup-del-ambiente.html#cb3-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;GEOquery&quot;</span>)   <span class="co"># Bases de datos de expresión genica</span></span>
+<span id="cb3-5"><a href="setup-del-ambiente.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Paquetes complejos compilados desde codigo fuente</span></span>
+<span id="cb3-6"><a href="setup-del-ambiente.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Lasciate ogni speranza, voi ch&#39;entrate</span></span>
+<span id="cb3-7"><a href="setup-del-ambiente.html#cb3-7" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;RforProteomics&quot;</span>, <span class="co"># Tidiverse para proteómica</span></span>
+<span id="cb3-8"><a href="setup-del-ambiente.html#cb3-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ask =</span> F, <span class="co"># sin promps de &quot;Instalar (y/n)&quot; </span></span>
+<span id="cb3-9"><a href="setup-del-ambiente.html#cb3-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="co"># con Dependencias</span></span>
+<span id="cb3-10"><a href="setup-del-ambiente.html#cb3-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">type =</span> <span class="st">&quot;source&quot;</span>, <span class="co"># Compila de fuente</span></span>
+<span id="cb3-11"><a href="setup-del-ambiente.html#cb3-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>) <span class="co"># Valida install</span></span>
+<span id="cb3-12"><a href="setup-del-ambiente.html#cb3-12" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;MSnbase&quot;</span>, <span class="co"># Funciones para espectrometria de masas</span></span>
+<span id="cb3-13"><a href="setup-del-ambiente.html#cb3-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ask =</span> F, <span class="co"># sin promps de &quot;Instalar (y/n)&quot;</span></span>
+<span id="cb3-14"><a href="setup-del-ambiente.html#cb3-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="co"># con Dependencias</span></span>
+<span id="cb3-15"><a href="setup-del-ambiente.html#cb3-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">type =</span> <span class="st">&quot;source&quot;</span>, <span class="co"># Compila de fuente</span></span>
+<span id="cb3-16"><a href="setup-del-ambiente.html#cb3-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>) <span class="co"># Valida install</span></span></code></pre></div>
 </div>
 <div id="instalación-de-rstudio-en-windows" class="section level2 unnumbered">
 <h2>Instalación de R(Studio) en Windows</h2>
@@ -313,11 +315,11 @@ Es la opción mas rápida, y funciona a largo plazo para cosas que no son R<a hr
 <li>🎉 (Instalación lista!)</li>
 </ol>
 <p>En resumen (que se puede copiar y pegar en PowerShell):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb18-1"><a href="setup-del-ambiente.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando Chocolatey</span></span>
-<span id="cb18-2"><a href="setup-del-ambiente.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> Bypass -Scope <span class="kw">Process</span> -Force; <span class="fu">iex</span> ((<span class="fu">New-Object</span> System.<span class="fu">Net</span>.<span class="fu">WebClient</span>).<span class="fu">DownloadString</span>(&#39;https://chocolatey.<span class="fu">org</span>/install.<span class="fu">ps1</span>&#39;))</span>
-<span id="cb18-3"><a href="setup-del-ambiente.html#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="setup-del-ambiente.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando R y RStudio</span></span>
-<span id="cb18-5"><a href="setup-del-ambiente.html#cb18-5" aria-hidden="true" tabindex="-1"></a>choco install <span class="fu">r</span> rtools <span class="fu">R</span>.<span class="fu">Studio</span> --yes</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="setup-del-ambiente.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando Chocolatey</span></span>
+<span id="cb4-2"><a href="setup-del-ambiente.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ExecutionPolicy</span> Bypass -Scope <span class="kw">Process</span> -Force; <span class="fu">iex</span> ((<span class="fu">New-Object</span> System.<span class="fu">Net</span>.<span class="fu">WebClient</span>).<span class="fu">DownloadString</span>(&#39;https://chocolatey.<span class="fu">org</span>/install.<span class="fu">ps1</span>&#39;))</span>
+<span id="cb4-3"><a href="setup-del-ambiente.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="setup-del-ambiente.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando R y RStudio</span></span>
+<span id="cb4-5"><a href="setup-del-ambiente.html#cb4-5" aria-hidden="true" tabindex="-1"></a>choco install <span class="fu">r</span> rtools <span class="fu">R</span>.<span class="fu">Studio</span> --yes</span></code></pre></div>
 </div>
 <div id="instalación-manual" class="section level3 unnumbered">
 <h3>Instalación manual</h3>
@@ -331,8 +333,8 @@ Por ello, es necesario <a href="https://cran.r-project.org/">descargar R de CRAN
 En R, este se suple por R-tools, distribuido en forma de un instalador ejecutable (desafortunadamente no en Chocolatey).</p>
 <p><a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe"><strong>R-tools (64bit &amp; 32bit)</strong></a> o para sistemas antiguos de <a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-i686.exe">32bit</a></p>
 <p>Luego, en R ejecutar</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="setup-del-ambiente.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="st">&#39;PATH=&quot;${RTOOLS40_HOME}</span><span class="sc">\\</span><span class="st">usr</span><span class="sc">\\</span><span class="st">bin;${PATH}&quot;&#39;</span>, <span class="at">con =</span> <span class="st">&quot;~/.Renviron&quot;</span>)</span>
-<span id="cb19-2"><a href="setup-del-ambiente.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.which</span>(<span class="st">&quot;make&quot;</span>) <span class="co"># la salida deberia ser &quot;C:\\rtools40\\usr\\bin\\make.exe&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup-del-ambiente.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="st">&#39;PATH=&quot;${RTOOLS40_HOME}</span><span class="sc">\\</span><span class="st">usr</span><span class="sc">\\</span><span class="st">bin;${PATH}&quot;&#39;</span>, <span class="at">con =</span> <span class="st">&quot;~/.Renviron&quot;</span>)</span>
+<span id="cb5-2"><a href="setup-del-ambiente.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.which</span>(<span class="st">&quot;make&quot;</span>) <span class="co"># la salida deberia ser &quot;C:\\rtools40\\usr\\bin\\make.exe&quot;</span></span></code></pre></div>
 
 </div>
 </div>

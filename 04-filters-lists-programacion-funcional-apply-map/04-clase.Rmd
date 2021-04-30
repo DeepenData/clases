@@ -1,15 +1,14 @@
----
-title: "R Notebook"
-output: html_notebook
----
+# (PART) SEGUNDA SECCIÓN - Obtención y pre-procesamiento de datos biológicos y metadatos asociados {-}
+
+# CLASE 4 - Descargas desde repositorios e interacción con objetos descargados
 
 ```{r message=FALSE, warning=FALSE}
 library(readr)
 library(tidyverse)
 
-genes_url       <- 'https://raw.githubusercontent.com/DeepenData/clases/master/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv'
-metabolites_url <- 'https://raw.githubusercontent.com/DeepenData/clases/master/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv'
-reactions_url   <- 'https://raw.githubusercontent.com/DeepenData/clases/master/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv'
+genes_url       <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv'
+metabolites_url <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv'
+reactions_url   <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv'
 
 import_my_csv <- function(url){readr::read_csv(url) %>% dplyr::select(-matches("x1")) %>% return}
 
@@ -41,7 +40,9 @@ recon3_list.map$genes %>% rename_ids
 map(recon3_list.map,rename_ids ) ->recon3_list
 #data.table::setnames(my_names)
 ```
+
 Filter
+
 ```{r}
 recon3_list %>%pluck('genes') %>% filter(ID == 314.2)
 recon3_list %>%pluck('genes') %>% filter(ID %in% c(3948.1,314.2))
@@ -50,7 +51,8 @@ my_reactions %<>% str_split(',', simplify = T) %>% str_extract('\\w+')
 recon3_list %>%pluck('reactions') %>% filter(ID %in% my_reactions)
 ```
 
-#Creatins my functions
+Creando funciones
+
 ```{r}
 
 name_pattern_to_IDs <- function(my_list, entry, name_pattern){
@@ -97,35 +99,4 @@ keywords_to_genes(c("reductase","peroxide","thioredoxin","glutathione") ) %>% ti
 ```{r}
 resultados%>% unnest(genes) %>% count(keyword) %>% mutate("%" = 100*n/sum(n))
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

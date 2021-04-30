@@ -16,8 +16,8 @@
 *.dcf
 
 # Archivos de datos absurdamente pesados
-**/*.gz
-**/*.tar
+#**/*.gz
+#**/*.tar
 
 # Archivos varios
 06_mutate_pipes_regex/pipes.drawio.svg
@@ -29,11 +29,11 @@ _bookdown_files/**
 clases.Rmd
 
 # Cosas inutiles que probablemente son errores mios/de bookdown
-*.csv*
-*.tsv*
-*.tar*
-*.xslx*
-*.xlsx*
-*.RDS*
-*.html*
-*.pkl*
+#*.csv*
+#*.tsv*
+#*.tar*
+#*.xslx*
+#*.xlsx*
+#*.RDS*
+#*.html*
+#*.pkl*

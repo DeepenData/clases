@@ -1,0 +1,274 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+####################################
+
+```{r message=FALSE, warning=FALSE}
+library(readr)
+library(tidyverse)
+
+genes_url     <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv'
+metabolites_url <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv'
+reactions_url   <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv'
+
+
+
+import_my_csv <- function(url){readr::read_csv(url) %>% dplyr::select(-matches("x1")) %>% return}
+
+
+library(magrittr)
+
+list(genes_url,reactions_url, metabolites_url) -> my_list
+
+purrr::map(my_list, import_my_csv)            -> recon3_list.map
+
+
+```
+
+
+```{r message=FALSE, warning=FALSE}
+library(magrittr)
+
+my_names <- c('genes', 'reactions', 'metabolites')
+
+recon3_list.map %<>% purrr::set_names(my_names)
+
+recon3_list.map %>% names
+
+recon3_list.map$genes
+recon3_list.map$reactions
+recon3_list.map$metabolites
+
+pluck(recon3_list.map,'genes')
+
+recon3_list.map %>% .$metabolites
+recon3_list.map %>% pluck("metabolites")
+```
+
+```{r}
+#primera columna sea "ID"
+rename_ids <- function(algun_input){
+                                algun_input %>% rename_with(~str_replace(., regex('.*iD.*', ignore_case = TRUE),'ID'))
+                          }
+#modo estándar
+rename_ids(algun_input = recon3_list.map$genes)
+#modo pipe
+recon3_list.map$genes %>% rename_ids
+#mapeada
+map(recon3_list.map,rename_ids)
+#mode pipe para actualizar el objeto antiguo
+recon3_list.map %<>% map(rename_ids)
+```
+
+```{r message=FALSE, warning=FALSE}
+rename_ids <- function(df){df %>% as_tibble %>% rename_with(tolower) %>%  rename_with(~str_replace(., '.*id.*','ID'))}
+rename_ids <- function(df){df %>% as_tibble %>% rename_with(~str_replace(.,regex('.*iD.*', ignore_case = T) ,'ID'))}
+#recon3_list.map$genes %>% rename_ids
+#guardar en un objeto nuevo
+map(recon3_list.map,rename_ids ) -> recon3_list
+#data.table::setnames(my_names)
+```
+
+Filter
+```{r}
+#filtros exactos
+recon3_list %>%pluck('genes') %>% filter(ID ==  314.2)
+recon3_list %>%pluck('genes') %>% filter(ID %in% c(3948.1,314.2))
+#Utilizamos una función de regex que devuelve un booleano
+recon3_list %>%pluck('genes') %>% filter(str_detect(ID,"^284.*0.*"))
+recon3_list %>%pluck('reactions') %>% filter(str_detect(rxn_names,"Tyrosine"))
+recon3_list %>%pluck('reactions') %>% filter(str_detect(rxn_names,"Oxidoreductase") & str_detect(rxn_subsystems,"Folate")) 
+```
+
+
+```{r}
+
+recon3_list %>%pluck('genes') %>% filter(str_detect(ID,"^284.*0.*")) %>% .[["Reactions"]] %>% .[2] -> my_reactions
+my_reactions %<>% str_split(',', simplify = T) %>% str_extract('\\w+')
+recon3_list %>%pluck('reactions') %>% filter(ID %in% my_reactions)
+```
+
+#Creatins my functions
+```{r}
+
+name_pattern_to_IDs <- function(my_list, entry, name_pattern){
+regex(name_pattern, ignore_case = T) -> name_pattern
+my_list %>% pluck(entry) %>% names %>% str_extract(regex('.*nAme.*', ignore_case = T)) %>% na.exclude %>% as.character -> my_col
+my_list %>% pluck(entry) %>% select(c("ID", my_col)) %>%filter(str_detect(.[[2]],name_pattern)) %>% .[['ID']] %>% return()
+}
+
+name_pattern_to_IDs(recon3_list, 'reactions', 'glutamate') -> found_rxns
+```
+
+```{r}
+reactionIDs_to_genes <- function(reaction_list){
+recon3_list %>%pluck('genes') -> genes_df
+genes_df$Reactions %>% str_extract_all('\\w+') %>% tibble( gene = genes_df$ID, rxn=.) %>% unnest(cols = rxn) -> gene_rxns
+gene_rxns %>% filter(rxn %in% reaction_list) %>% .[["gene"]] %>% unique() %>% return()
+}
+
+reactionIDs_to_genes(found_rxns) -> found_genes
+```
+
+```{r}
+
+name_pattern_to_IDs_2 <- function(pattern){name_pattern_to_IDs(recon3_list, 'reactions', pattern)}
+
+purrr::compose(reactionIDs_to_genes, name_pattern_to_IDs_2 ) -> rxn_name_to_genes
+
+
+rxn_name_to_genes('atp')
+
+```
+
+```{r}
+c("glucose","phenyl","rna") -> some_keywords
+
+map(some_keywords, rxn_name_to_genes) %>% set_names(some_keywords) %>% tibble(genes=., keyword = some_keywords) %>% unnest(cols = c(genes))
+set_long_df <- function(a_list, keywords){a_list %>% set_names(keywords) %>% tibble(genes=., keyword = keywords) %>% unnest(cols = c(genes))}
+some_keywords %>%map(rxn_name_to_genes)%>% set_long_df(some_keywords)
+```
+```{r}
+keywords_to_genes <- function(some_keywords){some_keywords %>%map(rxn_name_to_genes)%>% set_long_df(some_keywords)}
+keywords_to_genes(c("reductase","peroxide","thioredoxin","glutathione") ) %>% tidyr::nest(genes= genes) -> resultados #%>% unnest(genes)
+```
+```{r}
+resultados%>% unnest(genes) %>% count(keyword) %>% mutate("%" = 100*n/sum(n))
+```
+
+
+Programación orientada a objetos: S4
+
+###########################################
+```{r}
+setClass("perro", slots=list(name="character"))
+setClass("gato", slots=list(name="character"))
+
+setMethod("show",
+"perro",
+function(object) {
+cat("nombre del perro:",object@name, "\n")
+}
+)
+
+setMethod("show",
+"gato",
+function(object) {
+cat("nombre del gato:",object@name, "\n")
+}
+)
+```
+
+```{r}
+crear_perro <- function(nombre){ new("perro", name = nombre)}
+crear_gato  <- function(nombre){ new("gato", name = nombre)}
+
+crear_perro("perrin") -> mi_perro
+crear_gato("gatin")   -> mi_gato
+
+library(tidyverse)
+
+glimpse(mi_gato)
+mi_gato@name
+```
+```{r}
+setGeneric("speak", function(object) {standardGeneric("speak")})
+```
+```{r}
+setMethod("speak", "gato", function(object){print("miau")})
+setMethod("speak", "perro", function(object){print("wau")})
+```
+```{r}
+mi_perro %>% speak
+mi_gato %>%speak
+```
+
+
+```{r}
+setClass("metabolism", slots=list(genes="data.frame", reactions = "data.frame", metabolites="data.frame"))
+crear_metabolismo <- function(mis_genes, mis_reacciones, mis_metabolitos){ 
+                             new("metabolism", genes= mis_genes, reactions= mis_reacciones, metabolites= mis_metabolitos)}
+```
+
+
+```{r}
+library(magrittr)
+genes_url     <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv'
+metabolites_url <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv'
+reactions_url   <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv'
+
+
+import_my_csv <- function(url){readr::read_csv(url) %>% dplyr::select(-matches("x1")) %>% return}
+
+list(genes_url,reactions_url, metabolites_url) %>% purrr::map(import_my_csv)   -> recon3_DFs
+my_names <- c('genes', 'reactions', 'metabolites')
+
+recon3_DFs %<>% purrr::set_names(my_names)
+```
+
+
+```{r}
+
+rename_ids <- function(algun_input){
+                                algun_input %>% rename_with(~str_replace(., regex('.*iD.*', ignore_case = TRUE),'ID'))
+                          }
+
+#mode pipe para actualizar el objeto antiguo
+recon3_DFs %<>% map(rename_ids)
+```
+```{r}
+crear_metabolismo(recon3_DFs$genes, recon3_DFs$reactions, recon3_DFs$metabolites) -> human
+
+glimpse(human)
+human@genes
+human@reactions
+human@metabolites
+```
+
+```{r}
+setGeneric("name_pattern_to_IDs", function(S4_object, a_slot, name_pattern) {standardGeneric("name_pattern_to_IDs")})
+```
+
+```{r}
+setMethod("name_pattern_to_IDs", signature(S4_object= "metabolism"), function(S4_object,a_slot , name_pattern ){ 
+                                  regex(name_pattern, ignore_case = T) -> name_pattern
+                                  slot(human,a_slot) -> extracted_slot
+                                  extracted_slot %>% names %>% str_extract(regex('.*nAme.*', ignore_case = T)) %>% na.exclude %>% as.character -> my_col
+                                  extracted_slot %>% select(c("ID", my_col)) %>%filter(str_detect(.[[2]],name_pattern)) %>% .[['ID']] %>% return()
+                                                  })
+
+name_pattern_to_IDs(human, "reactions", "glutam.") 
+name_pattern_to_IDs(human, "metabolites", "glu.am") 
+
+```
+
+```{r}
+
+
+setGeneric("reactionIDs_to_genes", function(S4_object, reaction_list) {standardGeneric("reactionIDs_to_genes")})
+
+setMethod("reactionIDs_to_genes", signature(S4_object= "metabolism"), function(S4_object, reaction_list ){ 
+                                   S4_object@genes   -> genes_df
+  genes_df$Reactions %>% str_extract_all('\\w+') %>% tibble( gene = genes_df$ID, rxn=.) %>% unnest(cols = rxn) -> gene_rxns
+gene_rxns %>% filter(rxn %in% reaction_list) %>% .[["gene"]] %>% unique() %>% return()
+
+                                                  })
+
+
+
+
+
+```
+
+
+```{r}
+name_pattern_to_IDs(human, "reactions", "glutam.") 
+name_pattern_to_IDs(human, "metabolites", "glu.am") 
+reactionIDs_to_genes(human,c(  "GLUNm", "GGH_7THFl" ,"NADS2" ))
+```
+
+
+
+
+

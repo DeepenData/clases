@@ -215,183 +215,381 @@ pre code {
 
 
 <!-- rnb-text-begin -->
+<div id="section" class="section level36">
+<p class="heading"></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtZXRob2RzKVxubGlicmFyeSh0aWR5dmVyc2UpXG5cbnNldENsYXNzKFwiZ2VuZXNcIiwgXG4gIHNsb3RzID0gYyhcbiAgICBpbmRlbnRpZmllcnMgICAgPSBcImRhdGEuZnJhbWVcIixcbiAgICBnZW5lX3RvX3JlYWN0aW9ucyAgID0gXCJkYXRhLmZyYW1lXCIpKVxuXG5zZXRDbGFzcyhcInJlYWN0aW9uc1wiLCBcbiAgc2xvdHMgPSBjKFxuICAgIGluZGVudGlmaWVycyAgPSBcImRhdGEuZnJhbWVcIiwgXG4gICAgc3RvaWNoaW9tZXRyeSA9IFwiZGF0YS5mcmFtZVwiLCBcbiAgICBzdWJzeXN0ZW0gICAgID0gXCJkYXRhLmZyYW1lXCIpKVxuXG5zZXRDbGFzcyhcIm1ldGFib2xpdGVzXCIsIFxuICBzbG90cyA9IGMoXG4gICAgaW5kZW50aWZpZXJzID0gXCJkYXRhLmZyYW1lXCIsIFxuICAgIGNvbXBhcnRlbXQgICA9IFwiZGF0YS5mcmFtZVwiLFxuICAgIGZvcm11bGEgICAgICA9IFwiZGF0YS5mcmFtZVwiKSlcblxuXG5zZXRDbGFzcyhcIm1ldGFib2xpc21cIiwgXG4gIHNsb3RzID0gYyhcbiAgICBnZW5lcyA9ICdnZW5lcycsIFxuICAgIHJlYWN0aW9ucyA9ICdyZWFjdGlvbnMnLFxuICAgIG1ldGFib2xpdGVzID0gJ21ldGFib2xpdGVzJykpXG5cblxuYGBgIn0= -->
-<pre class="r"><code>library(methods)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkodGlkeXZlcnNlKVxuXG5nZW5lc191cmwgICAgIDwtICdodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlcGVuRGF0YS9jbGFzZXMvZmIzZTViM2Y3YzlhY2EwYzEzZDdlZWJlMjE3Y2RlOWZlNmIwODdiZi8wNC1maWx0ZXJzLXByb2dyYW1hY2lvbi1mdW5jaW9uYWwtYXBwbHktbWFwL3JlY29uM19nZW5lc190b19yZWFjdGlvbklEcy5jc3YnXG5tZXRhYm9saXRlc191cmwgPC0gJ2h0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9EZWVwZW5EYXRhL2NsYXNlcy9mYjNlNWIzZjdjOWFjYTBjMTNkN2VlYmUyMTdjZGU5ZmU2YjA4N2JmLzA0LWZpbHRlcnMtcHJvZ3JhbWFjaW9uLWZ1bmNpb25hbC1hcHBseS1tYXAvcmVjb24zX21ldGFib2xpdGVfbWV0YWRhdGEuY3N2J1xucmVhY3Rpb25zX3VybCAgIDwtICdodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlcGVuRGF0YS9jbGFzZXMvZmIzZTViM2Y3YzlhY2EwYzEzZDdlZWJlMjE3Y2RlOWZlNmIwODdiZi8wNC1maWx0ZXJzLXByb2dyYW1hY2lvbi1mdW5jaW9uYWwtYXBwbHktbWFwL3JlY29uM19yZWFjdGlvbnNfbWV0YWRhdGEuY3N2J1xuXG5cblxuaW1wb3J0X215X2NzdiA8LSBmdW5jdGlvbih1cmwpe3JlYWRyOjpyZWFkX2Nzdih1cmwpICU+JSBkcGx5cjo6c2VsZWN0KC1tYXRjaGVzKFwieDFcIikpICU+JSByZXR1cm59XG5cblxubGlicmFyeShtYWdyaXR0cilcblxubGlzdChnZW5lc191cmwscmVhY3Rpb25zX3VybCwgbWV0YWJvbGl0ZXNfdXJsKSAtPiBteV9saXN0XG5cbnB1cnJyOjptYXAobXlfbGlzdCwgaW1wb3J0X215X2NzdikgICAgICAgICAgICAtPiByZWNvbjNfbGlzdC5tYXBcblxuXG5gYGAifQ== -->
+<pre class="r"><code>library(readr)
 library(tidyverse)
 
-setClass(&quot;genes&quot;, 
-  slots = c(
-    indentifiers    = &quot;data.frame&quot;,
-    gene_to_reactions   = &quot;data.frame&quot;))
-
-setClass(&quot;reactions&quot;, 
-  slots = c(
-    indentifiers  = &quot;data.frame&quot;, 
-    stoichiometry = &quot;data.frame&quot;, 
-    subsystem     = &quot;data.frame&quot;))
-
-setClass(&quot;metabolites&quot;, 
-  slots = c(
-    indentifiers = &quot;data.frame&quot;, 
-    compartemt   = &quot;data.frame&quot;,
-    formula      = &quot;data.frame&quot;))
-
-
-setClass(&quot;metabolism&quot;, 
-  slots = c(
-    genes = &#39;genes&#39;, 
-    reactions = &#39;reactions&#39;,
-    metabolites = &#39;metabolites&#39;))
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtYWdyaXR0cilcbmdlbmVzX3VybCAgICAgICA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfZ2VuZXNfdG9fcmVhY3Rpb25JRHMuY3N2J1xubWV0YWJvbGl0ZXNfdXJsIDwtICdodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlcGVuRGF0YS9jbGFzZXMvZmIzZTViM2Y3YzlhY2EwYzEzZDdlZWJlMjE3Y2RlOWZlNmIwODdiZi8wNC1maWx0ZXJzLXByb2dyYW1hY2lvbi1mdW5jaW9uYWwtYXBwbHktbWFwL3JlY29uM19tZXRhYm9saXRlX21ldGFkYXRhLmNzdidcbnJlYWN0aW9uc191cmwgICA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfcmVhY3Rpb25zX21ldGFkYXRhLmNzdidcblxuXG5pbXBvcnRfbXlfY3N2IDwtIGZ1bmN0aW9uKHVybCl7cmVhZHI6OnJlYWRfY3N2KHVybCkgJT4lIGRwbHlyOjpzZWxlY3QoLW1hdGNoZXMoXCJ4MVwiKSl9XG5cbmBgYCJ9 -->
-<pre class="r"><code>library(magrittr)
-genes_url       &lt;- &#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv&#39;
+genes_url     &lt;- &#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv&#39;
 metabolites_url &lt;- &#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv&#39;
 reactions_url   &lt;- &#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv&#39;
 
 
-import_my_csv &lt;- function(url){readr::read_csv(url) %&gt;% dplyr::select(-matches(&quot;x1&quot;))}
+
+import_my_csv &lt;- function(url){readr::read_csv(url) %&gt;% dplyr::select(-matches(&quot;x1&quot;)) %&gt;% return}
+
+
+library(magrittr)
+
+list(genes_url,reactions_url, metabolites_url) -&gt; my_list
+
+purrr::map(my_list, import_my_csv)            -&gt; recon3_list.map
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2VuZXNfZGYgICAgICAgICAgPC0gaW1wb3J0X215X2NzdihnZW5lc191cmwpIFxuaHVtYW5fZ2VuZXMgICAgICAgPC0gbmV3KFwiZ2VuZXNcIiwgaW5kZW50aWZpZXJzID0gZ2VuZXNfZGZbXCJHZW5lX0lEXCJdLCBnZW5lX3RvX3JlYWN0aW9ucyA9IGdlbmVzX2RmW1wiUmVhY3Rpb25zXCJdKSAlPiUgZ2xpbXBzZVxuYGBgIn0= -->
-<pre class="r"><code>genes_df          &lt;- import_my_csv(genes_url) 
-human_genes       &lt;- new(&quot;genes&quot;, indentifiers = genes_df[&quot;Gene_ID&quot;], gene_to_reactions = genes_df[&quot;Reactions&quot;]) %&gt;% glimpse</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRm9ybWFsIGNsYXNzICdnZW5lcycgW3BhY2thZ2UgXCIuR2xvYmFsRW52XCJdIHdpdGggMiBzbG90c1xuICAuLkAgaW5kZW50aWZpZXJzICAgICA6IHRpYmJsZVssMV0gWzIsMjQ4IMOXIDFdIChTMzogdGJsX2RmL3RibC9kYXRhLmZyYW1lKVxuICAuLkAgZ2VuZV90b19yZWFjdGlvbnM6IHRpYmJsZVssMV0gWzIsMjQ4IMOXIDFdIChTMzogdGJsX2RmL3RibC9kYXRhLmZyYW1lKVxuIn0= -->
-<pre><code>Formal class &#39;genes&#39; [package &quot;.GlobalEnv&quot;] with 2 slots
-  ..@ indentifiers     : tibble[,1] [2,248 × 1] (S3: tbl_df/tbl/data.frame)
-  ..@ gene_to_reactions: tibble[,1] [2,248 × 1] (S3: tbl_df/tbl/data.frame)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVhY3Rpb25zX2RmICAgICAgPC0gaW1wb3J0X215X2NzdihyZWFjdGlvbnNfdXJsKSBcbmh1bWFuX3JlYWN0aW9ucyAgIDwtIG5ldyhcInJlYWN0aW9uc1wiLCBpbmRlbnRpZmllcnMgPSAgcmVhY3Rpb25zX2RmW2MoJ3J4bl9pZHMnLCdyeG5fbmFtZXMnKV0sIHN0b2ljaGlvbWV0cnkgPSByZWFjdGlvbnNfZGZbJ3JlYWN0aW9ucyddLCBzdWJzeXN0ZW0gPSByZWFjdGlvbnNfZGZbXCJyeG5fc3Vic3lzdGVtc1wiXSkgJT4lIGdsaW1wc2VcbmBgYCJ9 -->
-<pre class="r"><code>reactions_df      &lt;- import_my_csv(reactions_url) 
-human_reactions   &lt;- new(&quot;reactions&quot;, indentifiers =  reactions_df[c(&#39;rxn_ids&#39;,&#39;rxn_names&#39;)], stoichiometry = reactions_df[&#39;reactions&#39;], subsystem = reactions_df[&quot;rxn_subsystems&quot;]) %&gt;% glimpse</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRm9ybWFsIGNsYXNzICdyZWFjdGlvbnMnIFtwYWNrYWdlIFwiLkdsb2JhbEVudlwiXSB3aXRoIDMgc2xvdHNcbiAgLi5AIGluZGVudGlmaWVycyA6IHRpYmJsZVssMl0gWzEwLDYwMiDDlyAyXSAoUzM6IHRibF9kZi90YmwvZGF0YS5mcmFtZSlcbiAgLi5AIHN0b2ljaGlvbWV0cnk6IHRpYmJsZVssMV0gWzEwLDYwMiDDlyAxXSAoUzM6IHRibF9kZi90YmwvZGF0YS5mcmFtZSlcbiAgLi5AIHN1YnN5c3RlbSAgICA6IHRpYmJsZVssMV0gWzEwLDYwMiDDlyAxXSAoUzM6IHRibF9kZi90YmwvZGF0YS5mcmFtZSlcbiJ9 -->
-<pre><code>Formal class &#39;reactions&#39; [package &quot;.GlobalEnv&quot;] with 3 slots
-  ..@ indentifiers : tibble[,2] [10,602 × 2] (S3: tbl_df/tbl/data.frame)
-  ..@ stoichiometry: tibble[,1] [10,602 × 1] (S3: tbl_df/tbl/data.frame)
-  ..@ subsystem    : tibble[,1] [10,602 × 1] (S3: tbl_df/tbl/data.frame)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWV0YWJvbGl0ZXNfZGYgICAgPC0gaW1wb3J0X215X2NzdihtZXRhYm9saXRlc191cmwpIFxuaHVtYW5fbWV0YWJvbGl0ZXMgPC0gbmV3KFwibWV0YWJvbGl0ZXNcIiwgaW5kZW50aWZpZXJzID1tZXRhYm9saXRlc19kZlsnSUQnLCAnTmFtZSddLCBjb21wYXJ0ZW10ID0gbWV0YWJvbGl0ZXNfZGZbJ0NvbXBhcnRtZW50J10sIGZvcm11bGEgPSBtZXRhYm9saXRlc19kZlsnRm9ybXVsYSddKSAgICAlPiUgZ2xpbXBzZVxuYGBgIn0= -->
-<pre class="r"><code>metabolites_df    &lt;- import_my_csv(metabolites_url) 
-human_metabolites &lt;- new(&quot;metabolites&quot;, indentifiers =metabolites_df[&#39;ID&#39;, &#39;Name&#39;], compartemt = metabolites_df[&#39;Compartment&#39;], formula = metabolites_df[&#39;Formula&#39;])    %&gt;% glimpse</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRm9ybWFsIGNsYXNzICdtZXRhYm9saXRlcycgW3BhY2thZ2UgXCIuR2xvYmFsRW52XCJdIHdpdGggMyBzbG90c1xuICAuLkAgaW5kZW50aWZpZXJzOiB0aWJibGVbLDFdIFsxIMOXIDFdIChTMzogdGJsX2RmL3RibC9kYXRhLmZyYW1lKVxuICAuLkAgY29tcGFydGVtdCAgOiB0aWJibGVbLDFdIFs1LDgzNSDDlyAxXSAoUzM6IHRibF9kZi90YmwvZGF0YS5mcmFtZSlcbiAgLi5AIGZvcm11bGEgICAgIDogdGliYmxlWywxXSBbNSw4MzUgw5cgMV0gKFMzOiB0YmxfZGYvdGJsL2RhdGEuZnJhbWUpXG4ifQ== -->
-<pre><code>Formal class &#39;metabolites&#39; [package &quot;.GlobalEnv&quot;] with 3 slots
-  ..@ indentifiers: tibble[,1] [1 × 1] (S3: tbl_df/tbl/data.frame)
-  ..@ compartemt  : tibble[,1] [5,835 × 1] (S3: tbl_df/tbl/data.frame)
-  ..@ formula     : tibble[,1] [5,835 × 1] (S3: tbl_df/tbl/data.frame)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JlYXRlX21ldGFib2xpc20gPC0gZnVuY3Rpb24oZ2VuZXMgPSAgZ2VuZXMsIHJlYWN0aW9ucyA9IHJlYWN0aW9ucywgbWV0YWJvbGl0ZXMgPSBtZXRhYm9saXRlcykge1xuICBuZXcoXCJtZXRhYm9saXNtXCIsIGdlbmVzID0gIGdlbmVzLCByZWFjdGlvbnMgPSByZWFjdGlvbnMsIG1ldGFib2xpdGVzID0gbWV0YWJvbGl0ZXMpICU+JSBnbGltcHNlfVxuXG5cbmh1bWFuX21ldGFib2xpc21fMCAgPC0gY3JlYXRlX21ldGFib2xpc20oIGdlbmVzID0gIGh1bWFuX2dlbmVzLCByZWFjdGlvbnMgPSBodW1hbl9yZWFjdGlvbnMsIG1ldGFib2xpdGVzID0gaHVtYW5fbWV0YWJvbGl0ZXMpXG5gYGAifQ== -->
-<pre class="r"><code>create_metabolism &lt;- function(genes =  genes, reactions = reactions, metabolites = metabolites) {
-  new(&quot;metabolism&quot;, genes =  genes, reactions = reactions, metabolites = metabolites) %&gt;% glimpse}
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtYWdyaXR0cilcblxubXlfbmFtZXMgPC0gYygnZ2VuZXMnLCAncmVhY3Rpb25zJywgJ21ldGFib2xpdGVzJylcblxucmVjb24zX2xpc3QubWFwICU8PiUgcHVycnI6OnNldF9uYW1lcyhteV9uYW1lcylcblxucmVjb24zX2xpc3QubWFwICU+JSBuYW1lc1xuXG5yZWNvbjNfbGlzdC5tYXAkZ2VuZXNcbnJlY29uM19saXN0Lm1hcCRyZWFjdGlvbnNcbnJlY29uM19saXN0Lm1hcCRtZXRhYm9saXRlc1xuXG5wbHVjayhyZWNvbjNfbGlzdC5tYXAsJ2dlbmVzJylcblxucmVjb24zX2xpc3QubWFwICU+JSAuJG1ldGFib2xpdGVzXG5yZWNvbjNfbGlzdC5tYXAgJT4lIHBsdWNrKFwibWV0YWJvbGl0ZXNcIilcbmBgYCJ9 -->
+<pre class="r"><code>library(magrittr)
 
+my_names &lt;- c(&#39;genes&#39;, &#39;reactions&#39;, &#39;metabolites&#39;)
 
-human_metabolism_0  &lt;- create_metabolism( genes =  human_genes, reactions = human_reactions, metabolites = human_metabolites)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRm9ybWFsIGNsYXNzICdtZXRhYm9saXNtJyBbcGFja2FnZSBcIi5HbG9iYWxFbnZcIl0gd2l0aCAzIHNsb3RzXG4gIC4uQCBnZW5lcyAgICAgIDpGb3JtYWwgY2xhc3MgJ2dlbmVzJyBbcGFja2FnZSBcIi5HbG9iYWxFbnZcIl0gd2l0aCAyIHNsb3RzXG4gIC4uQCByZWFjdGlvbnMgIDpGb3JtYWwgY2xhc3MgJ3JlYWN0aW9ucycgW3BhY2thZ2UgXCIuR2xvYmFsRW52XCJdIHdpdGggMyBzbG90c1xuICAuLkAgbWV0YWJvbGl0ZXM6Rm9ybWFsIGNsYXNzICdtZXRhYm9saXRlcycgW3BhY2thZ2UgXCIuR2xvYmFsRW52XCJdIHdpdGggMyBzbG90c1xuIn0= -->
-<pre><code>Formal class &#39;metabolism&#39; [package &quot;.GlobalEnv&quot;] with 3 slots
-  ..@ genes      :Formal class &#39;genes&#39; [package &quot;.GlobalEnv&quot;] with 2 slots
-  ..@ reactions  :Formal class &#39;reactions&#39; [package &quot;.GlobalEnv&quot;] with 3 slots
-  ..@ metabolites:Formal class &#39;metabolites&#39; [package &quot;.GlobalEnv&quot;] with 3 slots</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JlYXRlX21ldGFib2xpc20gPC0gZnVuY3Rpb24oZ2VuZXMgPSAgZ2VuZXNfZGYsIHJlYWN0aW9ucyA9IHJlYWN0aW9uc19kZiwgbWV0YWJvbGl0ZXMgPSBtZXRhYm9saXRlc19kZikge1xuXG5nZW5lcyAgICAgICA8LSBuZXcoXCJnZW5lc1wiLCBpbmRlbnRpZmllcnMgPSBnZW5lc19kZltcIkdlbmVfSURcIl0sIGdlbmVfdG9fcmVhY3Rpb25zID0gZ2VuZXNfZGZbXCJSZWFjdGlvbnNcIl0pXG5yZWFjdGlvbnMgICA8LSBuZXcoXCJyZWFjdGlvbnNcIiwgaW5kZW50aWZpZXJzID0gIHJlYWN0aW9uc19kZltjKCdyeG5faWRzJywncnhuX25hbWVzJyldLCBzdG9pY2hpb21ldHJ5ID0gcmVhY3Rpb25zX2RmWydyZWFjdGlvbnMnXSwgc3Vic3lzdGVtID0gcmVhY3Rpb25zX2RmW1wicnhuX3N1YnN5c3RlbXNcIl0pXG5tZXRhYm9saXRlcyA8LSBuZXcoXCJtZXRhYm9saXRlc1wiLCBpbmRlbnRpZmllcnMgPW1ldGFib2xpdGVzX2RmWydJRCcsICdOYW1lJ10sIGNvbXBhcnRlbXQgPSBtZXRhYm9saXRlc19kZlsnQ29tcGFydG1lbnQnXSwgZm9ybXVsYSA9IG1ldGFib2xpdGVzX2RmWydGb3JtdWxhJ10pICBcblxubmV3KFwibWV0YWJvbGlzbVwiLCBnZW5lcyA9ICBnZW5lcywgcmVhY3Rpb25zID0gcmVhY3Rpb25zLCBtZXRhYm9saXRlcyA9IG1ldGFib2xpdGVzKSAlPiUgZ2xpbXBzZX1cbmBgYCJ9 -->
-<pre class="r"><code>create_metabolism &lt;- function(genes =  genes_df, reactions = reactions_df, metabolites = metabolites_df) {
+recon3_list.map %&lt;&gt;% purrr::set_names(my_names)
 
-genes       &lt;- new(&quot;genes&quot;, indentifiers = genes_df[&quot;Gene_ID&quot;], gene_to_reactions = genes_df[&quot;Reactions&quot;])
-reactions   &lt;- new(&quot;reactions&quot;, indentifiers =  reactions_df[c(&#39;rxn_ids&#39;,&#39;rxn_names&#39;)], stoichiometry = reactions_df[&#39;reactions&#39;], subsystem = reactions_df[&quot;rxn_subsystems&quot;])
-metabolites &lt;- new(&quot;metabolites&quot;, indentifiers =metabolites_df[&#39;ID&#39;, &#39;Name&#39;], compartemt = metabolites_df[&#39;Compartment&#39;], formula = metabolites_df[&#39;Formula&#39;])  
+recon3_list.map %&gt;% names
 
-new(&quot;metabolism&quot;, genes =  genes, reactions = reactions, metabolites = metabolites) %&gt;% glimpse}</code></pre>
+recon3_list.map$genes
+recon3_list.map$reactions
+recon3_list.map$metabolites
+
+pluck(recon3_list.map,&#39;genes&#39;)
+
+recon3_list.map %&gt;% .$metabolites
+recon3_list.map %&gt;% pluck(&quot;metabolites&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaHVtYW5fbWV0YWJvbGlzbSA8LSBjcmVhdGVfbWV0YWJvbGlzbShnZW5lcyA9ICBpbXBvcnRfbXlfY3N2KGdlbmVzX3VybCkgLCByZWFjdGlvbnMgPSBpbXBvcnRfbXlfY3N2KHJlYWN0aW9uc191cmwpLCBtZXRhYm9saXRlcyA9IGltcG9ydF9teV9jc3YobWV0YWJvbGl0ZXNfdXJsKSlcblxuYGBgIn0= -->
-<pre class="r"><code>human_metabolism &lt;- create_metabolism(genes =  import_my_csv(genes_url) , reactions = import_my_csv(reactions_url), metabolites = import_my_csv(metabolites_url))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3ByaW1lcmEgY29sdW1uYSBzZWEgXCJJRFwiXG5yZW5hbWVfaWRzIDwtIGZ1bmN0aW9uKGFsZ3VuX2lucHV0KXtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYWxndW5faW5wdXQgJT4lIHJlbmFtZV93aXRoKH5zdHJfcmVwbGFjZSguLCByZWdleCgnLippRC4qJywgaWdub3JlX2Nhc2UgPSBUUlVFKSwnSUQnKSlcbiAgICAgICAgICAgICAgICAgICAgICAgICAgfVxuI21vZG8gZXN0w6FuZGFyXG5yZW5hbWVfaWRzKGFsZ3VuX2lucHV0ID0gcmVjb24zX2xpc3QubWFwJGdlbmVzKVxuI21vZG8gcGlwZVxucmVjb24zX2xpc3QubWFwJGdlbmVzICU+JSByZW5hbWVfaWRzXG4jbWFwZWFkYVxubWFwKHJlY29uM19saXN0Lm1hcCxyZW5hbWVfaWRzKVxuI21vZGUgcGlwZSBwYXJhIGFjdHVhbGl6YXIgZWwgb2JqZXRvIGFudGlndW9cbnJlY29uM19saXN0Lm1hcCAlPD4lIG1hcChyZW5hbWVfaWRzKVxuYGBgIn0= -->
+<pre class="r"><code>#primera columna sea &quot;ID&quot;
+rename_ids &lt;- function(algun_input){
+                                algun_input %&gt;% rename_with(~str_replace(., regex(&#39;.*iD.*&#39;, ignore_case = TRUE),&#39;ID&#39;))
+                          }
+#modo estándar
+rename_ids(algun_input = recon3_list.map$genes)
+#modo pipe
+recon3_list.map$genes %&gt;% rename_ids
+#mapeada
+map(recon3_list.map,rename_ids)
+#mode pipe para actualizar el objeto antiguo
+recon3_list.map %&lt;&gt;% map(rename_ids)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVuYW1lX2lkcyA8LSBmdW5jdGlvbihkZil7ZGYgJT4lIGFzX3RpYmJsZSAlPiUgcmVuYW1lX3dpdGgodG9sb3dlcikgJT4lICByZW5hbWVfd2l0aCh+c3RyX3JlcGxhY2UoLiwgJy4qaWQuKicsJ0lEJykpfVxucmVuYW1lX2lkcyA8LSBmdW5jdGlvbihkZil7ZGYgJT4lIGFzX3RpYmJsZSAlPiUgcmVuYW1lX3dpdGgofnN0cl9yZXBsYWNlKC4scmVnZXgoJy4qaUQuKicsIGlnbm9yZV9jYXNlID0gVCkgLCdJRCcpKX1cbiNyZWNvbjNfbGlzdC5tYXAkZ2VuZXMgJT4lIHJlbmFtZV9pZHNcbiNndWFyZGFyIGVuIHVuIG9iamV0byBudWV2b1xubWFwKHJlY29uM19saXN0Lm1hcCxyZW5hbWVfaWRzICkgLT4gcmVjb24zX2xpc3RcbiNkYXRhLnRhYmxlOjpzZXRuYW1lcyhteV9uYW1lcylcbmBgYCJ9 -->
+<pre class="r"><code>rename_ids &lt;- function(df){df %&gt;% as_tibble %&gt;% rename_with(tolower) %&gt;%  rename_with(~str_replace(., &#39;.*id.*&#39;,&#39;ID&#39;))}
+rename_ids &lt;- function(df){df %&gt;% as_tibble %&gt;% rename_with(~str_replace(.,regex(&#39;.*iD.*&#39;, ignore_case = T) ,&#39;ID&#39;))}
+#recon3_list.map$genes %&gt;% rename_ids
+#guardar en un objeto nuevo
+map(recon3_list.map,rename_ids ) -&gt; recon3_list
+#data.table::setnames(my_names)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Filter</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2ZpbHRyb3MgZXhhY3Rvc1xucmVjb24zX2xpc3QgJT4lcGx1Y2soJ2dlbmVzJykgJT4lIGZpbHRlcihJRCA9PSAgMzE0LjIpXG5yZWNvbjNfbGlzdCAlPiVwbHVjaygnZ2VuZXMnKSAlPiUgZmlsdGVyKElEICVpbiUgYygzOTQ4LjEsMzE0LjIpKVxuI1V0aWxpemFtb3MgdW5hIGZ1bmNpw7NuIGRlIHJlZ2V4IHF1ZSBkZXZ1ZWx2ZSB1biBib29sZWFub1xucmVjb24zX2xpc3QgJT4lcGx1Y2soJ2dlbmVzJykgJT4lIGZpbHRlcihzdHJfZGV0ZWN0KElELFwiXjI4NC4qMC4qXCIpKVxucmVjb24zX2xpc3QgJT4lcGx1Y2soJ3JlYWN0aW9ucycpICU+JSBmaWx0ZXIoc3RyX2RldGVjdChyeG5fbmFtZXMsXCJUeXJvc2luZVwiKSlcbnJlY29uM19saXN0ICU+JXBsdWNrKCdyZWFjdGlvbnMnKSAlPiUgZmlsdGVyKHN0cl9kZXRlY3QocnhuX25hbWVzLFwiT3hpZG9yZWR1Y3Rhc2VcIikgJiBzdHJfZGV0ZWN0KHJ4bl9zdWJzeXN0ZW1zLFwiRm9sYXRlXCIpKSBcbmBgYCJ9 -->
+<pre class="r"><code>#filtros exactos
+recon3_list %&gt;%pluck(&#39;genes&#39;) %&gt;% filter(ID ==  314.2)
+recon3_list %&gt;%pluck(&#39;genes&#39;) %&gt;% filter(ID %in% c(3948.1,314.2))
+#Utilizamos una función de regex que devuelve un booleano
+recon3_list %&gt;%pluck(&#39;genes&#39;) %&gt;% filter(str_detect(ID,&quot;^284.*0.*&quot;))
+recon3_list %&gt;%pluck(&#39;reactions&#39;) %&gt;% filter(str_detect(rxn_names,&quot;Tyrosine&quot;))
+recon3_list %&gt;%pluck(&#39;reactions&#39;) %&gt;% filter(str_detect(rxn_names,&quot;Oxidoreductase&quot;) &amp; str_detect(rxn_subsystems,&quot;Folate&quot;)) </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5yZWNvbjNfbGlzdCAlPiVwbHVjaygnZ2VuZXMnKSAlPiUgZmlsdGVyKHN0cl9kZXRlY3QoSUQsXCJeMjg0LiowLipcIikpICU+JSAuW1tcIlJlYWN0aW9uc1wiXV0gJT4lIC5bMl0gLT4gbXlfcmVhY3Rpb25zXG5teV9yZWFjdGlvbnMgJTw+JSBzdHJfc3BsaXQoJywnLCBzaW1wbGlmeSA9IFQpICU+JSBzdHJfZXh0cmFjdCgnXFxcXHcrJylcbnJlY29uM19saXN0ICU+JXBsdWNrKCdyZWFjdGlvbnMnKSAlPiUgZmlsdGVyKElEICVpbiUgbXlfcmVhY3Rpb25zKVxuYGBgIn0= -->
+<pre class="r"><code>
+recon3_list %&gt;%pluck(&#39;genes&#39;) %&gt;% filter(str_detect(ID,&quot;^284.*0.*&quot;)) %&gt;% .[[&quot;Reactions&quot;]] %&gt;% .[2] -&gt; my_reactions
+my_reactions %&lt;&gt;% str_split(&#39;,&#39;, simplify = T) %&gt;% str_extract(&#39;\\w+&#39;)
+recon3_list %&gt;%pluck(&#39;reactions&#39;) %&gt;% filter(ID %in% my_reactions)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#Creatins my functions</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5uYW1lX3BhdHRlcm5fdG9fSURzIDwtIGZ1bmN0aW9uKG15X2xpc3QsIGVudHJ5LCBuYW1lX3BhdHRlcm4pe1xucmVnZXgobmFtZV9wYXR0ZXJuLCBpZ25vcmVfY2FzZSA9IFQpIC0+IG5hbWVfcGF0dGVyblxubXlfbGlzdCAlPiUgcGx1Y2soZW50cnkpICU+JSBuYW1lcyAlPiUgc3RyX2V4dHJhY3QocmVnZXgoJy4qbkFtZS4qJywgaWdub3JlX2Nhc2UgPSBUKSkgJT4lIG5hLmV4Y2x1ZGUgJT4lIGFzLmNoYXJhY3RlciAtPiBteV9jb2xcbm15X2xpc3QgJT4lIHBsdWNrKGVudHJ5KSAlPiUgc2VsZWN0KGMoXCJJRFwiLCBteV9jb2wpKSAlPiVmaWx0ZXIoc3RyX2RldGVjdCguW1syXV0sbmFtZV9wYXR0ZXJuKSkgJT4lIC5bWydJRCddXSAlPiUgcmV0dXJuKClcbn1cblxubmFtZV9wYXR0ZXJuX3RvX0lEcyhyZWNvbjNfbGlzdCwgJ3JlYWN0aW9ucycsICdnbHV0YW1hdGUnKSAtPiBmb3VuZF9yeG5zXG5gYGAifQ== -->
+<pre class="r"><code>
+name_pattern_to_IDs &lt;- function(my_list, entry, name_pattern){
+regex(name_pattern, ignore_case = T) -&gt; name_pattern
+my_list %&gt;% pluck(entry) %&gt;% names %&gt;% str_extract(regex(&#39;.*nAme.*&#39;, ignore_case = T)) %&gt;% na.exclude %&gt;% as.character -&gt; my_col
+my_list %&gt;% pluck(entry) %&gt;% select(c(&quot;ID&quot;, my_col)) %&gt;%filter(str_detect(.[[2]],name_pattern)) %&gt;% .[[&#39;ID&#39;]] %&gt;% return()
+}
+
+name_pattern_to_IDs(recon3_list, &#39;reactions&#39;, &#39;glutamate&#39;) -&gt; found_rxns</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVhY3Rpb25JRHNfdG9fZ2VuZXMgPC0gZnVuY3Rpb24ocmVhY3Rpb25fbGlzdCl7XG5yZWNvbjNfbGlzdCAlPiVwbHVjaygnZ2VuZXMnKSAtPiBnZW5lc19kZlxuZ2VuZXNfZGYkUmVhY3Rpb25zICU+JSBzdHJfZXh0cmFjdF9hbGwoJ1xcXFx3KycpICU+JSB0aWJibGUoIGdlbmUgPSBnZW5lc19kZiRJRCwgcnhuPS4pICU+JSB1bm5lc3QoY29scyA9IHJ4bikgLT4gZ2VuZV9yeG5zXG5nZW5lX3J4bnMgJT4lIGZpbHRlcihyeG4gJWluJSByZWFjdGlvbl9saXN0KSAlPiUgLltbXCJnZW5lXCJdXSAlPiUgdW5pcXVlKCkgJT4lIHJldHVybigpXG59XG5cbnJlYWN0aW9uSURzX3RvX2dlbmVzKGZvdW5kX3J4bnMpIC0+IGZvdW5kX2dlbmVzXG5gYGAifQ== -->
+<pre class="r"><code>reactionIDs_to_genes &lt;- function(reaction_list){
+recon3_list %&gt;%pluck(&#39;genes&#39;) -&gt; genes_df
+genes_df$Reactions %&gt;% str_extract_all(&#39;\\w+&#39;) %&gt;% tibble( gene = genes_df$ID, rxn=.) %&gt;% unnest(cols = rxn) -&gt; gene_rxns
+gene_rxns %&gt;% filter(rxn %in% reaction_list) %&gt;% .[[&quot;gene&quot;]] %&gt;% unique() %&gt;% return()
+}
+
+reactionIDs_to_genes(found_rxns) -&gt; found_genes</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5uYW1lX3BhdHRlcm5fdG9fSURzXzIgPC0gZnVuY3Rpb24ocGF0dGVybil7bmFtZV9wYXR0ZXJuX3RvX0lEcyhyZWNvbjNfbGlzdCwgJ3JlYWN0aW9ucycsIHBhdHRlcm4pfVxuXG5wdXJycjo6Y29tcG9zZShyZWFjdGlvbklEc190b19nZW5lcywgbmFtZV9wYXR0ZXJuX3RvX0lEc18yICkgLT4gcnhuX25hbWVfdG9fZ2VuZXNcblxuXG5yeG5fbmFtZV90b19nZW5lcygnYXRwJylcblxuYGBgIn0= -->
+<pre class="r"><code>
+name_pattern_to_IDs_2 &lt;- function(pattern){name_pattern_to_IDs(recon3_list, &#39;reactions&#39;, pattern)}
+
+purrr::compose(reactionIDs_to_genes, name_pattern_to_IDs_2 ) -&gt; rxn_name_to_genes
+
+
+rxn_name_to_genes(&#39;atp&#39;)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRm9ybWFsIGNsYXNzICdtZXRhYm9saXNtJyBbcGFja2FnZSBcIi5HbG9iYWxFbnZcIl0gd2l0aCAzIHNsb3RzXG4gIC4uQCBnZW5lcyAgICAgIDpGb3JtYWwgY2xhc3MgJ2dlbmVzJyBbcGFja2FnZSBcIi5HbG9iYWxFbnZcIl0gd2l0aCAyIHNsb3RzXG4gIC4uQCByZWFjdGlvbnMgIDpGb3JtYWwgY2xhc3MgJ3JlYWN0aW9ucycgW3BhY2thZ2UgXCIuR2xvYmFsRW52XCJdIHdpdGggMyBzbG90c1xuICAuLkAgbWV0YWJvbGl0ZXM6Rm9ybWFsIGNsYXNzICdtZXRhYm9saXRlcycgW3BhY2thZ2UgXCIuR2xvYmFsRW52XCJdIHdpdGggMyBzbG90c1xuIn0= -->
-<pre><code>Formal class &#39;metabolism&#39; [package &quot;.GlobalEnv&quot;] with 3 slots
-  ..@ genes      :Formal class &#39;genes&#39; [package &quot;.GlobalEnv&quot;] with 2 slots
-  ..@ reactions  :Formal class &#39;reactions&#39; [package &quot;.GlobalEnv&quot;] with 3 slots
-  ..@ metabolites:Formal class &#39;metabolites&#39; [package &quot;.GlobalEnv&quot;] with 3 slots</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Accessors: setters and getters</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0R2VuZXJpYyhcImdlbmVzXCIsICAgZnVuY3Rpb24oeCkgc3RhbmRhcmRHZW5lcmljKFwiZ2VuZXNcIikpXG5zZXRNZXRob2QoXCJnZW5lc1wiLCBcIm1ldGFib2xpc21cIiwgZnVuY3Rpb24oeCkgc2xvdCh4QGdlbmVzLCAnaW5kZW50aWZpZXJzJylbWzFdXSlcblxuZ2VuZXMoaHVtYW5fbWV0YWJvbGlzbSlcblxuc2V0R2VuZXJpYyhcImdlbmVzPC1cIiwgZnVuY3Rpb24oeCwgdmFsdWUpIHN0YW5kYXJkR2VuZXJpYyhcImdlbmVzPC1cIikpXG5zZXRNZXRob2QoXCJnZW5lczwtXCIsIFwibWV0YWJvbGlzbVwiLCBmdW5jdGlvbih4LCB2YWx1ZSkge1xuICB4QGFnZSA8LSB2YWx1ZVxuICB4XG59KVxuXG5gYGAifQ== -->
-<pre class="r"><code>setGeneric(&quot;genes&quot;,   function(x) standardGeneric(&quot;genes&quot;))
-setMethod(&quot;genes&quot;, &quot;metabolism&quot;, function(x) slot(x@genes, &#39;indentifiers&#39;)[[1]])
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYyhcImdsdWNvc2VcIixcInBoZW55bFwiLFwicm5hXCIpIC0+IHNvbWVfa2V5d29yZHNcblxubWFwKHNvbWVfa2V5d29yZHMsIHJ4bl9uYW1lX3RvX2dlbmVzKSAlPiUgc2V0X25hbWVzKHNvbWVfa2V5d29yZHMpICU+JSB0aWJibGUoZ2VuZXM9Liwga2V5d29yZCA9IHNvbWVfa2V5d29yZHMpICU+JSB1bm5lc3QoY29scyA9IGMoZ2VuZXMpKVxuc2V0X2xvbmdfZGYgPC0gZnVuY3Rpb24oYV9saXN0LCBrZXl3b3Jkcyl7YV9saXN0ICU+JSBzZXRfbmFtZXMoa2V5d29yZHMpICU+JSB0aWJibGUoZ2VuZXM9Liwga2V5d29yZCA9IGtleXdvcmRzKSAlPiUgdW5uZXN0KGNvbHMgPSBjKGdlbmVzKSl9XG5zb21lX2tleXdvcmRzICU+JW1hcChyeG5fbmFtZV90b19nZW5lcyklPiUgc2V0X2xvbmdfZGYoc29tZV9rZXl3b3JkcylcbmBgYCJ9 -->
+<pre class="r"><code>c(&quot;glucose&quot;,&quot;phenyl&quot;,&quot;rna&quot;) -&gt; some_keywords
 
-genes(human_metabolism)
+map(some_keywords, rxn_name_to_genes) %&gt;% set_names(some_keywords) %&gt;% tibble(genes=., keyword = some_keywords) %&gt;% unnest(cols = c(genes))
+set_long_df &lt;- function(a_list, keywords){a_list %&gt;% set_names(keywords) %&gt;% tibble(genes=., keyword = keywords) %&gt;% unnest(cols = c(genes))}
+some_keywords %&gt;%map(rxn_name_to_genes)%&gt;% set_long_df(some_keywords)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxua2V5d29yZHNfdG9fZ2VuZXMgPC0gZnVuY3Rpb24oc29tZV9rZXl3b3Jkcyl7c29tZV9rZXl3b3JkcyAlPiVtYXAocnhuX25hbWVfdG9fZ2VuZXMpJT4lIHNldF9sb25nX2RmKHNvbWVfa2V5d29yZHMpfVxua2V5d29yZHNfdG9fZ2VuZXMoYyhcInJlZHVjdGFzZVwiLFwicGVyb3hpZGVcIixcInRoaW9yZWRveGluXCIsXCJnbHV0YXRoaW9uZVwiKSApICU+JSB0aWR5cjo6bmVzdChnZW5lcz0gZ2VuZXMpIC0+IHJlc3VsdGFkb3MgIyU+JSB1bm5lc3QoZ2VuZXMpXG5gYGAifQ== -->
+<pre class="r"><code>keywords_to_genes &lt;- function(some_keywords){some_keywords %&gt;%map(rxn_name_to_genes)%&gt;% set_long_df(some_keywords)}
+keywords_to_genes(c(&quot;reductase&quot;,&quot;peroxide&quot;,&quot;thioredoxin&quot;,&quot;glutathione&quot;) ) %&gt;% tidyr::nest(genes= genes) -&gt; resultados #%&gt;% unnest(genes)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVzdWx0YWRvcyU+JSB1bm5lc3QoZ2VuZXMpICU+JSBjb3VudChrZXl3b3JkKSAlPiUgbXV0YXRlKFwiJVwiID0gMTAwKm4vc3VtKG4pKVxuYGBgIn0= -->
+<pre class="r"><code>resultados%&gt;% unnest(genes) %&gt;% count(keyword) %&gt;% mutate(&quot;%&quot; = 100*n/sum(n))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Programación orientada a objetos: S4</p>
+<div id="section-1" class="section level43">
+<p class="heading"></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0Q2xhc3MoXCJwZXJyb1wiLCBzbG90cz1saXN0KG5hbWU9XCJjaGFyYWN0ZXJcIikpXG5zZXRDbGFzcyhcImdhdG9cIiwgc2xvdHM9bGlzdChuYW1lPVwiY2hhcmFjdGVyXCIpKVxuXG5zZXRNZXRob2QoXCJzaG93XCIsXG5cInBlcnJvXCIsXG5mdW5jdGlvbihvYmplY3QpIHtcbmNhdChcIm5vbWJyZSBkZWwgcGVycm86XCIsb2JqZWN0QG5hbWUsIFwiXFxuXCIpXG59XG4pXG5cbnNldE1ldGhvZChcInNob3dcIixcblwiZ2F0b1wiLFxuZnVuY3Rpb24ob2JqZWN0KSB7XG5jYXQoXCJub21icmUgZGVsIGdhdG86XCIsb2JqZWN0QG5hbWUsIFwiXFxuXCIpXG59XG4pXG5gYGAifQ== -->
+<pre class="r"><code>setClass(&quot;perro&quot;, slots=list(name=&quot;character&quot;))
+setClass(&quot;gato&quot;, slots=list(name=&quot;character&quot;))
 
-setGeneric(&quot;genes&lt;-&quot;, function(x, value) standardGeneric(&quot;genes&lt;-&quot;))
-setMethod(&quot;genes&lt;-&quot;, &quot;metabolism&quot;, function(x, value) {
-  x@age &lt;- value
-  x
-})
+setMethod(&quot;show&quot;,
+&quot;perro&quot;,
+function(object) {
+cat(&quot;nombre del perro:&quot;,object@name, &quot;\n&quot;)
+}
+)
+
+setMethod(&quot;show&quot;,
+&quot;gato&quot;,
+function(object) {
+cat(&quot;nombre del gato:&quot;,object@name, &quot;\n&quot;)
+}
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JlYXJfcGVycm8gPC0gZnVuY3Rpb24obm9tYnJlKXsgbmV3KFwicGVycm9cIiwgbmFtZSA9IG5vbWJyZSl9XG5jcmVhcl9nYXRvICA8LSBmdW5jdGlvbihub21icmUpeyBuZXcoXCJnYXRvXCIsIG5hbWUgPSBub21icmUpfVxuXG5jcmVhcl9wZXJybyhcInBlcnJpblwiKSAtPiBtaV9wZXJyb1xuY3JlYXJfZ2F0byhcImdhdGluXCIpICAgLT4gbWlfZ2F0b1xuXG5saWJyYXJ5KHRpZHl2ZXJzZSlcblxuZ2xpbXBzZShtaV9nYXRvKVxubWlfZ2F0b0BuYW1lXG5gYGAifQ== -->
+<pre class="r"><code>crear_perro &lt;- function(nombre){ new(&quot;perro&quot;, name = nombre)}
+crear_gato  &lt;- function(nombre){ new(&quot;gato&quot;, name = nombre)}
+
+crear_perro(&quot;perrin&quot;) -&gt; mi_perro
+crear_gato(&quot;gatin&quot;)   -&gt; mi_gato
+
+library(tidyverse)
+
+glimpse(mi_gato)
+mi_gato@name</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0R2VuZXJpYyhcInNwZWFrXCIsIGZ1bmN0aW9uKG9iamVjdCkge3N0YW5kYXJkR2VuZXJpYyhcInNwZWFrXCIpfSlcbmBgYCJ9 -->
+<pre class="r"><code>setGeneric(&quot;speak&quot;, function(object) {standardGeneric(&quot;speak&quot;)})</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0TWV0aG9kKFwic3BlYWtcIiwgXCJnYXRvXCIsIGZ1bmN0aW9uKG9iamVjdCl7cHJpbnQoXCJtaWF1XCIpfSlcbnNldE1ldGhvZChcInNwZWFrXCIsIFwicGVycm9cIiwgZnVuY3Rpb24ob2JqZWN0KXtwcmludChcIndhdVwiKX0pXG5gYGAifQ== -->
+<pre class="r"><code>setMethod(&quot;speak&quot;, &quot;gato&quot;, function(object){print(&quot;miau&quot;)})
+setMethod(&quot;speak&quot;, &quot;perro&quot;, function(object){print(&quot;wau&quot;)})</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWlfcGVycm8gJT4lIHNwZWFrXG5taV9nYXRvICU+JXNwZWFrXG5gYGAifQ== -->
+<pre class="r"><code>mi_perro %&gt;% speak
+mi_gato %&gt;%speak</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0Q2xhc3MoXCJtZXRhYm9saXNtXCIsIHNsb3RzPWxpc3QoZ2VuZXM9XCJkYXRhLmZyYW1lXCIsIHJlYWN0aW9ucyA9IFwiZGF0YS5mcmFtZVwiLCBtZXRhYm9saXRlcz1cImRhdGEuZnJhbWVcIikpXG5jcmVhcl9tZXRhYm9saXNtbyA8LSBmdW5jdGlvbihtaXNfZ2VuZXMsIG1pc19yZWFjY2lvbmVzLCBtaXNfbWV0YWJvbGl0b3MpeyBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV3KFwibWV0YWJvbGlzbVwiLCBnZW5lcz0gbWlzX2dlbmVzLCByZWFjdGlvbnM9IG1pc19yZWFjY2lvbmVzLCBtZXRhYm9saXRlcz0gbWlzX21ldGFib2xpdG9zKX1cbmBgYCJ9 -->
+<pre class="r"><code>setClass(&quot;metabolism&quot;, slots=list(genes=&quot;data.frame&quot;, reactions = &quot;data.frame&quot;, metabolites=&quot;data.frame&quot;))
+crear_metabolismo &lt;- function(mis_genes, mis_reacciones, mis_metabolitos){ 
+                             new(&quot;metabolism&quot;, genes= mis_genes, reactions= mis_reacciones, metabolites= mis_metabolitos)}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtYWdyaXR0cilcbmBgYCJ9 -->
+<pre class="r"><code>library(magrittr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYbWFncml0dHLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpwdXJycuKAmTpcblxuICAgIHNldF9uYW1lc1xuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnRpZHly4oCZOlxuXG4gICAgZXh0cmFjdFxuIn0= -->
+<pre><code>
+Attaching package: ‘magrittr’
+
+The following object is masked from ‘package:purrr’:
+
+    set_names
+
+The following object is masked from ‘package:tidyr’:
+
+    extract</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2VuZXNfdXJsICAgICA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfZ2VuZXNfdG9fcmVhY3Rpb25JRHMuY3N2J1xubWV0YWJvbGl0ZXNfdXJsIDwtICdodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlcGVuRGF0YS9jbGFzZXMvZmIzZTViM2Y3YzlhY2EwYzEzZDdlZWJlMjE3Y2RlOWZlNmIwODdiZi8wNC1maWx0ZXJzLXByb2dyYW1hY2lvbi1mdW5jaW9uYWwtYXBwbHktbWFwL3JlY29uM19tZXRhYm9saXRlX21ldGFkYXRhLmNzdidcbnJlYWN0aW9uc191cmwgICA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfcmVhY3Rpb25zX21ldGFkYXRhLmNzdidcblxuXG5pbXBvcnRfbXlfY3N2IDwtIGZ1bmN0aW9uKHVybCl7cmVhZHI6OnJlYWRfY3N2KHVybCkgJT4lIGRwbHlyOjpzZWxlY3QoLW1hdGNoZXMoXCJ4MVwiKSkgJT4lIHJldHVybn1cblxubGlzdChnZW5lc191cmwscmVhY3Rpb25zX3VybCwgbWV0YWJvbGl0ZXNfdXJsKSAlPiUgcHVycnI6Om1hcChpbXBvcnRfbXlfY3N2KSAgIC0+IHJlY29uM19ERnNcbmBgYCJ9 -->
+<pre class="r"><code>genes_url     &lt;- &#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv&#39;
+metabolites_url &lt;- &#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv&#39;
+reactions_url   &lt;- &#39;https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv&#39;
+
+
+import_my_csv &lt;- function(url){readr::read_csv(url) %&gt;% dplyr::select(-matches(&quot;x1&quot;)) %&gt;% return}
+
+list(genes_url,reactions_url, metabolites_url) %&gt;% purrr::map(import_my_csv)   -&gt; recon3_DFs</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTWlzc2luZyBjb2x1bW4gbmFtZXMgZmlsbGVkIGluOiAnWDEnIFsxXVxu4pSA4pSAIENvbHVtbiBzcGVjaWZpY2F0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgFxuY29scyhcbiAgWDEgPSBjb2xfZG91YmxlKCksXG4gIEdlbmVfSUQgPSBjb2xfZG91YmxlKCksXG4gIFJlYWN0aW9ucyA9IGNvbF9jaGFyYWN0ZXIoKVxuKVxuXG5NaXNzaW5nIGNvbHVtbiBuYW1lcyBmaWxsZWQgaW46ICdYMScgWzFdXG7ilIDilIAgQ29sdW1uIHNwZWNpZmljYXRpb24g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAXG5jb2xzKFxuICBYMSA9IGNvbF9kb3VibGUoKSxcbiAgcnhuX2lkcyA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgcnhuX25hbWVzID0gY29sX2NoYXJhY3RlcigpLFxuICByZWFjdGlvbnMgPSBjb2xfY2hhcmFjdGVyKCksXG4gIHJ4bl9ib3VuZHMgPSBjb2xfY2hhcmFjdGVyKCksXG4gIHJ4bl9zdWJzeXN0ZW1zID0gY29sX2NoYXJhY3RlcigpXG4pXG5cbk1pc3NpbmcgY29sdW1uIG5hbWVzIGZpbGxlZCBpbjogJ1gxJyBbMV1cbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbmNvbHMoXG4gIFgxID0gY29sX2RvdWJsZSgpLFxuICBJRCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgTmFtZSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRm9ybXVsYSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgQ29tcGFydG1lbnQgPSBjb2xfY2hhcmFjdGVyKCksXG4gIENoYXJnZSA9IGNvbF9kb3VibGUoKVxuKVxuIn0= -->
+<pre><code>Missing column names filled in: &#39;X1&#39; [1]
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+cols(
+  X1 = col_double(),
+  Gene_ID = col_double(),
+  Reactions = col_character()
+)
+
+Missing column names filled in: &#39;X1&#39; [1]
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+cols(
+  X1 = col_double(),
+  rxn_ids = col_character(),
+  rxn_names = col_character(),
+  reactions = col_character(),
+  rxn_bounds = col_character(),
+  rxn_subsystems = col_character()
+)
+
+Missing column names filled in: &#39;X1&#39; [1]
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+cols(
+  X1 = col_double(),
+  ID = col_character(),
+  Name = col_character(),
+  Formula = col_character(),
+  Compartment = col_character(),
+  Charge = col_double()
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfbmFtZXMgPC0gYygnZ2VuZXMnLCAncmVhY3Rpb25zJywgJ21ldGFib2xpdGVzJylcblxucmVjb24zX0RGcyAlPD4lIHB1cnJyOjpzZXRfbmFtZXMobXlfbmFtZXMpXG5gYGAifQ== -->
+<pre class="r"><code>my_names &lt;- c(&#39;genes&#39;, &#39;reactions&#39;, &#39;metabolites&#39;)
+
+recon3_DFs %&lt;&gt;% purrr::set_names(my_names)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5yZW5hbWVfaWRzIDwtIGZ1bmN0aW9uKGFsZ3VuX2lucHV0KXtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYWxndW5faW5wdXQgJT4lIHJlbmFtZV93aXRoKH5zdHJfcmVwbGFjZSguLCByZWdleCgnLippRC4qJywgaWdub3JlX2Nhc2UgPSBUUlVFKSwnSUQnKSlcbiAgICAgICAgICAgICAgICAgICAgICAgICAgfVxuXG4jbW9kZSBwaXBlIHBhcmEgYWN0dWFsaXphciBlbCBvYmpldG8gYW50aWd1b1xucmVjb24zX0RGcyAlPD4lIG1hcChyZW5hbWVfaWRzKVxuYGBgIn0= -->
+<pre class="r"><code>
+rename_ids &lt;- function(algun_input){
+                                algun_input %&gt;% rename_with(~str_replace(., regex(&#39;.*iD.*&#39;, ignore_case = TRUE),&#39;ID&#39;))
+                          }
+
+#mode pipe para actualizar el objeto antiguo
+recon3_DFs %&lt;&gt;% map(rename_ids)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JlYXJfbWV0YWJvbGlzbW8ocmVjb24zX0RGcyRnZW5lcywgcmVjb24zX0RGcyRyZWFjdGlvbnMsIHJlY29uM19ERnMkbWV0YWJvbGl0ZXMpIC0+IGh1bWFuXG5cbmdsaW1wc2UoaHVtYW4pXG5odW1hbkBnZW5lc1xuaHVtYW5AcmVhY3Rpb25zXG5odW1hbkBtZXRhYm9saXRlc1xuYGBgIn0= -->
+<pre class="r"><code>crear_metabolismo(recon3_DFs$genes, recon3_DFs$reactions, recon3_DFs$metabolites) -&gt; human
+
+glimpse(human)
+human@genes
+human@reactions
+human@metabolites</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0R2VuZXJpYyhcIm5hbWVfcGF0dGVybl90b19JRHNcIiwgZnVuY3Rpb24oUzRfb2JqZWN0LCBhX3Nsb3QsIG5hbWVfcGF0dGVybikge3N0YW5kYXJkR2VuZXJpYyhcIm5hbWVfcGF0dGVybl90b19JRHNcIil9KVxuYGBgIn0= -->
+<pre class="r"><code>setGeneric(&quot;name_pattern_to_IDs&quot;, function(S4_object, a_slot, name_pattern) {standardGeneric(&quot;name_pattern_to_IDs&quot;)})</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0TWV0aG9kKFwibmFtZV9wYXR0ZXJuX3RvX0lEc1wiLCBzaWduYXR1cmUoUzRfb2JqZWN0PSBcIm1ldGFib2xpc21cIiksIGZ1bmN0aW9uKFM0X29iamVjdCxhX3Nsb3QgLCBuYW1lX3BhdHRlcm4gKXsgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcmVnZXgobmFtZV9wYXR0ZXJuLCBpZ25vcmVfY2FzZSA9IFQpIC0+IG5hbWVfcGF0dGVyblxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNsb3QoaHVtYW4sYV9zbG90KSAtPiBleHRyYWN0ZWRfc2xvdFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGV4dHJhY3RlZF9zbG90ICU+JSBuYW1lcyAlPiUgc3RyX2V4dHJhY3QocmVnZXgoJy4qbkFtZS4qJywgaWdub3JlX2Nhc2UgPSBUKSkgJT4lIG5hLmV4Y2x1ZGUgJT4lIGFzLmNoYXJhY3RlciAtPiBteV9jb2xcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBleHRyYWN0ZWRfc2xvdCAlPiUgc2VsZWN0KGMoXCJJRFwiLCBteV9jb2wpKSAlPiVmaWx0ZXIoc3RyX2RldGVjdCguW1syXV0sbmFtZV9wYXR0ZXJuKSkgJT4lIC5bWydJRCddXSAlPiUgcmV0dXJuKClcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfSlcblxubmFtZV9wYXR0ZXJuX3RvX0lEcyhodW1hbiwgXCJyZWFjdGlvbnNcIiwgXCJnbHV0YW0uXCIpIFxubmFtZV9wYXR0ZXJuX3RvX0lEcyhodW1hbiwgXCJtZXRhYm9saXRlc1wiLCBcImdsdS5hbVwiKSBcblxuYGBgIn0= -->
+<pre class="r"><code>setMethod(&quot;name_pattern_to_IDs&quot;, signature(S4_object= &quot;metabolism&quot;), function(S4_object,a_slot , name_pattern ){ 
+                                  regex(name_pattern, ignore_case = T) -&gt; name_pattern
+                                  slot(human,a_slot) -&gt; extracted_slot
+                                  extracted_slot %&gt;% names %&gt;% str_extract(regex(&#39;.*nAme.*&#39;, ignore_case = T)) %&gt;% na.exclude %&gt;% as.character -&gt; my_col
+                                  extracted_slot %&gt;% select(c(&quot;ID&quot;, my_col)) %&gt;%filter(str_detect(.[[2]],name_pattern)) %&gt;% .[[&#39;ID&#39;]] %&gt;% return()
+                                                  })
+
+name_pattern_to_IDs(human, &quot;reactions&quot;, &quot;glutam.&quot;) 
+name_pattern_to_IDs(human, &quot;metabolites&quot;, &quot;glu.am&quot;) 
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5cbnNldEdlbmVyaWMoXCJyeG5zX2J5X2dlbmVzXCIsICAgZnVuY3Rpb24oeCkgc3RhbmRhcmRHZW5lcmljKFwicnhuc19ieV9nZW5lc1wiKSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5cbnNldEdlbmVyaWMoXCJyZWFjdGlvbklEc190b19nZW5lc1wiLCBmdW5jdGlvbihTNF9vYmplY3QsIHJlYWN0aW9uX2xpc3QpIHtzdGFuZGFyZEdlbmVyaWMoXCJyZWFjdGlvbklEc190b19nZW5lc1wiKX0pXG5cbnNldE1ldGhvZChcInJlYWN0aW9uSURzX3RvX2dlbmVzXCIsIHNpZ25hdHVyZShTNF9vYmplY3Q9IFwibWV0YWJvbGlzbVwiKSwgZnVuY3Rpb24oUzRfb2JqZWN0LCByZWFjdGlvbl9saXN0ICl7IFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTNF9vYmplY3RAZ2VuZXMgICAtPiBnZW5lc19kZlxuICBnZW5lc19kZiRSZWFjdGlvbnMgJT4lIHN0cl9leHRyYWN0X2FsbCgnXFxcXHcrJykgJT4lIHRpYmJsZSggZ2VuZSA9IGdlbmVzX2RmJElELCByeG49LikgJT4lIHVubmVzdChjb2xzID0gcnhuKSAtPiBnZW5lX3J4bnNcbmdlbmVfcnhucyAlPiUgZmlsdGVyKHJ4biAlaW4lIHJlYWN0aW9uX2xpc3QpICU+JSAuW1tcImdlbmVcIl1dICU+JSB1bmlxdWUoKSAlPiUgcmV0dXJuKClcblxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9KVxuXG5cblxuXG5cbmBgYCJ9 -->
 <pre class="r"><code>
 
-setGeneric(&quot;rxns_by_genes&quot;,   function(x) standardGeneric(&quot;rxns_by_genes&quot;))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwicnhuc19ieV9nZW5lc1wiXG4ifQ== -->
-<pre><code>[1] &quot;rxns_by_genes&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0TWV0aG9kKFwicnhuc19ieV9nZW5lc1wiLCBcIm1ldGFib2xpc21cIiwgZnVuY3Rpb24oeCl7IFxuICBzbG90KHhAZ2VuZXMsICdnZW5lX3RvX3JlYWN0aW9ucycpIC0+IGdlbmVfdG9fcmVhY3Rpb25zXG4gIHNsb3QoeEBnZW5lcywgJ2luZGVudGlmaWVycycpICAtPiBnZW5lc1xuICB0aWJibGUoZ2VuZXMsIGdlbmVfdG9fcmVhY3Rpb25zIClcbiAgfSlcbiAgI3Nsb3QoeEBnZW5lcywgJ2luZGVudGlmaWVycycpICU+JSBhcy5jaGFyYWN0ZXIoKSAtPiBnZW5lX3Jvd3NcblxuI3Jvd25hbWVzKGdlbmVfdG9fcmVhY3Rpb25zKSA8LSAgZ2VuZV9yb3dzIFxuI3JldHVybihnZW5lX3RvX3JlYWN0aW9ucykgfVxuYGBgIn0= -->
-<pre class="r"><code>setMethod(&quot;rxns_by_genes&quot;, &quot;metabolism&quot;, function(x){ 
-  slot(x@genes, &#39;gene_to_reactions&#39;) -&gt; gene_to_reactions
-  slot(x@genes, &#39;indentifiers&#39;)  -&gt; genes
-  tibble(genes, gene_to_reactions )
-  })
-  #slot(x@genes, &#39;indentifiers&#39;) %&gt;% as.character() -&gt; gene_rows
+setGeneric(&quot;reactionIDs_to_genes&quot;, function(S4_object, reaction_list) {standardGeneric(&quot;reactionIDs_to_genes&quot;)})
 
-#rownames(gene_to_reactions) &lt;-  gene_rows 
-#return(gene_to_reactions) }</code></pre>
+setMethod(&quot;reactionIDs_to_genes&quot;, signature(S4_object= &quot;metabolism&quot;), function(S4_object, reaction_list ){ 
+                                   S4_object@genes   -&gt; genes_df
+  genes_df$Reactions %&gt;% str_extract_all(&#39;\\w+&#39;) %&gt;% tibble( gene = genes_df$ID, rxn=.) %&gt;% unnest(cols = rxn) -&gt; gene_rxns
+gene_rxns %&gt;% filter(rxn %in% reaction_list) %&gt;% .[[&quot;gene&quot;]] %&gt;% unique() %&gt;% return()
+
+                                                  })
+</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucnhuc19ieV9nZW5lcyhodW1hbl9tZXRhYm9saXNtKVxuYGBgIn0= -->
-<pre class="r"><code>rxns_by_genes(human_metabolism)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFtZV9wYXR0ZXJuX3RvX0lEcyhodW1hbiwgXCJyZWFjdGlvbnNcIiwgXCJnbHV0YW0uXCIpIFxubmFtZV9wYXR0ZXJuX3RvX0lEcyhodW1hbiwgXCJtZXRhYm9saXRlc1wiLCBcImdsdS5hbVwiKSBcbnJlYWN0aW9uSURzX3RvX2dlbmVzKGh1bWFuLGMoICBcIkdMVU5tXCIsIFwiR0dIXzdUSEZsXCIgLFwiTkFEUzJcIiApKVxuYGBgIn0= -->
+<pre class="r"><code>name_pattern_to_IDs(human, &quot;reactions&quot;, &quot;glutam.&quot;) 
+name_pattern_to_IDs(human, &quot;metabolites&quot;, &quot;glu.am&quot;) 
+reactionIDs_to_genes(human,c(  &quot;GLUNm&quot;, &quot;GGH_7THFl&quot; ,&quot;NADS2&quot; ))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0TWV0aG9kKFwiYWdlPC1cIiwgXCJQZXJzb25cIiwgZnVuY3Rpb24oeCwgdmFsdWUpIHtcbiAgeEBhZ2UgPC0gdmFsdWVcbiAgeFxufSlcbmBgYCJ9 -->
-<pre class="r"><code>setMethod(&quot;age&lt;-&quot;, &quot;Person&quot;, function(x, value) {
-  x@age &lt;- value
-  x
-})</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
+</div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQpsaWJyYXJ5KG1ldGhvZHMpCmxpYnJhcnkodGlkeXZlcnNlKQoKc2V0Q2xhc3MoImdlbmVzIiwgCiAgc2xvdHMgPSBjKAogICAgaW5kZW50aWZpZXJzICAgID0gImRhdGEuZnJhbWUiLAogICAgZ2VuZV90b19yZWFjdGlvbnMgICA9ICJkYXRhLmZyYW1lIikpCgpzZXRDbGFzcygicmVhY3Rpb25zIiwgCiAgc2xvdHMgPSBjKAogICAgaW5kZW50aWZpZXJzICA9ICJkYXRhLmZyYW1lIiwgCiAgICBzdG9pY2hpb21ldHJ5ID0gImRhdGEuZnJhbWUiLCAKICAgIHN1YnN5c3RlbSAgICAgPSAiZGF0YS5mcmFtZSIpKQoKc2V0Q2xhc3MoIm1ldGFib2xpdGVzIiwgCiAgc2xvdHMgPSBjKAogICAgaW5kZW50aWZpZXJzID0gImRhdGEuZnJhbWUiLCAKICAgIGNvbXBhcnRlbXQgICA9ICJkYXRhLmZyYW1lIiwKICAgIGZvcm11bGEgICAgICA9ICJkYXRhLmZyYW1lIikpCgoKc2V0Q2xhc3MoIm1ldGFib2xpc20iLCAKICBzbG90cyA9IGMoCiAgICBnZW5lcyA9ICdnZW5lcycsIAogICAgcmVhY3Rpb25zID0gJ3JlYWN0aW9ucycsCiAgICBtZXRhYm9saXRlcyA9ICdtZXRhYm9saXRlcycpKQoKCmBgYApgYGB7cn0KbGlicmFyeShtYWdyaXR0cikKZ2VuZXNfdXJsICAgICAgIDwtICdodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlcGVuRGF0YS9jbGFzZXMvZmIzZTViM2Y3YzlhY2EwYzEzZDdlZWJlMjE3Y2RlOWZlNmIwODdiZi8wNC1maWx0ZXJzLXByb2dyYW1hY2lvbi1mdW5jaW9uYWwtYXBwbHktbWFwL3JlY29uM19nZW5lc190b19yZWFjdGlvbklEcy5jc3YnCm1ldGFib2xpdGVzX3VybCA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfbWV0YWJvbGl0ZV9tZXRhZGF0YS5jc3YnCnJlYWN0aW9uc191cmwgICA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfcmVhY3Rpb25zX21ldGFkYXRhLmNzdicKCgppbXBvcnRfbXlfY3N2IDwtIGZ1bmN0aW9uKHVybCl7cmVhZHI6OnJlYWRfY3N2KHVybCkgJT4lIGRwbHlyOjpzZWxlY3QoLW1hdGNoZXMoIngxIikpfQoKYGBgCgpgYGB7ciBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQpnZW5lc19kZiAgICAgICAgICA8LSBpbXBvcnRfbXlfY3N2KGdlbmVzX3VybCkgCmh1bWFuX2dlbmVzICAgICAgIDwtIG5ldygiZ2VuZXMiLCBpbmRlbnRpZmllcnMgPSBnZW5lc19kZlsiR2VuZV9JRCJdLCBnZW5lX3RvX3JlYWN0aW9ucyA9IGdlbmVzX2RmWyJSZWFjdGlvbnMiXSkgJT4lIGdsaW1wc2UKCnJlYWN0aW9uc19kZiAgICAgIDwtIGltcG9ydF9teV9jc3YocmVhY3Rpb25zX3VybCkgCmh1bWFuX3JlYWN0aW9ucyAgIDwtIG5ldygicmVhY3Rpb25zIiwgaW5kZW50aWZpZXJzID0gIHJlYWN0aW9uc19kZltjKCdyeG5faWRzJywncnhuX25hbWVzJyldLCBzdG9pY2hpb21ldHJ5ID0gcmVhY3Rpb25zX2RmWydyZWFjdGlvbnMnXSwgc3Vic3lzdGVtID0gcmVhY3Rpb25zX2RmWyJyeG5fc3Vic3lzdGVtcyJdKSAlPiUgZ2xpbXBzZQoKbWV0YWJvbGl0ZXNfZGYgICAgPC0gaW1wb3J0X215X2NzdihtZXRhYm9saXRlc191cmwpIApodW1hbl9tZXRhYm9saXRlcyA8LSBuZXcoIm1ldGFib2xpdGVzIiwgaW5kZW50aWZpZXJzID1tZXRhYm9saXRlc19kZlsnSUQnLCAnTmFtZSddLCBjb21wYXJ0ZW10ID0gbWV0YWJvbGl0ZXNfZGZbJ0NvbXBhcnRtZW50J10sIGZvcm11bGEgPSBtZXRhYm9saXRlc19kZlsnRm9ybXVsYSddKSAgICAlPiUgZ2xpbXBzZQoKCmNyZWF0ZV9tZXRhYm9saXNtIDwtIGZ1bmN0aW9uKGdlbmVzID0gIGdlbmVzLCByZWFjdGlvbnMgPSByZWFjdGlvbnMsIG1ldGFib2xpdGVzID0gbWV0YWJvbGl0ZXMpIHsKICBuZXcoIm1ldGFib2xpc20iLCBnZW5lcyA9ICBnZW5lcywgcmVhY3Rpb25zID0gcmVhY3Rpb25zLCBtZXRhYm9saXRlcyA9IG1ldGFib2xpdGVzKSAlPiUgZ2xpbXBzZX0KCgpodW1hbl9tZXRhYm9saXNtXzAgIDwtIGNyZWF0ZV9tZXRhYm9saXNtKCBnZW5lcyA9ICBodW1hbl9nZW5lcywgcmVhY3Rpb25zID0gaHVtYW5fcmVhY3Rpb25zLCBtZXRhYm9saXRlcyA9IGh1bWFuX21ldGFib2xpdGVzKQpgYGAKYGBge3J9CmNyZWF0ZV9tZXRhYm9saXNtIDwtIGZ1bmN0aW9uKGdlbmVzID0gIGdlbmVzX2RmLCByZWFjdGlvbnMgPSByZWFjdGlvbnNfZGYsIG1ldGFib2xpdGVzID0gbWV0YWJvbGl0ZXNfZGYpIHsKCmdlbmVzICAgICAgIDwtIG5ldygiZ2VuZXMiLCBpbmRlbnRpZmllcnMgPSBnZW5lc19kZlsiR2VuZV9JRCJdLCBnZW5lX3RvX3JlYWN0aW9ucyA9IGdlbmVzX2RmWyJSZWFjdGlvbnMiXSkKcmVhY3Rpb25zICAgPC0gbmV3KCJyZWFjdGlvbnMiLCBpbmRlbnRpZmllcnMgPSAgcmVhY3Rpb25zX2RmW2MoJ3J4bl9pZHMnLCdyeG5fbmFtZXMnKV0sIHN0b2ljaGlvbWV0cnkgPSByZWFjdGlvbnNfZGZbJ3JlYWN0aW9ucyddLCBzdWJzeXN0ZW0gPSByZWFjdGlvbnNfZGZbInJ4bl9zdWJzeXN0ZW1zIl0pCm1ldGFib2xpdGVzIDwtIG5ldygibWV0YWJvbGl0ZXMiLCBpbmRlbnRpZmllcnMgPW1ldGFib2xpdGVzX2RmWydJRCcsICdOYW1lJ10sIGNvbXBhcnRlbXQgPSBtZXRhYm9saXRlc19kZlsnQ29tcGFydG1lbnQnXSwgZm9ybXVsYSA9IG1ldGFib2xpdGVzX2RmWydGb3JtdWxhJ10pICAKCm5ldygibWV0YWJvbGlzbSIsIGdlbmVzID0gIGdlbmVzLCByZWFjdGlvbnMgPSByZWFjdGlvbnMsIG1ldGFib2xpdGVzID0gbWV0YWJvbGl0ZXMpICU+JSBnbGltcHNlfQpgYGAKCgpgYGB7cn0KaHVtYW5fbWV0YWJvbGlzbSA8LSBjcmVhdGVfbWV0YWJvbGlzbShnZW5lcyA9ICBpbXBvcnRfbXlfY3N2KGdlbmVzX3VybCkgLCByZWFjdGlvbnMgPSBpbXBvcnRfbXlfY3N2KHJlYWN0aW9uc191cmwpLCBtZXRhYm9saXRlcyA9IGltcG9ydF9teV9jc3YobWV0YWJvbGl0ZXNfdXJsKSkKYGBgCgpBY2Nlc3NvcnM6ICBzZXR0ZXJzIGFuZCBnZXR0ZXJzCmBgYHtyfQpzZXRHZW5lcmljKCJnZW5lcyIsICAgZnVuY3Rpb24oeCkgc3RhbmRhcmRHZW5lcmljKCJnZW5lcyIpKQpzZXRNZXRob2QoImdlbmVzIiwgIm1ldGFib2xpc20iLCBmdW5jdGlvbih4KSBzbG90KHhAZ2VuZXMsICdpbmRlbnRpZmllcnMnKVtbMV1dKQoKZ2VuZXMoaHVtYW5fbWV0YWJvbGlzbSkKCnNldEdlbmVyaWMoImdlbmVzPC0iLCBmdW5jdGlvbih4LCB2YWx1ZSkgc3RhbmRhcmRHZW5lcmljKCJnZW5lczwtIikpCnNldE1ldGhvZCgiZ2VuZXM8LSIsICJtZXRhYm9saXNtIiwgZnVuY3Rpb24oeCwgdmFsdWUpIHsKICB4QGFnZSA8LSB2YWx1ZQogIHgKfSkKCmBgYAoKYGBge3J9CnNldEdlbmVyaWMoInJ4bnNfYnlfZ2VuZXMiLCAgIGZ1bmN0aW9uKHgpIHN0YW5kYXJkR2VuZXJpYygicnhuc19ieV9nZW5lcyIpKQpzZXRNZXRob2QoInJ4bnNfYnlfZ2VuZXMiLCAibWV0YWJvbGlzbSIsIGZ1bmN0aW9uKHgpeyAKICBzbG90KHhAZ2VuZXMsICdnZW5lX3RvX3JlYWN0aW9ucycpIC0+IGdlbmVfdG9fcmVhY3Rpb25zCiAgc2xvdCh4QGdlbmVzLCAnaW5kZW50aWZpZXJzJykgIC0+IGdlbmVzCiAgdGliYmxlKGdlbmVzLCBnZW5lX3RvX3JlYWN0aW9ucyApCiAgfSkKYGBgCgoKYGBge3J9CnJ4bnNfYnlfZ2VuZXMoaHVtYW5fbWV0YWJvbGlzbSkKYGBgCgoKYGBge3J9CnNldE1ldGhvZCgiYWdlPC0iLCAiUGVyc29uIiwgZnVuY3Rpb24oeCwgdmFsdWUpIHsKICB4QGFnZSA8LSB2YWx1ZQogIHgKfSkKYGBgCgoKCgoKCgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CmxpYnJhcnkocmVhZHIpCmxpYnJhcnkodGlkeXZlcnNlKQoKZ2VuZXNfdXJsICAgICA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfZ2VuZXNfdG9fcmVhY3Rpb25JRHMuY3N2JwptZXRhYm9saXRlc191cmwgPC0gJ2h0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9EZWVwZW5EYXRhL2NsYXNlcy9mYjNlNWIzZjdjOWFjYTBjMTNkN2VlYmUyMTdjZGU5ZmU2YjA4N2JmLzA0LWZpbHRlcnMtcHJvZ3JhbWFjaW9uLWZ1bmNpb25hbC1hcHBseS1tYXAvcmVjb24zX21ldGFib2xpdGVfbWV0YWRhdGEuY3N2JwpyZWFjdGlvbnNfdXJsICAgPC0gJ2h0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9EZWVwZW5EYXRhL2NsYXNlcy9mYjNlNWIzZjdjOWFjYTBjMTNkN2VlYmUyMTdjZGU5ZmU2YjA4N2JmLzA0LWZpbHRlcnMtcHJvZ3JhbWFjaW9uLWZ1bmNpb25hbC1hcHBseS1tYXAvcmVjb24zX3JlYWN0aW9uc19tZXRhZGF0YS5jc3YnCgoKCmltcG9ydF9teV9jc3YgPC0gZnVuY3Rpb24odXJsKXtyZWFkcjo6cmVhZF9jc3YodXJsKSAlPiUgZHBseXI6OnNlbGVjdCgtbWF0Y2hlcygieDEiKSkgJT4lIHJldHVybn0KCgpsaWJyYXJ5KG1hZ3JpdHRyKQoKbGlzdChnZW5lc191cmwscmVhY3Rpb25zX3VybCwgbWV0YWJvbGl0ZXNfdXJsKSAtPiBteV9saXN0CgpwdXJycjo6bWFwKG15X2xpc3QsIGltcG9ydF9teV9jc3YpICAgICAgICAgICAgLT4gcmVjb24zX2xpc3QubWFwCgoKYGBgCgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0KbGlicmFyeShtYWdyaXR0cikKCm15X25hbWVzIDwtIGMoJ2dlbmVzJywgJ3JlYWN0aW9ucycsICdtZXRhYm9saXRlcycpCgpyZWNvbjNfbGlzdC5tYXAgJTw+JSBwdXJycjo6c2V0X25hbWVzKG15X25hbWVzKQoKcmVjb24zX2xpc3QubWFwICU+JSBuYW1lcwoKcmVjb24zX2xpc3QubWFwJGdlbmVzCnJlY29uM19saXN0Lm1hcCRyZWFjdGlvbnMKcmVjb24zX2xpc3QubWFwJG1ldGFib2xpdGVzCgpwbHVjayhyZWNvbjNfbGlzdC5tYXAsJ2dlbmVzJykKCnJlY29uM19saXN0Lm1hcCAlPiUgLiRtZXRhYm9saXRlcwpyZWNvbjNfbGlzdC5tYXAgJT4lIHBsdWNrKCJtZXRhYm9saXRlcyIpCmBgYAoKYGBge3J9CiNwcmltZXJhIGNvbHVtbmEgc2VhICJJRCIKcmVuYW1lX2lkcyA8LSBmdW5jdGlvbihhbGd1bl9pbnB1dCl7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYWxndW5faW5wdXQgJT4lIHJlbmFtZV93aXRoKH5zdHJfcmVwbGFjZSguLCByZWdleCgnLippRC4qJywgaWdub3JlX2Nhc2UgPSBUUlVFKSwnSUQnKSkKICAgICAgICAgICAgICAgICAgICAgICAgICB9CiNtb2RvIGVzdMOhbmRhcgpyZW5hbWVfaWRzKGFsZ3VuX2lucHV0ID0gcmVjb24zX2xpc3QubWFwJGdlbmVzKQojbW9kbyBwaXBlCnJlY29uM19saXN0Lm1hcCRnZW5lcyAlPiUgcmVuYW1lX2lkcwojbWFwZWFkYQptYXAocmVjb24zX2xpc3QubWFwLHJlbmFtZV9pZHMpCiNtb2RlIHBpcGUgcGFyYSBhY3R1YWxpemFyIGVsIG9iamV0byBhbnRpZ3VvCnJlY29uM19saXN0Lm1hcCAlPD4lIG1hcChyZW5hbWVfaWRzKQpgYGAKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CnJlbmFtZV9pZHMgPC0gZnVuY3Rpb24oZGYpe2RmICU+JSBhc190aWJibGUgJT4lIHJlbmFtZV93aXRoKHRvbG93ZXIpICU+JSAgcmVuYW1lX3dpdGgofnN0cl9yZXBsYWNlKC4sICcuKmlkLionLCdJRCcpKX0KcmVuYW1lX2lkcyA8LSBmdW5jdGlvbihkZil7ZGYgJT4lIGFzX3RpYmJsZSAlPiUgcmVuYW1lX3dpdGgofnN0cl9yZXBsYWNlKC4scmVnZXgoJy4qaUQuKicsIGlnbm9yZV9jYXNlID0gVCkgLCdJRCcpKX0KI3JlY29uM19saXN0Lm1hcCRnZW5lcyAlPiUgcmVuYW1lX2lkcwojZ3VhcmRhciBlbiB1biBvYmpldG8gbnVldm8KbWFwKHJlY29uM19saXN0Lm1hcCxyZW5hbWVfaWRzICkgLT4gcmVjb24zX2xpc3QKI2RhdGEudGFibGU6OnNldG5hbWVzKG15X25hbWVzKQpgYGAKCkZpbHRlcgpgYGB7cn0KI2ZpbHRyb3MgZXhhY3RvcwpyZWNvbjNfbGlzdCAlPiVwbHVjaygnZ2VuZXMnKSAlPiUgZmlsdGVyKElEID09ICAzMTQuMikKcmVjb24zX2xpc3QgJT4lcGx1Y2soJ2dlbmVzJykgJT4lIGZpbHRlcihJRCAlaW4lIGMoMzk0OC4xLDMxNC4yKSkKI1V0aWxpemFtb3MgdW5hIGZ1bmNpw7NuIGRlIHJlZ2V4IHF1ZSBkZXZ1ZWx2ZSB1biBib29sZWFubwpyZWNvbjNfbGlzdCAlPiVwbHVjaygnZ2VuZXMnKSAlPiUgZmlsdGVyKHN0cl9kZXRlY3QoSUQsIl4yODQuKjAuKiIpKQpyZWNvbjNfbGlzdCAlPiVwbHVjaygncmVhY3Rpb25zJykgJT4lIGZpbHRlcihzdHJfZGV0ZWN0KHJ4bl9uYW1lcywiVHlyb3NpbmUiKSkKcmVjb24zX2xpc3QgJT4lcGx1Y2soJ3JlYWN0aW9ucycpICU+JSBmaWx0ZXIoc3RyX2RldGVjdChyeG5fbmFtZXMsIk94aWRvcmVkdWN0YXNlIikgJiBzdHJfZGV0ZWN0KHJ4bl9zdWJzeXN0ZW1zLCJGb2xhdGUiKSkgCmBgYAoKCmBgYHtyfQoKcmVjb24zX2xpc3QgJT4lcGx1Y2soJ2dlbmVzJykgJT4lIGZpbHRlcihzdHJfZGV0ZWN0KElELCJeMjg0LiowLioiKSkgJT4lIC5bWyJSZWFjdGlvbnMiXV0gJT4lIC5bMl0gLT4gbXlfcmVhY3Rpb25zCm15X3JlYWN0aW9ucyAlPD4lIHN0cl9zcGxpdCgnLCcsIHNpbXBsaWZ5ID0gVCkgJT4lIHN0cl9leHRyYWN0KCdcXHcrJykKcmVjb24zX2xpc3QgJT4lcGx1Y2soJ3JlYWN0aW9ucycpICU+JSBmaWx0ZXIoSUQgJWluJSBteV9yZWFjdGlvbnMpCmBgYAoKI0NyZWF0aW5zIG15IGZ1bmN0aW9ucwpgYGB7cn0KCm5hbWVfcGF0dGVybl90b19JRHMgPC0gZnVuY3Rpb24obXlfbGlzdCwgZW50cnksIG5hbWVfcGF0dGVybil7CnJlZ2V4KG5hbWVfcGF0dGVybiwgaWdub3JlX2Nhc2UgPSBUKSAtPiBuYW1lX3BhdHRlcm4KbXlfbGlzdCAlPiUgcGx1Y2soZW50cnkpICU+JSBuYW1lcyAlPiUgc3RyX2V4dHJhY3QocmVnZXgoJy4qbkFtZS4qJywgaWdub3JlX2Nhc2UgPSBUKSkgJT4lIG5hLmV4Y2x1ZGUgJT4lIGFzLmNoYXJhY3RlciAtPiBteV9jb2wKbXlfbGlzdCAlPiUgcGx1Y2soZW50cnkpICU+JSBzZWxlY3QoYygiSUQiLCBteV9jb2wpKSAlPiVmaWx0ZXIoc3RyX2RldGVjdCguW1syXV0sbmFtZV9wYXR0ZXJuKSkgJT4lIC5bWydJRCddXSAlPiUgcmV0dXJuKCkKfQoKbmFtZV9wYXR0ZXJuX3RvX0lEcyhyZWNvbjNfbGlzdCwgJ3JlYWN0aW9ucycsICdnbHV0YW1hdGUnKSAtPiBmb3VuZF9yeG5zCmBgYAoKYGBge3J9CnJlYWN0aW9uSURzX3RvX2dlbmVzIDwtIGZ1bmN0aW9uKHJlYWN0aW9uX2xpc3QpewpyZWNvbjNfbGlzdCAlPiVwbHVjaygnZ2VuZXMnKSAtPiBnZW5lc19kZgpnZW5lc19kZiRSZWFjdGlvbnMgJT4lIHN0cl9leHRyYWN0X2FsbCgnXFx3KycpICU+JSB0aWJibGUoIGdlbmUgPSBnZW5lc19kZiRJRCwgcnhuPS4pICU+JSB1bm5lc3QoY29scyA9IHJ4bikgLT4gZ2VuZV9yeG5zCmdlbmVfcnhucyAlPiUgZmlsdGVyKHJ4biAlaW4lIHJlYWN0aW9uX2xpc3QpICU+JSAuW1siZ2VuZSJdXSAlPiUgdW5pcXVlKCkgJT4lIHJldHVybigpCn0KCnJlYWN0aW9uSURzX3RvX2dlbmVzKGZvdW5kX3J4bnMpIC0+IGZvdW5kX2dlbmVzCmBgYAoKYGBge3J9CgpuYW1lX3BhdHRlcm5fdG9fSURzXzIgPC0gZnVuY3Rpb24ocGF0dGVybil7bmFtZV9wYXR0ZXJuX3RvX0lEcyhyZWNvbjNfbGlzdCwgJ3JlYWN0aW9ucycsIHBhdHRlcm4pfQoKcHVycnI6OmNvbXBvc2UocmVhY3Rpb25JRHNfdG9fZ2VuZXMsIG5hbWVfcGF0dGVybl90b19JRHNfMiApIC0+IHJ4bl9uYW1lX3RvX2dlbmVzCgoKcnhuX25hbWVfdG9fZ2VuZXMoJ2F0cCcpCgpgYGAKCmBgYHtyfQpjKCJnbHVjb3NlIiwicGhlbnlsIiwicm5hIikgLT4gc29tZV9rZXl3b3JkcwoKbWFwKHNvbWVfa2V5d29yZHMsIHJ4bl9uYW1lX3RvX2dlbmVzKSAlPiUgc2V0X25hbWVzKHNvbWVfa2V5d29yZHMpICU+JSB0aWJibGUoZ2VuZXM9Liwga2V5d29yZCA9IHNvbWVfa2V5d29yZHMpICU+JSB1bm5lc3QoY29scyA9IGMoZ2VuZXMpKQpzZXRfbG9uZ19kZiA8LSBmdW5jdGlvbihhX2xpc3QsIGtleXdvcmRzKXthX2xpc3QgJT4lIHNldF9uYW1lcyhrZXl3b3JkcykgJT4lIHRpYmJsZShnZW5lcz0uLCBrZXl3b3JkID0ga2V5d29yZHMpICU+JSB1bm5lc3QoY29scyA9IGMoZ2VuZXMpKX0Kc29tZV9rZXl3b3JkcyAlPiVtYXAocnhuX25hbWVfdG9fZ2VuZXMpJT4lIHNldF9sb25nX2RmKHNvbWVfa2V5d29yZHMpCmBgYApgYGB7cn0Ka2V5d29yZHNfdG9fZ2VuZXMgPC0gZnVuY3Rpb24oc29tZV9rZXl3b3Jkcyl7c29tZV9rZXl3b3JkcyAlPiVtYXAocnhuX25hbWVfdG9fZ2VuZXMpJT4lIHNldF9sb25nX2RmKHNvbWVfa2V5d29yZHMpfQprZXl3b3Jkc190b19nZW5lcyhjKCJyZWR1Y3Rhc2UiLCJwZXJveGlkZSIsInRoaW9yZWRveGluIiwiZ2x1dGF0aGlvbmUiKSApICU+JSB0aWR5cjo6bmVzdChnZW5lcz0gZ2VuZXMpIC0+IHJlc3VsdGFkb3MgIyU+JSB1bm5lc3QoZ2VuZXMpCmBgYApgYGB7cn0KcmVzdWx0YWRvcyU+JSB1bm5lc3QoZ2VuZXMpICU+JSBjb3VudChrZXl3b3JkKSAlPiUgbXV0YXRlKCIlIiA9IDEwMCpuL3N1bShuKSkKYGBgCgoKUHJvZ3JhbWFjacOzbiBvcmllbnRhZGEgYSBvYmpldG9zOiBTNAoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpgYGB7cn0Kc2V0Q2xhc3MoInBlcnJvIiwgc2xvdHM9bGlzdChuYW1lPSJjaGFyYWN0ZXIiKSkKc2V0Q2xhc3MoImdhdG8iLCBzbG90cz1saXN0KG5hbWU9ImNoYXJhY3RlciIpKQoKc2V0TWV0aG9kKCJzaG93IiwKInBlcnJvIiwKZnVuY3Rpb24ob2JqZWN0KSB7CmNhdCgibm9tYnJlIGRlbCBwZXJybzoiLG9iamVjdEBuYW1lLCAiXG4iKQp9CikKCnNldE1ldGhvZCgic2hvdyIsCiJnYXRvIiwKZnVuY3Rpb24ob2JqZWN0KSB7CmNhdCgibm9tYnJlIGRlbCBnYXRvOiIsb2JqZWN0QG5hbWUsICJcbiIpCn0KKQpgYGAKCmBgYHtyfQpjcmVhcl9wZXJybyA8LSBmdW5jdGlvbihub21icmUpeyBuZXcoInBlcnJvIiwgbmFtZSA9IG5vbWJyZSl9CmNyZWFyX2dhdG8gIDwtIGZ1bmN0aW9uKG5vbWJyZSl7IG5ldygiZ2F0byIsIG5hbWUgPSBub21icmUpfQoKY3JlYXJfcGVycm8oInBlcnJpbiIpIC0+IG1pX3BlcnJvCmNyZWFyX2dhdG8oImdhdGluIikgICAtPiBtaV9nYXRvCgpsaWJyYXJ5KHRpZHl2ZXJzZSkKCmdsaW1wc2UobWlfZ2F0bykKbWlfZ2F0b0BuYW1lCmBgYApgYGB7cn0Kc2V0R2VuZXJpYygic3BlYWsiLCBmdW5jdGlvbihvYmplY3QpIHtzdGFuZGFyZEdlbmVyaWMoInNwZWFrIil9KQpgYGAKYGBge3J9CnNldE1ldGhvZCgic3BlYWsiLCAiZ2F0byIsIGZ1bmN0aW9uKG9iamVjdCl7cHJpbnQoIm1pYXUiKX0pCnNldE1ldGhvZCgic3BlYWsiLCAicGVycm8iLCBmdW5jdGlvbihvYmplY3Qpe3ByaW50KCJ3YXUiKX0pCmBgYApgYGB7cn0KbWlfcGVycm8gJT4lIHNwZWFrCm1pX2dhdG8gJT4lc3BlYWsKYGBgCgoKYGBge3J9CnNldENsYXNzKCJtZXRhYm9saXNtIiwgc2xvdHM9bGlzdChnZW5lcz0iZGF0YS5mcmFtZSIsIHJlYWN0aW9ucyA9ICJkYXRhLmZyYW1lIiwgbWV0YWJvbGl0ZXM9ImRhdGEuZnJhbWUiKSkKY3JlYXJfbWV0YWJvbGlzbW8gPC0gZnVuY3Rpb24obWlzX2dlbmVzLCBtaXNfcmVhY2Npb25lcywgbWlzX21ldGFib2xpdG9zKXsgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV3KCJtZXRhYm9saXNtIiwgZ2VuZXM9IG1pc19nZW5lcywgcmVhY3Rpb25zPSBtaXNfcmVhY2Npb25lcywgbWV0YWJvbGl0ZXM9IG1pc19tZXRhYm9saXRvcyl9CmBgYAoKCmBgYHtyfQpsaWJyYXJ5KG1hZ3JpdHRyKQpnZW5lc191cmwgICAgIDwtICdodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vRGVlcGVuRGF0YS9jbGFzZXMvZmIzZTViM2Y3YzlhY2EwYzEzZDdlZWJlMjE3Y2RlOWZlNmIwODdiZi8wNC1maWx0ZXJzLXByb2dyYW1hY2lvbi1mdW5jaW9uYWwtYXBwbHktbWFwL3JlY29uM19nZW5lc190b19yZWFjdGlvbklEcy5jc3YnCm1ldGFib2xpdGVzX3VybCA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfbWV0YWJvbGl0ZV9tZXRhZGF0YS5jc3YnCnJlYWN0aW9uc191cmwgICA8LSAnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0RlZXBlbkRhdGEvY2xhc2VzL2ZiM2U1YjNmN2M5YWNhMGMxM2Q3ZWViZTIxN2NkZTlmZTZiMDg3YmYvMDQtZmlsdGVycy1wcm9ncmFtYWNpb24tZnVuY2lvbmFsLWFwcGx5LW1hcC9yZWNvbjNfcmVhY3Rpb25zX21ldGFkYXRhLmNzdicKCgppbXBvcnRfbXlfY3N2IDwtIGZ1bmN0aW9uKHVybCl7cmVhZHI6OnJlYWRfY3N2KHVybCkgJT4lIGRwbHlyOjpzZWxlY3QoLW1hdGNoZXMoIngxIikpICU+JSByZXR1cm59CgpsaXN0KGdlbmVzX3VybCxyZWFjdGlvbnNfdXJsLCBtZXRhYm9saXRlc191cmwpICU+JSBwdXJycjo6bWFwKGltcG9ydF9teV9jc3YpICAgLT4gcmVjb24zX0RGcwpteV9uYW1lcyA8LSBjKCdnZW5lcycsICdyZWFjdGlvbnMnLCAnbWV0YWJvbGl0ZXMnKQoKcmVjb24zX0RGcyAlPD4lIHB1cnJyOjpzZXRfbmFtZXMobXlfbmFtZXMpCmBgYAoKCmBgYHtyfQoKcmVuYW1lX2lkcyA8LSBmdW5jdGlvbihhbGd1bl9pbnB1dCl7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYWxndW5faW5wdXQgJT4lIHJlbmFtZV93aXRoKH5zdHJfcmVwbGFjZSguLCByZWdleCgnLippRC4qJywgaWdub3JlX2Nhc2UgPSBUUlVFKSwnSUQnKSkKICAgICAgICAgICAgICAgICAgICAgICAgICB9CgojbW9kZSBwaXBlIHBhcmEgYWN0dWFsaXphciBlbCBvYmpldG8gYW50aWd1bwpyZWNvbjNfREZzICU8PiUgbWFwKHJlbmFtZV9pZHMpCmBgYApgYGB7cn0KY3JlYXJfbWV0YWJvbGlzbW8ocmVjb24zX0RGcyRnZW5lcywgcmVjb24zX0RGcyRyZWFjdGlvbnMsIHJlY29uM19ERnMkbWV0YWJvbGl0ZXMpIC0+IGh1bWFuCgpnbGltcHNlKGh1bWFuKQpodW1hbkBnZW5lcwpodW1hbkByZWFjdGlvbnMKaHVtYW5AbWV0YWJvbGl0ZXMKYGBgCgpgYGB7cn0Kc2V0R2VuZXJpYygibmFtZV9wYXR0ZXJuX3RvX0lEcyIsIGZ1bmN0aW9uKFM0X29iamVjdCwgYV9zbG90LCBuYW1lX3BhdHRlcm4pIHtzdGFuZGFyZEdlbmVyaWMoIm5hbWVfcGF0dGVybl90b19JRHMiKX0pCmBgYAoKYGBge3J9CnNldE1ldGhvZCgibmFtZV9wYXR0ZXJuX3RvX0lEcyIsIHNpZ25hdHVyZShTNF9vYmplY3Q9ICJtZXRhYm9saXNtIiksIGZ1bmN0aW9uKFM0X29iamVjdCxhX3Nsb3QgLCBuYW1lX3BhdHRlcm4gKXsgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWdleChuYW1lX3BhdHRlcm4sIGlnbm9yZV9jYXNlID0gVCkgLT4gbmFtZV9wYXR0ZXJuCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzbG90KGh1bWFuLGFfc2xvdCkgLT4gZXh0cmFjdGVkX3Nsb3QKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGV4dHJhY3RlZF9zbG90ICU+JSBuYW1lcyAlPiUgc3RyX2V4dHJhY3QocmVnZXgoJy4qbkFtZS4qJywgaWdub3JlX2Nhc2UgPSBUKSkgJT4lIG5hLmV4Y2x1ZGUgJT4lIGFzLmNoYXJhY3RlciAtPiBteV9jb2wKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGV4dHJhY3RlZF9zbG90ICU+JSBzZWxlY3QoYygiSUQiLCBteV9jb2wpKSAlPiVmaWx0ZXIoc3RyX2RldGVjdCguW1syXV0sbmFtZV9wYXR0ZXJuKSkgJT4lIC5bWydJRCddXSAlPiUgcmV0dXJuKCkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9KQoKbmFtZV9wYXR0ZXJuX3RvX0lEcyhodW1hbiwgInJlYWN0aW9ucyIsICJnbHV0YW0uIikgCm5hbWVfcGF0dGVybl90b19JRHMoaHVtYW4sICJtZXRhYm9saXRlcyIsICJnbHUuYW0iKSAKCmBgYAoKYGBge3J9CgoKc2V0R2VuZXJpYygicmVhY3Rpb25JRHNfdG9fZ2VuZXMiLCBmdW5jdGlvbihTNF9vYmplY3QsIHJlYWN0aW9uX2xpc3QpIHtzdGFuZGFyZEdlbmVyaWMoInJlYWN0aW9uSURzX3RvX2dlbmVzIil9KQoKc2V0TWV0aG9kKCJyZWFjdGlvbklEc190b19nZW5lcyIsIHNpZ25hdHVyZShTNF9vYmplY3Q9ICJtZXRhYm9saXNtIiksIGZ1bmN0aW9uKFM0X29iamVjdCwgcmVhY3Rpb25fbGlzdCApeyAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTNF9vYmplY3RAZ2VuZXMgICAtPiBnZW5lc19kZgogIGdlbmVzX2RmJFJlYWN0aW9ucyAlPiUgc3RyX2V4dHJhY3RfYWxsKCdcXHcrJykgJT4lIHRpYmJsZSggZ2VuZSA9IGdlbmVzX2RmJElELCByeG49LikgJT4lIHVubmVzdChjb2xzID0gcnhuKSAtPiBnZW5lX3J4bnMKZ2VuZV9yeG5zICU+JSBmaWx0ZXIocnhuICVpbiUgcmVhY3Rpb25fbGlzdCkgJT4lIC5bWyJnZW5lIl1dICU+JSB1bmlxdWUoKSAlPiUgcmV0dXJuKCkKCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfSkKCgoKCgpgYGAKCgpgYGB7cn0KbmFtZV9wYXR0ZXJuX3RvX0lEcyhodW1hbiwgInJlYWN0aW9ucyIsICJnbHV0YW0uIikgCm5hbWVfcGF0dGVybl90b19JRHMoaHVtYW4sICJtZXRhYm9saXRlcyIsICJnbHUuYW0iKSAKcmVhY3Rpb25JRHNfdG9fZ2VuZXMoaHVtYW4sYyggICJHTFVObSIsICJHR0hfN1RIRmwiICwiTkFEUzIiICkpCmBgYAoKCgoKCg==</div>
 
 
 
@@ -438,7 +636,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("clase_14_de_mayo_2021.Rmd");
+  window.initializeSourceEmbed("clase_07_de_mayo.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

@@ -3,49 +3,18 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-
-```{r}
-library(methods)
-library(tidyverse)
-
-setClass("genes", 
-  slots = c(
-    indentifiers    = "data.frame",
-    gene_to_reactions   = "data.frame"))
-
-setClass("reactions", 
-  slots = c(
-    indentifiers  = "data.frame", 
-    stoichiometry = "data.frame", 
-    subsystem     = "data.frame"))
-
-setClass("metabolites", 
-  slots = c(
-    indentifiers = "data.frame", 
-    compartemt   = "data.frame",
-    formula      = "data.frame"))
-
-
-setClass("metabolism", 
-  slots = c(
-    genes = 'genes', 
-    reactions = 'reactions',
-    metabolites = 'metabolites'))
-
-
-```
 ```{r}
 library(magrittr)
 genes_url       <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_genes_to_reactionIDs.csv'
 metabolites_url <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_metabolite_metadata.csv'
 reactions_url   <- 'https://raw.githubusercontent.com/DeepenData/clases/fb3e5b3f7c9aca0c13d7eebe217cde9fe6b087bf/04-filters-programacion-funcional-apply-map/recon3_reactions_metadata.csv'
-
-
-import_my_csv <- function(url){readr::read_csv(url) %>% dplyr::select(-matches("x1"))}
-
 ```
 
 ```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+source("my_classes.R")
+source("my_functions.R")
+
 genes_df          <- import_my_csv(genes_url) 
 human_genes       <- new("genes", indentifiers = genes_df["Gene_ID"], gene_to_reactions = genes_df["Reactions"]) %>% glimpse
 
@@ -56,22 +25,12 @@ metabolites_df    <- import_my_csv(metabolites_url)
 human_metabolites <- new("metabolites", indentifiers =metabolites_df['ID', 'Name'], compartemt = metabolites_df['Compartment'], formula = metabolites_df['Formula'])    %>% glimpse
 
 
-create_metabolism <- function(genes =  genes, reactions = reactions, metabolites = metabolites) {
+create_metabolism_0 <- function(genes =  genes, reactions = reactions, metabolites = metabolites) {
   new("metabolism", genes =  genes, reactions = reactions, metabolites = metabolites) %>% glimpse}
 
 
-human_metabolism_0  <- create_metabolism( genes =  human_genes, reactions = human_reactions, metabolites = human_metabolites)
+human_metabolism_0  <- create_metabolism_0( genes =  human_genes, reactions = human_reactions, metabolites = human_metabolites)
 ```
-```{r}
-create_metabolism <- function(genes =  genes_df, reactions = reactions_df, metabolites = metabolites_df) {
-
-genes       <- new("genes", indentifiers = genes_df["Gene_ID"], gene_to_reactions = genes_df["Reactions"])
-reactions   <- new("reactions", indentifiers =  reactions_df[c('rxn_ids','rxn_names')], stoichiometry = reactions_df['reactions'], subsystem = reactions_df["rxn_subsystems"])
-metabolites <- new("metabolites", indentifiers =metabolites_df['ID', 'Name'], compartemt = metabolites_df['Compartment'], formula = metabolites_df['Formula'])  
-
-new("metabolism", genes =  genes, reactions = reactions, metabolites = metabolites) %>% glimpse}
-```
-
 
 ```{r}
 human_metabolism <- create_metabolism(genes =  import_my_csv(genes_url) , reactions = import_my_csv(reactions_url), metabolites = import_my_csv(metabolites_url))

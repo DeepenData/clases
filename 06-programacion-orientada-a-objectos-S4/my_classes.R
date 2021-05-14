@@ -1,8 +1,8 @@
+#creación del objeto S4: seteo de las clases.
 library(methods)
 
-
 setClass("genes", 
-         slots = c(
+           slots = c(
            indentifiers    = "data.frame",
            gene_to_reactions   = "data.frame"))
 
@@ -18,7 +18,7 @@ setClass("metabolites",
            compartemt   = "data.frame",
            formula      = "data.frame"))
 
-
+#la clase metabolism depende de las clases genes, reactions y metabolites, predefinidas arriba.
 setClass("metabolism", 
          slots = c(
            genes = 'genes', 

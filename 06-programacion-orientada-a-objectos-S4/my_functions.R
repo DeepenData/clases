@@ -1,7 +1,10 @@
-import_my_csv <- function(url){readr::read_csv(url) %>% dplyr::select(-matches("x1"))}
+#mis funciones
+
+import_my_csv      <- function(url){readr::read_csv(url) %>% dplyr::select(-matches("x1"))}
 
 
-create_metabolism <- function(genes =  genes_url, reactions = reactions_url, metabolites = metabolites_url) {
+create_metabolism   <- function(genes =  genes_url, reactions = reactions_url, metabolites = metabolites_url) {
+  
   genes_df          <- import_my_csv(genes_url) 
   genes             <- new("genes", indentifiers = genes_df["Gene_ID"], gene_to_reactions = genes_df["Reactions"])
   
@@ -14,23 +17,12 @@ create_metabolism <- function(genes =  genes_url, reactions = reactions_url, met
   new("metabolism", genes =  genes, reactions = reactions, metabolites = metabolites) %>% glimpse}
 
 
+#funciones para consultar a mi objeto
 
-
-setGeneric("metabolite_to_genes",                            function(S4_object, name_pattern) standardGeneric("metabolite_to_genes"))
-setMethod("metabolite_to_genes",  signature(S4_object= "metabolism"), function(S4_object, name_pattern) {
-  
-  regex(name_pattern, ignore_case = T) -> name_pattern
-  name_pattern_to_IDs(S4_object, 'metabolites', name_pattern) -> met_ids  
-  mets_to_rxns(S4_object,met_ids) -> my_rxns
-  genes_by_reactions(S4_object) %>% filter(rxn %in% my_rxns) %>% .[["gene"]]
-})
-
-setGeneric("mets_to_rxns",                            function(S4_object, met_ids) standardGeneric("mets_to_rxns"))
+setGeneric("mets_to_rxns",                                      function(S4_object, met_ids) standardGeneric("mets_to_rxns"))
 setMethod("mets_to_rxns",  signature(S4_object= "metabolism"), function(S4_object, met_ids) {
-  
-  cbind(S4_object@reactions@indentifiers,S4_object@reactions@stoichiometry) %>% filter(str_detect(reactions,paste0(met_ids, collapse = '|'))) %>%  .[['rxn_ids']]
-  
-  
+  cbind(S4_object@reactions@indentifiers,S4_object@reactions@stoichiometry) %>% 
+    filter(str_detect(reactions,paste0(met_ids, collapse = '|'))) %>%  .[['rxn_ids']]
 })
 
 setGeneric("name_pattern_to_IDs",                            function(S4_object, entry, name_pattern) standardGeneric("name_pattern_to_IDs"))
@@ -51,10 +43,9 @@ setMethod("genes_by_reactions", "metabolism", function(x){
     tibble(  rxn=. ,gene = genes) %>% unnest(cols = rxn)
 })
 
+
 setGeneric("genes_ids",   function(x) standardGeneric("genes_ids"))
 setMethod("genes_ids", "metabolism", function(x) slot(x@genes, 'indentifiers')[[1]])
-
-
 
 
 setGeneric("genes_ids<-",                            function(S4_object, value) standardGeneric("genes_ids<-"))
@@ -64,6 +55,15 @@ setMethod("genes_ids<-",  signature(S4_object= "metabolism"), function(S4_object
 })
 
 
+setGeneric("metabolite_to_genes",                                     function(S4_object, name_pattern) standardGeneric("metabolite_to_genes"))
+setMethod("metabolite_to_genes",  signature(S4_object= "metabolism"), function(S4_object, name_pattern) {
+  
+  regex(name_pattern, ignore_case = T) -> name_pattern
+  name_pattern_to_IDs(S4_object, 'metabolites', name_pattern) -> met_ids  
+  mets_to_rxns(S4_object,met_ids) -> my_rxns
+  genes_by_reactions(S4_object) %>% filter(rxn %in% my_rxns) %>% .[["gene"]]
+  
+})
 
 
 

@@ -19,10 +19,88 @@ human_metabolism <- create_metabolism(genes =  genes_url , reactions = reactions
 
 class(human_metabolism)
 methods(class="metabolism")
-
 attr(methods(class="metabolism"), "info")
+
+human_metabolism %>% glimpse
+human_metabolism@genes  %>% glimpse
+human_metabolism@reactions  %>% glimpse
+human_metabolism@metabolites  %>% glimpse
+
+human_metabolism@genes@indentifiers$Gene_ID %>% head
+human_metabolism@reactions@stoichiometry$reactions %>% head
+human_metabolism@metabolites@indentifiers$ID %>% head
+
+```
+#Entendiendo las funciones
+```{r}
+S4_object <- human_metabolism
+met_ids   <- c( "10fthf6glu_c", "10fthf6glu_l", "10fthf6glu_m")
+
+cbind(S4_object@reactions@indentifiers  ,  S4_object@reactions@stoichiometry) -> df1
+
+df1 %>% filter(str_detect(reactions,"10fthf6glu_c|10fthf6glu_l|10fthf6glu_m" )) %>%  .[['rxn_ids']]
+
+df1 %>% filter(str_detect(reactions, paste0(met_ids, collapse = '|') )) %>%  .[['rxn_ids']]
+
+
+mets_to_rxns_0 <- function(S4_object, met_ids) {
+  cbind(S4_object@reactions@indentifiers,S4_object@reactions@stoichiometry) %>% 
+    filter(str_detect(reactions,paste0(met_ids, collapse = '|'))) %>%  .[['rxn_ids']]
+}
+
+mets_to_rxns_0(human_metabolism,  c( "10fthf6glu_c", "10fthf6glu_l", "10fthf6glu_m"))
+```
+
+```{r}
+S4_object <- human_metabolism
+
+S4_object@genes@indentifiers
+
+slot(S4_object, "genes") %>% slot("indentifiers")
+
+slot(S4_object@genes, 'indentifiers')[["Gene_ID"]]
+slot(S4_object@genes, 'indentifiers')[[1]]-> genes
+
+slot(S4_object@genes, 'gene_to_reactions')[[1]]%>% as.list()%>% str_extract_all('\\w+') %>% tibble(rxn=. ,gene = genes) %>% unnest(cols = rxn)
+
+genes_by_reactions_0 <- function(S4_object){ 
+  slot(S4_object@genes, 'indentifiers')[[1]]  -> genes
+  slot(S4_object@genes, 'gene_to_reactions')[[1]] %>% as.list()%>% str_extract_all('\\w+') %>% 
+    tibble(rxn=. ,gene = genes) %>% unnest(cols = rxn)
+}
+
+genes_by_reactions_0(human_metabolism)
+
 ```
 ```{r}
+colnames(human_metabolism@metabolites@indentifiers)
+
+colnames(human_metabolism@metabolites@indentifiers) <- c("ID_hola"  , "Name_hola")
+
+colnames(human_metabolism@metabolites@indentifiers)
+```
+
+
+```{r}
+
+genes_ids_0 <- function(x) {slot(x@genes, 'indentifiers')[[1]]}
+
+human_metabolism %>% genes_ids_0
+
+
+"genes_ids_0<-" <- function(S4_object, value) {
+  S4_object@genes@indentifiers <-data.frame(Gene_hola = value )
+  S4_object
+}
+
+genes_ids_0(human_metabolism) <- c(767,67677,9880,22112)
+
+human_metabolism@genes@indentifiers
+```
+
+
+```{r}
+genes_ids(human_metabolism)
 genes_ids(human_metabolism) %>% head
 ```
 ```{r}
@@ -43,7 +121,8 @@ mets_to_rxns(human_metabolism,c( "glu_L_c" ,    "e4hglu_m" ,   "acglu_m" ))
 
 
 ```{r}
-human_metabolism %>% metabolite_to_genes("glutamate")
+human_metabolism <- create_metabolism(genes =  genes_url , reactions = reactions_url, metabolites = metabolites_url)
+human_metabolism %>% metabolite_to_genes("xylose|citra")
 ```
 
 

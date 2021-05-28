@@ -1,0 +1,85 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+library(GEOquery)
+library(tidyverse)
+library(Biobase)
+setwd("~/DeepenData/clases/07-retrieving-RNAseq-data")
+gse <- "GSE148349"
+downloaded.sets <- list()
+downloaded.sets[gse]  <-  getGEO(gse, GSEMatrix =TRUE, getGPL= T, AnnotGPL = T)
+
+downloaded.sets[[gse]] %>% pData
+downloaded.sets[[gse]] %>%exprs %>% colnames() -> GSMs
+downloaded.sets[[gse]]$title                   -> titles
+
+tibble(GSMs, titles) -> GSMs_titles
+GSMs_titles
+```
+
+```{r message=FALSE, warning=FALSE}
+getGEOSuppFiles(gse) -> files
+rownames(files) %>% untar(exdir = file.path(getwd(), gse))
+list.files(file.path(getwd(), gse), full.names = T) %>% str_extract(".*\\.gz") %>% na.omit() %>% c -> gz_files
+map(gz_files,gunzip)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+library(magrittr)
+
+list.files(file.path(getwd(), gse), full.names = T) %>% str_extract(".*\\.tsv") %>% na.omit() %>% c -> gsm_files
+gsm_files %>% str_extract_all('GSM\\d+') %>% purrr::reduce(c) -> gsm_codes
+gsm_files %<>% as.matrix()
+rownames(gsm_files) <- gsm_codes
+```
+```{r message=FALSE, warning=FALSE}
+get_GSM_column <- function(gsm){
+                                gsm_files[gsm,] %>% read_delim(delim = "\t") %>% dplyr::select(c('target_id', "est_counts")) %>% 
+                                set_names(c('target_id', gsm)) -> counts
+                                return(counts)}
+
+map(rownames(gsm_files),get_GSM_column ) %>% purrr::set_names(rownames(gsm_files)) -> gsm_list
+
+gsm_list %>% purrr::reduce(full_join) -> big_exprs_matrix
+
+big_exprs_matrix %>% as_tibble() %>% column_to_rownames("target_id") %>% filter(GSM4462251 >0) %>% 
+  dplyr::select(c('GSM4462240','GSM4462241','GSM4462253','GSM4462254')) %>% as.matrix() -> sub_expression_matrix
+
+```
+
+```{r}
+downloaded.sets$GSE148349 %>% pData() %>% .[ colnames(sub_expression_matrix) , ] -> sub_phenoData
+
+pData(downloaded.sets$GSE148349) <- sub_phenoData
+set1 <- ExpressionSet( assayData  = sub_expression_matrix,
+                        phenoData  =  phenoData(downloaded.sets$GSE148349))
+```
+
+```{r}
+
+coldata <- pData(set1)
+ coldata$title %>% as.character() %>% str_replace_all('.*(AAV|injection).*','treatment') %>% str_replace_all('.*(Untreated).*','control') -> coldata$title
+
+```
+
+```{r}
+library(DESeq2)
+
+ddsMat <- DESeqDataSetFromMatrix(countData =round(exprs(set1)),
+                                 colData   = coldata,
+                                 design    = ~ title)
+```
+```{r}
+
+DE.analysis  <- DESeq(ddsMat)
+results(DE.analysis, contrast=c("title","treatment","control") )
+```
+
+
+
+
+
